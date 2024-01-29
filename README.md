@@ -2,7 +2,11 @@
 
 This is my modest Github account. I don't often upload code, but I try to show part of all my skills 😏😎.
 
+Some of my last... updates code.
 
+- [mern-ql](https://github.com/slaveofthecode/mern-ql) 
+This is an example (simple), where I used the famous stack tech Mongo, Express, React, and Node, but in my case, I added GraphQL (for that in the end I put on "-ql" 😉).
+You can see on this repository, different branch which has different versions of the project.
 
 
 <!--

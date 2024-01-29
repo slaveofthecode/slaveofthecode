@@ -1,5 +1,10 @@
 ### Hi there 👋
 
+This is my modest Github account. I don't often upload code, but I try to show part of all my skills 😏😎.
+
+
+
+
 <!--
 **slaveofthecode/slaveofthecode** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 

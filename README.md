@@ -8,7 +8,7 @@ Some of my last... updates code.
   This is an example (simple), where I used the famous stack tech Mongo, Express, React, and Node, but in my case, I added GraphQL (for that in the end I put on "-ql" 😉).
   You can see on this repository, different branch which has different versions of the project.
 
-- [advetjs](https://github.com/slaveofthecode/advetnjs)
+- [adventjs](https://github.com/slaveofthecode/adventjs)
   Here you can see a list of challengers separated for different years since 2021 of the [website](https://adventjs.dev/) of @midudev
   The idea is to show my solutions applied to these challenges.
 

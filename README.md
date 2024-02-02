@@ -10,7 +10,10 @@ Some of my last... updates code.
 
 - [adventjs](https://github.com/slaveofthecode/adventjs)
   Here you can see a list of challengers separated for different years since 2021 of the [website](https://adventjs.dev/) of @midudev
-  The idea is to show my solutions applied to these challenges.
+  I'd like to show you my solutions to these challenges.
+
+- [styles](https://github.com/slaveofthecode/styles)
+  In this awesome repository, you will see, experiment, and test all existing code related to several examples in CSS (just CSS pure)
 
 <!--
 **slaveofthecode/slaveofthecode** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.

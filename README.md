@@ -15,6 +15,10 @@ Some of my last... updates code.
 - [styles](https://github.com/slaveofthecode/styles)
   In this awesome repository, you will see, experiment, and test all existing code related to several examples in CSS (just CSS pure)
 
+- [challenges](https://github.com/slaveofthecode/challenges)
+  Here, you can see the different challenges of several companies (obviously their names were hidden) that I have gotten. 
+
+
 <!--
 **slaveofthecode/slaveofthecode** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 

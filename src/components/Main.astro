@@ -1,0 +1,56 @@
+---
+interface Props {
+	listRepositories: {
+		text: string;
+		link: string;
+		description: string;
+	}[];
+}
+const { listRepositories } = Astro.props;
+---
+
+<div class="flex justify-evenly flex-col items-center bg-[#e8e8e8]">
+	{
+		listRepositories.map((repo) => {
+			return (
+				<div>
+					<button>{repo.text}</button>
+					<p>{repo.description}</p>
+				</div>
+				// <div class="button-relieve">
+				// 	<a href={repo.link}>{repo.text}</a>
+				// 	<p>{repo.description}</p>
+				// </div>
+			);
+		})
+	}
+</div>
+
+<style lang="scss">
+	button {
+		color: #090909;
+		padding: 0.7em 1.7em;
+		font-size: 18px;
+		border-radius: 0.5em;
+		background: #e8e8e8;
+		cursor: pointer;
+		border: 1px solid #e8e8e8;
+		transition: all 0.3s;
+		box-shadow:
+			6px 6px 12px #c5c5c5,
+			-6px -6px 12px #ffffff;
+
+		// border-radius: 50px;
+		// background: #f7eded;
+		// box-shadow:
+		// 	20px 20px 60px #d2c9c9,
+		// 	-20px -20px 60px #ffffff;
+
+		&:active {
+			color: #666;
+			box-shadow:
+				inset 4px 4px 12px #c5c5c5,
+				inset -4px -4px 12px #ffffff;
+		}
+	}
+</style>

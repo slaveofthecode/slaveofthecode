@@ -1,27 +1,54 @@
 ---
-import TextBlue from "../components/TextBlue.astro";
-import TextRed from "../components/TextRed.astro";
+import Footer from "../components/Footer.astro";
+import HeaderWithPhoto from "../components/HeaderWithPhoto.astro";
+import Main from "../components/Main.astro";
 import Layout from "../layouts/Layout.astro";
+
+const LIST_REPOSITORIES = [
+	{
+		text: "repo 1",
+		link: "#",
+		description: "here a brief description",
+	},
+	{
+		text: "repo 2",
+		link: "#",
+		description: "here a brief description",
+	},
+	{
+		text: "repo 3",
+		link: "#",
+		description: "here a brief description",
+	},
+];
 ---
 
 <Layout title="slaveofthecode">
 	<main>
-		<header>
-			<h1>slaveofthecode</h1>
-		</header>
-		<p>veamos que onda</p>
-		<section>
-			<TextRed />
-			<TextBlue < main />
-		</section>
+		<HeaderWithPhoto />
+		<Main listRepositories={LIST_REPOSITORIES} />
+		<Footer />
 	</main>
-	<style>
-		p {
-			color: green;
-		}
-
-		section p {
-			color: orange;
-		}
-	</style>
 </Layout>
+
+<style lang="scss">
+	main {
+		display: grid;
+		grid-template-areas:
+			"header"
+			"main"
+			"footer";
+		grid-template-rows: auto 1fr auto;
+		height: 100vh;
+
+		> :nth-child(1) {
+			grid-area: header;
+		}
+		> :nth-child(2) {
+			grid-area: main;
+		}
+		> :nth-child(1) {
+			grid-area: footer;
+		}
+	}
+</style>

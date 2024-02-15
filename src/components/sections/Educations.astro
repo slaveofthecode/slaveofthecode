@@ -1,0 +1,27 @@
+---
+import { getJsonCV } from "@/utils";
+
+const { education } = getJsonCV();
+---
+
+<section>
+	<h1>Education</h1>
+	{
+		education.map(({ institution, date, area }) => (
+			<>
+				<div class="flex justify-between items-center">
+					<h2>
+						<strong class="opacity-60 text-sm me-2">
+							{institution.abreviation}
+						</strong>
+						{institution.name}
+					</h2>
+					<time class="text-gray-400 text-xs">
+						{`${date.start} - ${date.end}`}
+					</time>
+				</div>
+				<p>{area}</p>
+			</>
+		))
+	}
+</section>

@@ -21,9 +21,9 @@ const { experience } = getJsonCV();
 						<div class="flex justify-between items-center">
 							<div class="flex items-center gap-3">
 								<h2 class="text-xl font-semibold opacity-80">
-									{rol}
+									{company}
 								</h2>
-								<small class="px-4 py-1 bg-gray-100/50 text-gray-700 rounded-xl w-fit text-center border-e-2 border-s-2 text-[12px]">
+								<small class="px-3 py-0 bg-gray-100/50 text-gray-700 rounded-e-2xl w-fit text-center border-e-2 border-s-1 text-[10px]">
 									{`${mode.time} / ${mode.type}`}
 								</small>
 							</div>
@@ -32,7 +32,7 @@ const { experience } = getJsonCV();
 							</time>
 						</div>
 						<div class="flex flex-col gap-2">
-							<h3 class="opacity-70">{company}</h3>
+							<h3 class="opacity-70">{rol}</h3>
 							<p>{summary}</p>
 						</div>
 						<div class="flex gap-1 justify-start items-center flex-wrap">

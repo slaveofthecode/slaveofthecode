@@ -144,6 +144,237 @@
 			"url": null
 		}
 	],
+	"education": [
+		{
+			"institution": {
+				"abreviation": "I.S.S.D.",
+				"name": "Instituto Superior Santo Domingo",
+				"url": "https://www.uoc.edu/portal/es/index.html"
+			},
+			"area": "System Analyst",
+			"studyType": "Bachelor",
+			"date": {
+				"start": "2001",
+				"end": "2006"
+			},
+			"score": "4.0",
+			"courses": ["DB1101 - Basic SQL"]
+		}
+	],
+	"skills": [
+		{
+			"name": "HTML",
+			"level": "Master",
+			"keywords": ["Desarrollo Web", "Frontend"]
+		},
+		{
+			"name": "CSS",
+			"level": "Master",
+			"keywords": ["Desarrollo Web", "Frontend", "Diseño Responsive"]
+		},
+		{
+			"name": "JavaScript",
+			"level": "Master",
+			"keywords": ["Desarrollo Web", "Frontend", "Backend", "Fullstack"]
+		},
+
+		{
+			"name": "Git",
+			"level": "Avanzado",
+			"keywords": [
+				"Control de Versiones",
+				"Colaboración",
+				"Código Fuente"
+			]
+		},
+		{
+			"name": "GitHub",
+			"level": "Avanzado",
+			"keywords": [
+				"Control de Versiones",
+				"Colaboración",
+				"Código Fuente",
+				"Git"
+			]
+		},
+		{
+			"name": "ElectronJs",
+			"level": "Avanzado",
+			"keywords": [
+				"Desarrollo Web",
+				"Frontend",
+				"React Framework",
+				"SSR",
+				"Static Generation"
+			]
+		},
+		{
+			"name": "React",
+			"level": "Avanzado",
+			"keywords": [
+				"Desarrollo Web",
+				"Frontend",
+				"JavaScript Library",
+				"UI"
+			]
+		},
+		{
+			"name": "Node",
+			"level": "Avanzado",
+			"keywords": ["Desarrollo Web", "Backend", "JavaScript", "Servidor"]
+		},
+		{
+			"name": "Express",
+			"level": "Avanzado",
+			"keywords": ["Desarrollo Web", "Backend", "JavaScript", "Servidor"]
+		},
+		{
+			"name": "jQuery",
+			"level": "Master",
+			"keywords": ["Desarrollo Web", "Frontend", "Backend", "Fullstack"]
+		},
+		{
+			"name": "Tailwind",
+			"level": "Avanzado",
+			"keywords": [
+				"Desarrollo Web",
+				"Frontend",
+				"CSS Framework",
+				"Diseño Responsive"
+			]
+		},
+		{
+			"name": "TypeScript",
+			"level": "Avanzado",
+			"keywords": [
+				"Desarrollo Web",
+				"Frontend",
+				"Backend",
+				"JavaScript Superset"
+			]
+		},
+		{
+			"name": "Team Foundation Server",
+			"level": "Avanzado",
+			"keywords": [
+				"Control de Versiones",
+				"Colaboración",
+				"Código Fuente"
+			]
+		},
+		{
+			"name": "SQL Server",
+			"level": "Avanzado",
+			"keywords": [
+				"Bases de Datos",
+				"SQL",
+				"Almacenamiento de Datos",
+				"Backend"
+			]
+		},
+		{
+			"name": "SVN (Subversion)",
+			"level": "Avanzado",
+			"keywords": [
+				"Control de Versiones",
+				"Colaboración",
+				"Código Fuente"
+			]
+		},
+		{
+			"name": "Jest",
+			"level": "Avanzado",
+			"keywords": [
+				"Desarrollo Web",
+				"Frontend",
+				"JavaScript Library",
+				"UI"
+			]
+		},
+		{
+			"name": ".Net",
+			"level": "Avanzado",
+			"keywords": [
+				"Desarrollo Web",
+				"Frontend",
+				"JavaScript Library",
+				"UI"
+			]
+		},
+		{
+			"name": "C#",
+			"level": "Avanzado",
+			"keywords": [
+				"Desarrollo Web",
+				"Frontend",
+				"JavaScript Library",
+				"UI"
+			]
+		}
+	],
+	"projects": [
+		{
+			"name": "mern-ql",
+			"url": {
+				"Github": "https://github.com/slaveofthecode/mern-ql"
+			},
+			"isActive": true,
+			"description": "This is a simple example, I used the famous stack tech MERN (Mongo, Express, React, Node), but in this case, I added GraphQL (that way I put in the end '-ql' 😉).",
+			"highlights": [
+				"JavsScript",
+				"CSS",
+				"HTML",
+				"Node",
+				"Express",
+				"GraphQL",
+				"Apollo",
+				"MongoDB",
+				"Mongoose"
+			]
+		},
+		{
+			"name": "styles",
+			"url": {
+				"Github": "https://github.com/slaveofthecode/styles"
+			},
+			"isActive": true,
+			"description": "This is a collection of styles that I have created over the years. I have decided to put them all in one place so that I can easily access them and share them with others.",
+			"highlights": [
+				"JavsScript",
+				"CSS",
+				"HTML",
+				"Node",
+				"Express",
+				"Pug"
+			]
+		},
+		{
+			"name": "challenges",
+			"url": {
+				"Github": "https://github.com/slaveofthecode/challenges"
+			},
+			"isActive": true,
+			"description": "Here, you can see different repositories with codes that were required or tasks from different companies, to apply a their corresponding job offer.",
+			"highlights": [
+				"JavsScript",
+				"CSS",
+				"HTML",
+				"Node",
+				"Express",
+				"Jest"
+			]
+		},
+		{
+			"name": "adventjs",
+			"url": {
+				"Github": "https://github.com/slaveofthecode/adventjs"
+			},
+			"isActive": true,
+			"description": "This is a list of different solutions to challenges from adventjs.dev web.",
+			"highlights": ["JavsScript", "TypeScript"]
+		}
+	],
+
 	"volunteer": [
 		{
 			"organization": "Organization",
@@ -155,18 +386,7 @@
 			"highlights": ["Awarded 'Volunteer of the Month'"]
 		}
 	],
-	"education": [
-		{
-			"institution": "Universitat Oberta de Catalunya",
-			"url": "https://www.uoc.edu/portal/es/index.html",
-			"area": "Ingeniero de Software",
-			"studyType": "Bachelor",
-			"startDate": "2003-01-01",
-			"endDate": "2009-01-01",
-			"score": "4.0",
-			"courses": ["DB1101 - Basic SQL"]
-		}
-	],
+
 	"awards": [
 		{
 			"title": "Award",
@@ -192,98 +412,7 @@
 			"summary": "Description…"
 		}
 	],
-	"skills": [
-		{
-			"name": "HTML",
-			"level": "Master",
-			"keywords": ["Desarrollo Web", "Frontend"]
-		},
-		{
-			"name": "CSS",
-			"level": "Master",
-			"keywords": ["Desarrollo Web", "Frontend", "Diseño Responsive"]
-		},
-		{
-			"name": "JavaScript",
-			"level": "Master",
-			"keywords": ["Desarrollo Web", "Frontend", "Backend", "Fullstack"]
-		},
-		{
-			"name": "Tailwind",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"CSS Framework",
-				"Diseño Responsive"
-			]
-		},
-		{
-			"name": "TypeScript",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"Backend",
-				"JavaScript Superset"
-			]
-		},
-		{
-			"name": "Node",
-			"level": "Avanzado",
-			"keywords": ["Desarrollo Web", "Backend", "JavaScript", "Servidor"]
-		},
-		{
-			"name": "MySQL",
-			"level": "Avanzado",
-			"keywords": [
-				"Bases de Datos",
-				"SQL",
-				"Almacenamiento de Datos",
-				"Backend"
-			]
-		},
-		{
-			"name": "Git",
-			"level": "Avanzado",
-			"keywords": [
-				"Control de Versiones",
-				"Colaboración",
-				"Código Fuente"
-			]
-		},
-		{
-			"name": "GitHub",
-			"level": "Avanzado",
-			"keywords": [
-				"Control de Versiones",
-				"Colaboración",
-				"Código Fuente",
-				"Git"
-			]
-		},
-		{
-			"name": "Next.js",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"React Framework",
-				"SSR",
-				"Static Generation"
-			]
-		},
-		{
-			"name": "React",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"JavaScript Library",
-				"UI"
-			]
-		}
-	],
+
 	"languages": [
 		{
 			"language": "Spanish",
@@ -304,64 +433,6 @@
 		{
 			"name": "Jane Doe",
 			"reference": "Reference…"
-		}
-	],
-	"projects": [
-		{
-			"name": "mars.codes",
-			"isActive": true,
-			"description": "Historia interactiva con retos de programación para viajar a Marte",
-			"highlights": ["Elige tu propia aventura", "En desarrollo"],
-			"url": "https://mars.codes"
-		},
-		{
-			"name": "AdventJS",
-			"isActive": true,
-			"description": "Retos de programación en JavaScript para cada día de diciembre hasta Navidad",
-			"highlights": [
-				"+1 millón de visitas",
-				"Multidioma",
-				"JavaScript & TypeScript"
-			],
-			"url": "https://adventjs.dev"
-		},
-		{
-			"name": "Codember",
-			"isActive": true,
-			"description": "Juego interactivo de programación con retos y secretos",
-			"highlights": [
-				"+2000 usuarios activos",
-				"Retos para cualquier lenguaje"
-			],
-			"url": "https://codember.dev"
-		},
-		{
-			"name": "codi.link",
-			"isActive": true,
-			"description": "Playground de código HTML, CSS y JavaScript para compartir",
-			"highlights": [
-				"100k visitas al mes",
-				"Desarrollado por la comunidad"
-			],
-			"url": "https://codi.link",
-			"github": "https://github.com/midudev/codi.link"
-		},
-		{
-			"name": "Pruebas Técnicas",
-			"isActive": true,
-			"description": "Lista de pruebas técnicas de empresas para practicar programación",
-			"highlights": ["100% gratuito", "+500 soluciones de la comunidad"],
-			"url": "https://pruebastecnicas.com",
-			"github": "https://github.com/midudev/pruebas-tecnicas"
-		},
-		{
-			"name": "miduConf",
-			"description": "Conferencia de programación en streaming para la comunidad hispanohablante con charlas top",
-			"highlights": [
-				"+15k tickets repartidos",
-				"+50k espectadores en directo"
-			],
-			"url": "https://miduconf.com"
 		}
 	]
 }

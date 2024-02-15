@@ -1,11 +1,11 @@
 ---
 import AboutMe from "@/components/sections/AboutMe.astro";
-import Educations from "@/components/Educations.astro";
+import Educations from "@/components/sections/Educations.astro";
 import Experience from "@/components/sections/Experience.astro";
 import Header from "@/components/sections/Header.astro";
 import InProgress from "@/components/InProgress.astro";
-import Projects from "@/components/Projects.astro";
-import Skills from "@/components/Skills.astro";
+import Projects from "@/components/sections/Projects.astro";
+import Skills from "@/components/sections/Skills.astro";
 import Layout from "@/layouts/Layout.astro";
 ---
 
@@ -15,16 +15,15 @@ import Layout from "@/layouts/Layout.astro";
 	<!-- -->
 
 	<main>
+		<div class="w-full bg-gray-200 fixed top-2 left-0 text-center z-10">
+			<p><em>...coming soon you will see more changes</em></p>
+		</div>
 		<Header />
 		<AboutMe />
 		<Experience />
-		<div class="w-full bg-gray-200 fixed top-2 left-0 text-center">
-			<p><em>...coming soon you will see more changes</em></p>
-		</div>
-		<!-- 
 		<Educations />
+		<Skills />
 		<Projects />
-		<Skills /> -->
 	</main>
 
 	<!-- <KeyboardManager /> -->

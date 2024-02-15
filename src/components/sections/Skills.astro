@@ -1,0 +1,18 @@
+---
+import { getJsonCV } from "@/utils";
+
+const { skills } = getJsonCV();
+---
+
+<section>
+	<h1>Skills</h1>
+	<div class="flex gap-1 flex-wrap">
+		{
+			skills.map(({ name }, index) => (
+				<span class="bg-black/75 text-white font-bold py-1 px-2 w-fit rounded text-sm">
+					{name}
+				</span>
+			))
+		}
+	</div>
+</section>

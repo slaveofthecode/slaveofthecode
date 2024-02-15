@@ -3,12 +3,21 @@ import AboutMe from "../components/AboutMe.astro";
 import Educations from "../components/Educations.astro";
 import Experience from "../components/Experience.astro";
 import Header from "../components/Header.astro";
+import InProgress from "../components/InProgress.astro";
+import Skills from "../components/Skills.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="slaveofthecode">
-	<Header />
-	<AboutMe />
-	<Experience />
-	<Educations />
+	<main>
+		<Header />
+		<AboutMe />
+		<Experience />
+		<Educations />
+		<Skills />
+	</main>
+
+	<!-- this component for WIP mode -->
+	<InProgress />
+	<!--  -->
 </Layout>

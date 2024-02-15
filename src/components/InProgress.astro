@@ -1,0 +1,54 @@
+<div>
+	<span></span>
+	<span class="p-2 text-black bg-[#f2a417] font-bold uppercase">
+		...in progress...
+	</span>
+</div>
+
+<style>
+	div {
+		transform: rotate(45deg);
+		width: 300px;
+		right: -75px;
+		top: 45px;
+		position: fixed;
+		padding: 0.5rem;
+		background: repeating-linear-gradient(
+			-45deg,
+			#f2a417,
+			#f2a417 15px,
+			#141617 15px,
+			#141617 30px
+		);
+		box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
+		z-index: 0;
+
+		> span {
+			&:nth-child(1) {
+				background: #f2a417;
+				z-index: 0;
+				display: block;
+				width: 100%;
+				height: 40px;
+				position: absolute;
+			}
+
+			&:nth-child(2) {
+				display: block;
+				width: 100%;
+				text-align: center;
+				z-index: 2;
+				animation: marquee 3s linear infinite;
+			}
+		}
+	}
+
+	@keyframes marquee {
+		0% {
+			transform: translateX(65%);
+		}
+		100% {
+			transform: translateX(-65%);
+		}
+	}
+</style>

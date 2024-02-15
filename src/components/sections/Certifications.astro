@@ -1,0 +1,27 @@
+---
+import { getJsonCV } from "@/utils";
+
+const { certificates } = getJsonCV();
+---
+
+<section>
+	<h1>Certifications</h1>
+	{
+		certificates.map(({ issuedBy, name, date, url }) => (
+			<div class="flex flex-col">
+				<div class="flex justify-between">
+					<div class="flex gap-2">
+						[ <time class="opacity-50">{date}</time> ]
+						<h3 class="opacity-80">{name}</h3>
+					</div>
+					<div>
+						<a href={url} target="_blank" rel="noopener noreferrer">
+							view
+						</a>
+					</div>
+				</div>
+				<span>{issuedBy}</span>
+			</div>
+		))
+	}
+</section>

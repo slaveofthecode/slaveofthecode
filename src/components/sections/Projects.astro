@@ -13,7 +13,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 	<div class="flex">
 		<h1>Projects</h1>
 		<small class="ms-4 text-[10px] pt-1 h-fit w-fit">
-			<em class="px-1">...only the most important projects</em>
+			<em class="px-1">...only the most important</em>
 		</small>
 	</div>
 	<div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -25,7 +25,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 							<h3 class="font-semibold tracking-tight text-base opacity-55">
 								{name}
 							</h3>
-							<div>
+							<div class="w-fit h-fit">
 								{Object.keys(url).map((key) => {
 									const Icon = ICONS_PROFILES[key];
 									return (

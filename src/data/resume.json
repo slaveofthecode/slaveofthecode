@@ -374,6 +374,14 @@
 			"highlights": ["JavsScript", "TypeScript"]
 		}
 	],
+	"certificates": [
+		{
+			"name": "Programming in HTML5 with JavaScript and CSS3",
+			"date": "2013",
+			"issuedBy": "Microsoft",
+			"url": "https://www.credly.com/badges/e4546f10-b164-4878-807a-0441afc5dce5?source=linked_in_profile"
+		}
+	],
 
 	"volunteer": [
 		{
@@ -393,14 +401,6 @@
 			"date": "2014-11-01",
 			"awarder": "Company",
 			"summary": "There is no spoon."
-		}
-	],
-	"certificates": [
-		{
-			"name": "Certificate",
-			"date": "2021-11-07",
-			"issuer": "Company",
-			"url": "https://certificate.com"
 		}
 	],
 	"publications": [

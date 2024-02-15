@@ -2,8 +2,8 @@
 import Email from "@/icons/Email.astro";
 import Github from "@/icons/Github.astro";
 import LinkedIn from "@/icons/LinkedIn.astro";
+import MapPin from "@/icons/MapPin.astro";
 import WhatsApp from "@/icons/WhatsApp.astro";
-import World from "@/icons/World.astro";
 import type { IconsProfilesType } from "@/types";
 import { getJsonCV } from "@/utils";
 
@@ -19,9 +19,9 @@ const ICONS_PROFILES: IconsProfilesType = {
 	<div>
 		<h1>{name}</h1>
 		<p>{label}</p>
-		<small class="flex gap-2 my-2 items-center text-gray-400">
-			<World class="size-4 opacity-30" />
-			<a href={location.googleMaps} target="_blank">
+		<small class="flex gap-2 my-2 items-center text-gray-600">
+			<a href={location.googleMaps} target="_blank" class="flex gap-1">
+				<MapPin class="size-4" />
 				{location?.city}, <strong>{location.country}</strong></a
 			>
 		</small>

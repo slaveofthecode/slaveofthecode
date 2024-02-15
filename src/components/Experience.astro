@@ -1,1 +1,58 @@
-<h1>Experience</h1>
+---
+const LIST_EXPERIENCES = [
+	{
+		title: "Software Engineer",
+		company: "Cognizant",
+		location: "Remote",
+		date: "May, 2019 - Current",
+		description:
+			"Worked as a software engineer in the banking domain. Developed and maintained web applications using Java, Spring, and Angular.",
+	},
+	{
+		title: "Software Engineer",
+		company: "Infosys",
+		location: "Córdoba, Argentina",
+		date: "Apr, 2017 - May, 2019",
+		description:
+			"Worked as a software engineer in the banking domain. Developed and maintained web applications using Java, Spring, and Angular.",
+	},
+];
+---
+
+<section>
+	<h1>Experience</h1>
+	{
+		LIST_EXPERIENCES.map((experience, index) => {
+			const [start, end] = experience.date.split(" - ");
+			return (
+				<div class="relative my-4 border-b border-gray-100 pb-3">
+					<div class="flex justify-between items-center">
+						<div class="flex items-center gap-3">
+							<h2 class="text-xl font-semibold">
+								{experience.company}
+							</h2>
+							<small class="px-4 py-1 bg-gray-100 text-gray-700 rounded-xl w-fit text-center">
+								{experience.location}
+							</small>
+						</div>
+						<time class="text-gray-400 text-xs">
+							{start} -{" "}
+							{end === "Current" ? (
+								<strong>Current</strong>
+							) : (
+								new Date(end).toLocaleDateString("en-US", {
+									month: "short",
+									year: "numeric",
+								})
+							)}
+						</time>
+					</div>
+					<div class="flex flex-col gap-2">
+						<h3>{experience.title}</h3>
+						<p>{experience.description}</p>
+					</div>
+				</div>
+			);
+		})
+	}
+</section>

@@ -24,20 +24,50 @@ const { title } = Astro.props;
 	</body>
 </html>
 <style is:global>
-	:root {
-		color-scheme: light dark;
-		--black-not-so-black: #13151a;
-		--black-real-black: #000;
+	@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
+	@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Rubik+Mono+One&display=swap");
 
-		--font-slaveofthecode: "Covered By Your Grace";
+	::root {
+		/* --black-not-so-black: #13151a;
+		--black-real-black: #000; */
+
+		/* --font-slaveofthecode: "Covered By Your Grace"; */
 		--font-default: "Zen Kaku Gothic New";
 	}
-	* {
+
+	*,
+	*::before,
+	*::after {
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
 	}
+
 	html {
-		font-family: var(--font-default), Verdana, Geneva, Tahoma;
+		font-size: 16px;
+	}
+
+	body {
+		font-family: var(--font-default);
+		margin: 0 auto;
+		height: 100vh;
+		width: 720px;
+		padding-block: 2rem;
+
+		> section {
+			margin-block: 1rem;
+		}
+	}
+
+	h1 {
+		font-family: "Rubik Mono One", monospace;
+		font-weight: 400;
+		font-style: normal;
+	}
+
+	p {
+		font-family: "Cutive Mono", monospace;
+		font-weight: 400;
+		font-style: normal;
 	}
 </style>

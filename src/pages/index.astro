@@ -1,10 +1,9 @@
 ---
-import AboutMe from "@/components/AboutMe.astro";
+import AboutMe from "@/components/sections/AboutMe.astro";
 import Educations from "@/components/Educations.astro";
 import Experience from "@/components/Experience.astro";
-import Header from "@/components/Header.astro";
+import Header from "@/components/sections/Header.astro";
 import InProgress from "@/components/InProgress.astro";
-import KeyboardManager from "@/components/KeyboardManager.astro";
 import Projects from "@/components/Projects.astro";
 import Skills from "@/components/Skills.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -18,15 +17,23 @@ import Layout from "@/layouts/Layout.astro";
 	<main>
 		<Header />
 		<AboutMe />
-		<Experience />
+		<div class="w-full bg-gray-200 absolute left-0 text-center">
+			<p><em>...coming soon you will see more changes</em></p>
+		</div>
+		<!-- <Experience />
 		<Educations />
-		<Skills />
 		<Projects />
+		<Skills /> -->
 	</main>
 
-	<KeyboardManager />
+	<!-- <KeyboardManager /> -->
 
 	<!-- this component for WIP mode -->
 	<InProgress />
 	<!--  -->
 </Layout>
+
+<script>
+	import cv from "@cv" assert { type: "json" };
+	console.log("HEADER", cv);
+</script>

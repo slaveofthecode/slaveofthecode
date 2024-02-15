@@ -4,9 +4,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      // "@cv": [
-      //   "./cv.json"
-      // ],
+      "@cv": [
+        "src/data/resume.json"
+      ],
     }
   }
 }

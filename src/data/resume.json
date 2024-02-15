@@ -28,32 +28,120 @@
 			}
 		]
 	},
-	"work": [
+	"experience": [
 		{
-			"name": "midudev",
-			"position": "Divulgador sobre Programación Web",
-			"url": "https://twitch.tv/midudev",
-			"startDate": "2021-01-01",
-			"endDate": null,
-			"summary": "Streamer de programación más visto en Español en Twitch. +1 millón de seguidores entre todas mis redes sociales. Reconocido por Google, Microsoft y GitHub por mi impacto en la comunidad de desarrolladores.",
-			"highlights": ["Started the company"]
+			"rol": "Senior Frontend Developer",
+			"company": "ITLG",
+			"mode": {
+				"time": "Full-Time",
+				"type": "Hybrid"
+			},
+			"date": {
+				"start": "January, 2023",
+				"end": "December, 2023"
+			},
+			"summary": "Migration from the product of the client (entity bank) to React technology, using Micro Front End.",
+			"stack": [
+				"JavaScript",
+				"TypeScript",
+				"React",
+				"Micro Front End",
+				"Bootstrap",
+				"HTML/CSS",
+				"Sass",
+				"Notion",
+				"GitLab"
+			],
+			"url": "https://www.adevinta.com/"
 		},
 		{
-			"name": "Adevinta",
-			"position": "Lead Frontend Architect",
-			"url": "https://twitch.tv/midudev",
-			"startDate": "2016-06-01",
-			"endDate": "2022-09-01",
-			"summary": "Lideré una convergencia técnica entre diferentes productos y migramos una arquitectura monolítica a otra más flexible y optimizada. Fomenté buenas prácticas y mejoras en la cultura de rendimiento, además de la entrega rápida de valor a los usuarios.",
-			"highlights": ["Started the company"]
+			"rol": "Senior Frontend Developer",
+			"company": "Kalto",
+			"mode": {
+				"time": "Full-Time",
+				"type": "Remote"
+			},
+			"date": {
+				"start": "November, 2021",
+				"end": "November, 2022"
+			},
+			"summary": "We created a product, related to BtoB (Business to Business) for the Mexico market.",
+			"stack": [
+				"JavaScript",
+				"TypeScript",
+				"React",
+				"GraphQL",
+				"Bootstrap",
+				"HTML/CSS",
+				"Sass",
+				"Git",
+				"Github"
+			],
+			"url": null
 		},
 		{
-			"name": "Hubii",
-			"position": "Senior FrontEnd Developer",
-			"startDate": "2011-03-01",
-			"endDate": "2016-05-01",
-			"summary": "Desarrollé una plataforma de noticias geolocalizadas y una API para consumir la información. Escalé los servicios para soportar la carga de más de cientos de miles de peticiones al día. Recorté los tiempos de entrega y despliegues a producción a la mitad. Colaboré con Mozilla y Telefónica para desarrollar la primera app para televisores con FirefoxOS.",
-			"highlights": ["Started the company"]
+			"rol": "React Native Developer",
+			"company": "Ohana",
+			"mode": {
+				"time": "Full-Time",
+				"type": "Remote"
+			},
+			"date": {
+				"start": "Augusto, 2021",
+				"end": "October, 2021"
+			},
+			"summary": "Creation mobile app related to payments and transactions between people.",
+			"stack": ["React Native", "Figma", "JavaScript"],
+			"url": null
+		},
+		{
+			"rol": "React Developer",
+			"company": "Cognizant Softvision",
+			"mode": {
+				"time": "Full-Time",
+				"type": "Remote"
+			},
+			"date": {
+				"start": "February, 2021",
+				"end": "July, 2021"
+			},
+			"summary": "We built a web page (we added new features) related to a product medicinal from Germany. This web page wasn't an e-commerce, maybe it was related to a promotion.",
+			"stack": [
+				"ReactJs",
+				"HTML/CSS",
+				"JavaScript",
+				"Bootstrap",
+				"Git",
+				"Adobe Ilustrator"
+			],
+			"url": null
+		},
+		{
+			"rol": "Frontend Developer",
+			"company": "McAfee",
+			"mode": {
+				"time": "Full-Time",
+				"type": "Hybrid"
+			},
+			"date": {
+				"start": "October, 2019",
+				"end": "Junuary, 2021"
+			},
+			"summary": "Participation in the product of the company, related to management security process for big clients.",
+			"stack": [
+				"AngularJs",
+				"Angular 8",
+				"HTML/CSS",
+				"TypeScript",
+				"NodeJs",
+				"ElectronJs",
+				"Git",
+				"Jira",
+				"Jest",
+				"Jasmine",
+				"Sass"
+			],
+			"url": null
 		}
 	],
 	"volunteer": [

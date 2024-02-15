@@ -1,7 +1,7 @@
 ---
 import AboutMe from "@/components/sections/AboutMe.astro";
 import Educations from "@/components/Educations.astro";
-import Experience from "@/components/Experience.astro";
+import Experience from "@/components/sections/Experience.astro";
 import Header from "@/components/sections/Header.astro";
 import InProgress from "@/components/InProgress.astro";
 import Projects from "@/components/Projects.astro";
@@ -17,10 +17,11 @@ import Layout from "@/layouts/Layout.astro";
 	<main>
 		<Header />
 		<AboutMe />
-		<div class="w-full bg-gray-200 absolute left-0 text-center">
+		<Experience />
+		<div class="w-full bg-gray-200 fixed top-2 left-0 text-center">
 			<p><em>...coming soon you will see more changes</em></p>
 		</div>
-		<!-- <Experience />
+		<!-- 
 		<Educations />
 		<Projects />
 		<Skills /> -->

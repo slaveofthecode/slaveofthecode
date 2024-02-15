@@ -1,12 +1,13 @@
 ---
 import type { IconsProfilesType } from "@/types";
-import { basics } from "@cv";
+import { getJsonCV } from "@/utils";
 import Email from "../../icons/Email.astro";
 import Github from "../../icons/Github.astro";
 import LinkedIn from "../../icons/LinkedIn.astro";
 import WhatsApp from "../../icons/WhatsApp.astro";
 import World from "../../icons/World.astro";
 
+const { basics } = getJsonCV();
 const { name, label, photo, email, location, profiles } = basics;
 const ICONS_PROFILES: IconsProfilesType = {
 	LinkedIn,

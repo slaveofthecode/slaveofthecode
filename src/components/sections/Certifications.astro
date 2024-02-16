@@ -8,19 +8,19 @@ const { certificates } = getJsonCV();
 	<h1>Certifications</h1>
 	{
 		certificates.map(({ issuedBy, name, date, url }) => (
-			<div class="flex flex-col">
-				<div class="flex justify-between">
-					<div class="flex gap-2">
+			<div class="flex flex-col border-b border-gray-100 pb-4">
+				<div class="flex gap-2 flex-col sm:flex-row">
+					<p>
 						[ <time class="opacity-50">{date}</time> ]
-						<h3 class="opacity-80">{name}</h3>
-					</div>
-					<div>
-						<a href={url} target="_blank" rel="noopener noreferrer">
-							view
-						</a>
-					</div>
+					</p>
+					<h3 class="opacity-80">{name}</h3>
 				</div>
-				<span>{issuedBy}</span>
+				<div class="flex justify-between">
+					<span>{issuedBy}</span>
+					<a href={url} target="_blank" rel="noopener noreferrer">
+						view
+					</a>
+				</div>
 			</div>
 		))
 	}

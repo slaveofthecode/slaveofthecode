@@ -87,10 +87,10 @@
 				"type": "Remote"
 			},
 			"date": {
-				"start": "Augusto, 2021",
+				"start": "August, 2021",
 				"end": "October, 2021"
 			},
-			"summary": "Creation mobile app related to payments and transactions between people.",
+			"summary": "Creation of mobile app related to payments and transactions between people.",
 			"stack": ["React Native", "Figma", "JavaScript"],
 			"url": null
 		},
@@ -112,7 +112,7 @@
 				"JavaScript",
 				"Bootstrap",
 				"Git",
-				"Adobe Ilustrator"
+				"Adobe Illustrator"
 			],
 			"url": null
 		},
@@ -125,7 +125,7 @@
 			},
 			"date": {
 				"start": "October, 2019",
-				"end": "Junuary, 2021"
+				"end": "January, 2021"
 			},
 			"summary": "Participation in the product of the company, related to management security process for big clients.",
 			"stack": [
@@ -147,7 +147,7 @@
 	"education": [
 		{
 			"institution": {
-				"abreviation": "I.S.S.D.",
+				"abbreviation": "I.S.S.D.",
 				"name": "Instituto Superior Santo Domingo",
 				"url": "https://www.uoc.edu/portal/es/index.html"
 			},
@@ -354,7 +354,7 @@
 				"Github": "https://github.com/slaveofthecode/challenges"
 			},
 			"isActive": true,
-			"description": "Here, you can see different repositories with codes that were required or tasks from different companies, to apply a their corresponding job offer.",
+			"description": "Here, you can see different repositories with codes that were required or tasks from different companies, to apply their corresponding job offer.",
 			"highlights": [
 				"JavsScript",
 				"CSS",
@@ -394,7 +394,6 @@
 			"highlights": ["Awarded 'Volunteer of the Month'"]
 		}
 	],
-
 	"awards": [
 		{
 			"title": "Award",

@@ -1,13 +1,12 @@
 ---
 import AboutMe from "@/components/sections/AboutMe.astro";
+import Certifications from "@/components/sections/Certifications.astro";
 import Educations from "@/components/sections/Educations.astro";
 import Experience from "@/components/sections/Experience.astro";
 import Header from "@/components/sections/Header.astro";
-import InProgress from "@/components/InProgress.astro";
 import Projects from "@/components/sections/Projects.astro";
 import Skills from "@/components/sections/Skills.astro";
 import Layout from "@/layouts/Layout.astro";
-import Certifications from "@/components/sections/Certifications.astro";
 ---
 
 <Layout title="slaveofthecode">
@@ -34,8 +33,3 @@ import Certifications from "@/components/sections/Certifications.astro";
 	<!-- <InProgress /> -->
 	<!--  -->
 </Layout>
-
-<script>
-	import cv from "@cv" assert { type: "json" };
-	console.log("HEADER", cv);
-</script>

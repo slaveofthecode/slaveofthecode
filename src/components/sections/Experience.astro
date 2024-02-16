@@ -17,24 +17,20 @@ const { experience } = getJsonCV();
 		experience.map(
 			({ rol, company, mode, summary, date, stack }, index) => {
 				return (
-					<div class="relative mb-8 border-b border-gray-100 pb-3">
-						<div class="flex justify-between items-center">
-							<div class="flex items-center gap-3">
-								<h2 class="text-xl font-semibold opacity-80">
-									{company}
-								</h2>
-								<small class="px-3 py-0 bg-gray-100/50 text-gray-700 rounded-e-2xl w-fit text-center border-e-2 border-s-1 text-[10px]">
-									{`${mode.time} / ${mode.type}`}
-								</small>
-							</div>
+					<div class="flex flex-col mb-8 border-b border-gray-100 pb-3">
+						<div class="flex justify-between">
 							<time class="text-gray-400 text-xs">
 								{date.start} - {date.end ?? "Current"}
 							</time>
+							<small class="text-[10px]">
+								{`${mode.time} / ${mode.type}`}
+							</small>
 						</div>
-						<div class="flex flex-col gap-2">
-							<h3 class="opacity-70">{rol}</h3>
-							<p>{summary}</p>
-						</div>
+						<h2 class="text-xl font-semibold opacity-80">
+							{company}
+						</h2>
+						<h3 class="opacity-70">{rol}</h3>
+						<p class="p-2 my-2 bg-gray-100/50">{summary}</p>
 						<div class="flex gap-1 justify-start items-center flex-wrap">
 							{stack.map((stackTech) => (
 								<div class="text-[10px] font-bold bg-slate-200 py-1 px-2">

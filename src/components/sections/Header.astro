@@ -15,8 +15,8 @@ const ICONS_PROFILES: IconsProfilesType = {
 };
 ---
 
-<section class="flex gap-x-2">
-	<div>
+<section class="flex gap-2 flex-col-reverse sm:flex-row">
+	<div class="mt-6 sm:m-0">
 		<h1>{name}</h1>
 		<p>{label}</p>
 		<small class="flex gap-2 my-2 items-center text-gray-600">
@@ -60,7 +60,9 @@ const ICONS_PROFILES: IconsProfilesType = {
 			}
 		</div>
 	</div>
-	<figure class="relative flex shrink-0 overflow-hidden rounded-xl size-32">
+	<figure
+		class="relative flex shrink-0 overflow-hidden rounded-xl sm:size-32 size-6/12 m-auto sm:m-0"
+	>
 		<img src={photo} alt={name} class="aspect-square h-full w-full" />
 		<!-- <figcaption>+16</figcaption> -->
 	</figure>

@@ -7,9 +7,12 @@ import Header from "@/components/sections/Header.astro";
 import Projects from "@/components/sections/Projects.astro";
 import Skills from "@/components/sections/Skills.astro";
 import Layout from "@/layouts/Layout.astro";
+import { basics } from "@cv";
+
+const { name } = basics;
 ---
 
-<Layout title="slaveofthecode">
+<Layout title=`RESUME: ${name}`>
 	<!-- Dark / White -->
 	<!-- <DarkWhite /> -->
 	<!-- -->

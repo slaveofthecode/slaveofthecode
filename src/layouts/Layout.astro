@@ -1,4 +1,5 @@
 ---
+import { basics } from "@cv";
 import "@fontsource/covered-by-your-grace";
 import "@fontsource/zen-kaku-gothic-new";
 
@@ -7,6 +8,8 @@ interface Props {
 }
 
 const { title } = Astro.props;
+
+const { photo } = basics;
 ---
 
 <!doctype html>
@@ -15,11 +18,14 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image" href={photo} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body>
+	<body
+		class="flex flex-col items-center pt-[2rem] sm:pt-[5rem]
+		w-10/12 overflow-x-hidden sm:bg-slate-600 sm:w-10/12 md:bg-orange-500 md:w-9/12 lg:bg-green-500 lg:w-8/12 xl:bg-cyan-500 xl:w-7/12 2xl:bg-yellow-200 2xl:w-6/12"
+	>
 		<slot />
 	</body>
 </html>
@@ -46,8 +52,6 @@ const { title } = Astro.props;
 	body {
 		font-family: var(--font-default);
 		margin: 0 auto;
-		width: 720px;
-		padding-top: 5rem;
 
 		> main {
 			> section {

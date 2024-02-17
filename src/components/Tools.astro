@@ -15,6 +15,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 
 <section
 	class="tools animate-[appear_0.001s_both] sm:animate-[appearSM_0.001s_both]
+	animation-IOS
 	fixed left-0 bottom-0 flex flex-col w-full h-fit mb-0 pb-8 pt-3 px-9"
 >
 	<div class="flex justify-between items-center 2xl:px-8">
@@ -85,12 +86,23 @@ const ICONS_PROFILES: IconsProfilesType = {
 		animation-timeline: --subjectReveal;
 	}
 
+	.animation-IOS {
+		-webkit-animation: appearIOS 0.001s both;
+	}
 	// .animation {
 	// 	view-timeline-name: --subjectReveal;
 	// 	animation-timeline: --subjectReveal;
 	// 	animation-name: appear;
 	// 	animation-fill-mode: both;
 	// 	animation-duration: 1ms;
+
+	// view-timeline-name: --revealing;
+	// view-timeline-axis: block;
+
+	// animation: linear 0.3s fadeIn;
+	// animation-timeline: --revealing;
+	// animation-range: entry 100% cover 10%;
+
 	// }
 
 	@keyframes appear {
@@ -104,6 +116,18 @@ const ICONS_PROFILES: IconsProfilesType = {
 			bottom: 4rem;
 		}
 	}
+	@-webkit-keyframes appearIOS {
+		0% {
+			opacity: 0;
+			bottom: -200px;
+		}
+
+		100% {
+			opacity: 1;
+			bottom: 0;
+		}
+	}
+
 	@keyframes appearSM {
 		0% {
 			opacity: 0;

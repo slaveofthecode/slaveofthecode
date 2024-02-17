@@ -13,18 +13,14 @@ const ICONS_PROFILES: IconsProfilesType = {
 };
 ---
 
-<!-- 
-	sm:animate-[appearSM_0.001s_both]
-	animation-IOS 
-	animate-[appear_0.001s_both]
--->
 <section
-	class="tools fixed left-0 bottom-0 flex flex-col w-full h-fit mb-0 pb-8 pt-3 px-9"
+	class="tools footer animate-appear-bottom
+	fixed left-0 bottom-0 flex flex-col w-full h-fit mb-0 pb-8 pt-3 px-9"
 >
 	<div class="flex justify-between items-center 2xl:px-8">
 		<div class="flex flex-col items-start justify-start">
-			<h1 class="m-0 text-xs">{name}</h1>
-			<small class="text-gray-400">Senior Software Developer</small>
+			<h1 class="m-0 text-xs tracking-widest">{name}</h1>
+			<small class="text-gray-900">Senior Software Developer</small>
 		</div>
 		<div class="tools-photo">
 			<div>
@@ -38,7 +34,9 @@ const ICONS_PROFILES: IconsProfilesType = {
 			</div>
 		</div>
 	</div>
-	<div class="absolute left-0 bottom-5 m-auto w-full flex justify-center">
+	<div
+		class="absolute left-0 bottom-5 m-auto w-full flex justify-center items-center text-gray-900"
+	>
 		<a
 			href=`https://wa.me/${phone.replace(/\D/g, "")}`
 			target="_blank"
@@ -53,7 +51,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 			title="Send me an email"
 			class="p-1"
 		>
-			<Email class="size-3 sm:size-4" />
+			<Email class="size-4 sm:size-4" />
 		</a>
 		{
 			profiles &&
@@ -88,43 +86,62 @@ const ICONS_PROFILES: IconsProfilesType = {
 
 		view-timeline-name: --subjectReveal;
 		animation-timeline: --subjectReveal;
-
-		animation-name: appear;
-		animation-fill-mode: both;
-		animation-duration: 1ms;
-
-		-webkit-animation-name: appear;
-		-webkit-animation-fill-mode: both;
-		-webkit-animation-duration: 1ms;
-
-		-moz-animation-name: appear;
-		-moz-animation-fill-mode: both;
-		-moz-animation-duration: 1ms;
-
-		-ms-animation-name: appear;
-		-ms-animation-fill-mode: both;
-		-ms-animation-duration: 1ms;
-
-		-o-animation-name: appear;
-		-o-animation-fill-mode: both;
-		-o-animation-duration: 1ms;
-
-		// view-timeline-name: --revealing;
-		// view-timeline-axis: block;
-		// animation: linear 0.3s appear;
-		// animation-timeline: --revealing;
-		// animation-range: entry 100% cover 10%;
 	}
 
-	@keyframes appear {
-		0% {
-			opacity: 0;
-			bottom: -200px;
-		}
+	.footer {
+		position: fixed;
+		z-index: 99999;
+		bottom: 0;
+		display: none;
+		width: 100%;
+		// background-color: rgba(0, 0, 0, 0.5);
+		font-size: 12px;
+		font-family: Arial, sans-serif;
+		font-weight: normal;
+		// color: #fff;
+		// text-align: center;
+		// cursor: pointer;
+	}
 
-		100% {
-			opacity: 1;
-			bottom: 0;
-		}
+	.show,
+	.footer:hover {
+		display: block;
 	}
 </style>
+
+<script>
+	window.addEventListener("scroll", function (event) {
+		function footer(this: any) {
+			var scroll = document.documentElement.scrollTop;
+			var footerNav = document.querySelector(".footer");
+			if (scroll > 50) {
+				if (footerNav) {
+					const footerNav = document.querySelector(
+						".footer"
+					) as HTMLElement;
+					footerNav.style.display = "block";
+					footerNav.classList.add("show");
+				}
+			} else {
+				if (footerNav) {
+					const footerNav = document.querySelector(
+						".footer"
+					) as HTMLElement;
+					footerNav.style.display = "none";
+					footerNav.classList.remove("show");
+				}
+			}
+
+			clearTimeout(this.scrollTimer);
+			this.scrollTimer = setTimeout(function () {
+				if (footerNav && !footerNav.matches(":hover")) {
+					const footerNav = document.querySelector(
+						".footer"
+					) as HTMLElement;
+					footerNav.style.display = "none";
+				}
+			}, 2000);
+		}
+		footer();
+	});
+</script>

@@ -3,7 +3,17 @@ export default {
 	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
 	darkMode: "class",
 	theme: {
-		extend: {},
+		extend: {
+			animation: {
+				"appear-bottom": "appear-bottom 1ms linear both",
+			},
+			keyframes: {
+				"appear-bottom": {
+					from: { opacity: 0, bottom: "-200px" },
+					to: { opacity: 1, bottom: 0 },
+				},
+			},
+		},
 	},
 	plugins: [],
 };

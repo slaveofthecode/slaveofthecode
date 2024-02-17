@@ -13,10 +13,13 @@ const ICONS_PROFILES: IconsProfilesType = {
 };
 ---
 
+<!-- 
+	sm:animate-[appearSM_0.001s_both]
+	animation-IOS 
+	animate-[appear_0.001s_both]
+-->
 <section
-	class="tools animate-[appear_0.001s_both] sm:animate-[appearSM_0.001s_both]
-	animation-IOS
-	fixed left-0 bottom-0 flex flex-col w-full h-fit mb-0 pb-8 pt-3 px-9"
+	class="tools fixed left-0 bottom-0 flex flex-col w-full h-fit mb-0 pb-8 pt-3 px-9"
 >
 	<div class="flex justify-between items-center 2xl:px-8">
 		<div class="flex flex-col items-start justify-start">
@@ -82,53 +85,38 @@ const ICONS_PROFILES: IconsProfilesType = {
 			rgba(255, 255, 255, 0.25),
 			rgba(255, 255, 255, 0.1)
 		);
+
 		view-timeline-name: --subjectReveal;
 		animation-timeline: --subjectReveal;
+
+		animation-name: appear;
+		animation-fill-mode: both;
+		animation-duration: 1ms;
+
+		-webkit-animation-name: appear;
+		-webkit-animation-fill-mode: both;
+		-webkit-animation-duration: 1ms;
+
+		-moz-animation-name: appear;
+		-moz-animation-fill-mode: both;
+		-moz-animation-duration: 1ms;
+
+		-ms-animation-name: appear;
+		-ms-animation-fill-mode: both;
+		-ms-animation-duration: 1ms;
+
+		-o-animation-name: appear;
+		-o-animation-fill-mode: both;
+		-o-animation-duration: 1ms;
+
+		// view-timeline-name: --revealing;
+		// view-timeline-axis: block;
+		// animation: linear 0.3s appear;
+		// animation-timeline: --revealing;
+		// animation-range: entry 100% cover 10%;
 	}
-
-	.animation-IOS {
-		-webkit-animation: appearIOS 0.001s both;
-	}
-	// .animation {
-	// 	view-timeline-name: --subjectReveal;
-	// 	animation-timeline: --subjectReveal;
-	// 	animation-name: appear;
-	// 	animation-fill-mode: both;
-	// 	animation-duration: 1ms;
-
-	// view-timeline-name: --revealing;
-	// view-timeline-axis: block;
-
-	// animation: linear 0.3s fadeIn;
-	// animation-timeline: --revealing;
-	// animation-range: entry 100% cover 10%;
-
-	// }
 
 	@keyframes appear {
-		0% {
-			opacity: 0;
-			bottom: -200px;
-		}
-
-		100% {
-			opacity: 1;
-			bottom: 4rem;
-		}
-	}
-	@-webkit-keyframes appearIOS {
-		0% {
-			opacity: 0;
-			bottom: -200px;
-		}
-
-		100% {
-			opacity: 1;
-			bottom: 0;
-		}
-	}
-
-	@keyframes appearSM {
 		0% {
 			opacity: 0;
 			bottom: -200px;

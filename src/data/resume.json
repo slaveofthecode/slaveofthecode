@@ -234,6 +234,16 @@
 			"keywords": ["Desarrollo Web", "Frontend", "Backend", "Fullstack"]
 		},
 		{
+			"name": "Astro",
+			"level": "Avanzado",
+			"keywords": [
+				"Desarrollo Web",
+				"Frontend",
+				"CSS Framework",
+				"Diseño Responsive"
+			]
+		},
+		{
 			"name": "Tailwind",
 			"level": "Avanzado",
 			"keywords": [
@@ -411,7 +421,6 @@
 			"summary": "Description…"
 		}
 	],
-
 	"languages": [
 		{
 			"language": "Spanish",

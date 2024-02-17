@@ -1,0 +1,120 @@
+---
+import Email from "@/icons/Email.astro";
+import Github from "@/icons/Github.astro";
+import LinkedIn from "@/icons/LinkedIn.astro";
+import WhatsApp from "@/icons/WhatsApp.astro";
+import type { IconsProfilesType } from "@/types";
+import { basics } from "@cv";
+
+const { name, photo, email, profiles, phone } = basics;
+const ICONS_PROFILES: IconsProfilesType = {
+	LinkedIn,
+	Github,
+};
+---
+
+<section
+	class="tools animation fixed left-0 bottom-0 flex flex-col w-full h-fit"
+>
+	<div class="flex justify-between items-center 2xl:px-8">
+		<div class="tools-title">
+			<h1>{name}</h1>
+			<small>Senior Software Developer</small>
+		</div>
+		<div class="tools-photo">
+			<div>
+				<div></div>
+				<img src={photo} class="size-12 sm:size-14" />
+				<figcaption
+					class="text-[9px] text-center text-gray-400 sm:text-sm"
+				>
+					+16 exp
+				</figcaption>
+			</div>
+		</div>
+	</div>
+	<div class="flex justify-center">
+		<a
+			href=`https://wa.me/${phone.replace(/\D/g, "")}`
+			target="_blank"
+			title="Send me a message on WhatsApp"
+			class="p-2"
+		>
+			<WhatsApp class="size-3 sm:size-4" />
+		</a>
+		<a
+			href=`mailto:${email}`
+			target="_blank"
+			title="Send me an email"
+			class="p-2"
+		>
+			<Email class="size-3 sm:size-4" />
+		</a>
+		{
+			profiles &&
+				profiles.map((profile) => {
+					const Icon = ICONS_PROFILES[profile.network];
+					return (
+						<a
+							href={profile.url}
+							target="_blank"
+							title={`Connect with me on ${profile.network}`}
+							class="p-2"
+						>
+							<Icon class="size-3  sm:size-4" />
+						</a>
+					);
+				})
+		}
+	</div>
+</section>
+
+<style lang="scss">
+	.tools {
+		padding: 12px 36px;
+		background: linear-gradient(
+			to top,
+			rgb(255, 255, 255),
+			rgba(255, 255, 255, 0.9),
+			rgba(255, 255, 255, 0.75),
+			rgba(255, 255, 255, 0.5),
+			rgba(255, 255, 255, 0.25),
+			rgba(255, 255, 255, 0.1)
+		);
+		margin-bottom: -8px;
+
+		&-title {
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			justify-content: start;
+			> h1 {
+				font-size: 0.75rem;
+				margin: 0;
+			}
+			> small {
+				color: gray;
+			}
+		}
+	}
+
+	.animation {
+		view-timeline-name: --subjectReveal;
+		animation-timeline: --subjectReveal;
+		animation-name: appear;
+		animation-fill-mode: both;
+		animation-duration: 1ms;
+	}
+
+	@keyframes appear {
+		0% {
+			opacity: 0;
+			bottom: -200px;
+		}
+
+		100% {
+			opacity: 1;
+			bottom: 0;
+		}
+	}
+</style>

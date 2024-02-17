@@ -1,5 +1,4 @@
 ---
-import InProgress from "@/components/InProgress.astro";
 import AboutMe from "@/components/sections/AboutMe.astro";
 import Certifications from "@/components/sections/Certifications.astro";
 import Educations from "@/components/sections/Educations.astro";
@@ -7,6 +6,7 @@ import Experience from "@/components/sections/Experience.astro";
 import Header from "@/components/sections/Header.astro";
 import Projects from "@/components/sections/Projects.astro";
 import Skills from "@/components/sections/Skills.astro";
+import Tools from "@/components/Tools.astro";
 import Layout from "@/layouts/Layout.astro";
 import { basics } from "@cv";
 
@@ -17,11 +17,10 @@ const { name } = basics;
 	<!-- Dark / White -->
 	<!-- <DarkWhite /> -->
 	<!-- -->
+	<!-- <InProgress /> -->
+	<!-- <div class="subject animation"></div> -->
 
 	<main>
-		<!-- <div class="w-full bg-gray-200 fixed top-2 left-0 text-center z-10">
-			<p><em>...coming soon you will see more changes</em></p>
-		</div> -->
 		<Header />
 		<AboutMe />
 		<Experience />
@@ -29,9 +28,8 @@ const { name } = basics;
 		<Skills />
 		<Projects />
 		<Certifications />
+		<Tools />
 	</main>
 
 	<!-- <KeyboardManager /> -->
-
-	<InProgress />
 </Layout>

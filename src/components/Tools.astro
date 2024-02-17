@@ -14,12 +14,12 @@ const ICONS_PROFILES: IconsProfilesType = {
 ---
 
 <section
-	class="tools animation fixed left-0 bottom-0 flex flex-col w-full h-fit"
+	class="tools animation fixed left-0 bottom-0 flex flex-col w-full h-fit mb-0 pb-8 pt-3 px-9"
 >
 	<div class="flex justify-between items-center 2xl:px-8">
-		<div class="tools-title">
-			<h1>{name}</h1>
-			<small>Senior Software Developer</small>
+		<div class="flex flex-col items-start justify-start">
+			<h1 class="m-0 text-xs">{name}</h1>
+			<small class="text-gray-400">Senior Software Developer</small>
 		</div>
 		<div class="tools-photo">
 			<div>
@@ -33,12 +33,12 @@ const ICONS_PROFILES: IconsProfilesType = {
 			</div>
 		</div>
 	</div>
-	<div class="flex justify-center">
+	<div class="absolute left-0 bottom-5 m-auto w-full flex justify-center">
 		<a
 			href=`https://wa.me/${phone.replace(/\D/g, "")}`
 			target="_blank"
 			title="Send me a message on WhatsApp"
-			class="p-2"
+			class="p-1"
 		>
 			<WhatsApp class="size-3 sm:size-4" />
 		</a>
@@ -46,7 +46,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 			href=`mailto:${email}`
 			target="_blank"
 			title="Send me an email"
-			class="p-2"
+			class="p-1"
 		>
 			<Email class="size-3 sm:size-4" />
 		</a>
@@ -59,7 +59,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 							href={profile.url}
 							target="_blank"
 							title={`Connect with me on ${profile.network}`}
-							class="p-2"
+							class="p-1"
 						>
 							<Icon class="size-3  sm:size-4" />
 						</a>
@@ -71,7 +71,6 @@ const ICONS_PROFILES: IconsProfilesType = {
 
 <style lang="scss">
 	.tools {
-		padding: 12px 36px;
 		background: linear-gradient(
 			to top,
 			rgb(255, 255, 255),
@@ -81,20 +80,20 @@ const ICONS_PROFILES: IconsProfilesType = {
 			rgba(255, 255, 255, 0.25),
 			rgba(255, 255, 255, 0.1)
 		);
-		margin-bottom: -8px;
+		// margin-bottom: -8px;
 
 		&-title {
-			display: flex;
-			flex-direction: column;
-			align-items: start;
-			justify-content: start;
-			> h1 {
-				font-size: 0.75rem;
-				margin: 0;
-			}
-			> small {
-				color: gray;
-			}
+			// display: flex;
+			// flex-direction: column;
+			// align-items: start;
+			// justify-content: start;
+			// > h1 {
+			// 	font-size: 0.75rem;
+			// 	margin: 0;
+			// }
+			// > small {
+			// 	color: gray;
+			// }
 		}
 	}
 

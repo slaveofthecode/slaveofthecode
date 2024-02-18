@@ -1,48 +1,29 @@
 <style lang="scss">
-	#btnToggleSkinMode {
-		background: 0;
-		border: 0;
-		cursor: pointer;
-		height: 25px;
-		width: 50px;
+	.toggle-switch {
 		position: relative;
-		border: 1px solid rgba(255, 255, 255, 0);
-		> span {
-			transition: 0.3s;
-			&:nth-child(1) {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 50px;
-				height: 25px;
-				border-radius: 20px;
-				background-color: #d6d7db;
-				box-shadow: inset 1px 1px 3px 0 rgb(0 0 0 / 40%);
-			}
-			&:nth-child(2) {
-				position: absolute;
-				top: 5px;
-				left: 5px;
-				width: 15px;
-				height: 15px;
-				background-color: #fff;
-				border-radius: 50%;
-				box-shadow: 1px 1px 2px 0 rgb(0 0 0 / 40%);
-			}
+		width: 41px;
+		height: 23px;
+		border-radius: 20px;
+		background-color: #d6d7db;
+		// box-shadow: inset 1px 1px 3px 0 rgb(0 0 0 / 40%);
+		transition: all 0.3s ease-in-out;
+		> .toogle-circle {
+			position: absolute;
+			top: 4px;
+			left: 5px;
+			width: 15px;
+			height: 15px;
+			background-color: #fff;
+			border-radius: 50%;
+			box-shadow: 1px 1px 2px 0 rgb(0 0 0 / 40%);
 		}
 	}
 
 	html[data-skin-mode="dark"] {
-		#btnToggleSkinMode {
-			> span {
-				&:nth-child(1) {
-					background-color: #ced4e2;
-					color: #141516;
-				}
-				&:nth-child(2) {
-					left: 25px;
-					background-color: #141516;
-				}
+		.toggle-switch {
+			> .toogle-circle {
+				left: 23px;
+				background-color: #141516;
 			}
 		}
 	}
@@ -52,13 +33,13 @@
 	}
 </style>
 
-<div class="bg-orange-300 w-full flex items-center justify-end absolute top-0">
-	<butt class="bg-cyan-200">
-		<button id="btnToggleSkinMode" onclick="handleClickToggleSkinMode()">
-			<span></span>
-			<span></span>
+<div class="flex justify-end absolute right-0 top-2">
+	<div>
+		<button class="toggle-switch" onclick="handleClickToggleSkinMode()">
+			<!-- <span></span> -->
+			<span class="toogle-circle"></span>
 		</button>
-	</butt>
+	</div>
 </div>
 
 <script is:inline>

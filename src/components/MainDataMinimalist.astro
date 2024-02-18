@@ -15,12 +15,13 @@ const ICONS_PROFILES: IconsProfilesType = {
 
 <section
 	class="tools footer animate-appear-bottom
-	fixed left-0 bottom-0 flex flex-col w-full h-fit mb-0 pb-8 pt-3 px-9"
+	fixed left-0 bottom-0 flex flex-col w-full h-fit mb-0 pb-8 pt-3 px-9
+	bg-gradient-to-t from-white to-transparent dark:from-gray-900 dark:to-transparent"
 >
 	<div class="flex justify-between items-center 2xl:px-8">
 		<div class="flex flex-col items-start justify-start">
 			<h1 class="m-0 text-xs tracking-widest">{name}</h1>
-			<small class="text-gray-900">Senior Software Developer</small>
+			<small class="opacity-50 text-xs">Senior Software Developer</small>
 		</div>
 		<div class="tools-photo">
 			<div>
@@ -35,7 +36,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 		</div>
 	</div>
 	<div
-		class="absolute left-0 bottom-5 m-auto w-full flex justify-center items-center text-gray-900"
+		class="absolute left-0 bottom-5 m-auto w-full flex justify-center items-center"
 	>
 		<a
 			href=`https://wa.me/${phone.replace(/\D/g, "")}`
@@ -74,16 +75,6 @@ const ICONS_PROFILES: IconsProfilesType = {
 
 <style lang="scss">
 	.tools {
-		background: linear-gradient(
-			to top,
-			rgb(255, 255, 255),
-			rgba(255, 255, 255, 0.9),
-			rgba(255, 255, 255, 0.75),
-			rgba(255, 255, 255, 0.5),
-			rgba(255, 255, 255, 0.25),
-			rgba(255, 255, 255, 0.1)
-		);
-
 		view-timeline-name: --subjectReveal;
 		animation-timeline: --subjectReveal;
 	}
@@ -94,17 +85,12 @@ const ICONS_PROFILES: IconsProfilesType = {
 		bottom: 0;
 		display: none;
 		width: 100%;
-		// background-color: rgba(0, 0, 0, 0.5);
 		font-size: 12px;
 		font-family: Arial, sans-serif;
 		font-weight: normal;
-		// color: #fff;
-		// text-align: center;
-		// cursor: pointer;
 	}
 
-	.show,
-	.footer:hover {
+	.show {
 		display: block;
 	}
 </style>
@@ -113,34 +99,28 @@ const ICONS_PROFILES: IconsProfilesType = {
 	window.addEventListener("scroll", function (event) {
 		function footer(this: any) {
 			var scroll = document.documentElement.scrollTop;
-			var footerNav = document.querySelector(".footer");
+			var footerNav = document.querySelector(".footer") as HTMLElement;
 			if (scroll > 50) {
 				if (footerNav) {
-					const footerNav = document.querySelector(
-						".footer"
-					) as HTMLElement;
 					footerNav.style.display = "block";
 					footerNav.classList.add("show");
 				}
 			} else {
 				if (footerNav) {
-					const footerNav = document.querySelector(
-						".footer"
-					) as HTMLElement;
 					footerNav.style.display = "none";
 					footerNav.classList.remove("show");
 				}
 			}
 
-			clearTimeout(this.scrollTimer);
-			this.scrollTimer = setTimeout(function () {
-				if (footerNav && !footerNav.matches(":hover")) {
-					const footerNav = document.querySelector(
-						".footer"
-					) as HTMLElement;
-					footerNav.style.display = "none";
-				}
-			}, 2000);
+			// clearTimeout(this.scrollTimer);
+			// this.scrollTimer = setTimeout(function () {
+			// 	if (footerNav && !footerNav.matches(":hover")) {
+			// 		const footerNav = document.querySelector(
+			// 			".footer"
+			// 		) as HTMLElement;
+			// 		footerNav.style.display = "none";
+			// 	}
+			// }, 2000);
 		}
 		footer();
 	});

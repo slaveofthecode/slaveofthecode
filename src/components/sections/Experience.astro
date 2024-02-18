@@ -30,10 +30,12 @@ const { experience } = getJsonCV();
 							{company}
 						</h2>
 						<h3 class="opacity-70">{rol}</h3>
-						<p class="p-2 my-2 bg-gray-100/50">{summary}</p>
+						<p class="p-2 my-2 bg-gray-100/50 dark:bg-slate-800 ">
+							{summary}
+						</p>
 						<div class="flex gap-1 justify-start items-center flex-wrap">
 							{stack.map((stackTech) => (
-								<div class="text-[10px] font-bold bg-slate-200 py-1 px-2">
+								<div class="text-[10px] font-bold py-1 px-2 dark:text-white/50">
 									{stackTech}
 								</div>
 							))}

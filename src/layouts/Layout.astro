@@ -29,65 +29,6 @@ const { photo } = basics;
 		<slot />
 	</body>
 </html>
-<style is:global lang="scss">
-	@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
-	@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Rubik+Mono+One&display=swap");
-
-	::root {
-		--font-default: "Zen Kaku Gothic New";
-	}
-
-	*,
-	*::before,
-	*::after {
-		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
-		// @apply transition-colors duration-200;
-	}
-
-	html {
-		font-size: 16px;
-	}
-
-	body {
-		font-family: var(--font-default);
-		margin: 0 auto;
-
-		> main {
-			> section {
-				margin-bottom: 4rem;
-			}
-		}
-	}
-
-	h1 {
-		font-family: "Rubik Mono One", monospace;
-		font-weight: 400;
-		font-style: normal;
-		margin-bottom: 0.5rem;
-		opacity: 0.75;
-	}
-
-	p {
-		font-family: "Cutive Mono", monospace;
-		font-weight: 400;
-		font-style: normal;
-		opacity: 0.65;
-	}
-
-	a {
-		color: inherit;
-		text-decoration: none;
-		opacity: 0.5;
-		transition: all 0.2s ease-in-out;
-		&:hover {
-			opacity: 1;
-		}
-	}
-
-	img {
-		filter: grayscale(1);
-		object-fit: cover;
-	}
+<style is:global>
+	@import "../styles/reset.css";
 </style>

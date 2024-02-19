@@ -21,12 +21,10 @@ html {
 body {
 	font-family: var(--font-default);
 	margin: 0 auto;
+}
 
-	> main {
-		> section {
-			margin-bottom: 4rem;
-		}
-	}
+body > main > section {
+	margin-bottom: 4rem;
 }
 
 h1 {
@@ -49,9 +47,9 @@ a {
 	text-decoration: none;
 	opacity: 0.5;
 	transition: all 0.2s ease-in-out;
-	&:hover {
-		opacity: 1;
-	}
+}
+a:hover {
+	opacity: 1;
 }
 
 img {

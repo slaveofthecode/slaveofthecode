@@ -1,10 +1,16 @@
 ---
 import { getJsonCV } from "@/utils";
+import { ui } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
 
 const { basics } = getJsonCV();
+
+const { lang } = Astro.params;
+
+const t = useTranslations(lang as keyof typeof ui);
 ---
 
 <section>
-	<h1>About me</h1>
+	<h1>{t("section.aboutMe")}</h1>
 	<p>{basics.summary}</p>
 </section>

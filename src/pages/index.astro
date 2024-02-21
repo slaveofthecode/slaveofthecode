@@ -1,6 +1,7 @@
 ---
 import DarkWhite from "@/components/DarkWhite.astro";
 import MainDataMinimalist from "@/components/MainDataMinimalist.astro";
+import MultilanguageSelect from "@/components/MultilanguageSelect.astro";
 import AboutMe from "@/components/sections/AboutMe.astro";
 import Certifications from "@/components/sections/Certifications.astro";
 import Educations from "@/components/sections/Educations.astro";
@@ -8,10 +9,20 @@ import Experience from "@/components/sections/Experience.astro";
 import Header from "@/components/sections/Header.astro";
 import Projects from "@/components/sections/Projects.astro";
 import Skills from "@/components/sections/Skills.astro";
+import { basics } from "@/data/resume.json";
+import { LANGUAGES } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
-import { basics } from "@cv";
 
 const { name } = basics;
+
+export async function getStaticPaths() {
+	return LANGUAGES.map((lang) => ({
+		params: {
+			lang: lang.lang,
+		},
+	}));
+}
+const { lang } = Astro.params;
 ---
 
 <Layout title=`RESUME: ${name}`>
@@ -23,6 +34,7 @@ const { name } = basics;
 		>dark / light</button
 	> -->
 
+	<MultilanguageSelect />
 	<DarkWhite />
 	<main>
 		<Header />

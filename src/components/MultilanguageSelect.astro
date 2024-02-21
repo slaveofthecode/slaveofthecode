@@ -1,0 +1,36 @@
+---
+import { LANGUAGES, getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+---
+
+<div
+	class="flex justify-end absolute right-0 top-[75px] w-fit flex-col sm:flex-row sm:left-0 sm:top-6"
+>
+	{
+		LANGUAGES.map(({ lang: l, label }) => (
+			<button
+				onclick={`handleClick(event, '${translatePath("/", l)}')`}
+				class={`opacity-50 text-xs sm:pe-2 px-0 ${l === lang ? "selected" : ""} `}
+			>
+				{label}
+			</button>
+		))
+	}
+</div>
+
+<style>
+	.selected {
+		opacity: 1;
+	}
+</style>
+
+<script is:inline>
+	function handleClick(event, url) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		window.location = url;
+	}
+</script>

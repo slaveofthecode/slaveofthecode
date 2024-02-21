@@ -1,7 +1,6 @@
 export const LANGUAGES = [
 	{ lang: "en", label: "EN" },
 	{ lang: "sp", label: "SP" },
-	{ lang: "de", label: "DE" },
 ];
 
 export const DEFAULT_LANG = "en";

@@ -1,63 +1,72 @@
 ---
 import Github from "@/icons/Github.astro";
 import type { IconsProfilesType } from "@/types";
-import { getJsonCV } from "@/utils";
+import { ui } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
 
-const { projects } = getJsonCV();
 const ICONS_PROFILES: IconsProfilesType = {
 	Github,
 };
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof ui);
+
+const { projects } = t("resume") as any;
 ---
 
 <section>
 	<div class="flex">
-		<h1>Projects</h1>
+		<h1>{t("section.projects")}</h1>
 		<small class="ms-4 text-[10px] pt-1 h-fit w-fit">
-			<em class="px-1">...only the most important</em>
+			<em class="px-1">{t("section.projects.onlyMostImportant")}</em>
 		</small>
 	</div>
 	<div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
 		{
-			projects.map(({ name, description, url, highlights }, index) => (
-				<div class="rounded-lg flex flex-col overflow-hidden border border-solid border-gray-100/50 p-3">
-					<div class="flex flex-col space-y-1.5">
-						<div class="space-y-1">
-							<h3 class="font-semibold tracking-tight text-base opacity-55">
-								{name}
-							</h3>
-							<div class="w-fit h-fit">
-								{Object.keys(url).map((key) => {
-									const Icon = ICONS_PROFILES[key];
-									return (
-										<a
-											href={url[key as keyof typeof url]}
-											target="_blank"
-											rel="noopener noreferrer"
-											class="text-sm text-primary-foreground"
-										>
-											<Icon class="size-4" />
-										</a>
-									);
-								})}
+			projects.map(
+				({ name, description, url, highlights }: any, index: any) => (
+					<div class="rounded-lg flex flex-col overflow-hidden border border-solid border-gray-100/50 p-3">
+						<div class="flex flex-col space-y-1.5">
+							<div class="space-y-1">
+								<h3 class="font-semibold tracking-tight text-base opacity-55">
+									{name}
+								</h3>
+								<div class="w-fit h-fit">
+									{Object.keys(url).map((key) => {
+										const Icon = ICONS_PROFILES[key];
+										return (
+											<a
+												href={
+													url[key as keyof typeof url]
+												}
+												target="_blank"
+												rel="noopener noreferrer"
+												class="text-sm text-primary-foreground"
+											>
+												<Icon class="size-4" />
+											</a>
+										);
+									})}
+								</div>
+								<p class="text-sm min-h-10">{description}</p>
 							</div>
-							<p class="text-sm min-h-10">{description}</p>
 						</div>
-					</div>
-					<div class="text-pretty font-mono text-sm text-muted-foreground mt-auto flex">
-						<div class="mt-2 flex flex-wrap gap-1">
-							{highlights.map((item) => (
-								<small
-									class="bg-black/10 px-2 py-0 flex items-center justify-center tracking-wider
+						<div class="text-pretty font-mono text-sm text-muted-foreground mt-auto flex">
+							<div class="mt-2 flex flex-wrap gap-1">
+								{highlights.map((item: any) => (
+									<small
+										class="bg-black/10 px-2 py-0 flex items-center justify-center tracking-wider
                                 rounded-md border font-normal text-nowrap border-transparent bg-secondary text-secondary-foreground text-[8px]
                                 "
-								>
-									{item}
-								</small>
-							))}
+									>
+										{item}
+									</small>
+								))}
+							</div>
 						</div>
 					</div>
-				</div>
-			))
+				)
+			)
 		}
 	</div>
 </section>

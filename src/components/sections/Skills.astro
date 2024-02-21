@@ -1,14 +1,18 @@
 ---
-import { getJsonCV } from "@/utils";
+import { ui } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
 
-const { skills } = getJsonCV();
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof ui);
+
+const { skills } = t("resume") as any;
 ---
 
 <section>
-	<h1>Skills</h1>
+	<h1>{t("section.skills")}</h1>
 	<div class="flex gap-1 flex-wrap">
 		{
-			skills.map(({ name }, index) => (
+			skills.map(({ name }: any, index: any) => (
 				<span class="bg-black/75 text-white font-bold py-1 px-2 w-fit rounded text-sm">
 					{name}
 				</span>

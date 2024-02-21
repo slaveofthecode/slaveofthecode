@@ -1,13 +1,17 @@
 ---
-import { getJsonCV } from "@/utils";
+import { ui } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
 
-const { certificates } = getJsonCV();
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof ui);
+
+const { certificates } = t("resume") as any;
 ---
 
 <section>
-	<h1>Certifications</h1>
+	<h1>{t("section.certifications")}</h1>
 	{
-		certificates.map(({ issuedBy, name, date, url }) => (
+		certificates.map(({ issuedBy, name, date, url }: any) => (
 			<div class="flex flex-col border-b border-gray-100 pb-4">
 				<div class="flex gap-2 flex-col sm:flex-row">
 					<p>

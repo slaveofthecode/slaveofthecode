@@ -4,7 +4,13 @@ import Github from "@/icons/Github.astro";
 import LinkedIn from "@/icons/LinkedIn.astro";
 import WhatsApp from "@/icons/WhatsApp.astro";
 import type { IconsProfilesType } from "@/types";
-import { basics } from "@cv";
+import { ui } from "../i18n/ui";
+import { useTranslations } from "../i18n/utils";
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof ui);
+
+const { basics } = t("resume") as any;
 
 const { name, photo, email, profiles, phone } = basics;
 const ICONS_PROFILES: IconsProfilesType = {
@@ -56,7 +62,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 		</a>
 		{
 			profiles &&
-				profiles.map((profile) => {
+				profiles.map((profile: any) => {
 					const Icon = ICONS_PROFILES[profile.network];
 					return (
 						<a

@@ -1,13 +1,11 @@
 ---
-import { getJsonCV } from "@/utils";
 import { ui } from "../../i18n/ui";
 import { useTranslations } from "../../i18n/utils";
 
-const { basics } = getJsonCV();
-
 const { lang } = Astro.params;
-
 const t = useTranslations(lang as keyof typeof ui);
+
+const { basics } = t("resume") as any;
 ---
 
 <section>

@@ -5,9 +5,14 @@ import LinkedIn from "@/icons/LinkedIn.astro";
 import MapPin from "@/icons/MapPin.astro";
 import WhatsApp from "@/icons/WhatsApp.astro";
 import type { IconsProfilesType } from "@/types";
-import { getJsonCV } from "@/utils";
+import { ui } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
 
-const { basics } = getJsonCV();
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof ui);
+
+const { basics } = t("resume") as any;
+
 const { name, label, photo, email, phone, location, profiles } = basics;
 const ICONS_PROFILES: IconsProfilesType = {
 	LinkedIn,
@@ -44,7 +49,7 @@ const ICONS_PROFILES: IconsProfilesType = {
 			</a>
 			{
 				profiles &&
-					profiles.map((profile) => {
+					profiles.map((profile: any) => {
 						const Icon = ICONS_PROFILES[profile.network];
 						return (
 							<a

@@ -1,21 +1,25 @@
 ---
-import { getJsonCV } from "@/utils";
+import { ui } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
 
-const { experience } = getJsonCV();
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof ui);
+
+const { experience } = t("resume") as any;
 ---
 
 <section>
 	<div class="flex">
-		<h1>Experience</h1>
+		<h1>{t("section.experience")}</h1>
 		<small class="ms-4 text-[10px] pt-1 h-fit w-fit">
 			<strong>(</strong>
-			<em class="px-1">just last five jobs</em>
+			<em class="px-1">{t("section.experience.justLastFiveJobs")}</em>
 			<strong>)</strong>
 		</small>
 	</div>
 	{
 		experience.map(
-			({ rol, company, mode, summary, date, stack }, index) => {
+			({ rol, company, mode, summary, date, stack }: any, index: any) => {
 				return (
 					<div class="flex flex-col mb-8 border-b border-gray-100 pb-3">
 						<div class="flex justify-between">
@@ -34,7 +38,7 @@ const { experience } = getJsonCV();
 							{summary}
 						</p>
 						<div class="flex gap-1 justify-start items-center flex-wrap">
-							{stack.map((stackTech) => (
+							{stack.map((stackTech: string) => (
 								<div class="text-[10px] font-bold py-1 px-2 dark:text-white/50">
 									{stackTech}
 								</div>

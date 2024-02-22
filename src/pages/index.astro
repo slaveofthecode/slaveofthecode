@@ -1,22 +1,20 @@
 ---
-// import { basics } from "@/data/resume.json";
-// import { LANGUAGES } from "@/i18n/utils";
+import MainDataMinimalist from "@/components/MainDataMinimalist.astro";
+import Certifications from "@/components/sections/Certifications.astro";
+import Educations from "@/components/sections/Educations.astro";
+import Experience from "@/components/sections/Experience.astro";
+import Projects from "@/components/sections/Projects.astro";
+import Skills from "@/components/sections/Skills.astro";
+import DarkWhite from "../components/DarkWhite.astro";
+import AboutMe from "../components/sections/AboutMe.astro";
+import Header from "../components/sections/Header.astro";
+import { basics } from "../data/resume.json";
+import Layout from "../layouts/Layout.astro";
 
-// const { name } = basics;
-
-// export async function getStaticPaths() {
-// 	return LANGUAGES.map((lang) => ({
-// 		params: {
-// 			lang: lang.lang,
-// 		},
-// 	}));
-// }
-const { lang } = Astro.params;
+const { name } = basics;
 ---
 
-<!--
 <Layout title=`RESUME: ${name}`>
-	<MultilanguageSelect />
 	<DarkWhite />
 	<main>
 		<Header />
@@ -28,5 +26,4 @@ const { lang } = Astro.params;
 		<Certifications />
 	</main>
 	<MainDataMinimalist />
-</Layout> -->
-<meta http-equiv="refresh" content={`0; url=${lang}`} />
+</Layout>

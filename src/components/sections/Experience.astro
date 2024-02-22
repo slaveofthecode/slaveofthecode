@@ -1,19 +1,15 @@
 ---
-import { ui } from "../../i18n/ui";
-import { useTranslations } from "../../i18n/utils";
+import { getJsonCV } from "@/utils";
 
-const { lang } = Astro.params;
-const t = useTranslations(lang as keyof typeof ui);
-
-const { experience } = t("resume") as any;
+const { experience } = getJsonCV();
 ---
 
 <section>
 	<div class="flex">
-		<h1>{t("section.experience")}</h1>
+		<h1>Experience</h1>
 		<small class="ms-4 text-[10px] pt-1 h-fit w-fit">
 			<strong>(</strong>
-			<em class="px-1">{t("section.experience.justLastFiveJobs")}</em>
+			<em class="px-1">just last five jobs</em>
 			<strong>)</strong>
 		</small>
 	</div>

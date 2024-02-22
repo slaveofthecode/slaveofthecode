@@ -1,24 +1,20 @@
 ---
 import Github from "@/icons/Github.astro";
 import type { IconsProfilesType } from "@/types";
-import { ui } from "../../i18n/ui";
-import { useTranslations } from "../../i18n/utils";
+import { getJsonCV } from "@/utils";
+
+const { projects } = getJsonCV();
 
 const ICONS_PROFILES: IconsProfilesType = {
 	Github,
 };
-
-const { lang } = Astro.params;
-const t = useTranslations(lang as keyof typeof ui);
-
-const { projects } = t("resume") as any;
 ---
 
 <section>
 	<div class="flex">
-		<h1>{t("section.projects")}</h1>
+		<h1>Projects</h1>
 		<small class="ms-4 text-[10px] pt-1 h-fit w-fit">
-			<em class="px-1">{t("section.projects.onlyMostImportant")}</em>
+			<em class="px-1">...only the most important</em>
 		</small>
 	</div>
 	<div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">

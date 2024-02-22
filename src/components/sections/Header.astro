@@ -5,13 +5,9 @@ import LinkedIn from "@/icons/LinkedIn.astro";
 import MapPin from "@/icons/MapPin.astro";
 import WhatsApp from "@/icons/WhatsApp.astro";
 import type { IconsProfilesType } from "@/types";
-import { ui } from "../../i18n/ui";
-import { useTranslations } from "../../i18n/utils";
+import { getJsonCV } from "@/utils";
 
-const { lang } = Astro.params;
-const t = useTranslations(lang as keyof typeof ui);
-
-const { basics } = t("resume") as any;
+const { basics } = getJsonCV();
 
 const { name, label, photo, email, phone, location, profiles } = basics;
 const ICONS_PROFILES: IconsProfilesType = {

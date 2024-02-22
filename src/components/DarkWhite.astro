@@ -1,3 +1,11 @@
+<div class="flex justify-end absolute right-0 top-6">
+	<div>
+		<button class="toggle-switch" onclick="handleClickToggleSkinMode()">
+			<span class="toogle-circle"></span>
+		</button>
+	</div>
+</div>
+
 <style lang="scss">
 	.toggle-switch {
 		position: relative;
@@ -33,14 +41,6 @@
 		color: #141516;
 	}
 </style>
-
-<div class="flex justify-end absolute right-0 top-6">
-	<div>
-		<button class="toggle-switch" onclick="handleClickToggleSkinMode()">
-			<span class="toogle-circle"></span>
-		</button>
-	</div>
-</div>
 
 <script is:inline>
 	window.onload = function () {

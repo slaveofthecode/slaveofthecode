@@ -383,6 +383,15 @@
 			"isActive": true,
 			"description": "This is a list of different solutions to challenges from adventjs.dev web.",
 			"highlights": ["JavsScript", "TypeScript"]
+		},
+		{
+			"name": "breakout-game",
+			"url": {
+				"Github": "https://github.com/slaveofthecode/breakout-game",
+				"Demo": "https://my-breakout-game.vercel.app/"
+			},
+			"description": "A replicate and custom version of the classic game Breakout.",
+			"highlights": ["JavsScript", "CSS", "HTML"]
 		}
 	],
 	"certificates": [

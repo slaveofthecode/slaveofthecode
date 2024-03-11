@@ -2,6 +2,7 @@
 import { basics } from "@cv/resume.json";
 import "@fontsource/covered-by-your-grace";
 import "@fontsource/zen-kaku-gothic-new";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 interface Props {
 	title: string;
@@ -27,6 +28,7 @@ const { photo } = basics;
 		relative dark:bg-black/85 dark:text-gray-100"
 	>
 		<slot />
+		<SpeedInsights />
 	</body>
 </html>
 <style is:global>

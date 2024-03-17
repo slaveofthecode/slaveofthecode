@@ -13,10 +13,10 @@ Some of my last... updates code.
   I'd like to show you my solutions to these challenges.
 
 - [styles](https://github.com/slaveofthecode/styles)
-  In this awesome repository, you will see, experiment, and test all existing code related to several examples in CSS (just CSS pure)
+  This is a collection of styles that I have created over the years. I have decided to put them all in one place so that I can easily access them and share them with others. I hope you find them useful.
 
 - [challenges](https://github.com/slaveofthecode/challenges)
-  Here, you can see the different challenges of several companies (obviously their names were hidden) that I have gotten. 
+  This repository contains some challenges that I have developed from different offers of work.
 
 
 <!--

@@ -2,17 +2,14 @@
 	"basics": {
 		"name": "Gustavo Lopez",
 		"title": "Senior Software Developer",
-		"label": "Senior Software Developer with +16 years of experience, focused on building products with extra attention to detail",
+		"label": "Senior Software Developer with over 15 years of experience, focused on creating solutions software in several technologies.",
 		"photo": "https://media.licdn.com/dms/image/D4D03AQFtKCYBTDGZMQ/profile-displayphoto-shrink_800_800/0/1700748305087?e=1713398400&v=beta&t=8qnNOA88eCMcixZuKo_aznKpQh39uK5hP4zpmbNcr_w",
 		"email": "gml.gustavoml@gmail.com",
 		"phone": "+5493515091235",
 		"url": "https://slaveofthecode.vercel.app/",
-		"summary": "I am a web developer with a passion for creating beautiful and functional websites. I have a strong background in web development and design, and I am always looking for new ways to improve my skills. I am a quick learner and a hard worker, and I am always looking for new challenges to take on.",
+		"summary": "I've been working in IT for over fifteen years, specializing in building and maintaining software systems. My expertise includes coding (firstly as a full-stack, nowadays as a front-end), problem-solving, mentoring colleagues, and unit tests, among others. I'm passionate about using the latest technology to solve real-world problems and make people's lives easier. I consider myself an organized and neat person.",
 		"location": {
-			"address": "",
-			"postalCode": "",
 			"city": "Córdoba",
-			"countryCode": "",
 			"country": "Argentina",
 			"googleMaps": "https://maps.app.goo.gl/KFEHPvrF6D5m2iuGA"
 		},
@@ -31,7 +28,7 @@
 	},
 	"experience": [
 		{
-			"rol": "Senior Frontend Developer",
+			"rol": "Senior React Developer",
 			"company": "ITLG",
 			"mode": {
 				"time": "Full-Time",
@@ -39,9 +36,9 @@
 			},
 			"date": {
 				"start": "January, 2023",
-				"end": "December, 2023"
+				"end": "November, 2023"
 			},
-			"summary": "Migration from the product of the client (entity bank) to React technology, using Micro Front End.",
+			"summary": "Migration from a big system (bank entity) to React, implementing the micro front-end architecture.",
 			"stack": [
 				"JavaScript",
 				"TypeScript",
@@ -53,10 +50,10 @@
 				"Notion",
 				"GitLab"
 			],
-			"url": "https://www.adevinta.com/"
+			"url": null
 		},
 		{
-			"rol": "Senior Frontend Developer",
+			"rol": "Senior React Developer",
 			"company": "Kalto",
 			"mode": {
 				"time": "Full-Time",
@@ -66,7 +63,7 @@
 				"start": "November, 2021",
 				"end": "November, 2022"
 			},
-			"summary": "We created a product, related to BtoB (Business to Business) for the Mexico market.",
+			"summary": "Company start-up to a product BtoB (business to business) to Mexico’s market, where you can make payments through several methods, and manage the finances of your company.",
 			"stack": [
 				"JavaScript",
 				"TypeScript",
@@ -91,8 +88,8 @@
 				"start": "August, 2021",
 				"end": "October, 2021"
 			},
-			"summary": "Creation of mobile app related to payments and transactions between people.",
-			"stack": ["React Native", "Figma", "JavaScript"],
+			"summary": "App mobile related to fintech between users. With several features such as payments, transferences, make purchases, and more.",
+			"stack": ["React Native", "Figma", "JavaScript", "Expo", "HTML"],
 			"url": null
 		},
 		{
@@ -106,13 +103,14 @@
 				"start": "February, 2021",
 				"end": "July, 2021"
 			},
-			"summary": "We built a web page (we added new features) related to a product medicinal from Germany. This web page wasn't an e-commerce, maybe it was related to a promotion.",
+			"summary": "New features and improvements on the promotional website regarding the product medicinal. Following a guide from Figma pixel to pixel.",
 			"stack": [
-				"ReactJs",
+				"React",
 				"HTML/CSS",
 				"JavaScript",
 				"Bootstrap",
 				"Git",
+				"Figma",
 				"Adobe Illustrator"
 			],
 			"url": null
@@ -128,7 +126,7 @@
 				"start": "October, 2019",
 				"end": "January, 2021"
 			},
-			"summary": "Participation in the product of the company, related to management security process for big clients.",
+			"summary": "Huge products of the company, related to management security, such as logs, tracking of users, databases, among others.",
 			"stack": [
 				"AngularJs",
 				"Angular 8",
@@ -143,6 +141,30 @@
 				"Sass"
 			],
 			"url": null
+		},
+		{
+			"rol": "Fullstack Developer",
+			"company": "DXC (ex HP)",
+			"mode": {
+				"time": "Full-Time",
+				"type": "Hybrid"
+			},
+			"date": {
+				"start": "September, 2018",
+				"end": "September, 2019"
+			},
+			"summary": "Improvements and new features on a big product related to multinational music, in their website who manage different artists, albums, tracks, etc.",
+			"stack": [
+				".Net",
+				"C#",
+				"HTML/CSS",
+				"MVC",
+				"Javascript",
+				"jQuery",
+				"Bootstrap",
+				"Jira"
+			],
+			"url": null
 		}
 	],
 	"education": [
@@ -150,178 +172,47 @@
 			"institution": {
 				"abbreviation": "I.S.S.D.",
 				"name": "Instituto Superior Santo Domingo",
-				"url": "https://www.uoc.edu/portal/es/index.html"
+				"url": "https://www.issd.edu.ar/"
 			},
 			"area": "System Analyst",
 			"studyType": "Asociate Degree",
 			"date": {
 				"start": "2001",
 				"end": "2006"
-			},
-			"score": "4.0",
-			"courses": ["DB1101 - Basic SQL"]
+			}
 		}
 	],
 	"skills": [
-		{
-			"name": "HTML",
-			"level": "Master",
-			"keywords": ["Desarrollo Web", "Frontend"]
-		},
-		{
-			"name": "CSS",
-			"level": "Master",
-			"keywords": ["Desarrollo Web", "Frontend", "Diseño Responsive"]
-		},
-		{
-			"name": "JavaScript",
-			"level": "Master",
-			"keywords": ["Desarrollo Web", "Frontend", "Backend", "Fullstack"]
-		},
-
-		{
-			"name": "Git",
-			"level": "Avanzado",
-			"keywords": [
-				"Control de Versiones",
-				"Colaboración",
-				"Código Fuente"
-			]
-		},
-		{
-			"name": "GitHub",
-			"level": "Avanzado",
-			"keywords": [
-				"Control de Versiones",
-				"Colaboración",
-				"Código Fuente",
-				"Git"
-			]
-		},
-		{
-			"name": "ElectronJs",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"React Framework",
-				"SSR",
-				"Static Generation"
-			]
-		},
-		{
-			"name": "React",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"JavaScript Library",
-				"UI"
-			]
-		},
-		{
-			"name": "Node",
-			"level": "Avanzado",
-			"keywords": ["Desarrollo Web", "Backend", "JavaScript", "Servidor"]
-		},
-		{
-			"name": "Express",
-			"level": "Avanzado",
-			"keywords": ["Desarrollo Web", "Backend", "JavaScript", "Servidor"]
-		},
-		{
-			"name": "jQuery",
-			"level": "Master",
-			"keywords": ["Desarrollo Web", "Frontend", "Backend", "Fullstack"]
-		},
-		{
-			"name": "Astro",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"CSS Framework",
-				"Diseño Responsive"
-			]
-		},
-		{
-			"name": "Tailwind",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"CSS Framework",
-				"Diseño Responsive"
-			]
-		},
-		{
-			"name": "TypeScript",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"Backend",
-				"JavaScript Superset"
-			]
-		},
-		{
-			"name": "Team Foundation Server",
-			"level": "Avanzado",
-			"keywords": [
-				"Control de Versiones",
-				"Colaboración",
-				"Código Fuente"
-			]
-		},
-		{
-			"name": "SQL Server",
-			"level": "Avanzado",
-			"keywords": [
-				"Bases de Datos",
-				"SQL",
-				"Almacenamiento de Datos",
-				"Backend"
-			]
-		},
-		{
-			"name": "SVN (Subversion)",
-			"level": "Avanzado",
-			"keywords": [
-				"Control de Versiones",
-				"Colaboración",
-				"Código Fuente"
-			]
-		},
-		{
-			"name": "Jest",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"JavaScript Library",
-				"UI"
-			]
-		},
-		{
-			"name": ".Net",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"JavaScript Library",
-				"UI"
-			]
-		},
-		{
-			"name": "C#",
-			"level": "Avanzado",
-			"keywords": [
-				"Desarrollo Web",
-				"Frontend",
-				"JavaScript Library",
-				"UI"
-			]
-		}
+		{ "name": "HTML" },
+		{ "name": "JavaScript" },
+		{ "name": "TypeScript" },
+		{ "name": "React" },
+		{ "name": "NodeJs" },
+		{ "name": "Express" },
+		{ "name": "GraphQL" },
+		{ "name": "Apollo" },
+		{ "name": "MongoDB" },
+		{ "name": "Mongoose" },
+		{ "name": "CSS" },
+		{ "name": "Tailwind" },
+		{ "name": "Sass" },
+		{ "name": "Bootstrap" },
+		{ "name": "Astro" },
+		{ "name": "ElectronJs" },
+		{ "name": "Figma" },
+		{ "name": "Git" },
+		{ "name": "Team Foundation Server" },
+		{ "name": "SVN (Subversion)" },
+		{ "name": "GitHub" },
+		{ "name": "jQuery" },
+		{ "name": "AngularJs" },
+		{ "name": "Angular 8" },
+		{ "name": "SQL Server" },
+		{ "name": "Jest" },
+		{ "name": "Jira" },
+		{ "name": ".Net" },
+		{ "name": "C#" },
+		{ "name": "MVC" }
 	],
 	"projects": [
 		{
@@ -346,28 +237,29 @@
 		{
 			"name": "styles",
 			"url": {
-				"Github": "https://github.com/slaveofthecode/styles"
+				"Github": "https://github.com/slaveofthecode/styles",
+				"Demo": "https://root-styles.vercel.app/"
 			},
-			"isActive": true,
-			"description": "This is a collection of styles that I have created over the years. I have decided to put them all in one place so that I can easily access them and share them with others.",
+			"description": "This is a collection of styles that I have created over the years. I have decided to put them all in one place so that I can easily access them and share them with others. I hope you find them useful.",
 			"highlights": [
-				"JavsScript",
-				"CSS",
-				"HTML",
 				"Node",
 				"Express",
+				"Javsscript",
+				"CSS",
+				"HTML",
 				"Pug"
 			]
 		},
 		{
 			"name": "challenges",
 			"url": {
-				"Github": "https://github.com/slaveofthecode/challenges"
+				"Github": "https://github.com/slaveofthecode/challenges",
+				"Demo": "https://root-challenges.vercel.app/"
 			},
-			"isActive": true,
-			"description": "Here, you can see different repositories with codes that were required or tasks from different companies, to apply their corresponding job offer.",
+			"description": "This repository contains some challenges that I have developed from different offers of work.",
 			"highlights": [
 				"JavsScript",
+				"Mustache",
 				"CSS",
 				"HTML",
 				"Node",

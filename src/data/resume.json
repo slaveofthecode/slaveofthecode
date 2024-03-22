@@ -284,6 +284,15 @@
 			},
 			"description": "A replicate and custom version of the classic game Breakout.",
 			"highlights": ["JavsScript", "CSS", "HTML"]
+		},
+		{
+			"name": "tictactoe-react-ts",
+			"url": {
+				"Github": "https://github.com/slaveofthecode/tictactoe-react-ts",
+				"Demo": "https://tictactoe-react-ts.vercel.app/"
+			},
+			"description": "Minimal classic game Tic-Tac-Toe.",
+			"highlights": ["React", "SCSS", "TypeScript", "Vite"]
 		}
 	],
 	"certificates": [

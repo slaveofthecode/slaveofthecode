@@ -1,357 +1,350 @@
 {
-	"basics": {
-		"name": "Gustavo Lopez",
-		"title": "Senior Software Developer",
-		"label": "Senior Software Developer with over 15 years of experience, focused on creating solutions software in several technologies.",
-		"photo": "https://media.licdn.com/dms/image/D4D03AQFtKCYBTDGZMQ/profile-displayphoto-shrink_800_800/0/1700748305087?e=1713398400&v=beta&t=8qnNOA88eCMcixZuKo_aznKpQh39uK5hP4zpmbNcr_w",
-		"email": "gml.gustavoml@gmail.com",
-		"phone": "+5493515091235",
-		"url": "https://slaveofthecode.vercel.app/",
-		"summary": "I've been working in IT for over fifteen years, specializing in building and maintaining software systems. My expertise includes coding (firstly as a full-stack, nowadays as a front-end), problem-solving, mentoring colleagues, and unit tests, among others. I'm passionate about using the latest technology to solve real-world problems and make people's lives easier. I consider myself an organized and neat person.",
-		"location": {
-			"city": "Córdoba",
-			"country": "Argentina",
-			"googleMaps": "https://maps.app.goo.gl/KFEHPvrF6D5m2iuGA"
-		},
-		"profiles": [
-			{
-				"network": "LinkedIn",
-				"username": "gustavoml",
-				"url": "https://www.linkedin.com/in/gustavolopezdev/"
-			},
-			{
-				"network": "Github",
-				"username": "slaveofthecode",
-				"url": "https://github.com/slaveofthecode"
-			}
-		]
-	},
-	"experience": [
-		{
-			"rol": "Senior React Developer",
-			"company": "ITLG",
-			"mode": {
-				"time": "Full-Time",
-				"type": "Hybrid"
-			},
-			"date": {
-				"start": "January, 2023",
-				"end": "November, 2023"
-			},
-			"summary": "Migration from a big system (bank entity) to React, implementing the micro front-end architecture.",
-			"stack": [
-				"JavaScript",
-				"TypeScript",
-				"React",
-				"Micro Front End",
-				"Bootstrap",
-				"HTML/CSS",
-				"Sass",
-				"Notion",
-				"GitLab"
-			],
-			"url": null
-		},
-		{
-			"rol": "Senior React Developer",
-			"company": "Kalto",
-			"mode": {
-				"time": "Full-Time",
-				"type": "Remote"
-			},
-			"date": {
-				"start": "November, 2021",
-				"end": "November, 2022"
-			},
-			"summary": "Company start-up to a product BtoB (business to business) to Mexico’s market, where you can make payments through several methods, and manage the finances of your company.",
-			"stack": [
-				"JavaScript",
-				"TypeScript",
-				"React",
-				"GraphQL",
-				"Bootstrap",
-				"HTML/CSS",
-				"Sass",
-				"Git",
-				"Github"
-			],
-			"url": null
-		},
-		{
-			"rol": "React Native Developer",
-			"company": "Ohana",
-			"mode": {
-				"time": "Full-Time",
-				"type": "Remote"
-			},
-			"date": {
-				"start": "August, 2021",
-				"end": "October, 2021"
-			},
-			"summary": "App mobile related to fintech between users. With several features such as payments, transferences, make purchases, and more.",
-			"stack": ["React Native", "Figma", "JavaScript", "Expo", "HTML"],
-			"url": null
-		},
-		{
-			"rol": "React Developer",
-			"company": "Cognizant Softvision",
-			"mode": {
-				"time": "Full-Time",
-				"type": "Remote"
-			},
-			"date": {
-				"start": "February, 2021",
-				"end": "July, 2021"
-			},
-			"summary": "New features and improvements on the promotional website regarding the product medicinal. Following a guide from Figma pixel to pixel.",
-			"stack": [
-				"React",
-				"HTML/CSS",
-				"JavaScript",
-				"Bootstrap",
-				"Git",
-				"Figma",
-				"Adobe Illustrator"
-			],
-			"url": null
-		},
-		{
-			"rol": "Frontend Developer",
-			"company": "McAfee",
-			"mode": {
-				"time": "Full-Time",
-				"type": "Hybrid"
-			},
-			"date": {
-				"start": "October, 2019",
-				"end": "January, 2021"
-			},
-			"summary": "Huge products of the company, related to management security, such as logs, tracking of users, databases, among others.",
-			"stack": [
-				"AngularJs",
-				"Angular 8",
-				"HTML/CSS",
-				"TypeScript",
-				"NodeJs",
-				"ElectronJs",
-				"Git",
-				"Jira",
-				"Jest",
-				"Jasmine",
-				"Sass"
-			],
-			"url": null
-		},
-		{
-			"rol": "Fullstack Developer",
-			"company": "DXC (ex HP)",
-			"mode": {
-				"time": "Full-Time",
-				"type": "Hybrid"
-			},
-			"date": {
-				"start": "September, 2018",
-				"end": "September, 2019"
-			},
-			"summary": "Improvements and new features on a big product related to multinational music, in their website who manage different artists, albums, tracks, etc.",
-			"stack": [
-				".Net",
-				"C#",
-				"HTML/CSS",
-				"MVC",
-				"Javascript",
-				"jQuery",
-				"Bootstrap",
-				"Jira"
-			],
-			"url": null
-		}
-	],
-	"education": [
-		{
-			"institution": {
-				"abbreviation": "I.S.S.D.",
-				"name": "Instituto Superior Santo Domingo",
-				"url": "https://www.issd.edu.ar/"
-			},
-			"area": "System Analyst",
-			"studyType": "Asociate Degree",
-			"date": {
-				"start": "2001",
-				"end": "2006"
-			}
-		}
-	],
-	"skills": [
-		{ "name": "HTML" },
-		{ "name": "JavaScript" },
-		{ "name": "TypeScript" },
-		{ "name": "React" },
-		{ "name": "NodeJs" },
-		{ "name": "Express" },
-		{ "name": "GraphQL" },
-		{ "name": "Apollo" },
-		{ "name": "MongoDB" },
-		{ "name": "Mongoose" },
-		{ "name": "CSS" },
-		{ "name": "Tailwind" },
-		{ "name": "Sass" },
-		{ "name": "Bootstrap" },
-		{ "name": "Astro" },
-		{ "name": "ElectronJs" },
-		{ "name": "Figma" },
-		{ "name": "Git" },
-		{ "name": "Team Foundation Server" },
-		{ "name": "SVN (Subversion)" },
-		{ "name": "GitHub" },
-		{ "name": "jQuery" },
-		{ "name": "AngularJs" },
-		{ "name": "Angular 8" },
-		{ "name": "SQL Server" },
-		{ "name": "Jest" },
-		{ "name": "Jira" },
-		{ "name": ".Net" },
-		{ "name": "C#" },
-		{ "name": "MVC" }
-	],
-	"projects": [
-		{
-			"name": "mern-ql",
-			"url": {
-				"Github": "https://github.com/slaveofthecode/mern-ql"
-			},
-			"isActive": true,
-			"description": "This is a simple example, I used the famous stack tech MERN (Mongo, Express, React, Node), but in this case, I added GraphQL (that way I put in the end '-ql' 😉).",
-			"highlights": [
-				"JavsScript",
-				"CSS",
-				"HTML",
-				"Node",
-				"Express",
-				"GraphQL",
-				"Apollo",
-				"MongoDB",
-				"Mongoose"
-			]
-		},
-		{
-			"name": "styles",
-			"url": {
-				"Github": "https://github.com/slaveofthecode/styles",
-				"Demo": "https://root-styles.vercel.app/"
-			},
-			"description": "This is a collection of styles that I have created over the years. I have decided to put them all in one place so that I can easily access them and share them with others. I hope you find them useful.",
-			"highlights": [
-				"Node",
-				"Express",
-				"Javsscript",
-				"CSS",
-				"HTML",
-				"Pug"
-			]
-		},
-		{
-			"name": "challenges",
-			"url": {
-				"Github": "https://github.com/slaveofthecode/challenges",
-				"Demo": "https://root-challenges.vercel.app/"
-			},
-			"description": "This repository contains some challenges that I have developed from different offers of work.",
-			"highlights": [
-				"JavsScript",
-				"Mustache",
-				"CSS",
-				"HTML",
-				"Node",
-				"Express",
-				"Jest"
-			]
-		},
-		{
-			"name": "adventjs",
-			"url": {
-				"Github": "https://github.com/slaveofthecode/adventjs"
-			},
-			"isActive": true,
-			"description": "This is a list of different solutions to challenges from adventjs.dev web.",
-			"highlights": ["JavsScript", "TypeScript"]
-		},
-		{
-			"name": "breakout-game",
-			"url": {
-				"Github": "https://github.com/slaveofthecode/breakout-game",
-				"Demo": "https://my-breakout-game.vercel.app/"
-			},
-			"description": "A replicate and custom version of the classic game Breakout.",
-			"highlights": ["JavsScript", "CSS", "HTML"]
-		},
-		{
-			"name": "tictactoe-react-ts",
-			"url": {
-				"Github": "https://github.com/slaveofthecode/tictactoe-react-ts",
-				"Demo": "https://tictactoe-react-ts.vercel.app/"
-			},
-			"description": "Minimal classic game Tic-Tac-Toe.",
-			"highlights": ["React", "SCSS", "TypeScript", "Vite"]
-		}
-	],
-	"certificates": [
-		{
-			"name": "Programming in HTML5 with JavaScript and CSS3",
-			"date": "2013",
-			"issuedBy": "Microsoft",
-			"url": "https://www.credly.com/badges/e4546f10-b164-4878-807a-0441afc5dce5?source=linked_in_profile"
-		}
-	],
+  "basics": {
+    "name": "Gustavo Lopez",
+    "title": "Senior Software Developer",
+    "label": "Senior Software Developer with over 15 years of experience, focused on creating solutions software in several technologies.",
+    "photo": "https://media.licdn.com/dms/image/D4D03AQFtKCYBTDGZMQ/profile-displayphoto-shrink_800_800/0/1700748305087?e=1713398400&v=beta&t=8qnNOA88eCMcixZuKo_aznKpQh39uK5hP4zpmbNcr_w",
+    "email": "gml.gustavoml@gmail.com",
+    "phone": "+5493515091235",
+    "url": "https://slaveofthecode.vercel.app/",
+    "summary": "I've been working in IT for over fifteen years, specializing in building and maintaining software systems. My expertise includes coding (firstly as a full-stack, nowadays as a front-end), problem-solving, mentoring colleagues, and unit tests, among others. I'm passionate about using the latest technology to solve real-world problems and make people's lives easier. I consider myself an organized and neat person.",
+    "location": {
+      "city": "Córdoba",
+      "country": "Argentina",
+      "googleMaps": "https://maps.app.goo.gl/KFEHPvrF6D5m2iuGA"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "gustavoml",
+        "url": "https://www.linkedin.com/in/gustavoml/"
+      },
+      {
+        "network": "Github",
+        "username": "slaveofthecode",
+        "url": "https://github.com/slaveofthecode"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "rol": "Senior React Developer",
+      "company": "ITLG",
+      "mode": {
+        "time": "Full-Time",
+        "type": "Hybrid"
+      },
+      "date": {
+        "start": "January, 2023",
+        "end": "November, 2023"
+      },
+      "summary": "Migration from a big system (bank entity) to React, implementing the micro front-end architecture.",
+      "stack": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Micro Front End",
+        "Bootstrap",
+        "HTML/CSS",
+        "Sass",
+        "Notion",
+        "GitLab"
+      ],
+      "url": null
+    },
+    {
+      "rol": "Senior React Developer",
+      "company": "Kalto",
+      "mode": {
+        "time": "Full-Time",
+        "type": "Remote"
+      },
+      "date": {
+        "start": "November, 2021",
+        "end": "November, 2022"
+      },
+      "summary": "Company start-up to a product BtoB (business to business) to Mexico’s market, where you can make payments through several methods, and manage the finances of your company.",
+      "stack": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "GraphQL",
+        "Bootstrap",
+        "HTML/CSS",
+        "Sass",
+        "Git",
+        "Github"
+      ],
+      "url": null
+    },
+    {
+      "rol": "React Native Developer",
+      "company": "Ohana",
+      "mode": {
+        "time": "Full-Time",
+        "type": "Remote"
+      },
+      "date": {
+        "start": "August, 2021",
+        "end": "October, 2021"
+      },
+      "summary": "App mobile related to fintech between users. With several features such as payments, transferences, make purchases, and more.",
+      "stack": ["React Native", "Figma", "JavaScript", "Expo", "HTML"],
+      "url": null
+    },
+    {
+      "rol": "React Developer",
+      "company": "Cognizant Softvision",
+      "mode": {
+        "time": "Full-Time",
+        "type": "Remote"
+      },
+      "date": {
+        "start": "February, 2021",
+        "end": "July, 2021"
+      },
+      "summary": "New features and improvements on the promotional website regarding the product medicinal. Following a guide from Figma pixel to pixel.",
+      "stack": [
+        "React",
+        "HTML/CSS",
+        "JavaScript",
+        "Bootstrap",
+        "Git",
+        "Figma",
+        "Adobe Illustrator"
+      ],
+      "url": null
+    },
+    {
+      "rol": "Frontend Developer",
+      "company": "McAfee",
+      "mode": {
+        "time": "Full-Time",
+        "type": "Hybrid"
+      },
+      "date": {
+        "start": "October, 2019",
+        "end": "January, 2021"
+      },
+      "summary": "Huge products of the company, related to management security, such as logs, tracking of users, databases, among others.",
+      "stack": [
+        "AngularJs",
+        "Angular 8",
+        "HTML/CSS",
+        "TypeScript",
+        "NodeJs",
+        "ElectronJs",
+        "Git",
+        "Jira",
+        "Jest",
+        "Jasmine",
+        "Sass"
+      ],
+      "url": null
+    },
+    {
+      "rol": "Fullstack Developer",
+      "company": "DXC (ex HP)",
+      "mode": {
+        "time": "Full-Time",
+        "type": "Hybrid"
+      },
+      "date": {
+        "start": "September, 2018",
+        "end": "September, 2019"
+      },
+      "summary": "Improvements and new features on a big product related to multinational music, in their website who manage different artists, albums, tracks, etc.",
+      "stack": [
+        ".Net",
+        "C#",
+        "HTML/CSS",
+        "MVC",
+        "Javascript",
+        "jQuery",
+        "Bootstrap",
+        "Jira"
+      ],
+      "url": null
+    }
+  ],
+  "education": [
+    {
+      "institution": {
+        "abbreviation": "I.S.S.D.",
+        "name": "Instituto Superior Santo Domingo",
+        "url": "https://www.issd.edu.ar/"
+      },
+      "area": "System Analyst",
+      "studyType": "Asociate Degree",
+      "date": {
+        "start": "2001",
+        "end": "2006"
+      }
+    }
+  ],
+  "skills": [
+    { "name": "HTML" },
+    { "name": "JavaScript" },
+    { "name": "TypeScript" },
+    { "name": "React" },
+    { "name": "NodeJs" },
+    { "name": "Express" },
+    { "name": "GraphQL" },
+    { "name": "Apollo" },
+    { "name": "MongoDB" },
+    { "name": "Mongoose" },
+    { "name": "CSS" },
+    { "name": "Tailwind" },
+    { "name": "Sass" },
+    { "name": "Bootstrap" },
+    { "name": "Astro" },
+    { "name": "ElectronJs" },
+    { "name": "Figma" },
+    { "name": "Git" },
+    { "name": "Team Foundation Server" },
+    { "name": "SVN (Subversion)" },
+    { "name": "GitHub" },
+    { "name": "jQuery" },
+    { "name": "AngularJs" },
+    { "name": "Angular 8" },
+    { "name": "SQL Server" },
+    { "name": "Jest" },
+    { "name": "Jira" },
+    { "name": ".Net" },
+    { "name": "C#" },
+    { "name": "MVC" }
+  ],
+  "projects": [
+    {
+      "name": "mern-ql",
+      "url": {
+        "Github": "https://github.com/slaveofthecode/mern-ql"
+      },
+      "isActive": true,
+      "description": "This is a simple example, I used the famous stack tech MERN (Mongo, Express, React, Node), but in this case, I added GraphQL (that way I put in the end '-ql' 😉).",
+      "highlights": [
+        "JavsScript",
+        "CSS",
+        "HTML",
+        "Node",
+        "Express",
+        "GraphQL",
+        "Apollo",
+        "MongoDB",
+        "Mongoose"
+      ]
+    },
+    {
+      "name": "styles",
+      "url": {
+        "Github": "https://github.com/slaveofthecode/styles",
+        "Demo": "https://root-styles.vercel.app/"
+      },
+      "description": "This is a collection of styles that I have created over the years. I have decided to put them all in one place so that I can easily access them and share them with others. I hope you find them useful.",
+      "highlights": ["Node", "Express", "Javsscript", "CSS", "HTML", "Pug"]
+    },
+    {
+      "name": "challenges",
+      "url": {
+        "Github": "https://github.com/slaveofthecode/challenges",
+        "Demo": "https://root-challenges.vercel.app/"
+      },
+      "description": "This repository contains some challenges that I have developed from different offers of work.",
+      "highlights": [
+        "JavsScript",
+        "Mustache",
+        "CSS",
+        "HTML",
+        "Node",
+        "Express",
+        "Jest"
+      ]
+    },
+    {
+      "name": "adventjs",
+      "url": {
+        "Github": "https://github.com/slaveofthecode/adventjs"
+      },
+      "isActive": true,
+      "description": "This is a list of different solutions to challenges from adventjs.dev web.",
+      "highlights": ["JavsScript", "TypeScript"]
+    },
+    {
+      "name": "breakout-game",
+      "url": {
+        "Github": "https://github.com/slaveofthecode/breakout-game",
+        "Demo": "https://my-breakout-game.vercel.app/"
+      },
+      "description": "A replicate and custom version of the classic game Breakout.",
+      "highlights": ["JavsScript", "CSS", "HTML"]
+    },
+    {
+      "name": "tictactoe-react-ts",
+      "url": {
+        "Github": "https://github.com/slaveofthecode/tictactoe-react-ts",
+        "Demo": "https://tictactoe-react-ts.vercel.app/"
+      },
+      "description": "Minimal classic game Tic-Tac-Toe.",
+      "highlights": ["React", "SCSS", "TypeScript", "Vite"]
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Programming in HTML5 with JavaScript and CSS3",
+      "date": "2013",
+      "issuedBy": "Microsoft",
+      "url": "https://www.credly.com/badges/e4546f10-b164-4878-807a-0441afc5dce5?source=linked_in_profile"
+    }
+  ],
 
-	"volunteer": [
-		{
-			"organization": "Organization",
-			"position": "Volunteer",
-			"url": "https://organization.com/",
-			"startDate": "2012-01-01",
-			"endDate": "2013-01-01",
-			"summary": "Description…",
-			"highlights": ["Awarded 'Volunteer of the Month'"]
-		}
-	],
-	"awards": [
-		{
-			"title": "Award",
-			"date": "2014-11-01",
-			"awarder": "Company",
-			"summary": "There is no spoon."
-		}
-	],
-	"publications": [
-		{
-			"name": "Publication",
-			"publisher": "Company",
-			"releaseDate": "2014-10-01",
-			"url": "https://publication.com",
-			"summary": "Description…"
-		}
-	],
-	"languages": [
-		{
-			"language": "Spanish",
-			"fluency": "Native speaker"
-		},
-		{
-			"language": "English",
-			"fluency": "Advanced"
-		}
-	],
-	"interests": [
-		{
-			"name": "Wildlife",
-			"keywords": ["Ferrets", "Unicorns"]
-		}
-	],
-	"references": [
-		{
-			"name": "Jane Doe",
-			"reference": "Reference…"
-		}
-	]
+  "volunteer": [
+    {
+      "organization": "Organization",
+      "position": "Volunteer",
+      "url": "https://organization.com/",
+      "startDate": "2012-01-01",
+      "endDate": "2013-01-01",
+      "summary": "Description…",
+      "highlights": ["Awarded 'Volunteer of the Month'"]
+    }
+  ],
+  "awards": [
+    {
+      "title": "Award",
+      "date": "2014-11-01",
+      "awarder": "Company",
+      "summary": "There is no spoon."
+    }
+  ],
+  "publications": [
+    {
+      "name": "Publication",
+      "publisher": "Company",
+      "releaseDate": "2014-10-01",
+      "url": "https://publication.com",
+      "summary": "Description…"
+    }
+  ],
+  "languages": [
+    {
+      "language": "Spanish",
+      "fluency": "Native speaker"
+    },
+    {
+      "language": "English",
+      "fluency": "Advanced"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Wildlife",
+      "keywords": ["Ferrets", "Unicorns"]
+    }
+  ],
+  "references": [
+    {
+      "name": "Jane Doe",
+      "reference": "Reference…"
+    }
+  ]
 }

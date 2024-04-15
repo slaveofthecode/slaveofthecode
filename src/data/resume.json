@@ -7,7 +7,7 @@
     "email": "gml.gustavoml@gmail.com",
     "phone": "+5493515091235",
     "url": "https://slaveofthecode.vercel.app/",
-    "summary": "I've been working in IT for over fifteen years, specializing in building and maintaining software systems. My expertise includes coding (firstly as a full-stack, nowadays as a front-end), problem-solving, mentoring colleagues, and unit tests, among others. I'm passionate about using the latest technology to solve real-world problems and make people's lives easier. I consider myself an organized and neat person.",
+    "summary": "I've been working in IT for over fifteen years, specializing in building and maintaining software systems. My expertise includes coding (firstly as a full-stack, nowadays as a front-end), problem-solving, mentoring colleagues, and unit tests, among others. I'm passionate about using the latest technology to solve real-world problems and make people's lives easier.  I consider myself an organized and neat person. ",
     "location": {
       "city": "Córdoba",
       "country": "Argentina",
@@ -38,7 +38,7 @@
         "start": "January, 2023",
         "end": "November, 2023"
       },
-      "summary": "Migration from a big system (bank entity) to React, implementing the micro front-end architecture.",
+      "summary": "Huge migration from a big system related to a bank entity. Applying micro front-end architecture with different technologies such as React, and Angular in different versions. From my side, I worked as a React Developer. ",
       "stack": [
         "JavaScript",
         "TypeScript",
@@ -63,7 +63,7 @@
         "start": "November, 2021",
         "end": "November, 2022"
       },
-      "summary": "Company start-up to a product BtoB (business to business) to Mexico’s market, where you can make payments through several methods, and manage the finances of your company.",
+      "summary": "Company start-up to about a product BtoB (business to business) to Mexico’s market, where you can make payments through several methods, and manage the finances of your company.",
       "stack": [
         "JavaScript",
         "TypeScript",
@@ -126,7 +126,7 @@
         "start": "October, 2019",
         "end": "January, 2021"
       },
-      "summary": "Huge products of the company, related to management security, such as logs, tracking of users, databases, among others.",
+      "summary": "Huge products of the company, related to management security, such as logs, tracking of users, and databases, among others. ",
       "stack": [
         "AngularJs",
         "Angular 8",
@@ -163,6 +163,36 @@
         "jQuery",
         "Bootstrap",
         "Jira"
+      ],
+      "url": null
+    },
+    {
+      "rol": "Fullstack Developer",
+      "company": "Bancor",
+      "mode": {
+        "time": "Full-Time",
+        "type": "Hybrid"
+      },
+      "date": {
+        "start": "September, 2015",
+        "end": "September, 2018"
+      },
+      "summary": "Maintenance and new projects, mostly intranet although internet as well, related to the product of the client. Desktop and website projects of the products related to the bank entity. ",
+      "stack": [
+        "Store Procedure",
+        "Entity Framework",
+        "SQL Server",
+        "Underscore",
+        "MustacheJs",
+        ".Net",
+        "C#",
+        "MVC",
+        "jQuery",
+        "Jira",
+        "JavaScript",
+        "Bootstrap",
+        "Visual Fox",
+        ".Net Web API"
       ],
       "url": null
     }

@@ -3,7 +3,7 @@
     "name": "Gustavo Lopez",
     "title": "Senior Software Developer",
     "label": "Senior Software Developer with over 15 years of experience, focused on creating solutions software in several technologies.",
-    "photo": "https://media.licdn.com/dms/image/D4D03AQFtKCYBTDGZMQ/profile-displayphoto-shrink_800_800/0/1700748305087?e=1713398400&v=beta&t=8qnNOA88eCMcixZuKo_aznKpQh39uK5hP4zpmbNcr_w",
+    "photo": "./img/me.jpeg",
     "email": "gml.gustavoml@gmail.com",
     "phone": "+5493515091235",
     "url": "https://slaveofthecode.vercel.app/",

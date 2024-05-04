@@ -28,6 +28,28 @@
   },
   "experience": [
     {
+      "rol": "Full Stack Developer",
+      "company": "Nybble Group",
+      "mode": {
+        "time": "Full-Time",
+        "type": "Remote"
+      },
+      "date": {
+        "start": "May, 2024",
+        "end": null
+      },
+      "summary": "New features and improvements on the Client's product related to Employee Stock Ownership Plan (ESOP). ",
+      "stack": [
+        "JavaScript",
+        "Meteor.js",
+        "D3.js",
+        "HTML/CSS",
+        "Sass",
+        "jQuery"
+      ],
+      "url": null
+    },
+    {
       "rol": "Senior React Developer",
       "company": "ITLG",
       "mode": {
@@ -143,7 +165,7 @@
       "url": null
     },
     {
-      "rol": "Fullstack Developer",
+      "rol": "Full Stack Developer",
       "company": "DXC (ex HP)",
       "mode": {
         "time": "Full-Time",
@@ -167,7 +189,7 @@
       "url": null
     },
     {
-      "rol": "Fullstack Developer",
+      "rol": "Full Stack Developer",
       "company": "Bancor",
       "mode": {
         "time": "Full-Time",

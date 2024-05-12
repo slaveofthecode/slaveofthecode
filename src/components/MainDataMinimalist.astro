@@ -22,13 +22,13 @@ const ICONS_PROFILES: IconsProfilesType = {
 >
 	<div class="flex justify-between items-center 2xl:px-8">
 		<div class="flex flex-col items-start justify-start">
-			<h1 class="m-0 text-xs tracking-widest">{name}</h1>
+			<h2 class="m-0 text-xs tracking-widest">{name}</h2>
 			<small class="opacity-50 text-xs">{title}</small>
 		</div>
 		<div class="tools-photo">
 			<div>
 				<div></div>
-				<img src={photo} class="size-12 sm:size-14" />
+				<img src={photo} class="size-12 sm:size-14" alt={name} />
 				<figcaption
 					class="text-[9px] text-center text-gray-400 sm:text-sm"
 				>

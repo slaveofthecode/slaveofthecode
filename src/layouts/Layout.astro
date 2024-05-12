@@ -16,13 +16,31 @@ const { photo } = basics;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta
-			name="description"
+		<meta name="description"
 			content="Senior Software Developer with over 15 years of experience"
 		/>
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image" href={photo} />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="robots" content="index, follow" />
+		
+		<!-- OG = open graph tag -->
+		<meta property="og:title" content={title} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://slaveofthecode.vercel.app/" />
+		<meta property="og:image" content={photo} />
+		<meta property="og:description" content="Senior Software Developer with over 15 years of experience" />
+		<meta property="og:site_name" content="Slave of the Code" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:author" content="Gustavo Lopez" />
+		<meta property="og:profile:first_name" content="Gustavo" />
+		<meta property="og:profile:last_name" content="Lopez" />
+		<meta property="og:profile:username" content="slaveofthecode" />		
+		<meta name="twitter:card" content="summary" />
+		<!-- OG -->
+
+		<link rel="canonical" href="https://slaveofthecode.vercel.app/" />
+		<link rel="icon" type="image" href={photo} />
+
 		<title>{title}</title>
 	</head>
 	<body
@@ -37,3 +55,19 @@ const { photo } = basics;
 <style is:global>
 	@import "../styles/reset.css";
 </style>
+
+<!-- Add here the schema markup -->
+<script type="application/ld+json">
+	{		
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "Gustavo Lopez",
+		"url": "https://slaveofthecode.vercel.app/",
+		"image": "https://slaveofthecode.vercel.app/img/me.jpeg",
+		"sameAs": [
+			"https://www.linkedin.com/in/gustavoml/"
+		],
+		"jobTitle": "Senior Software Developer",
+		"email": "mailto:gml.gustavoml@gmail.com"
+	}
+</script>

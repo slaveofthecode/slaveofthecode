@@ -5,17 +5,17 @@ const { education } = getJsonCV();
 ---
 
 <section>
-	<h1>Education</h1>
+	<h2>Education</h2>
 	{
 		education.map(({ institution, date, area }: any) => (
 			<>
 				<div class="flex justify-between items-start flex-col-reverse sm:flex-row sm:items-center">
-					<h2>
+					<h3>
 						<strong class="opacity-60 text-sm me-2">
 							{institution.abbreviation}
 						</strong>
 						{institution.name}
-					</h2>
+					</h3>
 					<time class="text-gray-400 text-xs">
 						{`${date.start} - ${date.end}`}
 					</time>

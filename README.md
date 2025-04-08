@@ -1,7 +1,7 @@
 <h1 align="center">Hey there, I'm <a href="https://slaveofthecode.vercel.app/">@slaveofthecode</a> 👋</h1>
 
 <div align="center">
-  <img src="https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif?cid=ecf05e47jcmjqtaqpfecedcolfn2j0euo278nd29khk583fs&ep=v1_gifs_search&rid=giphy.gif&ct=g" width="450"/>
+  <img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" width="450"/>
 </div>
 
 ---

@@ -1,7 +1,8 @@
 {
-	"name": "slaveofthecode",
+	"name": "readme-updater",
+	"version": "1.0.0",
+	"main": "update-readme.js",
 	"type": "module",
-	"version": "0.0.1",
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",

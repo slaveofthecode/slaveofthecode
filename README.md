@@ -1,35 +1,66 @@
-### Hi there 👋
+<h1 align="center">Hey there, I'm <a href="https://slaveofthecode.vercel.app/">@slaveofthecode</a> 👋</h1>
 
-This is my modest Github account. I don't often upload code, but I try to show part of all my skills 😏😎.
+<div align="center">
+  <img src="https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif?cid=ecf05e47jcmjqtaqpfecedcolfn2j0euo278nd29khk583fs&ep=v1_gifs_search&rid=giphy.gif&ct=g" width="450"/>
+</div>
 
-Some of my last... updates code.
+---
 
-- [mern-ql](https://github.com/slaveofthecode/mern-ql) 
-  This is an example (simple), where I used the famous stack tech Mongo, Express, React, and Node, but in my case, I added GraphQL (for that in the end I put on "-ql" 😉).
-  You can see on this repository, different branch which has different versions of the project...
+### 👨‍💻 About Me
 
-- [adventjs](https://github.com/slaveofthecode/adventjs)
-  Here you can see a list of challengers separated for different years since 2021 of the [website](https://adventjs.dev/) of @midudev
-  I'd like to show you my solutions to these challenges.
+I’m a passionate developer who truly enjoys programming — especially on the front-end 🎨. Although I’ve worked for many years as a fullstack developer ⚙️, I’ve always had a special love for the user experience and the creativity of front-end work.
 
-- [styles](https://github.com/slaveofthecode/styles)
-  This is a collection of styles that I have created over the years. I have decided to put them all in one place so that I can easily access them and share them with others. I hope you find them useful.
+I’m also a tech enthusiast who enjoys exploring new gadgets 📱, robotics 🤖, and emerging technologies. For me, programming isn’t just a job — it’s something inspiring 💡 that constantly pushes me to learn 📚 and grow.
 
-- [challenges](https://github.com/slaveofthecode/challenges)
-  This repository contains some challenges that I have developed from different offers of work.
+---
 
+### 🚀 Projects I’ve Been Working On
+
+- 📦 [**mern-ql**](https://github.com/slaveofthecode/mern-ql)  
+  MERN + GraphQL example with multiple branches showing project evolution.
+
+- 🎄 [**adventjs**](https://github.com/slaveofthecode/adventjs)  
+  My personal solutions to Midudev’s AdventJS challenges since 2021.
+
+- 🎨 [**styles**](https://github.com/slaveofthecode/styles)  
+  A curated collection of reusable styles and design snippets I’ve created over time.
+
+- 🧠 [**challenges**](https://github.com/slaveofthecode/challenges)  
+  Coding challenges inspired by real-world job offers and tech exercises.
+
+---
+
+### 🧰 Tech Stack
+
+![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=flat-square&logo=javascript)
+![TypeScript](https://img.shields.io/badge/-TypeScript-black?style=flat-square&logo=typescript)
+![Node.js](https://img.shields.io/badge/-Node.js-black?style=flat-square&logo=node.js)
+![React](https://img.shields.io/badge/-React-black?style=flat-square&logo=react)
+![GraphQL](https://img.shields.io/badge/-GraphQL-black?style=flat-square&logo=graphql)
+![MongoDB](https://img.shields.io/badge/-MongoDB-black?style=flat-square&logo=mongodb)
+![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-black?style=flat-square&logo=tailwind-css)
+![HTML5](https://img.shields.io/badge/-HTML5-black?style=flat-square&logo=html5)
+![CSS3](https://img.shields.io/badge/-CSS3-black?style=flat-square&logo=css3)
+![Git](https://img.shields.io/badge/-Git-black?style=flat-square&logo=git)
+![Astro](https://img.shields.io/badge/-Astro-black?style=flat-square&logo=astro)
+![PWA](https://img.shields.io/badge/-PWA-black?style=flat-square&logo=pwa)
+![Electron](https://img.shields.io/badge/-Electron-black?style=flat-square&logo=electron)
+
+---
+
+### 🌐 Connect with Me
+
+<div align="left">
+  <a href="https://www.linkedin.com/in/gustavoml/">
+    <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+  </a>
+  <a href="mailto:gml.gustavoml@gmail.com">
+    <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/>
+  </a>
+</div>
+
+---
 
 <!--
-**slaveofthecode/slaveofthecode** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
+**slaveofthecode/slaveofthecode** is a ✨ _special_ ✨ repository because its `README.md` appears on your GitHub profile.
 -->

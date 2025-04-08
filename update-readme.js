@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const gifs = {
 	0: 'https://media.giphy.com/media/YQitE4YNQNahy/giphy.gif', // Sunday
-	1: 'https://media.giphy.com/media/L1R1tvI9svkIWwpVYr/giphy.gif', // Monday
+	1: 'https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif?cid=ecf05e47jcmjqtaqpfecedcolfn2j0euo278nd29khk583fs&ep=v1_gifs_search&rid=giphy.gif&ct=g', // Monday
 	2: 'https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif', // Tuesday
 	3: 'https://media.giphy.com/media/f3iwJFOVOwuy7K6FFw/giphy.gif', // Wednesday
 	4: 'https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif', // Thursday

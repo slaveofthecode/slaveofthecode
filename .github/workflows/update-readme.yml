@@ -2,8 +2,11 @@ name: Daily README Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # todos los días a la medianoche UTC
+    - cron: '0 0 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update-readme:

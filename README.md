@@ -3,7 +3,7 @@
 <!-- start-daily-gif -->
 <!--
 <div align="center">
-  <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" width="450"/>
+  <img src="https://media.giphy.com/media/YQitE4YNQNahy/giphy.gif" width="450"/>
 </div>
 -->
 <!-- end-daily-gif -->

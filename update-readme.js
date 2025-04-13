@@ -19,9 +19,8 @@ const gifs = [
 const randomIndex = Math.floor(Math.random() * gifs.length);
 const randomGif = gifs[randomIndex];
 
-// Lee el archivo README.md
 const readmePath = 'README.md';
-fs.readFile(readmePath, 'utf8', (err: any, data: string) => {
+fs.readFile(readmePath, 'utf8', (err, data) => {
 	if (err) {
 		console.error('Error reading README.md:', err);
 		return;
@@ -32,7 +31,7 @@ fs.readFile(readmePath, 'utf8', (err: any, data: string) => {
 		`![Random GIF](${randomGif})`
 	);
 
-	fs.writeFile(readmePath, updatedData, 'utf8', (err: any) => {
+	fs.writeFile(readmePath, updatedData, 'utf8', (err) => {
 		if (err) {
 			console.error('Error writing to README.md:', err);
 			return;

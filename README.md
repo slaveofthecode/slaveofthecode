@@ -1,12 +1,18 @@
 <h1 align="center">Hey there, I'm <a href="https://slaveofthecode.vercel.app/">@slaveofthecode</a> 👋</h1>
 
 <!-- start-daily-gif -->
+<!--
 <div align="center">
   <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" width="450"/>
 </div>
+-->
 <!-- end-daily-gif -->
 
----
+<!-- show randomize gift each refresh page -->
+
+![Mood of the day](https://slaveofthecode.vercel.app/api/random-gif)
+
+<!-- end randomize gift -->
 
 ### 👨‍💻 About Me
 

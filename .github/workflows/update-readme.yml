@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Run update script
-        run: node update-readme.ts
+        run: node update-readme.js
 
       - name: Commit and push changes
         run: |

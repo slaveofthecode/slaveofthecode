@@ -10,7 +10,7 @@
 
 <!-- show randomize gift each refresh page -->
 
-![Mood of the day](https://slaveofthecode.vercel.app/api/random-gif)
+![Random GIF](https://slaveofthecode.vercel.app/api/random-gif)
 
 <!-- end randomize gift -->
 

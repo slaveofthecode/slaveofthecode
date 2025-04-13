@@ -25,6 +25,9 @@ export const GET: APIRoute = async () => {
 		status: 302,
 		headers: {
 			Location: gifUrl,
+			'Cache-Control': 'no-store',
+			'Content-Type': 'image/gif',
+			'Content-Disposition': 'inline', // ⚠️ IMPORTANT to prevent download
 		},
 	});
 };

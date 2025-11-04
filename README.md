@@ -10,7 +10,7 @@
 
 <!-- show randomize gift each refresh page -->
 
-![Random GIF](https://media.giphy.com/media/YQitE4YNQNahy/giphy.gif)
+![Random GIF](https://media.giphy.com/media/MD0svLSDeudszrNrp0/giphy.gif)
 
 <!-- end randomize gift -->
 

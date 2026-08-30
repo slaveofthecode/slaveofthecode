@@ -7,15 +7,15 @@
   "command": {
     "build": {
       "description": "Run the full build verification (astro check + astro build).",
-      "prompt": "Run the verify-build skill workflow: execute `npm run build` (runs `astro check` then `astro build`) from the repo root and report the result. If it fails, investigate and fix on a feature branch, then re-run until green."
+      "template": "Run the verify-build skill workflow: execute `npm run build` (runs `astro check` then `astro build`) from the repo root and report the result. If it fails, investigate and fix on a feature branch, then re-run until green."
     },
     "add-project": {
       "description": "Add a project entry to resume.json.",
-      "prompt": "Add a new project to src/data/resume.json following the add-resume-entry skill exactly, then verify with npm run build."
+      "template": "Add a new project to src/data/resume.json following the add-resume-entry skill exactly, then verify with npm run build."
     },
     "update-gif": {
       "description": "Update the daily README random-GIF list.",
-      "prompt": "Update the daily random-GIF workflow per the update-readme-gif skill: keep the GIF lists in update-readme.js, src/pages/api/random-gif.ts, and README.md in sync, then verify."
+      "template": "Update the daily random-GIF workflow per the update-readme-gif skill: keep the GIF lists in update-readme.js, src/pages/api/random-gif.ts, and README.md in sync, then verify."
     }
   },
   "permission": {

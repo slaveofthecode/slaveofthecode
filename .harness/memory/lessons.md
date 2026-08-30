@@ -9,3 +9,6 @@ AGENTS.md (§8.4) and prune.
 - Added the cross-agent harness (AGENTS.md + `.harness/` + tool adapters) on branch
   `feat/001-add-ai-harness`. Gotcha: the daily-GIF workflow writes with
   `update-readme.js`, and GIF lists must stay in sync across three files (§5.1).
+- opencode commands need a `template` field — `prompt` is rejected by the config
+  validator (`opencode debug config`). Validate any `.opencode` change with
+  `opencode debug config` before committing.

@@ -4,8 +4,9 @@ Truthful snapshot of where the project stands. Keep updated after every task
 (`memory-update` skill).
 
 - **Current branch:** `feat/001-add-ai-harness`
-- **In-flight work:** adding the cross-agent AI harness (AGENTS.md, `.harness/`,
-  `.opencode/`, `.claude/`, `.cursor/`). No app-code changes to `src/`.
+- **In-flight work:** harness implemented and committed; config validated via
+  `opencode debug config`. Pending: restart opencode so the harness loads; smoke-test
+  in Claude Code and Cursor. No app-code changes to `src/`.
 - **Known issues:**
   - `.github/workflows/update-readme.yml` calls `node update-readme.ts`, but the
     actual file is `update-readme.js` (the workflow is broken in CI for this step).

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["../AGENTS.md", "../.harness/memory/project-state.md"],
+  "skills": {
+    "paths": ["../.harness/skills"]
+  },
+  "command": {
+    "build": {
+      "description": "Run the full build verification (astro check + astro build).",
+      "template": "Run the verify-build skill workflow: execute `npm run build` (runs `astro check` then `astro build`) from the repo root and report the result. If it fails, investigate and fix on a feature branch, then re-run until green."
+    },
+    "add-project": {
+      "description": "Add a project entry to resume.json.",
+      "template": "Add a new project to src/data/resume.json following the add-resume-entry skill exactly, then verify with npm run build."
+    },
+    "update-gif": {
+      "description": "Update the daily README random-GIF list.",
+      "template": "Update the daily random-GIF workflow per the update-readme-gif skill: keep the GIF lists in update-readme.js, src/pages/api/random-gif.ts, and README.md in sync, then verify."
+    }
+  },
+  "permission": {
+    "read": "allow",
+    "list": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "edit": "allow",
+    "task": "allow",
+    "todowrite": "allow",
+    "question": "allow",
+    "webfetch": "allow",
+    "websearch": "allow",
+    "bash": {
+      "git *": "ask",
+      "npm *": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git branch*": "allow",
+      "git fetch*": "allow",
+      "git remote*": "allow",
+      "git add *": "allow",
+      "git checkout -b*": "allow",
+      "git checkout -B*": "allow",
+      "git switch -c*": "allow",
+      "git checkout master": "deny",
+      "git switch master": "deny",
+      "npm run dev*": "allow",
+      "npm run build*": "allow",
+      "npm run preview*": "allow",
+      "npx astro check*": "allow",
+      "node update-readme.js*": "allow"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+---
+description: Load the project AI harness — canonical rules in AGENTS.md, shared skills, memory, and sub-agent definitions. Always apply.
+globs:
+alwaysApply: true
+---
+
+# Project AI harness
+
+Cursor reads `AGENTS.md` at the repo root natively — it is the **single source of truth** and wins over any rule here. Follow it in full, especially:
+
+- **Git & branching (§6):** never commit/push on `master`; work on
+  `type/###-kebab-slug` branches (`feat|fix|chore|docs|refactor|test`).
+- **Permissions (§7):** always-allowed (read, build commands, edit under `src/`),
+  confirmation-required (commits/pushes/merges, `npm install`, memory edits),
+  never (`master`, `dist/`, `.astro/`, `node_modules/`, `.qodo/`).
+- **Memory & self-learning (§8):** after every task update
+  `.harness/memory/lessons.md`, `decisions.md`, `project-state.md` via the
+  `memory-update` skill.
+
+## Shared harness locations
+
+| Path | Contents |
+|---|---|
+| `.harness/skills/<name>/SKILL.md` | Reusable procedures (see AGENTS.md §9 for the index) |
+| `.harness/agents/<name>.md` | Sub-agent definitions (full personas) |
+| `.harness/memory/` | Cross-agent persistent memory |
+
+Follow the matching `SKILL.md` whenever the task matches its description. Cursor
+does not auto-load `.harness/skills` — read the relevant skill file explicitly
+when its topic comes up (e.g. resume content → `add-resume-entry`, GIF workflow →
+`update-readme-gif`, finishing any change → `verify-build`).

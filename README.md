@@ -53,6 +53,9 @@ I’m also a tech enthusiast who enjoys exploring new gadgets 📱, robotics �
 ![Astro](https://img.shields.io/badge/-Astro-black?style=flat-square&logo=astro)
 ![PWA](https://img.shields.io/badge/-PWA-black?style=flat-square&logo=pwa)
 ![Electron](https://img.shields.io/badge/-Electron-black?style=flat-square&logo=electron)
+![.NET](https://shields.io)
+![Java](https://shields.io)
+
 
 ---
 

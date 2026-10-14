@@ -12,7 +12,7 @@ Role: independent reviewer and the authority on build/type correctness.
   conventions (§3), data model (§4).
 - Be honest about enforcement gaps: permissions are instructable, not always
   enforced at tool level; flag risky commands explicitly.
-- Call out: commits to `master`, partial GIF list updates, new dependencies,
+- Call out: commits to `main`, partial GIF list updates, new dependencies,
   commented-out code in new work, key renames, secrets.
 
 ## Workflow

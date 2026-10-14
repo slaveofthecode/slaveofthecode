@@ -123,20 +123,20 @@ When adding a `projects[]` entry, the icon map in `Projects.astro`
 ### 5.2 Feature/bug-fix loop (any agent)
 1. Read this file + `.harness/memory/project-state.md`.
 2. Load the relevant skill from `.harness/skills/` (see index below).
-3. Create/completask on a feature branch (see §6), never on `master`.
+3. Create/completask on a feature branch (see §6), never on `main`.
 4. Make the change, run `npm run build`, update memory per §8, and **leave the changes
    staged in the working tree. The agent does NOT commit.**
 5. Show the human the diff and **wait** for the human to review, commit, and `git push`
    (the human owns commit AND push). If the human wants edits, incorporate and repeat.
 6. Only after the human confirms the push, **create the Pull Request** (see §6):
-   `gh pr create` with a meaningful description, base `master`, **assigned to the human**
+   `gh pr create` with a meaningful description, base `main`, **assigned to the human**
    `slaveofthecode`. Report the PR URL.
 
 ---
 
 ## 6. Git & branching policy (HARD RULES)
 
-- **Never commit, push, or PR directly on `master`.** Request a branch instead.
+- **Never commit, push, or PR directly on `main`.** Request a branch instead.
 - Branch naming convention: `type/###-short-kebab-slug`
   - `type` ∈ `feat`, `fix`, `chore`, `docs`, `refactor`, `test`
   - `###` = zero-padded ordinal per type (next counter for the type)
@@ -149,7 +149,7 @@ When adding a `projects[]` entry, the icon map in `Projects.astro`
   the human reviews, commits, and runs `git push` (and owns the remote). The agent never
   commits or pushes.
 - **Create the PR after the human pushes.** Once the human confirms the push, the agent
-  opens the Pull Request to `master` with `gh pr create`, writes a meaningful description
+  opens the Pull Request to `main` with `gh pr create`, writes a meaningful description
   summarizing the change, and **assigns it to the human** (`slaveofthecode`). Report the PR URL.
 - Never stage or commit secrets, `node_modules/`, `dist/`, `.astro/`, or `.qodo/`.
 - If a change is generated-consistent (e.g. `astro check` output), regenerate, don't hand-edit.
@@ -175,7 +175,7 @@ otherwise as instructions.
 - Editing files under `.harness/memory/` — do it only via the `memory-update` protocol (§8).
 
 **Never (without explicit request)**
-- Checkout/switch to `master` or run destructive git ops.
+- Checkout/switch to `main` or run destructive git ops.
 - Edit `dist/`, `.astro/`, `node_modules/`, `.qodo/`.
 - Replace the GIF list in only ONE of the three places (see §5.1 — all three stay in sync).
 - Leave commented-out code in new work (existing commented blobs in this repo are intentional).
@@ -227,5 +227,5 @@ Full definitions live in `.harness/agents/`. Tool adapters only forward to them.
 ## 11. Do / Don't summary
 
 - Do: read `.harness/memory/project-state.md` first; run `npm run build` before finishing.
-- Don't: commit to `master`; duplicate GIF lists; invent new scripts; edit memory without protocol.
+- Don't: commit to `main`; duplicate GIF lists; invent new scripts; edit memory without protocol.
 - When unsure, prefer asking the human over guessing.

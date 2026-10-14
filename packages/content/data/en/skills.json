@@ -1,7 +1,59 @@
 [
   {
-    "id": "languages-and-frameworks",
-    "name": "Languages & Frameworks",
-    "items": ["TypeScript", "Node.js", "Astro"]
+    "id": "front-end",
+    "name": "Front-End",
+    "items": [
+      "React",
+      "TypeScript",
+      "Angular",
+      "JavaScript (ES6+)",
+      "HTML5",
+      "CSS3",
+      "Micro Frontends",
+      "Bootstrap",
+      "Tailwind CSS",
+      "Next.js",
+      "Astro"
+    ]
+  },
+  {
+    "id": "back-end",
+    "name": "Back-End",
+    "items": [
+      "Node.js",
+      "Express",
+      "C#",
+      ".NET",
+      "ASP.NET MVC",
+      "Entity Framework",
+      "Prisma",
+      "Java",
+      "Spring Boot"
+    ]
+  },
+  {
+    "id": "ai-assisted-development",
+    "name": "AI-Assisted Development",
+    "items": ["LLMs", "Coding Agents", "MCP", "Harness Engineering", "RAG"]
+  },
+  {
+    "id": "ai-development-tools",
+    "name": "AI Development Tools",
+    "items": ["OpenCode", "Claude", "Cursor", "GitHub Copilot", "Gemini"]
+  },
+  {
+    "id": "devops-infrastructure",
+    "name": "DevOps & Infrastructure",
+    "items": ["AWS", "Docker", "CI/CD Pipelines", "Git"]
+  },
+  {
+    "id": "testing-frameworks",
+    "name": "Testing Frameworks",
+    "items": ["Jest", "Cypress", "Vitest", "Playwright"]
+  },
+  {
+    "id": "databases",
+    "name": "Databases",
+    "items": ["SQL Server", "MongoDB", "MySQL", "SQLite"]
   }
 ]

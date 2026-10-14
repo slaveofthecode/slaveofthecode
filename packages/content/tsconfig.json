@@ -4,5 +4,5 @@
     "types": ["bun"],
     "rootDir": "."
   },
-  "include": ["src", "test", "data"]
+  "include": ["src", "test", "data", "scripts"]
 }

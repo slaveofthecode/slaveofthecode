@@ -1,10 +1,11 @@
 {
-  "name": "Jane Doe",
-  "headline": "Placeholder headline",
-  "location": "Placeholder City",
-  "summary": "Placeholder summary used only to exercise the schema and the en/es parity tests.",
+  "name": "Gustavo Lopez",
+  "headline": "Senior Full-Stack Developer",
+  "location": "Córdoba, Argentina",
+  "summary": "Senior Full-Stack Developer with 15+ years of experience across Banking, Fintech, Cybersecurity, Healthcare, and Enterprise environments. Core experience in TypeScript, React, Node.js, and .NET, among others, with a strong focus on building reliable, maintainable software and modernizing legacy platforms. Currently focused on AI-assisted software development, exploring LLMs, coding agents, MCP, and agent-based architectures.",
   "links": [
-    { "label": "GitHub", "url": "https://example.com/github" },
-    { "label": "LinkedIn", "url": "https://example.com/linkedin" }
+    { "label": "Portfolio", "url": "https://slaveofthecode.vercel.app/" },
+    { "label": "GitHub", "url": "https://github.com/slaveofthecode" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/gustavoml/" }
   ]
 }

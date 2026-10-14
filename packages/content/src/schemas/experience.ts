@@ -8,7 +8,7 @@ export const experienceSchema = z.object({
   startDate: yearMonthSchema,
   endDate: yearMonthSchema.nullable(),
   location: z.string().min(1).optional(),
-  summary: z.string().min(1),
+  summary: z.string().min(1).optional(),
   highlights: z.array(z.string().min(1)),
   tech: z.array(z.string().min(1)),
 });

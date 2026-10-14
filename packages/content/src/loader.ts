@@ -1,12 +1,14 @@
 import type { ZodError } from "zod";
 import { type Content, contentSchema } from "./schemas";
 
+import enCertifications from "../data/en/certifications.json";
 import enEducation from "../data/en/education.json";
 import enExperience from "../data/en/experience.json";
 import enLanguages from "../data/en/languages.json";
 import enNow from "../data/en/now.json";
 import enProfile from "../data/en/profile.json";
 import enSkills from "../data/en/skills.json";
+import esCertifications from "../data/es/certifications.json";
 import esEducation from "../data/es/education.json";
 import esExperience from "../data/es/experience.json";
 import esLanguages from "../data/es/languages.json";
@@ -28,6 +30,7 @@ const DATA: Record<Locale, unknown> = {
     skills: enSkills,
     languages: enLanguages,
     education: enEducation,
+    certifications: enCertifications,
     now: enNow,
   },
   es: {
@@ -36,6 +39,7 @@ const DATA: Record<Locale, unknown> = {
     skills: esSkills,
     languages: esLanguages,
     education: esEducation,
+    certifications: esCertifications,
     now: esNow,
   },
 };

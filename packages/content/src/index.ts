@@ -1,4 +1,5 @@
 export type {
+  Certification,
   Content,
   Education,
   Experience,
@@ -11,6 +12,7 @@ export type {
   SkillGroup,
 } from "./schemas";
 export {
+  certificationSchema,
   contentSchema,
   educationSchema,
   experienceSchema,
@@ -22,6 +24,8 @@ export {
   profileSchema,
   skillGroupSchema,
   yearMonthSchema,
+  yearOrYearMonthSchema,
+  yearSchema,
   isoDateSchema,
 } from "./schemas";
 export { getContent, parseContent, LOCALES } from "./loader";

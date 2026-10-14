@@ -8,6 +8,19 @@ export const yearMonthSchema = z
     "Expected a year-month date in YYYY-MM format",
   );
 
+/** A four-digit year (`YYYY`). */
+export const yearSchema = z
+  .string()
+  .regex(/^\d{4}$/, "Expected a four-digit year");
+
+/** A year (`YYYY`) or year-month (`YYYY-MM`). */
+export const yearOrYearMonthSchema = z
+  .string()
+  .regex(
+    /^\d{4}(-(0[1-9]|1[0-2]))?$/,
+    "Expected a year (YYYY) or year-month (YYYY-MM)",
+  );
+
 /** An ISO 8601 date (`YYYY-MM-DD`) or full timestamp. */
 export const isoDateSchema = z
   .string()

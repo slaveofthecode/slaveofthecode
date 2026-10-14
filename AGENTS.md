@@ -49,6 +49,7 @@ Verification before finishing ANY change: `npm run build` (see the `verify-build
 ├── tsconfig.json               # path aliases: @/* → src/*, @cv/* → src/data/*
 ├── update-readme.js            # CI script: swaps the README random GIF
 ├── README.md                   # GitHub PROFILE README (not the site)
+├── docs/project-analysis.md    # Human-facing overview: stack, structure, backlog
 └── src/
     ├── pages/
     │   ├── index.astro         # single page, assembles all sections
@@ -123,7 +124,7 @@ When adding a `projects[]` entry, the icon map in `Projects.astro`
 ### 5.2 Feature/bug-fix loop (any agent)
 1. Read this file + `.harness/memory/project-state.md`.
 2. Load the relevant skill from `.harness/skills/` (see index below).
-3. Create/completask on a feature branch (see §6), never on `main`.
+3. Create/complete a task on a feature branch (see §6), never on `main`.
 4. Make the change, run `npm run build`, update memory per §8, and **leave the changes
    staged in the working tree. The agent does NOT commit.**
 5. Show the human the diff and **wait** for the human to review, commit, and `git push`
@@ -153,6 +154,17 @@ When adding a `projects[]` entry, the icon map in `Projects.astro`
   summarizing the change, and **assigns it to the human** (`slaveofthecode`). Report the PR URL.
 - Never stage or commit secrets, `node_modules/`, `dist/`, `.astro/`, or `.qodo/`.
 - If a change is generated-consistent (e.g. `astro check` output), regenerate, don't hand-edit.
+- **Git gotchas (folded from lessons.md):**
+  - Direct pushes to `main` are rejected (`GH013`) by the `rs-validation-pr`
+    **ruleset** (not classic branch protection — `branches/<name>/protection` may 404
+    while pushes are still blocked).
+  - Once a PR is open on a branch, any new commit pushed to that branch lands in the
+    same PR — keep follow-ups on that branch only if they belong in it.
+  - After restarting the IDE/terminal, ssh-agent can lose the key (`ssh-add -l` → no
+    identities). Fix: `ssh-add --apple-use-keychain ~/.ssh/id_ed25519`; if `ssh -T`
+    still fails, re-add the public key to GitHub.
+  - opencode custom commands need a `template` field (`prompt` is rejected by the
+    config validator). Validate with `opencode debug config` before committing.
 
 ---
 

@@ -1,0 +1,7 @@
+[
+  {
+    "id": "languages-and-frameworks",
+    "name": "Languages & Frameworks",
+    "items": ["TypeScript", "Node.js", "Astro"]
+  }
+]

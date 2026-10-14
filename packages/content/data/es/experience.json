@@ -1,0 +1,16 @@
+[
+  {
+    "id": "example-co",
+    "company": "Example Co",
+    "role": "Ingeniero de Software",
+    "startDate": "2020-01",
+    "endDate": null,
+    "location": "Remoto",
+    "summary": "Entrada de experiencia de marcador de posición.",
+    "highlights": [
+      "Entregué una funcionalidad de ejemplo",
+      "Mejoré una métrica de ejemplo"
+    ],
+    "tech": ["TypeScript", "Node.js"]
+  }
+]

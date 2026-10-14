@@ -1,0 +1,14 @@
+[
+  {
+    "id": "example-course",
+    "kind": "course",
+    "title": "Example Course",
+    "description": "Placeholder 'now' item used only to exercise the schema and parity tests.",
+    "progress": 40,
+    "status": "in-progress",
+    "startedAt": "2026-01-15",
+    "updatedAt": "2026-10-01",
+    "links": [{ "label": "Repository", "url": "https://example.com/repo" }],
+    "tags": ["typescript", "learning"]
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "name": "Jane Doe",
+  "headline": "Placeholder headline",
+  "location": "Placeholder City",
+  "summary": "Placeholder summary used only to exercise the schema and the en/es parity tests.",
+  "links": [
+    { "label": "GitHub", "url": "https://example.com/github" },
+    { "label": "LinkedIn", "url": "https://example.com/linkedin" }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Jane Doe",
+  "headline": "Titular de ejemplo",
+  "location": "Ciudad de ejemplo",
+  "summary": "Resumen de marcador de posición usado solo para probar el esquema y la paridad en/es.",
+  "links": [
+    { "label": "GitHub", "url": "https://example.com/github" },
+    { "label": "LinkedIn", "url": "https://example.com/linkedin" }
+  ]
+}

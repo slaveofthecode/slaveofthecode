@@ -1,0 +1,14 @@
+[
+  {
+    "id": "example-course",
+    "kind": "course",
+    "title": "Curso de ejemplo",
+    "description": "Ítem de 'now' de marcador de posición usado solo para probar el esquema y la paridad.",
+    "progress": 40,
+    "status": "in-progress",
+    "startedAt": "2026-01-15",
+    "updatedAt": "2026-10-01",
+    "links": [{ "label": "Repositorio", "url": "https://example.com/repo" }],
+    "tags": ["typescript", "learning"]
+  }
+]

@@ -10,22 +10,34 @@ Agent memory. Read at the start of every session; update at the end of every tas
   `BOOTSTRAP.md` moved to `docs/BOOTSTRAP.md`.
 - Privacy fix: `content-source/` gitignored; the resume PDF was removed from the
   branch history and `chore/harness` was rewritten to a single clean commit.
-- PR-2 (`chore/workspace-scaffold`): moved the v1 Astro portfolio to `legacy/` (git mv);
-  deleted the v1 harness (`.harness/`, v1 subagents, `.cursor`); created Bun workspaces
-  (`apps/*`, `packages/*`), root scripts (`--filter`), `tsconfig.base.json`, `biome.json`,
-  empty `@portfolio/{content,web,api}` with `package.json`/`tsconfig.json`/`AGENTS.md`,
+- PR-2 (`chore/workspace-scaffold`) merged into `v2` (PR #8, merge `f040ba1`, commit
+  `7320aa8`): moved the v1 Astro portfolio to `legacy/` (git mv); deleted the v1 harness
+  (`.harness/`, v1 subagents, `.cursor`); created Bun workspaces (`apps/*`, `packages/*`),
+  root scripts (`--filter`), `tsconfig.base.json`, `biome.json`, empty
+  `@portfolio/{content,web,api}` with `package.json`/`tsconfig.json`/`AGENTS.md`,
   `scripts/check-boundaries.ts` and `.github/workflows/ci.yml`. `bun install` + lint +
   typecheck + test + build + check:boundaries pass; the boundary script was proven to fail
   on a forbidden `@portfolio/web` → `@portfolio/api` import, then reverted.
 
 ## In progress
-- PR-2 awaiting human commit + push, then the PR (base `v2`). Do not merge.
+- PR-3 (`feat/content-schemas`, from `v2`@`f040ba1`) awaiting human commit + push, then the
+  PR (base `v2`). Do not merge. Implemented, all checks green:
+  - `packages/content/src/schemas/{common,profile,experience,skills,languages,education,now,index}.ts`
+    (Zod 3.25; `yearMonth` YYYY-MM, ISO dates, `linkSchema`, `contentSchema` with
+    `education` defaulting to `[]`).
+  - `packages/content/src/loader.ts`: `getContent(locale)` / `parseContent(locale, raw)`
+    using **static JSON imports** (no `fs`), readable validation errors; `LOCALES` const.
+  - `packages/content/src/index.ts` re-exports schemas, types, loader.
+  - `packages/content/data/{en,es}/*.json`: obviously-fake placeholder fixtures
+    (`Jane Doe`, `Example Co`) — no real or personal data.
+  - `packages/content/test/{schemas,parity,loader}.test.ts`: 22 tests (valid/invalid cases,
+    en/es id/order/keys/non-text parity, loader error messages).
+  - Deps: `zod@^3.23.8` in `packages/content`; `@types/bun` in root devDependencies;
+    `packages/content/tsconfig.json` includes `test`/`data`, `types: ["bun"]`.
 
 ## Next steps
-- PR-3 `feat/content-schemas`: Zod schemas + `getContent(locale)` loader (static JSON
-  imports, no `fs`), fixture data, schema and en/es parity tests.
 - PR-4 `feat/ingest-resume`: `extract-resume.ts` + `ingest:extract`, real `data/en/*.json`,
-  draft `data/es/*.json`, `docs/ingest-notes.md`.
+  draft `data/es/*.json`, `docs/ingest-notes.md`. Replace the PR-3 placeholder fixtures.
 - PR-5..PR-7 web: base (Astro/Tailwind/i18n/tema), CV sections, Now section.
 - PR-8 (stretch) `feat/api-skeleton`.
 

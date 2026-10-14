@@ -1,0 +1,13 @@
+[
+  {
+    "id": "example-co",
+    "company": "Example Co",
+    "role": "Software Engineer",
+    "startDate": "2020-01",
+    "endDate": null,
+    "location": "Remote",
+    "summary": "Placeholder experience entry.",
+    "highlights": ["Shipped an example feature", "Improved an example metric"],
+    "tech": ["TypeScript", "Node.js"]
+  }
+]

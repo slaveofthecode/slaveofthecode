@@ -1,13 +1,245 @@
 [
   {
-    "id": "example-co",
-    "company": "Example Co",
-    "role": "Software Engineer",
-    "startDate": "2020-01",
-    "endDate": null,
-    "location": "Remote",
-    "summary": "Placeholder experience entry.",
-    "highlights": ["Shipped an example feature", "Improved an example metric"],
-    "tech": ["TypeScript", "Node.js"]
+    "id": "nybble-group",
+    "company": "Nybble Group",
+    "role": "Senior Full-Stack Engineer",
+    "startDate": "2024-05",
+    "endDate": "2026-06",
+    "highlights": [
+      "Delivered enterprise software solutions using Angular, React, TypeScript, Node.js, Java, Docker, and AWS.",
+      "Applied AI-assisted development workflows using Claude and Cursor to support implementation, validation, and software quality.",
+      "Reviewed and validated AI-generated code to ensure maintainability, consistency, and engineering quality standards.",
+      "Collaborated in small, highly autonomous engineering teams and contributed to technical decision-making."
+    ],
+    "tech": [
+      "Angular",
+      "Java",
+      "React",
+      "TypeScript",
+      "Camunda",
+      "Spring Boot",
+      "HTML",
+      "Claude Code",
+      "GitHub Copilot",
+      "Cursor"
+    ]
+  },
+  {
+    "id": "itlg",
+    "company": "ITLG",
+    "role": "Senior React Developer",
+    "startDate": "2023-01",
+    "endDate": "2023-12",
+    "highlights": [
+      "Contributed to the migration of a legacy banking platform toward a Micro Frontend architecture using React and TypeScript.",
+      "Participated in modernization initiatives for core banking systems.",
+      "Served as a front-end technical reference, helping maintain consistency in architecture, code quality, and development practices across distributed teams."
+    ],
+    "tech": [
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "HTML",
+      "Redux",
+      "Axios",
+      "Java"
+    ]
+  },
+  {
+    "id": "kalto",
+    "company": "Kalto",
+    "role": "Senior React Developer",
+    "startDate": "2021-11",
+    "endDate": "2022-11",
+    "highlights": [
+      "Developed financial management and payment processing features for a B2B fintech platform serving the Mexican market.",
+      "Implemented unit and integration testing practices to support application reliability and maintainability."
+    ],
+    "tech": [
+      "React",
+      "Redux",
+      "TypeScript",
+      "JavaScript",
+      "UT (Jest)",
+      "Node.JS",
+      "Bootstrap",
+      "GraphQL"
+    ]
+  },
+  {
+    "id": "ohana",
+    "company": "Ohana",
+    "role": "React Native Developer",
+    "startDate": "2021-08",
+    "endDate": "2021-10",
+    "highlights": [
+      "Developed mobile fintech features including payments, transfers, purchases, and account management capabilities.",
+      "Collaborated with the mobile development team to build front-end components and user interface features for financial applications."
+    ],
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Figma (pixel-to-pixel)",
+      "React Native"
+    ]
+  },
+  {
+    "id": "cognizant-softvision",
+    "company": "Cognizant Softvision",
+    "role": "React Developer",
+    "startDate": "2021-02",
+    "endDate": "2021-07",
+    "highlights": [
+      "Implemented new features and UI enhancements for a pharmaceutical platform using React and Figma-based designs.",
+      "Delivered responsive user interface implementations based on high-fidelity designs."
+    ],
+    "tech": ["HTML", "JavaScript", "Hooks", "React", "TypeScript"]
+  },
+  {
+    "id": "mcafee",
+    "company": "McAfee",
+    "role": "Angular Developer",
+    "startDate": "2019-10",
+    "endDate": "2021-01",
+    "highlights": [
+      "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
+    ],
+    "tech": [
+      "Angular",
+      "ElectronJS",
+      "JavaScript",
+      "Node.js",
+      "HTML",
+      "TypeScript",
+      "Jest"
+    ]
+  },
+  {
+    "id": "dxc-technology",
+    "company": "DXC Technology",
+    "role": "Full-Stack Developer",
+    "startDate": "2018-09",
+    "endDate": "2019-09",
+    "highlights": [
+      "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
+      "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
+    ],
+    "tech": [
+      "C#",
+      "CSS",
+      "ASP.Net",
+      "JavaScript",
+      "Bootstrap",
+      "HTML",
+      "jQuery"
+    ]
+  },
+  {
+    "id": "bancor-2013",
+    "company": "Bancor",
+    "role": "Full-Stack Developer",
+    "startDate": "2013-12",
+    "endDate": "2018-09",
+    "highlights": [
+      "Designed, maintained, and modernized banking systems, intranet platforms, and customer-facing applications.",
+      "Delivered full-stack solutions using C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server, and JavaScript.",
+      "Maintained and enhanced business-critical banking applications and implemented new functionality across multiple banking products."
+    ],
+    "tech": [
+      "C#",
+      "Visual Fox",
+      "SQL Server",
+      "JavaScript",
+      "jQuery",
+      "Entity Framework",
+      "ASP.Net",
+      "CSS",
+      "MustacheJS",
+      "UnderscoreJS",
+      "RequiredJS",
+      ".NET MVC",
+      ".NET Web API",
+      "FoxPro",
+      "WPF / WCF"
+    ]
+  },
+  {
+    "id": "mystic-solutions",
+    "company": "Mystic Solutions Limited",
+    "role": "Freelance Developer",
+    "startDate": "2012-08",
+    "endDate": "2016-10",
+    "highlights": [],
+    "tech": [
+      "C#",
+      ".NET",
+      "SQL Server",
+      "JavaScript",
+      ".NET MVC",
+      "HTML",
+      "jQuery",
+      "CSS"
+    ]
+  },
+  {
+    "id": "harriague-asociados",
+    "company": "Harriague + Asociados",
+    "role": "Senior Software Developer",
+    "startDate": "2013-03",
+    "endDate": "2013-12",
+    "highlights": [],
+    "tech": ["MongoDB", ".NET MVC", "JavaScript", "C#", ".NET Web API"]
+  },
+  {
+    "id": "globant",
+    "company": "Globant",
+    "role": "Full-Stack Developer",
+    "startDate": "2011-07",
+    "endDate": "2013-03",
+    "highlights": [],
+    "tech": [".NET Razor", "MVC", "jQuery", "JavaScript", "C#"]
+  },
+  {
+    "id": "particular",
+    "company": "Particular",
+    "role": "Freelance Part-Time Developer",
+    "startDate": "2011-09",
+    "endDate": "2011-12",
+    "highlights": [],
+    "tech": ["ASP.NET", "ASP", "JavaScript", "C#", "SQL Server"]
+  },
+  {
+    "id": "bancor-2008",
+    "company": "Bancor",
+    "role": "Full-Stack Developer",
+    "startDate": "2008-06",
+    "endDate": "2011-07",
+    "highlights": [],
+    "tech": [
+      "C#",
+      "SQL Server",
+      "JavaScript",
+      ".NET",
+      "Visual Fox",
+      "WPF / WCF",
+      "jQuery"
+    ]
+  },
+  {
+    "id": "dicicom",
+    "company": "Dicicom",
+    "role": "Full-Stack Developer",
+    "startDate": "2007-06",
+    "endDate": "2008-06",
+    "highlights": [],
+    "tech": [
+      "SQL Server",
+      "HTML",
+      "JavaScript",
+      "ASP.NET Web Forms",
+      "CSS",
+      "C#"
+    ]
   }
 ]

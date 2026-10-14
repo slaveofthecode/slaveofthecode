@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { certificationSchema } from "./certifications";
 import { educationSchema } from "./education";
 import { experienceSchema } from "./experience";
 import { languageSchema } from "./languages";
@@ -12,11 +13,13 @@ export const contentSchema = z.object({
   skills: z.array(skillGroupSchema),
   languages: z.array(languageSchema),
   education: z.array(educationSchema).default([]),
+  certifications: z.array(certificationSchema).default([]),
   now: z.array(nowItemSchema),
 });
 
 export type Content = z.infer<typeof contentSchema>;
 
+export * from "./certifications";
 export * from "./common";
 export * from "./education";
 export * from "./experience";

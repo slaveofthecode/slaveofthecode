@@ -1,4 +1,4 @@
 [
-  { "id": "english", "name": "Inglés", "level": "Nativo" },
-  { "id": "spanish", "name": "Español", "level": "C1" }
+  { "id": "spanish", "name": "Español", "level": "Nativo / Bilingüe" },
+  { "id": "english", "name": "Inglés", "level": "Competencia profesional" }
 ]

@@ -19,36 +19,37 @@ Agent memory. Read at the start of every session; update at the end of every tas
   typecheck + test + build + check:boundaries pass; the boundary script was proven to fail
   on a forbidden `@portfolio/web` → `@portfolio/api` import, then reverted.
 
+- PR-3 (`feat/content-schemas`) merged into `v2` (PR #9, merge `8ebb3d1`, commit `5d3ffad`):
+  Zod schemas, `getContent(locale)` loader (static JSON imports, no `fs`), placeholder
+  fixtures, 22 schema + en/es parity + loader tests. `zod@^3.23.8`; `@types/bun` at root.
+
 ## In progress
-- PR-3 (`feat/content-schemas`, from `v2`@`f040ba1`) awaiting human commit + push, then the
-  PR (base `v2`). Do not merge. Implemented, all checks green:
-  - `packages/content/src/schemas/{common,profile,experience,skills,languages,education,now,index}.ts`
-    (Zod 3.25; `yearMonth` YYYY-MM, ISO dates, `linkSchema`, `contentSchema` with
-    `education` defaulting to `[]`).
-  - `packages/content/src/loader.ts`: `getContent(locale)` / `parseContent(locale, raw)`
-    using **static JSON imports** (no `fs`), readable validation errors; `LOCALES` const.
-  - `packages/content/src/index.ts` re-exports schemas, types, loader.
-  - `packages/content/data/{en,es}/*.json`: obviously-fake placeholder fixtures
-    (`Jane Doe`, `Example Co`) — no real or personal data.
-  - `packages/content/test/{schemas,parity,loader}.test.ts`: 22 tests (valid/invalid cases,
-    en/es id/order/keys/non-text parity, loader error messages).
-  - Deps: `zod@^3.23.8` in `packages/content`; `@types/bun` in root devDependencies;
-    `packages/content/tsconfig.json` includes `test`/`data`, `types: ["bun"]`.
+- PR-4 (`feat/ingest-resume`, from `v2`@`8ebb3d1`) awaiting human commit + push, then the
+  PR (base `v2`). Do not merge. Implemented, all checks green (30 tests):
+  - `packages/content/scripts/extract-resume.ts` (unpdf dev-dep) → `content-source/resume.txt`;
+    root script `ingest:extract`. Node-compatible file resolution; logs only page/char counts.
+  - Real `data/en/*.json` from the PDF text (profile, 14 experience entries, 7 skill groups,
+    2 languages, education, certifications); `data/es/*.json` is a **draft translation**
+    (non-text fields identical — enforced by parity tests).
+  - Schema tweaks to fit real data: `experience[].summary` optional; `education[]` dates and
+    `certifications[].date` accept `YYYY` or `YYYY-MM`; new `certifications[]` collection.
+  - `docs/ingest-notes.md` with open questions for the human.
+  - `now[]` stays mock until PR-7.
 
 ## Next steps
-- PR-4 `feat/ingest-resume`: `extract-resume.ts` + `ingest:extract`, real `data/en/*.json`,
-  draft `data/es/*.json`, `docs/ingest-notes.md`. Replace the PR-3 placeholder fixtures.
-- PR-5..PR-7 web: base (Astro/Tailwind/i18n/tema), CV sections, Now section.
+- Human: review PR-4 JSON diff + answer `docs/ingest-notes.md`.
+- PR-5..PR-7 web: base (Astro/Tailwind/i18n/theme), CV sections, Now section.
 - PR-8 (stretch) `feat/api-skeleton`.
 
 ## Open decisions
-- Resume source is in English → `data/en/*.json` is the source language, `data/es/*`
-  is a draft translation (confirm at PR-4).
-- The human asked that the public site show the same contact info as the PDF. Confirm
-  at PR-4 which fields (email/LinkedIn/GitHub) are safe to publish; phone/address stay
-  out by default (public repo).
+- Resume source is English → `data/en/*.json` authoritative, `data/es/*` draft (human to
+  review wording).
+- Contact data: **email NOT published** (confirmed); phone/address never. Profile links
+  published: Portfolio, GitHub, LinkedIn.
+- Certifications: new `certifications[]` collection (approved). MCP vs HTML5 Specialist
+  Credly URL ambiguity → `docs/ingest-notes.md`.
 - Visual direction: keep the current identity as a base but with a refreshed look.
-- "Now" items: first iteration uses clearly-marked mock data (replace later with real ones).
+- "Now" items: first iteration uses clearly-marked mock data (replace in PR-7).
 
 ## Follow-ups / risks
 - Privacy incident: the PDF blob `98825db2990add365133a536ba45c5a8cbd30c3d` was pushed
@@ -57,3 +58,6 @@ Agent memory. Read at the start of every session; update at the end of every tas
 - Profile infrastructure stays at the repo root (not `legacy/`): `README.md`,
   `update-readme.js`, `.github/workflows/update-readme.yml`. Pre-existing issue: that
   workflow pushes directly to the default branch, which is protected (`GH013`).
+- Pre-existing privacy: `legacy/src/data/resume.json` and `legacy/src/layouts/Layout.astro`
+  still contain the old email/phone (moved in PR-2). Decide whether to scrub when `legacy/`
+  is removed at cutover (out of scope for PR-4).

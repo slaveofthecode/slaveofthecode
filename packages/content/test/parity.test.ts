@@ -1,11 +1,13 @@
 import { describe, expect, it } from "bun:test";
 
+import enCertifications from "../data/en/certifications.json";
 import enEducation from "../data/en/education.json";
 import enExperience from "../data/en/experience.json";
 import enLanguages from "../data/en/languages.json";
 import enNow from "../data/en/now.json";
 import enProfile from "../data/en/profile.json";
 import enSkills from "../data/en/skills.json";
+import esCertifications from "../data/es/certifications.json";
 import esEducation from "../data/es/education.json";
 import esExperience from "../data/es/experience.json";
 import esLanguages from "../data/es/languages.json";
@@ -14,13 +16,20 @@ import esProfile from "../data/es/profile.json";
 import esSkills from "../data/es/skills.json";
 
 type Row = Record<string, unknown>;
-type Collection = "experience" | "skills" | "languages" | "education" | "now";
+type Collection =
+  | "experience"
+  | "skills"
+  | "languages"
+  | "education"
+  | "certifications"
+  | "now";
 
 const en: Record<Collection, Row[]> = {
   experience: enExperience as unknown as Row[],
   skills: enSkills as unknown as Row[],
   languages: enLanguages as unknown as Row[],
   education: enEducation as unknown as Row[],
+  certifications: enCertifications as unknown as Row[],
   now: enNow as unknown as Row[],
 };
 
@@ -29,6 +38,7 @@ const es: Record<Collection, Row[]> = {
   skills: esSkills as unknown as Row[],
   languages: esLanguages as unknown as Row[],
   education: esEducation as unknown as Row[],
+  certifications: esCertifications as unknown as Row[],
   now: esNow as unknown as Row[],
 };
 
@@ -37,6 +47,7 @@ const collections: Collection[] = [
   "skills",
   "languages",
   "education",
+  "certifications",
   "now",
 ];
 
@@ -46,6 +57,7 @@ const TEXT_FIELDS: Record<Collection, string[]> = {
   skills: ["name", "items"],
   languages: ["name", "level"],
   education: ["institution", "title"],
+  certifications: ["name", "issuer"],
   now: ["title", "description", "tags"],
 };
 

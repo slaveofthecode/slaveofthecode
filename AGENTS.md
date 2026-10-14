@@ -1,243 +1,30 @@
-# AGENTS.md — Slave of the Code (Gustavo Lopez)
+# slaveofthecode portfolio v2
 
-Canonical context and rules for **any AI coding agent** working on this repository.
-Read this file in full before doing anything. Every other harness file in `.harness/`
-is consumed relative to this one. This file is the **single source of truth**;
-tool-specific adapters (`.opencode/`, `.claude/`, `.cursor/`) only forward to it.
+Living CV site: profile, experience, skills, languages, "What I'm working on now",
+and (later) an AI chat for recruiters. Default language English, plus Spanish.
+Talk to the human in Spanish; write code/docs/commits/PRs in English.
 
-If this file conflicts with a tool's own config or another instruction file,
-**AGENTS.md wins**.
+## Layout
+- packages/content: Zod schemas + CV data (data/en, data/es). SINGLE SOURCE OF TRUTH.
+- apps/web: Astro + Tailwind, static output.
+- apps/api: Node-compatible TypeScript backend (chat later). Skeleton only for now.
+- docs/: architecture, workflows, decisions, STATUS.md (memory), learnings.md
+- legacy/: the old portfolio. Reference only. Do not modify. Excluded from lint/CI.
 
----
+## Commands (Bun, from repo root)
+bun install | bun run dev | bun run lint | bun run typecheck | bun test | bun run build
+bun run check:boundaries | bun run ingest:extract
 
-## 1. What this repository is
-
-This is a **triple-purpose personal repo** for Gustavo "slaveofthecode" Lopez:
-
-1. **Portfolio website** — an [Astro](https://astro.build) 4 static site deployed to
-   https://slaveofthecode.vercel.app/. All CV content is data-driven.
-2. **GitHub profile README** — `README.md` renders on
-   https://github.com/slaveofthecode and is automatically rewritten with a daily random GIF.
-3. **Special GitHub repo** — `slaveofthecode/slaveofthecode`.
-
-Do not confuse the two faces: the **website** is built from `src/`, the **profile README**
-is plain Markdown served by GitHub. Changes to one rarely affect the other.
-
----
-
-## 2. Commands
-
-Run these from the repository root. Do not invent other scripts.
-
-| Command | Action |
-|---|---|
-| `npm run dev` | Start the Astro dev server (also aliased `npm start`) |
-| `npm run build` | Type-check then build: runs `astro check` then `astro build` |
-| `npm run preview` | Preview the production build locally |
-| `npx astro check` | Type-check only (fast feedback loop) |
-| `node update-readme.js` | Rewrite `README.md` with a random GIF (used by CI) |
-
-Verification before finishing ANY change: `npm run build` (see the `verify-build` skill).
-
----
-
-## 3. Architecture map
-
-```
-├── astro.config.mjs            # Astro config; only integration is Tailwind
-├── tailwind.config.mjs         # Tailwind 3 config
-├── tsconfig.json               # path aliases: @/* → src/*, @cv/* → src/data/*
-├── update-readme.js            # CI script: swaps the README random GIF
-├── README.md                   # GitHub PROFILE README (not the site)
-├── docs/project-analysis.md    # Human-facing overview: stack, structure, backlog
-└── src/
-    ├── pages/
-    │   ├── index.astro         # single page, assembles all sections
-    │   └── api/random-gif.ts   # API route → 302 redirect to a random GIF
-    ├── components/
-    │   ├── MainDataMinimalist.astro
-    │   ├── MultilanguageSelect.astro  # currently fully commented-out
-    │   ├── DarkWhite.astro            # dark/white theme toggle
-    │   ├── InProgress.astro           # work-in-progress badge
-    │   ├── KeyboardManager.astro      # hotkeypad command palette (Cmd/Ctrl+K)
-    │   └── sections/                  # one component per CV section
-    │       ├── Header.astro     AboutMe.astro  Experience.astro
-    │       ├── Educations.astro  Skills.astro  Projects.astro
-    │       └── Certifications.astro
-    ├── layouts/Layout.astro    # <html>, OG tags, fonts, schema.org JSON-LD
-    ├── data/resume.json        # THE cv data model (see §4)
-    ├── icons/                  # inline SVG icon components
-    ├── styles/reset.css
-    ├── utils/index.ts          # getJsonCV() → typed import of resume.json
-    └── types.d.ts
-```
-
-Key details:
-
-- **Data source**: every section imports its data from `src/data/resume.json` via
-  `getJsonCV()` (`src/utils/index.ts`) or `import { basics } from "@/data/resume.json"`.
-  `@/` → `src/`, `@cv/` → `src/data/`.
-- **API route**: `src/pages/api/random-gif.ts` redirects (`302`) to a random Giphy URL
-  with `Content-Disposition: inline` so GitHub renders it as an image.
-- **i18n**: a multilingual select component exists but is **commented out**; the site is
-  effectively English-only (some UI copy is Spanish; preserve the existing mix).
-- **Theme**: `DarkWhite.astro` toggles `dark:` Tailwind classes on `<html>`.
-
----
-
-## 4. Data model — `src/data/resume.json`
-
-All CV content lives here. When adding content, update this file (see the
-`add-resume-entry` skill for the exact recipe). Current top-level keys:
-
-| Key | Shape (one entry) |
-|---|---|
-| `basics` | `{ name, title, label, email, phone, url, summary, location, profiles[] }` |
-| `experience[]` | `{ rol, company, mode:{time,type}, date:{start,end}, summary, stack[], url }` |
-| `education[]` | `{ institution:{abbreviation,name,url}, area, studyType, date:{start,end} }` |
-| `skills[]` | `{ name }` |
-| `projects[]` | `{ name, url:{Github,Demo?}, isActive?, description, highlights[] }` |
-| `certificates[]` | `{ name, date, issuedBy, url }` |
-| `volunteer[]`, `awards[]`, `publications[]`, `languages[]`, `interests[]`, `references[]` | reserved (present, some not rendered) |
-
-Rendering expects these keys verbatim (e.g. `Projects.astro` reads `url.Demo` and
-`url.Github`; `isActive` is unused by the renderer today). **Do not rename keys**
-without updating the renderer.
-
-When adding a `projects[]` entry, the icon map in `Projects.astro`
-(`ICONS_PROFILES`) supports the url keys `Github` and `Demo`.
-
----
-
-## 5. Workflows
-
-### 5.1 Daily random-GIF README (GitHub Actions)
-- Trigger: cron daily + manual. See `.github/workflows/update-readme.yml`.
-- Steps: `npm install` → `node update-readme.js` → commit & push if changed.
-- `update-readme.js` reads `README.md`, replaces the `![Random GIF](...)` line with a
-  randomly picked GIF from its local `gifs` array.
-- GIF URL lists exist in **three places** that must stay in sync:
-  1. `update-readme.js` (the CI writer)
-  2. `src/pages/api/random-gif.ts` (the live site endpoint)
-  3. the static fallback in `README.md` (renders between CI runs)
-
-### 5.2 Feature/bug-fix loop (any agent)
-1. Read this file + `.harness/memory/project-state.md`.
-2. Load the relevant skill from `.harness/skills/` (see index below).
-3. Create/complete a task on a feature branch (see §6), never on `main`.
-4. Make the change, run `npm run build`, update memory per §8, and **leave the changes
-   staged in the working tree. The agent does NOT commit.**
-5. Show the human the diff and **wait** for the human to review, commit, and `git push`
-   (the human owns commit AND push). If the human wants edits, incorporate and repeat.
-6. Only after the human confirms the push, **create the Pull Request** (see §6):
-   `gh pr create` with a meaningful description, base `main`, **assigned to the human**
-   `slaveofthecode`. Report the PR URL.
-
----
-
-## 6. Git & branching policy (HARD RULES)
-
-- **Never commit, push, or PR directly on `main`.** Request a branch instead.
-- Branch naming convention: `type/###-short-kebab-slug`
-  - `type` ∈ `feat`, `fix`, `chore`, `docs`, `refactor`, `test`
-  - `###` = zero-padded ordinal per type (next counter for the type)
-  - Examples: `feat/001-add-new-login-button`, `fix/002-fix-mobile-nav`, `chore/003-update-deps`
-- Before starting a task, determine the next ordinal by listing existing branches:
-  `git branch -a | grep "^..*<type>/"` and take max+1.
-- Commit style: imperative, concise, prefixed with the conventional type,
-  e.g. `feat: add dark mode toggle`. Never push commits that fail to build.
-- **Commit and push only the human.** The agent stages the changes and shows the diff;
-  the human reviews, commits, and runs `git push` (and owns the remote). The agent never
-  commits or pushes.
-- **Create the PR after the human pushes.** Once the human confirms the push, the agent
-  opens the Pull Request to `main` with `gh pr create`, writes a meaningful description
-  summarizing the change, and **assigns it to the human** (`slaveofthecode`). Report the PR URL.
-- Never stage or commit secrets, `node_modules/`, `dist/`, `.astro/`, or `.qodo/`.
-- If a change is generated-consistent (e.g. `astro check` output), regenerate, don't hand-edit.
-- **Git gotchas (folded from lessons.md):**
-  - Direct pushes to `main` are rejected (`GH013`) by the `rs-validation-pr`
-    **ruleset** (not classic branch protection — `branches/<name>/protection` may 404
-    while pushes are still blocked).
-  - Once a PR is open on a branch, any new commit pushed to that branch lands in the
-    same PR — keep follow-ups on that branch only if they belong in it.
-  - After restarting the IDE/terminal, ssh-agent can lose the key (`ssh-add -l` → no
-    identities). Fix: `ssh-add --apple-use-keychain ~/.ssh/id_ed25519`; if `ssh -T`
-    still fails, re-add the public key to GitHub.
-  - opencode custom commands need a `template` field (`prompt` is rejected by the
-    config validator). Validate with `opencode debug config` before committing.
-
----
-
-## 7. Permissions & hard rules
-
-These rules apply to **every agent, in every tool**. The tool-specific adapters
-mirror them natively where the tool can enforce (opencode's permission engine),
-otherwise as instructions.
-
-**Always allowed**
-- Reading any project file, `git status/diff/log/branch`.
-- Running `npm run dev/build/preview`, `npx astro check`, `node update-readme.js`.
-- Editing files under `src/`, `config`, `README.md`, `package.json`, `AGENTS.md`.
-- Creating branches, staging files, and `gh pr create` to a **feature** branch.
-  The agent **never** commits or runs `git push` — the human does both (see §6).
-
-**Require human confirmation**
-- Any `git commit`, `git push`, `git merge`, `git reset --hard`, `git force`.
-- `npm install`/`npm uninstall` (dependency changes), any script not listed above.
-- Editing files under `.harness/memory/` — do it only via the `memory-update` protocol (§8).
-
-**Never (without explicit request)**
-- Checkout/switch to `main` or run destructive git ops.
-- Edit `dist/`, `.astro/`, `node_modules/`, `.qodo/`.
-- Replace the GIF list in only ONE of the three places (see §5.1 — all three stay in sync).
-- Leave commented-out code in new work (existing commented blobs in this repo are intentional).
-
----
-
-## 8. Memory & self-learning protocol (HARD)
-
-The harness learns. After **every completed task**, follow the `memory-update` skill:
-
-1. **Lessons** → append 1-3 concise bullets to `.harness/memory/lessons.md`
-   (`what changed`, `where`, and any `gotcha`).
-2. **Decisions** → if a meaningful architectural choice was made, log it in
-   `.harness/memory/decisions.md` (format: date · decision · rationale · alternatives).
-3. **State** → keep `.harness/memory/project-state.md` truthful: current branch,
-   in-flight work, known issues.
-4. **Consolidation** → when `lessons.md` grows (~20+ lines) or structure changes,
-   fold the durable knowledge back into this file and prune the memory log. Do this
-   in the same commit as the substantative change whenever reasonable.
-
-Memory files are plain Markdown so every tool can follow the same loop.
-
----
-
-## 9. Skills index (`.harness/skills/`)
-
-Load the relevant `SKILL.md` when the task matches. Read the file, follow it in full.
-
-| Skill | When to use |
-|---|---|
-| `add-resume-entry` | Adding/editing CV content in `src/data/resume.json` (projects, experience, skills…) |
-| `update-readme-gif` | Touching the daily GIF automation or GIF URL lists |
-| `verify-build` | Before finishing ANY change — required verification |
-| `memory-update` | After finishing any task — required self-learning step |
-
-## 10. Sub-agent index (`.harness/agents/`)
-
-Full definitions live in `.harness/agents/`. Tool adapters only forward to them.
-
-| Agent | Focus |
-|---|---|
-| `feature-builder` | Implement features/fixes in the Astro site |
-| `data-curator` | Maintain `resume.json` safely and schema-true |
-| `readme-maintainer` | Own `README.md` + the daily GIF workflow |
-| `site-reviewer` | Independent review; autoridade on build/type correctness |
-
----
-
-## 11. Do / Don't summary
-
-- Do: read `.harness/memory/project-state.md` first; run `npm run build` before finishing.
-- Don't: commit to `main`; duplicate GIF lists; invent new scripts; edit memory without protocol.
-- When unsure, prefer asking the human over guessing.
+## Rules
+1. Never invent CV data. Facts come from packages/content. en/es must stay in parity.
+2. Theme tokens only (CSS variables). No hard-coded colors.
+3. Git: NEVER run git commit/push/merge or gh pr merge. The human commits and pushes.
+   Never work on main or v2. Branch from an up-to-date v2 (docs/workflows/start-feature.md).
+4. PRs: only after the human pushed, per docs/workflows/open-pr.md (base v2, assignee @me).
+5. Done = lint + typecheck + test + build + check:boundaries pass. Report what you could not run.
+6. One feature per branch; small diffs; no new dependency without justification.
+7. Dependency rule: web and api never import each other; both may import @portfolio/content only.
+   No Bun-only APIs in apps/api or packages it uses.
+8. Session start: read docs/STATUS.md. Task end: update it.
+9. Reusable lessons go to docs/learnings.md as proposals. Do not edit this file yourself.
+10. Public repo: never commit the PDF, phone, address or private emails.

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git fetch*": "allow",
+      "git pull --ff-only*": "allow",
+      "git switch*": "allow",
+      "git checkout -b*": "allow",
+      "git add*": "allow",
+      "git commit*": "deny",
+      "git push*": "deny",
+      "git merge*": "deny",
+      "git reset --hard*": "deny",
+      "gh pr create*": "allow",
+      "gh pr view*": "allow",
+      "gh pr merge*": "deny",
+      "bun *": "allow",
+      "bunx *": "allow"
+    }
+  }
+}

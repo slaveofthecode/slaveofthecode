@@ -9,10 +9,11 @@ export const es: Strings = {
   nav: {
     label: "Principal",
     experience: "Experiencia",
-    skills: "Habilidades",
+    skills: "Skills",
     languages: "Idiomas",
     education: "Educación",
-    now: "Ahora",
+    certifications: "Certificaciones",
+    now: "Now",
   },
   theme: {
     label: "Tema de color",
@@ -34,7 +35,9 @@ export const es: Strings = {
   },
   home: {
     title: "Hola, construyo software confiable",
-    intro:
-      "Este es mi CV vivo. Pronto habrá más secciones — mientras tanto, sigue leyendo o escríbeme.",
+  },
+  cv: {
+    links: "Enlaces",
+    present: "Actualidad",
   },
 };

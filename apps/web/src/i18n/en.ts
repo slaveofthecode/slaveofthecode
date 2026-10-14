@@ -10,6 +10,7 @@ export const en = {
     skills: "Skills",
     languages: "Languages",
     education: "Education",
+    certifications: "Certifications",
     now: "Now",
   },
   theme: {
@@ -32,8 +33,10 @@ export const en = {
   },
   home: {
     title: "Hey, I build reliable software",
-    intro:
-      "This is my living CV. More sections are on the way — meanwhile, read on or reach out.",
+  },
+  cv: {
+    links: "Links",
+    present: "Present",
   },
 };
 

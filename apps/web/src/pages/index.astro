@@ -1,23 +1,48 @@
 ---
 import { getContent } from "@portfolio/content";
+import Section from "../components/Section.astro";
+import Certifications from "../components/sections/Certifications.astro";
+import Education from "../components/sections/Education.astro";
+import Experience from "../components/sections/Experience.astro";
+import Languages from "../components/sections/Languages.astro";
+import Profile from "../components/sections/Profile.astro";
+import Skills from "../components/sections/Skills.astro";
 import { getStrings } from "../i18n";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const locale = "en" as const;
 const t = getStrings(locale);
-const { profile } = getContent(locale);
+const content = getContent(locale);
 ---
 
 <BaseLayout locale={locale} path="/">
-  <section class="py-12">
-    <h1 class="font-heading text-2xl leading-tight text-fg sm:text-3xl">
-      {t.home.title}
-    </h1>
-    <p class="mt-4 max-w-prose font-mono text-lg text-muted">
-      {profile.headline}
-    </p>
-    <p class="mt-4 max-w-prose font-mono text-base text-muted">
-      {t.home.intro}
-    </p>
-  </section>
+  <Profile profile={content.profile} locale={locale} />
+
+  <Section id="experience" title={t.nav.experience}>
+    <Experience items={content.experience} locale={locale} />
+  </Section>
+
+  <Section id="skills" title={t.nav.skills}>
+    <Skills groups={content.skills} />
+  </Section>
+
+  <Section id="languages" title={t.nav.languages}>
+    <Languages items={content.languages} />
+  </Section>
+
+  {
+    content.education.length > 0 ? (
+      <Section id="education" title={t.nav.education}>
+        <Education items={content.education} locale={locale} />
+      </Section>
+    ) : null
+  }
+
+  {
+    content.certifications.length > 0 ? (
+      <Section id="certifications" title={t.nav.certifications}>
+        <Certifications items={content.certifications} locale={locale} />
+      </Section>
+    ) : null
+  }
 </BaseLayout>

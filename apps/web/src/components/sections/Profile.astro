@@ -1,0 +1,40 @@
+---
+import type { Profile } from "@portfolio/content";
+import { type Locale, getStrings } from "../../i18n";
+
+interface Props {
+  profile: Profile;
+  locale: Locale;
+}
+
+const { profile, locale } = Astro.props;
+const t = getStrings(locale);
+---
+
+<section class="py-12">
+  <h1 class="font-heading text-2xl leading-tight text-fg sm:text-3xl">
+    {t.home.title}
+  </h1>
+  <p class="mt-4 max-w-prose font-mono text-lg text-muted">
+    {profile.headline}
+  </p>
+  <p class="mt-4 max-w-prose font-mono text-base text-muted">
+    {profile.summary}
+  </p>
+  <ul class="mt-6 flex flex-wrap gap-3 font-mono text-sm" aria-label={t.cv.links}>
+    {
+      profile.links.map((link) => (
+        <li>
+          <a
+            href={link.url}
+            rel="me noopener"
+            target="_blank"
+            class="inline-flex rounded-card border border-border px-3 py-1 text-fg transition-colors hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

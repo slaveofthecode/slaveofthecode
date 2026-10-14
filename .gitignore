@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # local-only resume source (may contain phone/address; repo is public)
 content-source/
+
+# TypeScript incremental build info
+*.tsbuildinfo

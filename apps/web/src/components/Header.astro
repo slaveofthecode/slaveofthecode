@@ -1,6 +1,6 @@
 ---
 import { getContent } from "@portfolio/content";
-import { type Locale, localizedPath } from "../i18n";
+import { type Locale, getStrings, localizedPath } from "../i18n";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
@@ -10,7 +10,14 @@ interface Props {
 }
 
 const { locale, path = "/" } = Astro.props;
+const t = getStrings(locale);
 const { profile } = getContent(locale);
+
+const navItems = [
+  { id: "experience", label: t.nav.experience },
+  { id: "skills", label: t.nav.skills },
+  { id: "education", label: t.nav.education },
+] as const;
 ---
 
 <header
@@ -22,8 +29,26 @@ const { profile } = getContent(locale);
   >
     {profile.name}
   </a>
-  <div class="flex items-center gap-2">
-    <LanguageSwitcher locale={locale} path={path} />
-    <ThemeToggle locale={locale} />
+  <div class="flex items-center gap-4">
+    <nav aria-label={t.nav.label} class="hidden sm:block">
+      <ul class="flex items-center gap-4 font-mono text-xs">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={localizedPath(locale, `/#${item.id}`)}
+                class="text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="flex items-center gap-2">
+      <LanguageSwitcher locale={locale} path={path} />
+      <ThemeToggle locale={locale} />
+    </div>
   </div>
 </header>

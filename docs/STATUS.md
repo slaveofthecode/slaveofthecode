@@ -33,16 +33,12 @@ Agent memory. Read at the start of every session; update at the end of every tas
   - `docs/ingest-notes.md` with open questions for the human. `now[]` stays mock until PR-7.
   - 30 tests total.
 
-## In progress
-- PR-5 (`feat/web-base`, from `v2`@`ae33d2c`) implemented, all checks green — awaiting human
-  commit + push, then the PR (base `v2`). Do not merge.
+- PR-5 (`feat/web-base`) merged into `v2` (PR #11, merge `edd00d9`, commit `5841501`):
   - Astro 7 + Tailwind 4 static app: i18n (`/` en, `/es/` es), theme tokens (light/dark via
     `data-theme`, CSS vars `--app-*` mapped through `@theme inline`), `BaseLayout` SEO
     (canonical/hreflang/OG), no-flash theme script, skip link, `Header` (LanguageSwitcher +
     ThemeToggle), `Footer`, placeholder home pages, `favicon.svg`.
   - Fonts via `@fontsource/*` **latin subsets only** (8 woff/woff2 assets).
-  - `astro check` 0 errors/0 warnings; build emits `/index.html`, `/es/index.html`,
-    `sitemap-index.xml`; preview smoke test: `/` and `/es/` → 200.
   - Two harness fixes needed for the suite to pass:
     - `scripts/check-boundaries.ts` had a bug: `internalPackage()` returned only `@portfolio`
       instead of `@portfolio/content`, so any internal import was flagged. Fixed to join the
@@ -51,11 +47,22 @@ Agent memory. Read at the start of every session; update at the end of every tas
       `astro check` failed to import. Workaround: root devDependency `@emnapi/wasi-threads`
       (proposal logged in `docs/learnings.md`).
 
+## In progress
+- PR-6 (`feat/web-cv-sections`, from `v2`@`edd00d9`) implemented, all checks green (35 tests):
+  - Renders every CV section from `@portfolio/content` (no data touched): hero `Profile` plus
+    `Experience`, `Skills`, `Languages`, `Education`, `Certifications`, each in a `Section`
+    wrapper (anchor `id`, `aria-labelledby`, `h2`).
+  - `Header` gets anchor nav (`experience`/`skills`/`education`, hidden on mobile).
+  - `src/lib/dates.ts` formats `YYYY` / `YYYY-MM` per locale (`formatPoint`/`formatRange`);
+    `Present`/`Actualidad` label from UI strings; `apps/web/test/dates.test.ts` (5 tests).
+  - i18n: added `nav.certifications` + `cv.{links,present}`; removed unused `home.intro`.
+  - `apps/web/tsconfig.json` now includes `test/` and the `bun` types so tests typecheck.
+  - Build renders both locales; preview smoke test `/` and `/es/` → 200.
+
 ## Next steps
-- Human: commit + push `feat/web-base`; then open the PR (see `docs/workflows/open-pr.md`).
+- Human: commit + push `feat/web-cv-sections`; then open the PR (see `docs/workflows/open-pr.md`).
 - Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
-- PR-6/PR-7 web: CV sections (profile, experience, skills, languages, education,
-  certifications), then Now section (replace mock `now[]`).
+- PR-7 web: Now section (replace mock `now[]`, with progress bar + tests).
 - PR-8 (stretch) `feat/api-skeleton`.
 
 ## Open decisions

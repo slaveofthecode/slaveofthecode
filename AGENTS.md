@@ -124,7 +124,13 @@ When adding a `projects[]` entry, the icon map in `Projects.astro`
 1. Read this file + `.harness/memory/project-state.md`.
 2. Load the relevant skill from `.harness/skills/` (see index below).
 3. Create/completask on a feature branch (see §6), never on `master`.
-4. Make the change, run `npm run build`, update memory per §8, then commit.
+4. Make the change, run `npm run build`, update memory per §8, and **leave the changes
+   staged in the working tree. The agent does NOT commit.**
+5. Show the human the diff and **wait** for the human to review, commit, and `git push`
+   (the human owns commit AND push). If the human wants edits, incorporate and repeat.
+6. Only after the human confirms the push, **create the Pull Request** (see §6):
+   `gh pr create` with a meaningful description, base `master`, **assigned to the human**
+   `slaveofthecode`. Report the PR URL.
 
 ---
 
@@ -139,6 +145,12 @@ When adding a `projects[]` entry, the icon map in `Projects.astro`
   `git branch -a | grep "^..*<type>/"` and take max+1.
 - Commit style: imperative, concise, prefixed with the conventional type,
   e.g. `feat: add dark mode toggle`. Never push commits that fail to build.
+- **Commit and push only the human.** The agent stages the changes and shows the diff;
+  the human reviews, commits, and runs `git push` (and owns the remote). The agent never
+  commits or pushes.
+- **Create the PR after the human pushes.** Once the human confirms the push, the agent
+  opens the Pull Request to `master` with `gh pr create`, writes a meaningful description
+  summarizing the change, and **assigns it to the human** (`slaveofthecode`). Report the PR URL.
 - Never stage or commit secrets, `node_modules/`, `dist/`, `.astro/`, or `.qodo/`.
 - If a change is generated-consistent (e.g. `astro check` output), regenerate, don't hand-edit.
 
@@ -154,7 +166,8 @@ otherwise as instructions.
 - Reading any project file, `git status/diff/log/branch`.
 - Running `npm run dev/build/preview`, `npx astro check`, `node update-readme.js`.
 - Editing files under `src/`, `config`, `README.md`, `package.json`, `AGENTS.md`.
-- Creating branches, staging files, `git push` to a **feature** branch.
+- Creating branches, staging files, and `gh pr create` to a **feature** branch.
+  The agent **never** commits or runs `git push` — the human does both (see §6).
 
 **Require human confirmation**
 - Any `git commit`, `git push`, `git merge`, `git reset --hard`, `git force`.

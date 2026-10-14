@@ -16,7 +16,7 @@ Role: owns the GitHub profile `README.md` and the daily random-GIF workflow.
 - If changing the workflow, fix known issues: it references `update-readme.ts`
   (file is `update-readme.js`) and pins Node 16 + `npm install` unnecessarily
   (the script uses only Node built-ins).
-- Never push readme-only commits to `master`.
+- Never push readme-only commits to `main`.
 
 ## Workflow
 1. Read the `update-readme-gif` skill in full.

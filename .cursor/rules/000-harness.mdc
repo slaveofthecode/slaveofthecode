@@ -8,11 +8,11 @@ alwaysApply: true
 
 Cursor reads `AGENTS.md` at the repo root natively — it is the **single source of truth** and wins over any rule here. Follow it in full, especially:
 
-- **Git & branching (§6):** never commit/push on `master`; work on
+- **Git & branching (§6):** never commit/push on `main`; work on
   `type/###-kebab-slug` branches (`feat|fix|chore|docs|refactor|test`).
 - **Permissions (§7):** always-allowed (read, build commands, edit under `src/`),
   confirmation-required (commits/pushes/merges, `npm install`, memory edits),
-  never (`master`, `dist/`, `.astro/`, `node_modules/`, `.qodo/`).
+  never (`main`, `dist/`, `.astro/`, `node_modules/`, `.qodo/`).
 - **Memory & self-learning (§8):** after every task update
   `.harness/memory/lessons.md`, `decisions.md`, `project-state.md` via the
   `memory-update` skill.

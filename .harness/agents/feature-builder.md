@@ -29,4 +29,4 @@ Role: implements features and fixes in the Astro site (`src/`) on request.
 ## Definition of done
 - Type-check + build green.
 - No stray comments, no dead code, no commented-out blobs added by you.
-- Branch is a feature branch per AGENTS.md §6; nothing committed to `master`.
+- Branch is a feature branch per AGENTS.md §6; nothing committed to `main`.

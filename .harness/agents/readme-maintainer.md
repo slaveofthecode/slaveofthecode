@@ -13,9 +13,9 @@ Role: owns the GitHub profile `README.md` and the daily random-GIF workflow.
 - `README.md` must stay GitHub-profile safe: keep the HTML `<header>`, badges,
   and the commented GIF blocks intact. Only change what the task asked for.
 - Do not conflate this file with the website: `README.md` never builds the site.
-- If changing the workflow, fix known issues: it references `update-readme.ts`
-  (file is `update-readme.js`) and pins Node 16 + `npm install` unnecessarily
-  (the script uses only Node built-ins).
+- If changing the workflow, fix known issues: it pins `node-version: '16'` (EOL) and
+  runs `npm install` unnecessarily (the script uses only Node built-ins), and its
+  `git push` to the default branch may be blocked by the `rs-validation-pr` ruleset.
 - Never push readme-only commits to `main`.
 
 ## Workflow

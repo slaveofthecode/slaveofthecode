@@ -3,13 +3,14 @@
 Truthful snapshot of where the project stands. Keep updated after every task
 (`memory-update` skill).
 
-- **Current branch:** `docs/002-base-branch-main`
-- **In-flight work:** retiring `master` in favour of `main`. Done: `main` was synced
-  from `master` via **PR #4** (merged), remote `master` deleted, and all `master`
-  references updated to `main` across the harness (AGENTS.md §5.2/§6/§7, `.cursor`,
-  `.opencode/opencode.json`, `.harness/agents/*`, memory). This branch stages the
-  doc/memory changes; the human commits+pushes and the agent opens the PR to `main`.
-  No app-code changes to `src/`.
+- **Current branch:** `docs/003-project-analysis`
+- **In-flight work:** added `docs/project-analysis.md` — human-facing overview of the
+  stack, folder structure (ASCII map), AI-harness flow, and a prioritized improvement
+  backlog (P0: fix daily-GIF workflow + add PR build CI + clean orphan components;
+  P1: Astro 4.3.6 → 7.x stepwise; P2: Tailwind 4, resume.json schema validation, lint).
+  Consolidated `lessons.md` into AGENTS.md §6 (git gotchas). Build green.
+  The human commits+pushes; the agent opens the PR to `main`.
+- **Previous:** PR #5 (`docs/002-base-branch-main`) retired `master` → `main`.
 - **Environment:** SSH auth OK. Default branch is **`main`**; governed by ruleset
   **`rs-validation-pr`** (`~DEFAULT_BRANCH`: requires PRs, `non_fast_forward`,
   `deletion`, `copilot_code_review`). Direct pushes to `main` are rejected (`GH013`).

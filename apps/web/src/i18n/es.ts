@@ -13,7 +13,7 @@ export const es: Strings = {
     languages: "Idiomas",
     education: "Educación",
     certifications: "Certificaciones",
-    now: "Now",
+    now: "Ahora",
   },
   theme: {
     label: "Tema de color",
@@ -39,5 +39,20 @@ export const es: Strings = {
   cv: {
     links: "Enlaces",
     present: "Actualidad",
+  },
+  now: {
+    heading: "¿En qué ando ahora?",
+    updated: "Actualizado",
+    status: {
+      "in-progress": "En curso",
+      paused: "En pausa",
+      done: "Terminado",
+    },
+    kind: {
+      course: "Curso",
+      project: "Proyecto",
+      learning: "Aprendizaje",
+      other: "Otro",
+    },
   },
 };

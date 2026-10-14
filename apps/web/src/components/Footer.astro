@@ -1,6 +1,8 @@
 ---
 import { getContent } from "@portfolio/content";
 import { type Locale, getStrings } from "../i18n";
+import { iconName } from "../lib/links";
+import Icon from "./Icon.astro";
 
 interface Props {
   locale: Locale;
@@ -26,10 +28,11 @@ const year = new Date().getFullYear();
           <li>
             <a
               href={link.url}
-              class="text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+              class="inline-flex items-center gap-2 text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
               rel="me noopener"
               target="_blank"
             >
+              <Icon name={iconName(link.url)} />
               {link.label}
             </a>
           </li>

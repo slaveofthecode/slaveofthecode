@@ -47,8 +47,8 @@ Agent memory. Read at the start of every session; update at the end of every tas
       `astro check` failed to import. Workaround: root devDependency `@emnapi/wasi-threads`
       (proposal logged in `docs/learnings.md`).
 
-## In progress
-- PR-6 (`feat/web-cv-sections`, from `v2`@`edd00d9`) implemented, all checks green (35 tests):
+- PR-6 (`feat/web-cv-sections`) merged into `v2` (PR #12, commit `677dc51`), all checks green
+  (35 tests):
   - Renders every CV section from `@portfolio/content` (no data touched): hero `Profile` plus
     `Experience`, `Skills`, `Languages`, `Education`, `Certifications`, each in a `Section`
     wrapper (anchor `id`, `aria-labelledby`, `h2`).
@@ -59,10 +59,27 @@ Agent memory. Read at the start of every session; update at the end of every tas
   - `apps/web/tsconfig.json` now includes `test/` and the `bun` types so tests typecheck.
   - Build renders both locales; preview smoke test `/` and `/es/` → 200.
 
+## In progress
+- PR-7 (`feat/now-and-branding`), uncommitted, awaiting human commit/push. From `v2`@`677dc51`,
+  all checks green (38 tests), build + preview smoke (`/`, `/es/`, `/portrait.png`) → 200:
+  - Fonts swapped to **Chakra Petch** (headings) + **Space Mono** (body/mono); removed Zen Kaku
+    Gothic New, Cutive Mono, Rubik Mono One; latin subsets only.
+  - Portrait `apps/web/public/portrait.png` (108×108, extracted from the PDF) shown as a round
+    avatar in the `Profile` hero.
+  - New `components/Icon.astro` (inline SVG github/linkedin/globe/thinking; no new dep) driven by
+    `src/lib/links.ts` `iconName(url)`; used in `Profile` + `Footer` links. `links.test.ts`.
+  - New `sections/Now.astro` + `NowCard` markup: progress bar (`role="progressbar"` +
+    `aria-valuenow`), status badge, tags, links, "Updated <mes año>". `Section` gained an optional
+    `icon`; the Now heading uses a "thinking" icon.
+  - Real `now[]` in `data/en` + `data/es` (Commit Academy AWS/Cloud course, progress 11). EN text
+    is my translation of the human-provided Spanish; human to review wording.
+  - i18n: `nav.now` short (`Now`/`Ahora`) for the header anchor; `now.heading` long
+    ("What I'm working on now" / “¿En qué ando ahora?”); `now.{updated,status,kind}` labels.
+  - `apps/web/test/links.test.ts` (3 tests) for `iconName`.
+
 ## Next steps
-- Human: commit + push `feat/web-cv-sections`; then open the PR (see `docs/workflows/open-pr.md`).
+- Human: review + commit/push PR-7, then open the PR (base `v2`, assignee @me).
 - Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
-- PR-7 web: Now section (replace mock `now[]`, with progress bar + tests).
 - PR-8 (stretch) `feat/api-skeleton`.
 
 ## Open decisions
@@ -73,7 +90,9 @@ Agent memory. Read at the start of every session; update at the end of every tas
 - Certifications: new `certifications[]` collection (approved). MCP vs HTML5 Specialist
   Credly URL ambiguity → `docs/ingest-notes.md`.
 - Visual direction: keep the current identity as a base but with a refreshed look.
-- "Now" items: first iteration uses clearly-marked mock data (replace in PR-7).
+- Branding (PR-7): Chakra Petch + Space Mono; portrait from the PDF. "Now" section labelled
+  "What I'm working on now" / "¿En qué ando ahora?" with a thinking icon; real `now[]` item
+  (Commit Academy cloud/AWS course). en text is a translation of the human-authored es.
 
 ## Follow-ups / risks
 - Privacy incident: the PDF blob `98825db2990add365133a536ba45c5a8cbd30c3d` was pushed

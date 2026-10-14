@@ -22,9 +22,8 @@
       "version": "0.0.0",
       "dependencies": {
         "@astrojs/sitemap": "^3.7.4",
-        "@fontsource/cutive-mono": "^5.3.0",
-        "@fontsource/rubik-mono-one": "^5.3.0",
-        "@fontsource/zen-kaku-gothic-new": "^5.3.1",
+        "@fontsource/chakra-petch": "^5.3.0",
+        "@fontsource/space-mono": "^5.3.0",
         "@portfolio/content": "workspace:*",
         "@tailwindcss/vite": "^4.3.3",
         "astro": "^7.3.8",
@@ -160,11 +159,9 @@
 
     "@emnapi/wasi-threads": ["@emnapi/wasi-threads@2.2.0", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-JP7OYH38Q7+pyTAe14raZHLQIK7BDKbdwji+Xi3pcd/6QkJYQH3SX4wu6EplGrGJWRepoNzedfm0G3B9Z4e9Rw=="],
 
-    "@fontsource/cutive-mono": ["@fontsource/cutive-mono@5.3.0", "", {}, "sha512-2E3zbb6eLvsw9cqeXNeoxWPMD0Dqs3z0DlgeUuB6NSjwkOVLFVp6T0DG36OERKfC4Nb+6QhU1kEOIctZbq49hg=="],
+    "@fontsource/chakra-petch": ["@fontsource/chakra-petch@5.3.0", "", {}, "sha512-QZvbM/q2R6n1pg2x+TJPftZmBNS+ADU37L4Z4L/6UJIz+JZ/SRaEf8usPFRiP7Ht28sIideMu/Bm1SnGlSrwNw=="],
 
-    "@fontsource/rubik-mono-one": ["@fontsource/rubik-mono-one@5.3.0", "", {}, "sha512-ReaCXaIKJAFdJAUaw8Gq3qXC9od7JotgqZFsVnwp06KqnBFtrX9qdeUvBdL+7avyUTic20gmzSH0NtEC6xAbDQ=="],
-
-    "@fontsource/zen-kaku-gothic-new": ["@fontsource/zen-kaku-gothic-new@5.3.1", "", {}, "sha512-L69mE6bkzeVK3UdTenxOmCIWvTwMxohJRNm1dAj+W+UiCULQ91b7M77ENVw+pjGmFL6zKPFYFeH3g8x2ugAJNw=="],
+    "@fontsource/space-mono": ["@fontsource/space-mono@5.3.0", "", {}, "sha512-FrpBMOVWn3PRdRHlrZWC55X3kZG/2BTH7SM5ZyS/bky3iKya2BturI5lk+t0RoDQL2JyHzURsVq/EisCsxpI5A=="],
 
     "@img/colour": ["@img/colour@1.1.0", "", {}, "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="],
 

@@ -5,6 +5,7 @@ import Certifications from "../../components/sections/Certifications.astro";
 import Education from "../../components/sections/Education.astro";
 import Experience from "../../components/sections/Experience.astro";
 import Languages from "../../components/sections/Languages.astro";
+import Now from "../../components/sections/Now.astro";
 import Profile from "../../components/sections/Profile.astro";
 import Skills from "../../components/sections/Skills.astro";
 import { getStrings } from "../../i18n";
@@ -42,6 +43,14 @@ const content = getContent(locale);
     content.certifications.length > 0 ? (
       <Section id="certifications" title={t.nav.certifications}>
         <Certifications items={content.certifications} locale={locale} />
+      </Section>
+    ) : null
+  }
+
+  {
+    content.now.length > 0 ? (
+      <Section id="now" title={t.now.heading} icon="thinking">
+        <Now items={content.now} locale={locale} />
       </Section>
     ) : null
   }

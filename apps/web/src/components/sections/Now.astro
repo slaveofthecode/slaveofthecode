@@ -1,0 +1,89 @@
+---
+import type { NowItem } from "@portfolio/content";
+import { type Locale, getStrings } from "../../i18n";
+import { formatPoint } from "../../lib/dates";
+import { iconName } from "../../lib/links";
+import Icon from "../Icon.astro";
+
+interface Props {
+  items: NowItem[];
+  locale: Locale;
+}
+
+const { items, locale } = Astro.props;
+const t = getStrings(locale);
+---
+
+<ul class="grid gap-4 sm:grid-cols-2">
+  {
+    items.map((item) => (
+      <li>
+        <article class="flex h-full flex-col rounded-card border border-border bg-surface p-5">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="font-mono text-xs uppercase tracking-widest text-muted">
+                {t.now.kind[item.kind]}
+              </p>
+              <h3 class="mt-1 font-heading text-base text-fg">{item.title}</h3>
+            </div>
+            <span class="shrink-0 rounded-card border border-border px-2 py-0.5 font-mono text-xs text-muted">
+              {t.now.status[item.status]}
+            </span>
+          </div>
+
+          <p class="mt-3 font-mono text-sm text-muted">{item.description}</p>
+
+          <div
+            class="mt-4"
+            role="progressbar"
+            aria-valuenow={item.progress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`${item.title}: ${item.progress}%`}
+          >
+            <div class="h-1.5 w-full overflow-hidden rounded-card bg-border">
+              <div
+                class="h-full rounded-card bg-accent"
+                style={`width: ${item.progress}%`}
+              />
+            </div>
+            <p class="mt-1 font-mono text-xs text-muted">{item.progress}%</p>
+          </div>
+
+          {item.tags.length > 0 ? (
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {item.tags.map((tag) => (
+                <li class="rounded-card border border-border px-2 py-0.5 font-mono text-xs text-muted">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          <div class="mt-auto pt-4">
+            {item.links.length > 0 ? (
+              <ul class="flex flex-wrap gap-3 font-mono text-xs">
+                {item.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.url}
+                      rel="noopener"
+                      target="_blank"
+                      class="inline-flex items-center gap-1.5 text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                    >
+                      <Icon name={iconName(link.url)} class="h-3.5 w-3.5" />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            <p class="mt-2 font-mono text-xs text-muted">
+              {t.now.updated} {formatPoint(item.updatedAt.slice(0, 7), locale)}
+            </p>
+          </div>
+        </article>
+      </li>
+    ))
+  }
+</ul>

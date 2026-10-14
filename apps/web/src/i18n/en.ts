@@ -38,6 +38,21 @@ export const en = {
     links: "Links",
     present: "Present",
   },
+  now: {
+    heading: "What I'm working on now",
+    updated: "Updated",
+    status: {
+      "in-progress": "In progress",
+      paused: "Paused",
+      done: "Done",
+    },
+    kind: {
+      course: "Course",
+      project: "Project",
+      learning: "Learning",
+      other: "Other",
+    },
+  },
 };
 
 export type Strings = typeof en;

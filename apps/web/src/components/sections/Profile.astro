@@ -1,6 +1,8 @@
 ---
 import type { Profile } from "@portfolio/content";
 import { type Locale, getStrings } from "../../i18n";
+import { iconName } from "../../lib/links";
+import Icon from "../Icon.astro";
 
 interface Props {
   profile: Profile;
@@ -12,15 +14,26 @@ const t = getStrings(locale);
 ---
 
 <section class="py-12">
-  <h1 class="font-heading text-2xl leading-tight text-fg sm:text-3xl">
-    {t.home.title}
-  </h1>
-  <p class="mt-4 max-w-prose font-mono text-lg text-muted">
-    {profile.headline}
-  </p>
-  <p class="mt-4 max-w-prose font-mono text-base text-muted">
+  <div class="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+    <img
+      src="/portrait.png"
+      alt={profile.name}
+      width="108"
+      height="108"
+      class="h-24 w-24 shrink-0 rounded-full border border-border object-cover"
+    />
+    <div>
+      <h1 class="font-heading text-2xl leading-tight text-fg sm:text-3xl">
+        {t.home.title}
+      </h1>
+      <p class="mt-3 font-mono text-lg text-muted">{profile.headline}</p>
+    </div>
+  </div>
+
+  <p class="mt-6 max-w-prose font-mono text-base text-muted">
     {profile.summary}
   </p>
+
   <ul class="mt-6 flex flex-wrap gap-3 font-mono text-sm" aria-label={t.cv.links}>
     {
       profile.links.map((link) => (
@@ -29,8 +42,9 @@ const t = getStrings(locale);
             href={link.url}
             rel="me noopener"
             target="_blank"
-            class="inline-flex rounded-card border border-border px-3 py-1 text-fg transition-colors hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+            class="inline-flex items-center gap-2 rounded-card border border-border px-3 py-1 text-fg transition-colors hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
           >
+            <Icon name={iconName(link.url)} />
             {link.label}
           </a>
         </li>

@@ -1,17 +1,21 @@
 ---
+import Icon from "./Icon.astro";
+
 interface Props {
   id: string;
   title: string;
+  icon?: "thinking";
 }
 
-const { id, title } = Astro.props;
+const { id, title, icon } = Astro.props;
 ---
 
 <section id={id} aria-labelledby={`${id}-heading`} class="scroll-mt-24 border-t border-border py-10">
   <h2
     id={`${id}-heading`}
-    class="font-heading text-sm uppercase tracking-widest text-muted"
+    class="flex items-center gap-2 font-heading text-sm uppercase tracking-widest text-muted"
   >
+    {icon ? <Icon name={icon} class="h-4 w-4" /> : null}
     {title}
   </h2>
   <div class="mt-6">

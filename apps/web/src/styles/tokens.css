@@ -27,9 +27,9 @@
 }
 
 :root {
-  --app-font-body: "Zen Kaku Gothic New", ui-sans-serif, system-ui, sans-serif;
-  --app-font-mono: "Cutive Mono", ui-monospace, monospace;
-  --app-font-heading: "Rubik Mono One", ui-monospace, monospace;
+  --app-font-body: "Space Mono", ui-monospace, monospace;
+  --app-font-mono: "Space Mono", ui-monospace, monospace;
+  --app-font-heading: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
 }
 
 body {

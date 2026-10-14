@@ -1,0 +1,41 @@
+---
+import { getContent } from "@portfolio/content";
+import { type Locale, getStrings } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getStrings(locale);
+const { profile } = getContent(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="mx-auto w-full max-w-3xl px-5 py-10">
+  <hr class="mb-6 border-border" />
+  <div
+    class="flex flex-col gap-3 text-sm text-muted sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p class="font-mono">
+      &copy; {year} {profile.name}. {t.footer.rights}
+    </p>
+    <ul class="flex flex-wrap items-center gap-4 font-mono">
+      {
+        profile.links.map((link) => (
+          <li>
+            <a
+              href={link.url}
+              class="text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+              rel="me noopener"
+              target="_blank"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>{t.footer.builtWith}</li>
+    </ul>
+  </div>
+</footer>

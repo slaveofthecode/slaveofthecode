@@ -1,0 +1,23 @@
+---
+import { getContent } from "@portfolio/content";
+import { getStrings } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const locale = "es" as const;
+const t = getStrings(locale);
+const { profile } = getContent(locale);
+---
+
+<BaseLayout locale={locale} path="/">
+  <section class="py-12">
+    <h1 class="font-heading text-2xl leading-tight text-fg sm:text-3xl">
+      {t.home.title}
+    </h1>
+    <p class="mt-4 max-w-prose font-mono text-lg text-muted">
+      {profile.headline}
+    </p>
+    <p class="mt-4 max-w-prose font-mono text-base text-muted">
+      {t.home.intro}
+    </p>
+  </section>
+</BaseLayout>

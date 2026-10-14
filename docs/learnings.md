@@ -8,3 +8,7 @@ good ones into `AGENTS.md`. Do not edit `AGENTS.md` directly.
 - opencode custom commands declared inline need a `template` field (a `prompt` field
   is rejected). Markdown command files under `.opencode/command/` use the body as the
   template, with `$ARGUMENTS` for user input.
+- (PR-5) `astro check` (`@astrojs/check`) failed to import because Bun does not materialize
+  the *bundled* transitive `@emnapi/wasi-threads` of `@emnapi/core` (pulled in by
+  `@astrojs/astro2tsx`). Workaround: declare `@emnapi/wasi-threads` as a root devDependency.
+  Revisit when Bun or `@astrojs/check` fixes bundled-dep handling.

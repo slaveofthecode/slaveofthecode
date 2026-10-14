@@ -90,8 +90,8 @@ const IMPORT_RE =
 
 function internalPackage(specifier: string): string | null {
   if (!specifier.startsWith(INTERNAL_PREFIX)) return null;
-  const [name] = specifier.split("/").slice(0, 2);
-  return name;
+  const [scope, name] = specifier.split("/");
+  return scope && name ? `${scope}/${name}` : specifier;
 }
 
 const rootPkg = readJson(join(ROOT, "package.json"));

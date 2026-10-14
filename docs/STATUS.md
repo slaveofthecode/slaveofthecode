@@ -22,10 +22,7 @@ Agent memory. Read at the start of every session; update at the end of every tas
 - PR-3 (`feat/content-schemas`) merged into `v2` (PR #9, merge `8ebb3d1`, commit `5d3ffad`):
   Zod schemas, `getContent(locale)` loader (static JSON imports, no `fs`), placeholder
   fixtures, 22 schema + en/es parity + loader tests. `zod@^3.23.8`; `@types/bun` at root.
-
-## In progress
-- PR-4 (`feat/ingest-resume`, from `v2`@`8ebb3d1`) awaiting human commit + push, then the
-  PR (base `v2`). Do not merge. Implemented, all checks green (30 tests):
+- PR-4 (`feat/ingest-resume`) merged into `v2` (PR #10, merge `ae33d2c`, commit `013e4db`):
   - `packages/content/scripts/extract-resume.ts` (unpdf dev-dep) → `content-source/resume.txt`;
     root script `ingest:extract`. Node-compatible file resolution; logs only page/char counts.
   - Real `data/en/*.json` from the PDF text (profile, 14 experience entries, 7 skill groups,
@@ -33,12 +30,32 @@ Agent memory. Read at the start of every session; update at the end of every tas
     (non-text fields identical — enforced by parity tests).
   - Schema tweaks to fit real data: `experience[].summary` optional; `education[]` dates and
     `certifications[].date` accept `YYYY` or `YYYY-MM`; new `certifications[]` collection.
-  - `docs/ingest-notes.md` with open questions for the human.
-  - `now[]` stays mock until PR-7.
+  - `docs/ingest-notes.md` with open questions for the human. `now[]` stays mock until PR-7.
+  - 30 tests total.
+
+## In progress
+- PR-5 (`feat/web-base`, from `v2`@`ae33d2c`) implemented, all checks green — awaiting human
+  commit + push, then the PR (base `v2`). Do not merge.
+  - Astro 7 + Tailwind 4 static app: i18n (`/` en, `/es/` es), theme tokens (light/dark via
+    `data-theme`, CSS vars `--app-*` mapped through `@theme inline`), `BaseLayout` SEO
+    (canonical/hreflang/OG), no-flash theme script, skip link, `Header` (LanguageSwitcher +
+    ThemeToggle), `Footer`, placeholder home pages, `favicon.svg`.
+  - Fonts via `@fontsource/*` **latin subsets only** (8 woff/woff2 assets).
+  - `astro check` 0 errors/0 warnings; build emits `/index.html`, `/es/index.html`,
+    `sitemap-index.xml`; preview smoke test: `/` and `/es/` → 200.
+  - Two harness fixes needed for the suite to pass:
+    - `scripts/check-boundaries.ts` had a bug: `internalPackage()` returned only `@portfolio`
+      instead of `@portfolio/content`, so any internal import was flagged. Fixed to join the
+      scope + name; guard re-verified to still fail on a forbidden `web → api` import.
+    - Bun does not materialize `@emnapi/core`'s bundled transitive `@emnapi/wasi-threads`, so
+      `astro check` failed to import. Workaround: root devDependency `@emnapi/wasi-threads`
+      (proposal logged in `docs/learnings.md`).
 
 ## Next steps
-- Human: review PR-4 JSON diff + answer `docs/ingest-notes.md`.
-- PR-5..PR-7 web: base (Astro/Tailwind/i18n/theme), CV sections, Now section.
+- Human: commit + push `feat/web-base`; then open the PR (see `docs/workflows/open-pr.md`).
+- Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
+- PR-6/PR-7 web: CV sections (profile, experience, skills, languages, education,
+  certifications), then Now section (replace mock `now[]`).
 - PR-8 (stretch) `feat/api-skeleton`.
 
 ## Open decisions

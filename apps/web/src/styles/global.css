@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* Map theme tokens to Tailwind utilities. `inline` keeps the var() reference
+ * so utilities follow the current `data-theme` without a rebuild. */
+@theme inline {
+  --color-bg: var(--app-bg);
+  --color-surface: var(--app-surface);
+  --color-fg: var(--app-fg);
+  --color-muted: var(--app-muted);
+  --color-border: var(--app-border);
+  --color-accent: var(--app-accent);
+  --color-accent-fg: var(--app-accent-fg);
+
+  --font-sans: var(--app-font-body);
+  --font-mono: var(--app-font-mono);
+  --font-heading: var(--app-font-heading);
+
+  --radius-card: var(--app-radius);
+}
+
+html {
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+}

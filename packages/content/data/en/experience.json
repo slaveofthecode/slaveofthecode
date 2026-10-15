@@ -60,7 +60,7 @@
       "Redux",
       "TypeScript",
       "JavaScript",
-      "UT (Jest)",
+      "UT ( Jest )",
       "Node.JS",
       "Bootstrap",
       "GraphQL"
@@ -80,7 +80,7 @@
       "HTML",
       "CSS",
       "JavaScript",
-      "Figma (pixel-to-pixel)",
+      "Figma ( pixel-to-pixel )",
       "React Native"
     ]
   },
@@ -94,7 +94,13 @@
       "Implemented new features and UI enhancements for a pharmaceutical platform using React and Figma-based designs.",
       "Delivered responsive user interface implementations based on high-fidelity designs."
     ],
-    "tech": ["HTML", "JavaScript", "Hooks", "React", "TypeScript"]
+    "tech": [
+      "HTML",
+      "JavaScript",
+      "Hooks",
+      "React",
+      "TypeScript"
+    ]
   },
   {
     "id": "mcafee",
@@ -136,7 +142,7 @@
     ]
   },
   {
-    "id": "bancor-2013",
+    "id": "bancor",
     "company": "Bancor",
     "role": "Full-Stack Developer",
     "startDate": "2013-12",
@@ -165,7 +171,7 @@
     ]
   },
   {
-    "id": "mystic-solutions",
+    "id": "mystic-solutions-limited",
     "company": "Mystic Solutions Limited",
     "role": "Freelance Developer",
     "startDate": "2012-08",
@@ -189,7 +195,13 @@
     "startDate": "2013-03",
     "endDate": "2013-12",
     "highlights": [],
-    "tech": ["MongoDB", ".NET MVC", "JavaScript", "C#", ".NET Web API"]
+    "tech": [
+      "MongoDB",
+      ".NET MVC",
+      "JavaScript",
+      "C#",
+      "NET Web API"
+    ]
   },
   {
     "id": "globant",
@@ -198,7 +210,13 @@
     "startDate": "2011-07",
     "endDate": "2013-03",
     "highlights": [],
-    "tech": [".NET Razor", "MVC", "jQuery", "JavaScript", "C#"]
+    "tech": [
+      ".NET Razor",
+      "MVC",
+      "jQuery",
+      "JavaScript",
+      "C#"
+    ]
   },
   {
     "id": "particular",
@@ -207,10 +225,16 @@
     "startDate": "2011-09",
     "endDate": "2011-12",
     "highlights": [],
-    "tech": ["ASP.NET", "ASP", "JavaScript", "C#", "SQL Server"]
+    "tech": [
+      "ASP.NET",
+      "ASP",
+      "JavaScript",
+      "C#",
+      "SQL Server"
+    ]
   },
   {
-    "id": "bancor-2008",
+    "id": "bancor-2",
     "company": "Bancor",
     "role": "Full-Stack Developer",
     "startDate": "2008-06",

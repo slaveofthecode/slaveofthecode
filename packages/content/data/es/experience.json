@@ -2,14 +2,14 @@
   {
     "id": "nybble-group",
     "company": "Nybble Group",
-    "role": "Ingeniero Full-Stack Senior",
+    "role": "Senior Full-Stack Engineer",
     "startDate": "2024-05",
     "endDate": "2026-06",
     "highlights": [
-      "Entregué soluciones de software empresarial usando Angular, React, TypeScript, Node.js, Java, Docker y AWS.",
-      "Apliqué flujos de desarrollo asistido por IA con Claude y Cursor para apoyar la implementación, la validación y la calidad del software.",
-      "Revisé y validé código generado por IA para asegurar mantenibilidad, consistencia y estándares de calidad de ingeniería.",
-      "Colaboré en equipos de ingeniería pequeños y altamente autónomos y contribuí a la toma de decisiones técnicas."
+      "Delivered enterprise software solutions using Angular, React, TypeScript, Node.js, Java, Docker, and AWS.",
+      "Applied AI-assisted development workflows using Claude and Cursor to support implementation, validation, and software quality.",
+      "Reviewed and validated AI-generated code to ensure maintainability, consistency, and engineering quality standards.",
+      "Collaborated in small, highly autonomous engineering teams and contributed to technical decision-making."
     ],
     "tech": [
       "Angular",
@@ -27,13 +27,13 @@
   {
     "id": "itlg",
     "company": "ITLG",
-    "role": "Desarrollador React Senior",
+    "role": "Senior React Developer",
     "startDate": "2023-01",
     "endDate": "2023-12",
     "highlights": [
-      "Contribuí a la migración de una plataforma bancaria heredada hacia una arquitectura de Micro Frontends usando React y TypeScript.",
-      "Participé en iniciativas de modernización de sistemas bancarios centrales.",
-      "Actué como referencia técnica de front-end, ayudando a mantener la consistencia en arquitectura, calidad de código y prácticas de desarrollo en equipos distribuidos."
+      "Contributed to the migration of a legacy banking platform toward a Micro Frontend architecture using React and TypeScript.",
+      "Participated in modernization initiatives for core banking systems.",
+      "Served as a front-end technical reference, helping maintain consistency in architecture, code quality, and development practices across distributed teams."
     ],
     "tech": [
       "React",
@@ -48,19 +48,19 @@
   {
     "id": "kalto",
     "company": "Kalto",
-    "role": "Desarrollador React Senior",
+    "role": "Senior React Developer",
     "startDate": "2021-11",
     "endDate": "2022-11",
     "highlights": [
-      "Desarrollé funcionalidades de gestión financiera y procesamiento de pagos para una plataforma fintech B2B orientada al mercado mexicano.",
-      "Implementé prácticas de testing unitario e de integración para respaldar la confiabilidad y mantenibilidad de la aplicación."
+      "Developed financial management and payment processing features for a B2B fintech platform serving the Mexican market.",
+      "Implemented unit and integration testing practices to support application reliability and maintainability."
     ],
     "tech": [
       "React",
       "Redux",
       "TypeScript",
       "JavaScript",
-      "UT (Jest)",
+      "UT ( Jest )",
       "Node.JS",
       "Bootstrap",
       "GraphQL"
@@ -69,41 +69,47 @@
   {
     "id": "ohana",
     "company": "Ohana",
-    "role": "Desarrollador React Native",
+    "role": "React Native Developer",
     "startDate": "2021-08",
     "endDate": "2021-10",
     "highlights": [
-      "Desarrollé funcionalidades fintech móviles, incluyendo pagos, transferencias, compras y gestión de cuentas.",
-      "Colaboré con el equipo de desarrollo móvil para construir componentes de front-end y funcionalidades de interfaz para aplicaciones financieras."
+      "Developed mobile fintech features including payments, transfers, purchases, and account management capabilities.",
+      "Collaborated with the mobile development team to build front-end components and user interface features for financial applications."
     ],
     "tech": [
       "HTML",
       "CSS",
       "JavaScript",
-      "Figma (pixel-to-pixel)",
+      "Figma ( pixel-to-pixel )",
       "React Native"
     ]
   },
   {
     "id": "cognizant-softvision",
     "company": "Cognizant Softvision",
-    "role": "Desarrollador React",
+    "role": "React Developer",
     "startDate": "2021-02",
     "endDate": "2021-07",
     "highlights": [
-      "Implementé nuevas funcionalidades y mejoras de UI para una plataforma farmacéutica usando React y diseños de Figma.",
-      "Entregué implementaciones de interfaz responsivas basadas en diseños de alta fidelidad."
+      "Implemented new features and UI enhancements for a pharmaceutical platform using React and Figma-based designs.",
+      "Delivered responsive user interface implementations based on high-fidelity designs."
     ],
-    "tech": ["HTML", "JavaScript", "Hooks", "React", "TypeScript"]
+    "tech": [
+      "HTML",
+      "JavaScript",
+      "Hooks",
+      "React",
+      "TypeScript"
+    ]
   },
   {
     "id": "mcafee",
     "company": "McAfee",
-    "role": "Desarrollador Angular",
+    "role": "Angular Developer",
     "startDate": "2019-10",
     "endDate": "2021-01",
     "highlights": [
-      "Desarrollé componentes centrales de dashboard para productos empresariales de ciberseguridad, mejorando el seguimiento de usuarios, la gestión de logs y la visualización de datos en tiempo real."
+      "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
     ],
     "tech": [
       "Angular",
@@ -118,12 +124,12 @@
   {
     "id": "dxc-technology",
     "company": "DXC Technology",
-    "role": "Desarrollador Full-Stack",
+    "role": "Full-Stack Developer",
     "startDate": "2018-09",
     "endDate": "2019-09",
     "highlights": [
-      "Implementé mejoras y nuevas funcionalidades para una plataforma global de la industria musical que da soporte a artistas, álbumes y gestión de contenido.",
-      "Contribuí tanto al desarrollo de front-end como de back-end usando C#, ASP.NET, JavaScript y tecnologías web relacionadas."
+      "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
+      "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
     ],
     "tech": [
       "C#",
@@ -136,15 +142,15 @@
     ]
   },
   {
-    "id": "bancor-2013",
+    "id": "bancor",
     "company": "Bancor",
-    "role": "Desarrollador Full-Stack",
+    "role": "Full-Stack Developer",
     "startDate": "2013-12",
     "endDate": "2018-09",
     "highlights": [
-      "Diseñé, mantuve y modernicé sistemas bancarios, plataformas de intranet y aplicaciones de cara al cliente.",
-      "Entregué soluciones full-stack usando C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server y JavaScript.",
-      "Mantuve y mejoré aplicaciones bancarias críticas e implementé nuevas funcionalidades en múltiples productos bancarios."
+      "Designed, maintained, and modernized banking systems, intranet platforms, and customer-facing applications.",
+      "Delivered full-stack solutions using C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server, and JavaScript.",
+      "Maintained and enhanced business-critical banking applications and implemented new functionality across multiple banking products."
     ],
     "tech": [
       "C#",
@@ -165,9 +171,9 @@
     ]
   },
   {
-    "id": "mystic-solutions",
+    "id": "mystic-solutions-limited",
     "company": "Mystic Solutions Limited",
-    "role": "Desarrollador Freelance",
+    "role": "Freelance Developer",
     "startDate": "2012-08",
     "endDate": "2016-10",
     "highlights": [],
@@ -185,34 +191,52 @@
   {
     "id": "harriague-asociados",
     "company": "Harriague + Asociados",
-    "role": "Desarrollador de Software Senior",
+    "role": "Senior Software Developer",
     "startDate": "2013-03",
     "endDate": "2013-12",
     "highlights": [],
-    "tech": ["MongoDB", ".NET MVC", "JavaScript", "C#", ".NET Web API"]
+    "tech": [
+      "MongoDB",
+      ".NET MVC",
+      "JavaScript",
+      "C#",
+      "NET Web API"
+    ]
   },
   {
     "id": "globant",
     "company": "Globant",
-    "role": "Desarrollador Full-Stack",
+    "role": "Full-Stack Developer",
     "startDate": "2011-07",
     "endDate": "2013-03",
     "highlights": [],
-    "tech": [".NET Razor", "MVC", "jQuery", "JavaScript", "C#"]
+    "tech": [
+      ".NET Razor",
+      "MVC",
+      "jQuery",
+      "JavaScript",
+      "C#"
+    ]
   },
   {
     "id": "particular",
     "company": "Particular",
-    "role": "Desarrollador Freelance Part-Time",
+    "role": "Freelance Part-Time Developer",
     "startDate": "2011-09",
     "endDate": "2011-12",
     "highlights": [],
-    "tech": ["ASP.NET", "ASP", "JavaScript", "C#", "SQL Server"]
+    "tech": [
+      "ASP.NET",
+      "ASP",
+      "JavaScript",
+      "C#",
+      "SQL Server"
+    ]
   },
   {
-    "id": "bancor-2008",
+    "id": "bancor-2",
     "company": "Bancor",
-    "role": "Desarrollador Full-Stack",
+    "role": "Full-Stack Developer",
     "startDate": "2008-06",
     "endDate": "2011-07",
     "highlights": [],
@@ -229,7 +253,7 @@
   {
     "id": "dicicom",
     "company": "Dicicom",
-    "role": "Desarrollador Full-Stack",
+    "role": "Full-Stack Developer",
     "startDate": "2007-06",
     "endDate": "2008-06",
     "highlights": [],

@@ -33,27 +33,54 @@
   },
   {
     "id": "ai-assisted-development",
-    "name": "Desarrollo Asistido por IA",
-    "items": ["LLMs", "Coding Agents", "MCP", "Harness Engineering", "RAG"]
+    "name": "AI-Assisted Development",
+    "items": [
+      "LLMs",
+      "Coding Agents",
+      "MCP",
+      "Harness Engineering",
+      "RAG"
+    ]
   },
   {
     "id": "ai-development-tools",
-    "name": "Herramientas de Desarrollo con IA",
-    "items": ["OpenCode", "Claude", "Cursor", "GitHub Copilot", "Gemini"]
+    "name": "AI Development Tools",
+    "items": [
+      "OpenCode",
+      "Claude",
+      "Cursor",
+      "GitHub Copilot",
+      "Gemini"
+    ]
   },
   {
     "id": "devops-infrastructure",
-    "name": "DevOps e Infraestructura",
-    "items": ["AWS", "Docker", "CI/CD Pipelines", "Git"]
+    "name": "DevOps & Infrastructure",
+    "items": [
+      "AWS",
+      "Docker",
+      "CI/CD Pipelines",
+      "Git"
+    ]
   },
   {
     "id": "testing-frameworks",
-    "name": "Frameworks de Testing",
-    "items": ["Jest", "Cypress", "Vitest", "Playwright"]
+    "name": "Testing Frameworks",
+    "items": [
+      "Jest",
+      "Cypress",
+      "Vitest",
+      "Playwright"
+    ]
   },
   {
     "id": "databases",
-    "name": "Bases de Datos",
-    "items": ["SQL Server", "MongoDB", "MySQL", "SQLite"]
+    "name": "Databases",
+    "items": [
+      "SQL Server",
+      "MongoDB",
+      "MySQL",
+      "SQLite"
+    ]
   }
 ]

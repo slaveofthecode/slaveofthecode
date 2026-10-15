@@ -20,10 +20,11 @@ interface Props {
 
 const { locale, path = "/", title, description } = Astro.props;
 const t = getStrings(locale);
-const avatar = getContent(locale).profile.avatar;
+const { profile } = getContent(locale);
+const avatar = profile.avatar;
 const faviconType = avatar?.endsWith(".svg") ? "image/svg+xml" : "image/png";
-const pageTitle = title ?? t.meta.title;
-const pageDescription = description ?? t.meta.description;
+const pageTitle = title ?? `${profile.name} — ${profile.headline}`;
+const pageDescription = description ?? profile.summary;
 
 const canonical = new URL(localizedPath(locale, path), Astro.site);
 const ogLocale = locale === "es" ? "es_ES" : "en_US";

@@ -3,7 +3,6 @@ import { getContent } from "@portfolio/content";
 import { type Locale, getStrings, localizedPath } from "../i18n";
 import { initials } from "../lib/initials";
 import Icon from "./Icon.astro";
-import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
@@ -11,7 +10,7 @@ interface Props {
   path?: string;
 }
 
-const { locale, path = "/" } = Astro.props;
+const { locale } = Astro.props;
 const t = getStrings(locale);
 const { profile } = getContent(locale);
 
@@ -80,7 +79,6 @@ const navItems = [
         </ul>
       </nav>
       <div class="flex items-center gap-2">
-        <LanguageSwitcher locale={locale} path={path} />
         <ThemeToggle locale={locale} />
       </div>
       <button

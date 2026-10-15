@@ -1,14 +1,11 @@
 [
   {
-    "id": "mcp",
+    "id": "microsoft-certified-professional-mcp",
     "name": "Microsoft Certified Professional (MCP)",
-    "issuer": "Microsoft"
+    "url": "https://www.credly.com/badges/e4546f10-b164-4878-807a-0441afc5dce5?source=linked_in_profile"
   },
   {
-    "id": "html5-specialist",
-    "name": "Programming in HTML5 with JavaScript and CSS3 Specialist (Exam 480)",
-    "issuer": "Microsoft",
-    "date": "2013",
-    "url": "https://www.credly.com/badges/e4546f10-b164-4878-807a-0441afc5dce5"
+    "id": "programming-in-html5-with-javascript-and-css3-specialist-exam-480",
+    "name": "Programming in HTML5 with JavaScript and CSS3 Specialist (Exam 480)"
   }
 ]

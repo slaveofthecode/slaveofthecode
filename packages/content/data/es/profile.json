@@ -7,5 +7,6 @@
     { "label": "Portafolio", "url": "https://slaveofthecode.vercel.app/" },
     { "label": "GitHub", "url": "https://github.com/slaveofthecode" },
     { "label": "LinkedIn", "url": "https://www.linkedin.com/in/gustavoml/" }
-  ]
+  ],
+  "avatar": "/portrait.png"
 }

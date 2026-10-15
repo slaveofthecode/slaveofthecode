@@ -4,6 +4,7 @@ import "@fontsource/chakra-petch/latin-700.css";
 import "@fontsource/space-mono/latin-400.css";
 import "@fontsource/space-mono/latin-700.css";
 import "../styles/global.css";
+import { getContent } from "@portfolio/content";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { type Locale, getStrings, locales, localizedPath } from "../i18n";
@@ -18,6 +19,8 @@ interface Props {
 
 const { locale, path = "/", title, description } = Astro.props;
 const t = getStrings(locale);
+const avatar = getContent(locale).profile.avatar;
+const faviconType = avatar?.endsWith(".svg") ? "image/svg+xml" : "image/png";
 const pageTitle = title ?? t.meta.title;
 const pageDescription = description ?? t.meta.description;
 
@@ -33,7 +36,12 @@ const ogLocale = locale === "es" ? "es_ES" : "en_US";
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={pageDescription} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="icon"
+      type={avatar ? faviconType : "image/svg+xml"}
+      href={avatar ?? "/favicon.svg"}
+    />
+    <link rel="apple-touch-icon" href={avatar ?? "/favicon.svg"} />
 
     {
       locales.map((code) => (

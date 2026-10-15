@@ -1,1 +1,1 @@
-export const API_PACKAGE = "@portfolio/api";
+export { handleRequest } from "./adapters/http/router";

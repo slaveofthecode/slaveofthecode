@@ -59,8 +59,7 @@ Agent memory. Read at the start of every session; update at the end of every tas
   - `apps/web/tsconfig.json` now includes `test/` and the `bun` types so tests typecheck.
   - Build renders both locales; preview smoke test `/` and `/es/` → 200.
 
-## In progress
-- PR-7 (`feat/now-and-branding`), uncommitted, awaiting human commit/push. From `v2`@`677dc51`,
+- PR-7 (`feat/now-and-branding`) merged into `v2` (PR #13, merge `823a2db`, commit `877009f`),
   all checks green (38 tests), build + preview smoke (`/`, `/es/`, `/portrait.png`) → 200:
   - Fonts swapped to **Chakra Petch** (headings) + **Space Mono** (body/mono); removed Zen Kaku
     Gothic New, Cutive Mono, Rubik Mono One; latin subsets only.
@@ -77,10 +76,29 @@ Agent memory. Read at the start of every session; update at the end of every tas
     ("What I'm working on now" / “¿En qué ando ahora?”); `now.{updated,status,kind}` labels.
   - `apps/web/test/links.test.ts` (3 tests) for `iconName`.
 
+## In progress
+- PR-8 (`feat/favicon-and-api-skeleton`) — **combined** PR (human choice) on top of `v2`@`823a2db`,
+  uncommitted, all checks green (48 tests, 8 test files), build + preview (`/`, `/favicon.svg`,
+  `/portrait.png`) → 200:
+  - **Favicon from content:** new optional `profile.avatar` field (schema + `data/{en,es}` →
+    `/portrait.png`). `BaseLayout` uses it for `<link rel="icon">`/`apple-touch-icon` (type by
+    extension), else falls back to `/favicon.svg`. Removed the static `public/favicon.svg`.
+  - **Initials fallback:** `src/lib/initials.ts` (first + last name → `GL`; single name → `G`) and
+    `src/lib/favicon.ts` `renderInitialsIcon` (square SVG, escapes XML, token colors). New route
+    `src/pages/favicon.svg.ts` serves the initials SVG. `Profile.astro` shows the avatar when
+    present, else an initials monogram. Tests: `initials.test.ts` (5) + `favicon.test.ts` (2).
+  - **`apps/api` skeleton:** layers `domain` (`health.ts`) → `application` (`get-health.ts`) →
+    `adapters/http/router.ts` (web-standard `handleRequest(Request): Response`); `src/index.ts`
+    re-exports it. Routes: `GET /health` → 200 `{status,service,timestamp}`, unknown → 404,
+    non-GET `/health` → 405. `test/health.test.ts` (3). `apps/api/tsconfig.json` now includes
+    `test/` with `types:["bun"]`. No Bun-only APIs; imports nothing internal.
+
 ## Next steps
-- Human: review + commit/push PR-7, then open the PR (base `v2`, assignee @me).
+- Human: review + commit/push PR-8, then open the PR (base `v2`, assignee @me).
 - Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
-- PR-8 (stretch) `feat/api-skeleton`.
+- After PR-8, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) optional AWS/Vercel
+  setup; (2) `POST /chat` + `LLMProvider` + streaming chat UI; (3) AI evals; (4) theme
+  variants; (5) AWS deploy + budget alarm; (6) replace PDF ingest; (7) cutover `v2` → `main`.
 
 ## Open decisions
 - Resume source is English → `data/en/*.json` authoritative, `data/es/*` draft (human to
@@ -93,6 +111,10 @@ Agent memory. Read at the start of every session; update at the end of every tas
 - Branding (PR-7): Chakra Petch + Space Mono; portrait from the PDF. "Now" section labelled
   "What I'm working on now" / "¿En qué ando ahora?" with a thinking icon; real `now[]` item
   (Commit Academy cloud/AWS course). en text is a translation of the human-authored es.
+- PR-8: human asked to combine the favicon/branding change with `feat/api-skeleton` in one PR
+  (deliberate deviation from the one-feature-per-branch rule). The favicon is driven by the new
+  optional `profile.avatar` content field rather than a filesystem check — the earlier
+  `existsSync` approach broke because Astro bundles server code (wrong `import.meta.url`).
 
 ## Follow-ups / risks
 - Privacy incident: the PDF blob `98825db2990add365133a536ba45c5a8cbd30c3d` was pushed

@@ -256,6 +256,7 @@ Merged into `main` after the cutover (see PRs #20/#21):
   `GEMINI_API_KEY=... bun run build:rag` (regenerates `apps/api/data/cv.sqlite` +
   `apps/api/src/data/rag-db.ts`). Without this the chat answers "no info".
 - Human: push `feat/recruiter-chat`, open the PR (base `main`), review, merge (merge commit).
+  → **PR #28 opened** (https://github.com/slaveofthecode/slaveofthecode/pull/28), assignee @me.
 - Human prerequisites for production:
   1. Create a Gemini API key (`GEMINI_API_KEY`) at https://aistudio.google.com/apikey.
   2. New Vercel project with **Root Directory `apps/api`**; set `GEMINI_API_KEY`,

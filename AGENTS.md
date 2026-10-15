@@ -9,7 +9,6 @@ Talk to the human in Spanish; write code/docs/commits/PRs in English.
 - apps/web: Astro + Tailwind, static output.
 - apps/api: Node-compatible TypeScript backend (chat later). Skeleton only for now.
 - docs/: architecture, workflows, decisions, STATUS.md (memory), learnings.md
-- legacy/: the old portfolio. Reference only. Do not modify. Excluded from lint/CI.
 
 ## Commands (Bun, from repo root)
 bun install | bun run dev | bun run lint | bun run typecheck | bun test | bun run build

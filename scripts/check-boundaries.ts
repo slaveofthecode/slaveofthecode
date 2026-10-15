@@ -39,7 +39,6 @@ const IGNORED_DIRS = new Set([
   "dist",
   ".astro",
   ".git",
-  "legacy",
   "content-source",
 ]);
 

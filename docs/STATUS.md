@@ -105,23 +105,27 @@ Agent memory. Read at the start of every session; update at the end of every tas
   - `Header` became a **sticky** bar revealing the identity (avatar + name + headline) on scroll;
     `BackToTop.astro` bottom-left instant scroll-to-top.
 
-## In progress
-- PR-11 (`feat/mobile-nav-and-labels`) on top of `v2`@`290dea8`, uncommitted, all checks green
-  (48 tests), build + preview (`/`, `/es/`) → 200:
-  - Language labels per locale: EN → `EN`/`SP`, ES → `IN`/`ES` (i.e. `language.{en,es}` in
+- PR-11 (`feat/mobile-nav-and-labels`) merged into `v2` (PR #17, merge `c06cf26`, commit
+  `5c4100b`), all checks green (48 tests), build + preview (`/`, `/es/`) → 200:
+  - Language labels per locale: EN → `EN`/`SP`, ES → `IN`/`ES` (`language.{en,es}` in
     `src/i18n/{en,es}.ts`).
   - **Mobile menu:** added a `menu` icon + a `sm:hidden` hamburger button (`data-menu-toggle`,
     `aria-controls="mobile-nav"`, `aria-expanded`) and a collapsible mobile nav panel
-    (`#mobile-nav`) so the section menu is no longer lost on small screens. JS in `Header.astro`
-    toggles it (click, close on link click / Escape).
+    (`#mobile-nav`). JS in `Header.astro` toggles it (click, close on link click / Escape).
   - Moved the back-to-top button from bottom-left to **bottom-right** (`right-4`).
 
+## In progress
+- PR-12 (`chore/cutover-main`) branched from `v2`@`c06cf26` (uncommitted): removes `legacy/`
+  (the v1 portfolio), cleans its references (`biome.json`, `scripts/check-boundaries.ts`,
+  `AGENTS.md`, `docs/architecture.md`) and adds a root `vercel.json` so Vercel builds `apps/web`
+  from the repo root. Target: merge into `main` to cut over the live site.
+
 ## Next steps
-- Human: review + commit/push PR-11, then open the PR (base `v2`, assignee @me).
+- Human: review + commit/push PR-12, then open the PR (base `main`, assignee @me) and merge.
 - Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
-- After PR-10, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) optional AWS/Vercel
-  setup; (2) `POST /chat` + `LLMProvider` + streaming chat UI; (3) AI evals; (4) theme
-  variants; (5) AWS deploy + budget alarm; (6) replace PDF ingest; (7) cutover `v2` → `main`.
+- After the cutover, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) `POST /chat` +
+  `LLMProvider` + streaming chat UI; (2) AI evals; (3) theme variants; (4) AWS deploy + budget
+  alarm; (5) replace PDF ingest.
 
 ## Open decisions
 - Resume source is English → `data/en/*.json` authoritative, `data/es/*` draft (human to
@@ -145,9 +149,11 @@ Agent memory. Read at the start of every session; update at the end of every tas
 - Privacy incident: the PDF blob `98825db2990add365133a536ba45c5a8cbd30c3d` was pushed
   while the repo was public. Open a GitHub Support ticket to purge it (blob may stay
   reachable by SHA until GC).
-- Profile infrastructure stays at the repo root (not `legacy/`): `README.md`,
-  `update-readme.js`, `.github/workflows/update-readme.yml`. Pre-existing issue: that
-  workflow pushes directly to the default branch, which is protected (`GH013`).
-- Pre-existing privacy: `legacy/src/data/resume.json` and `legacy/src/layouts/Layout.astro`
-  still contain the old email/phone (moved in PR-2). Decide whether to scrub when `legacy/`
-  is removed at cutover (out of scope for PR-4).
+- Profile infrastructure stays at the repo root: `README.md`, `update-readme.js`,
+  `.github/workflows/update-readme.yml`. Pre-existing issue: that workflow pushes directly to the
+  default branch, which is protected (`GH013`).
+- Privacy: `legacy/` (which held the old email/phone in `resume.json` and `Layout.astro`) is
+  removed at cutover; that data still lives in git history and in the `v1` tag/release.
+- Hosting: Vercel builds the repo root; the root `vercel.json` redirects the build to
+  `apps/web`. If the dashboard has a manual Root Directory/Build override, set Root Directory to
+  `apps/web` instead.

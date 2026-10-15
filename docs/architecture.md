@@ -25,7 +25,7 @@ See `docs/decisions/` for the ADRs behind each choice.
 │  ├─ decisions/             # ADR-0001...
 │  └─ workflows/             # start-feature.md, open-pr.md
 ├─ content-source/           # GITIGNORED: resume.pdf, resume.txt
-├─ legacy/                   # the old portfolio, reference only
+├─ vercel.json               # builds apps/web from the repo root
 ├─ packages/content/         # @portfolio/content (schemas + data + loader)
 ├─ apps/web/                 # @portfolio/web (Astro + Tailwind)
 ├─ apps/api/                 # @portfolio/api (skeleton; chat later)

@@ -2,7 +2,6 @@
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
     "ignore": [
-      "legacy/**",
       "dist/**",
       "node_modules/**",
       "content-source/**",

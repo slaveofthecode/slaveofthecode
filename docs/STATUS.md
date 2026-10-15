@@ -114,24 +114,35 @@ Agent memory. Read at the start of every session; update at the end of every tas
     (`#mobile-nav`). JS in `Header.astro` toggles it (click, close on link click / Escape).
   - Moved the back-to-top button from bottom-left to **bottom-right** (`right-4`).
 
+- PR-12 (`chore/cutover-main`) merged into `main` (PR #19, merge `d1c617b`), all checks green:
+  removed `legacy/` (the v1 portfolio), cleaned its references (`biome.json`,
+  `scripts/check-boundaries.ts`, `AGENTS.md`, `docs/architecture.md`) and added a root
+  `vercel.json` so Vercel builds `apps/web` from the repo root. `main` is now the new site.
+
 ## In progress
-- PR-12 (`chore/cutover-main`) branched from `v2`@`c06cf26` (uncommitted): removes `legacy/`
-  (the v1 portfolio), cleans its references (`biome.json`, `scripts/check-boundaries.ts`,
-  `AGENTS.md`, `docs/architecture.md`) and adds a root `vercel.json` so Vercel builds `apps/web`
-  from the repo root. Target: merge into `main` to cut over the live site.
+- PR-13 (`feat/cv-contact-and-polish`) branched from `main`@`d1c617b` (uncommitted), all checks
+  green (48 tests), build OK:
+  - Profile hero now shows the PDF header data: `name` (replaces a non-PDF tagline), `headline`,
+    `location` (map-pin icon) and `email` (mail icon, `mailto:`); Portfolio/GitHub/LinkedIn keep
+    their icons.
+  - Added an `email` field to `data/{en,es}/profile.json` (en/es parity kept).
+  - Removed the non-PDF hero text "Hey, I build reliable software" / "Hola, construyo software
+    confiable" (`i18n.home`).
+  - Experience: distinguished the date (uppercase + tracking), the role/company text and the
+    highlights (left-rule block) from the tech chips.
+  - Footer: "Built with Astro" → "Built with" / "Hecho con" + a heart icon.
 
 ## Next steps
-- Human: review + commit/push PR-12, then open the PR (base `main`, assignee @me) and merge.
+- Human: review + commit/push PR-13, open the PR (base `main`, assignee @me).
 - Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
-- After the cutover, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) `POST /chat` +
-  `LLMProvider` + streaming chat UI; (2) AI evals; (3) theme variants; (4) AWS deploy + budget
-  alarm; (5) replace PDF ingest.
+- Roadmap per `docs/BOOTSTRAP.md` §12: (1) `POST /chat` + `LLMProvider` + streaming chat UI;
+  (2) AI evals; (3) theme variants; (4) AWS deploy + budget alarm; (5) replace PDF ingest.
 
 ## Open decisions
 - Resume source is English → `data/en/*.json` authoritative, `data/es/*` draft (human to
   review wording).
-- Contact data: **email NOT published** (confirmed); phone/address never. Profile links
-  published: Portfolio, GitHub, LinkedIn.
+- Contact data: `email` published at the human's request (PR-13); phone/address never. Profile
+  links published: Portfolio, GitHub, LinkedIn, plus the email.
 - Certifications: new `certifications[]` collection (approved). MCP vs HTML5 Specialist
   Credly URL ambiguity → `docs/ingest-notes.md`.
 - Visual direction: keep the current identity as a base but with a refreshed look.

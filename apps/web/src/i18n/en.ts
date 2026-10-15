@@ -30,15 +30,13 @@ export const en = {
     backToTop: "Back to top",
   },
   footer: {
-    builtWith: "Built with Astro",
+    builtWith: "Built with",
     rights: "All rights reserved.",
     source: "View the source on GitHub",
   },
-  home: {
-    title: "Hey, I build reliable software",
-  },
   cv: {
     links: "Links",
+    email: "Email",
     present: "Present",
   },
   now: {

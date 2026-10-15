@@ -32,15 +32,13 @@ export const es: Strings = {
     backToTop: "Volver arriba",
   },
   footer: {
-    builtWith: "Hecho con Astro",
+    builtWith: "Hecho con",
     rights: "Todos los derechos reservados.",
     source: "Ver el código en GitHub",
   },
-  home: {
-    title: "Hola, construyo software confiable",
-  },
   cv: {
     links: "Enlaces",
+    email: "Correo",
     present: "Actualidad",
   },
   now: {

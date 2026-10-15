@@ -8,6 +8,7 @@ export const es: Strings = {
   },
   nav: {
     label: "Principal",
+    menu: "Menú",
     experience: "Experiencia",
     skills: "Skills",
     languages: "Idiomas",
@@ -23,8 +24,8 @@ export const es: Strings = {
   },
   language: {
     label: "Idioma",
-    en: "ENG",
-    es: "SPN",
+    en: "IN",
+    es: "ES",
   },
   a11y: {
     skipToContent: "Saltar al contenido",

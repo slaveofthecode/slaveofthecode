@@ -6,6 +6,7 @@ export const en = {
   },
   nav: {
     label: "Primary",
+    menu: "Menu",
     experience: "Experience",
     skills: "Skills",
     languages: "Languages",
@@ -21,8 +22,8 @@ export const en = {
   },
   language: {
     label: "Language",
-    en: "ENG",
-    es: "SPN",
+    en: "EN",
+    es: "SP",
   },
   a11y: {
     skipToContent: "Skip to content",

@@ -2,6 +2,7 @@
 import { getContent } from "@portfolio/content";
 import { type Locale, getStrings, localizedPath } from "../i18n";
 import { initials } from "../lib/initials";
+import Icon from "./Icon.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
@@ -61,7 +62,7 @@ const navItems = [
       </span>
     </a>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-2 sm:gap-4">
       <nav aria-label={t.nav.label} class="hidden sm:block">
         <ul class="flex items-center gap-4 font-mono text-xs">
           {
@@ -82,8 +83,41 @@ const navItems = [
         <LanguageSwitcher locale={locale} path={path} />
         <ThemeToggle locale={locale} />
       </div>
+      <button
+        type="button"
+        data-menu-toggle
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label={t.nav.menu}
+        class="inline-flex h-8 w-8 items-center justify-center rounded-card border border-border text-muted transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg sm:hidden"
+      >
+        <Icon name="menu" class="h-5 w-5" />
+      </button>
     </div>
   </div>
+
+  <nav
+    id="mobile-nav"
+    data-menu-panel
+    hidden
+    aria-label={t.nav.label}
+    class="border-t border-border sm:hidden"
+  >
+    <ul class="mx-auto flex w-full max-w-3xl flex-col px-5 py-2 font-mono text-sm">
+      {
+        navItems.map((item) => (
+          <li>
+            <a
+              href={localizedPath(locale, `/#${item.id}`)}
+              class="block py-2 text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 </header>
 
 <style>
@@ -114,5 +148,25 @@ const navItems = [
       header.classList.toggle("is-scrolled", window.scrollY > 140);
     update();
     window.addEventListener("scroll", update, { passive: true });
+
+    const toggle = header.querySelector("[data-menu-toggle]");
+    const panel = header.querySelector("[data-menu-panel]");
+    if (toggle && panel) {
+      const setOpen = (open: boolean) => {
+        toggle.setAttribute("aria-expanded", String(open));
+        panel.toggleAttribute("hidden", !open);
+      };
+      toggle.addEventListener("click", () =>
+        setOpen(panel.hasAttribute("hidden")),
+      );
+      panel.addEventListener("click", (event) => {
+        if (event.target instanceof Element && event.target.closest("a")) {
+          setOpen(false);
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setOpen(false);
+      });
+    }
   }
 </script>

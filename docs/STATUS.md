@@ -99,18 +99,25 @@ Agent memory. Read at the start of every session; update at the end of every tas
     new `heart-face` inline icon; i18n `footer.source` label (`Ver el código en GitHub` / `View
     the source on GitHub`).
 
+- PR-10 (`feat/header-and-backtotop`) merged into `v2` (PR #16, merge `290dea8`, commit
+  `653217a`), all checks green (48 tests):
+  - Language switcher labels switched to abbreviations (superseded by PR-11).
+  - `Header` became a **sticky** bar revealing the identity (avatar + name + headline) on scroll;
+    `BackToTop.astro` bottom-left instant scroll-to-top.
+
 ## In progress
-- PR-10 (`feat/header-and-backtotop`) on top of `v2`@`65214b6`, uncommitted, all checks green
+- PR-11 (`feat/mobile-nav-and-labels`) on top of `v2`@`290dea8`, uncommitted, all checks green
   (48 tests), build + preview (`/`, `/es/`) → 200:
-  - Language switcher labels are now abbreviations **ENG/SPN** in both locales.
-  - `Header` is now a **sticky** bar; it reveals the identity (avatar + full name + headline) once
-    scrolled (JS toggles `.is-scrolled` past 140px; hidden with `opacity`/`pointer-events` at the
-    top to avoid duplicating the hero).
-  - New `BackToTop.astro`: a `fixed` bottom-left icon button (appears after 300px) that scrolls to
-    the top instantly; adds an `arrow-up` icon and i18n `a11y.backToTop`.
+  - Language labels per locale: EN → `EN`/`SP`, ES → `IN`/`ES` (i.e. `language.{en,es}` in
+    `src/i18n/{en,es}.ts`).
+  - **Mobile menu:** added a `menu` icon + a `sm:hidden` hamburger button (`data-menu-toggle`,
+    `aria-controls="mobile-nav"`, `aria-expanded`) and a collapsible mobile nav panel
+    (`#mobile-nav`) so the section menu is no longer lost on small screens. JS in `Header.astro`
+    toggles it (click, close on link click / Escape).
+  - Moved the back-to-top button from bottom-left to **bottom-right** (`right-4`).
 
 ## Next steps
-- Human: review + commit/push PR-10, then open the PR (base `v2`, assignee @me).
+- Human: review + commit/push PR-11, then open the PR (base `v2`, assignee @me).
 - Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
 - After PR-10, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) optional AWS/Vercel
   setup; (2) `POST /chat` + `LLMProvider` + streaming chat UI; (3) AI evals; (4) theme
@@ -127,9 +134,8 @@ Agent memory. Read at the start of every session; update at the end of every tas
 - Branding (PR-7): Chakra Petch + Space Mono; portrait from the PDF. "Now" section labelled
   "What I'm working on now" / "¿En qué ando ahora?" with a thinking icon; real `now[]` item
   (Commit Academy cloud/AWS course). en text is a translation of the human-authored es.
-- PR-10: language switcher uses the fixed abbreviations **ENG/SPN** in both locales (interpretation
-  of "cambiar English→ENG y Spanish→SPN y su correspondencia en español"). If the human prefers
-  endonym codes in Spanish (e.g. ING/ESP), only `language.{en,es}` in `src/i18n/es.ts` change.
+- PR-11: language switcher now uses locale-specific codes: EN locale → `EN`/`SP`, ES locale →
+  `IN`/`ES` (per the human's latest instruction; supersedes PR-10's ENG/SPN).
 - PR-8: human asked to combine the favicon/branding change with `feat/api-skeleton` in one PR
   (deliberate deviation from the one-feature-per-branch rule). The favicon is driven by the new
   optional `profile.avatar` content field rather than a filesystem check — the earlier

@@ -94,13 +94,7 @@
       "Implemented new features and UI enhancements for a pharmaceutical platform using React and Figma-based designs.",
       "Delivered responsive user interface implementations based on high-fidelity designs."
     ],
-    "tech": [
-      "HTML",
-      "JavaScript",
-      "Hooks",
-      "React",
-      "TypeScript"
-    ]
+    "tech": ["HTML", "JavaScript", "Hooks", "React", "TypeScript"]
   },
   {
     "id": "mcafee",
@@ -195,13 +189,7 @@
     "startDate": "2013-03",
     "endDate": "2013-12",
     "highlights": [],
-    "tech": [
-      "MongoDB",
-      ".NET MVC",
-      "JavaScript",
-      "C#",
-      "NET Web API"
-    ]
+    "tech": ["MongoDB", ".NET MVC", "JavaScript", "C#", "NET Web API"]
   },
   {
     "id": "globant",
@@ -210,13 +198,7 @@
     "startDate": "2011-07",
     "endDate": "2013-03",
     "highlights": [],
-    "tech": [
-      ".NET Razor",
-      "MVC",
-      "jQuery",
-      "JavaScript",
-      "C#"
-    ]
+    "tech": [".NET Razor", "MVC", "jQuery", "JavaScript", "C#"]
   },
   {
     "id": "particular",
@@ -225,13 +207,7 @@
     "startDate": "2011-09",
     "endDate": "2011-12",
     "highlights": [],
-    "tech": [
-      "ASP.NET",
-      "ASP",
-      "JavaScript",
-      "C#",
-      "SQL Server"
-    ]
+    "tech": ["ASP.NET", "ASP", "JavaScript", "C#", "SQL Server"]
   },
   {
     "id": "bancor-2",

@@ -22,5 +22,31 @@
       "docker",
       "kubernetes"
     ]
+  },
+  {
+    "id": "personal-project-linkzen-extension",
+    "kind": "project",
+    "title": "Extension for Google Chrome to manage bookmarks",
+    "description": "Google Chrome Extension (Manifest V3) designed to replace the traditional bookmarks bar with a single minimalist popup launcher. It includes a bookmark auditing engine that scans for obsolete, broken, or mismatched URLs and provides an interactive dashboard to manage and clean them up.",
+    "progress": 73,
+    "status": "in-progress",
+    "startedAt": "2026-09-23",
+    "updatedAt": "2026-10-08",
+    "links": [
+      {
+        "label": "linkzen-extension",
+        "url": "https://github.com/slaveofthecode/linkzen-extension"
+      }
+    ],
+    "tags": [
+      "chrome-extension",
+      "react",
+      "typescript",
+      "vite",
+      "chrome.bookmarks",
+      "chrome.tabs",
+      "chrome.storage",
+      "aws amplify"
+    ]
   }
 ]

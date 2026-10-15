@@ -39,6 +39,7 @@ export const es: Strings = {
   cv: {
     links: "Enlaces",
     email: "Correo",
+    location: "Ubicación",
     present: "Actualidad",
   },
   now: {

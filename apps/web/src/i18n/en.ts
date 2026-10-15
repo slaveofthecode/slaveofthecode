@@ -37,6 +37,7 @@ export const en = {
   cv: {
     links: "Links",
     email: "Email",
+    location: "Location",
     present: "Present",
   },
   now: {

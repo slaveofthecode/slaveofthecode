@@ -131,6 +131,14 @@ Agent memory. Read at the start of every session; update at the end of every tas
   - Experience: distinguished the date (uppercase + tracking), the role/company text and the
     highlights (left-rule block) from the tech chips.
   - Footer: "Built with Astro" → "Built with" / "Hecho con" + a heart icon.
+  - Location links out to Google Maps (`…/maps/search/?api=1&query=…`).
+  - Dark theme lightened (`--app-bg` `#141516` → `#202126`, surface/border/muted bumped) so
+    badges/labels stand out.
+  - Languages section: removed the per-row bottom rule.
+  - Subtle hover affordances: experience rows and skills groups fade in a left-ward
+    background gradient on hover (`hover:bg-linear-to-l from-transparent to-surface`) with
+    breathing-room padding; Now cards highlight their border (`hover:border-accent`).
+  - "Now" stays the single optional collection (rendered only when `now.json` is non-empty).
 
 ## Next steps
 - Human: review + commit/push PR-13, open the PR (base `main`, assignee @me).

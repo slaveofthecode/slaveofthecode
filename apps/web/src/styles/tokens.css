@@ -16,13 +16,13 @@
 }
 
 :root[data-theme="dark"] {
-  --app-bg: #141516;
-  --app-surface: #1c1d20;
+  --app-bg: #202126;
+  --app-surface: #2a2b31;
   --app-fg: #f4f4f5;
-  --app-muted: #a1a1aa;
-  --app-border: #2c2d31;
+  --app-muted: #b1b2b9;
+  --app-border: #3b3c43;
   --app-accent: #f4f4f5;
-  --app-accent-fg: #141516;
+  --app-accent-fg: #202126;
   --app-radius: 0.5rem;
 }
 

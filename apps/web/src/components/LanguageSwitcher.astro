@@ -1,0 +1,30 @@
+---
+import { type Locale, getStrings, locales, localizedPath } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  /** Locale-agnostic path of the current page, e.g. "/". */
+  path?: string;
+}
+
+const { locale, path = "/" } = Astro.props;
+const t = getStrings(locale);
+---
+
+<nav aria-label={t.language.label} class="flex items-center gap-1 text-sm">
+  {
+    locales.map((code) => (
+      <a
+        href={localizedPath(code, path)}
+        hreflang={code}
+        aria-current={code === locale ? "true" : undefined}
+        class:list={[
+          "rounded-card px-2 py-1 transition-colors hover:bg-surface",
+          code === locale ? "text-fg" : "text-muted",
+        ]}
+      >
+        {t.language[code]}
+      </a>
+    ))
+  }
+</nav>

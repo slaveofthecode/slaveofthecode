@@ -1,0 +1,12 @@
+{
+  "name": "Gustavo Lopez",
+  "headline": "Desarrollador Full-Stack Senior",
+  "location": "Córdoba, Argentina",
+  "summary": "Desarrollador Full-Stack Senior con más de 15 años de experiencia en entornos de Banca, Fintech, Ciberseguridad, Salud y Empresariales. Experiencia principal en TypeScript, React, Node.js y .NET, entre otros, con un fuerte enfoque en construir software confiable y mantenible y en modernizar plataformas heredadas. Actualmente enfocado en el desarrollo de software asistido por IA, explorando LLMs, agentes de código, MCP y arquitecturas basadas en agentes.",
+  "links": [
+    { "label": "Portafolio", "url": "https://slaveofthecode.vercel.app/" },
+    { "label": "GitHub", "url": "https://github.com/slaveofthecode" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/gustavoml/" }
+  ],
+  "avatar": "/portrait.png"
+}

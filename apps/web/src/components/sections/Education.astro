@@ -1,0 +1,29 @@
+---
+import type { Education } from "@portfolio/content";
+import { type Locale, getStrings } from "../../i18n";
+import { formatRange } from "../../lib/dates";
+
+interface Props {
+  items: Education[];
+  locale: Locale;
+}
+
+const { items, locale } = Astro.props;
+const t = getStrings(locale);
+---
+
+<ul class="space-y-6">
+  {
+    items.map((entry) => (
+      <li>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 class="font-heading text-base text-fg">{entry.institution}</h3>
+          <time datetime={entry.startDate} class="font-mono text-xs text-muted">
+            {formatRange(entry.startDate, entry.endDate, locale, t.cv.present)}
+          </time>
+        </div>
+        <p class="mt-1 font-mono text-sm text-muted">{entry.title}</p>
+      </li>
+    ))
+  }
+</ul>

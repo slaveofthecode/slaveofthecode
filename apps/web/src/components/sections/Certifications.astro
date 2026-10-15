@@ -1,0 +1,39 @@
+---
+import type { Certification } from "@portfolio/content";
+import type { Locale } from "../../i18n";
+import { formatPoint } from "../../lib/dates";
+
+interface Props {
+  items: Certification[];
+  locale: Locale;
+}
+
+const { items, locale } = Astro.props;
+---
+
+<ul class="space-y-4">
+  {
+    items.map((certification) => (
+      <li>
+        <h3 class="font-mono text-sm text-fg">
+          {certification.url ? (
+            <a
+              href={certification.url}
+              rel="noopener"
+              target="_blank"
+              class="underline-offset-4 transition-colors hover:text-muted hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+            >
+              {certification.name}
+            </a>
+          ) : (
+            certification.name
+          )}
+        </h3>
+        <p class="font-mono text-xs text-muted">
+          {certification.issuer}
+          {certification.date ? ` · ${formatPoint(certification.date, locale)}` : ""}
+        </p>
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "aws-cloud-commit-academy",
+    "kind": "course",
+    "title": "Programa Profesional de Cloud, AWS e Infraestructura",
+    "description": "Domina los fundamentos y prácticas avanzadas de Cloud Computing con AWS, aprendiendo a diseñar, desplegar y operar aplicaciones escalables en la nube. Explora tecnologías clave como Terraform, Docker y Kubernetes, con ejercicios prácticos y un proyecto final real. Incluye 16 semanas de contenido estructurado, mentoría en vivo y acceso a una cuenta AWS real para aplicar lo aprendido.",
+    "progress": 11,
+    "status": "in-progress",
+    "startedAt": "2026-09-28",
+    "updatedAt": "2026-10-14",
+    "links": [
+      {
+        "label": "commitacademy.io",
+        "url": "https://www.commitacademy.io/app/courses/e4efcccc-42b0-4ebb-b4fd-fc5fb38e4be9"
+      }
+    ],
+    "tags": [
+      "cloud",
+      "aws",
+      "infrastructure",
+      "terraform",
+      "docker",
+      "kubernetes"
+    ]
+  }
+]

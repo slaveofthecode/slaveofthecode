@@ -1,0 +1,98 @@
+---
+import "@fontsource/chakra-petch/latin-400.css";
+import "@fontsource/chakra-petch/latin-700.css";
+import "@fontsource/space-mono/latin-400.css";
+import "@fontsource/space-mono/latin-700.css";
+import "../styles/global.css";
+import { getContent } from "@portfolio/content";
+import BackToTop from "../components/BackToTop.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { type Locale, getStrings, locales, localizedPath } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  /** Locale-agnostic path of the current page, e.g. "/". */
+  path?: string;
+  title?: string;
+  description?: string;
+}
+
+const { locale, path = "/", title, description } = Astro.props;
+const t = getStrings(locale);
+const avatar = getContent(locale).profile.avatar;
+const faviconType = avatar?.endsWith(".svg") ? "image/svg+xml" : "image/png";
+const pageTitle = title ?? t.meta.title;
+const pageDescription = description ?? t.meta.description;
+
+const canonical = new URL(localizedPath(locale, path), Astro.site);
+const ogLocale = locale === "es" ? "es_ES" : "en_US";
+---
+
+<!doctype html>
+<html lang={locale} data-theme="light" data-style="normal">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+    <link
+      rel="icon"
+      type={avatar ? faviconType : "image/svg+xml"}
+      href={avatar ?? "/favicon.svg"}
+    />
+    <link rel="apple-touch-icon" href={avatar ?? "/favicon.svg"} />
+
+    {
+      locales.map((code) => (
+        <link rel="alternate" hreflang={code} href={new URL(localizedPath(code, path), Astro.site)} />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(localizedPath("en", path), Astro.site)}
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta name="twitter:card" content="summary" />
+
+    <title>{pageTitle}</title>
+
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (_error) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-dvh bg-bg font-sans text-fg">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-card focus:bg-surface focus:px-3 focus:py-2"
+    >
+      {t.a11y.skipToContent}
+    </a>
+    <Header locale={locale} path={path} />
+    <main id="main" class="mx-auto w-full max-w-3xl px-5">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <BackToTop locale={locale} />
+  </body>
+</html>

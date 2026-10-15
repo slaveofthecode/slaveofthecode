@@ -1,0 +1,49 @@
+/*
+ * Theme tokens. The only place colors, fonts and radii are defined.
+ * Components must use Tailwind utilities mapped to these variables
+ * (see global.css `@theme inline`) — never hard-coded colors.
+ */
+:root,
+:root[data-theme="light"] {
+  --app-bg: #f4f4f5;
+  --app-surface: #ffffff;
+  --app-fg: #141516;
+  --app-muted: #52525b;
+  --app-border: #d6d7db;
+  --app-accent: #141516;
+  --app-accent-fg: #ffffff;
+  --app-radius: 0.5rem;
+}
+
+:root[data-theme="dark"] {
+  --app-bg: #141516;
+  --app-surface: #1c1d20;
+  --app-fg: #f4f4f5;
+  --app-muted: #a1a1aa;
+  --app-border: #2c2d31;
+  --app-accent: #f4f4f5;
+  --app-accent-fg: #141516;
+  --app-radius: 0.5rem;
+}
+
+:root {
+  --app-font-body: "Space Mono", ui-monospace, monospace;
+  --app-font-mono: "Space Mono", ui-monospace, monospace;
+  --app-font-heading: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--app-bg);
+  color: var(--app-fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

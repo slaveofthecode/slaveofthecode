@@ -20,3 +20,9 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 .qodo
+
+# local-only resume source (may contain phone/address; repo is public)
+content-source/
+
+# TypeScript incremental build info
+*.tsbuildinfo

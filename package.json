@@ -1,24 +1,22 @@
 {
-	"name": "readme-updater",
-	"version": "1.0.0",
-	"main": "update-readme.js",
-	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "astro check && astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/check": "^0.5.4",
-		"@astrojs/tailwind": "^5.1.0",
-		"@fontsource/covered-by-your-grace": "^5.0.8",
-		"@fontsource/zen-kaku-gothic-new": "^5.0.17",
-		"@vercel/speed-insights": "^1.0.10",
-		"astro": "^4.3.6",
-		"hotkeypad": "0.1.0",
-		"sass": "^1.70.0",
-		"tailwindcss": "^3.4.1",
-		"typescript": "^5.3.3"
-	}
+  "name": "slaveofthecode",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "build": "bun run --filter '*' build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "bun run --filter '*' typecheck",
+    "test": "bun test",
+    "check:boundaries": "bun scripts/check-boundaries.ts",
+    "ingest:extract": "bun packages/content/scripts/extract-resume.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@emnapi/wasi-threads": "^2.2.0",
+    "@types/bun": "^1.2.0",
+    "typescript": "^5.6.3"
+  }
 }

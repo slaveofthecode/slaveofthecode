@@ -1,0 +1,57 @@
+---
+import { getContent } from "@portfolio/content";
+import { type Locale, getStrings } from "../i18n";
+import { REPO_URL, iconName } from "../lib/links";
+import Icon from "./Icon.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getStrings(locale);
+const { profile } = getContent(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="mx-auto w-full max-w-3xl px-5 py-10">
+  <hr class="mb-6 border-border" />
+  <div
+    class="flex flex-col gap-3 text-sm text-muted sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p class="font-mono">
+      &copy; {year} {profile.name}. {t.footer.rights}
+    </p>
+    <div class="flex items-center gap-5">
+      <ul class="flex flex-wrap items-center gap-4">
+        {
+          profile.links.map((link) => (
+            <li>
+              <a
+                href={link.url}
+                aria-label={link.label}
+                title={link.label}
+                class="inline-flex text-muted transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                rel="me noopener"
+                target="_blank"
+              >
+                <Icon name={iconName(link.url)} class="h-5 w-5" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        href={REPO_URL}
+        aria-label={t.footer.source}
+        title={t.footer.source}
+        class="inline-flex items-center gap-2 font-mono text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+        rel="noopener"
+        target="_blank"
+      >
+        {t.footer.builtWith}
+        <Icon name="heart-face" class="h-4 w-4" />
+      </a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,56 @@
+---
+import { type Locale, getStrings } from "../i18n";
+import Icon from "./Icon.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getStrings(locale);
+---
+
+<div data-back-to-top class="fixed bottom-6 right-4 z-40">
+  <button
+    type="button"
+    aria-label={t.a11y.backToTop}
+    title={t.a11y.backToTop}
+    class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface text-muted shadow-sm transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+  >
+    <Icon name="arrow-up" class="h-5 w-5" />
+  </button>
+</div>
+
+<style>
+  [data-back-to-top] {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 200ms ease,
+      transform 200ms ease,
+      visibility 200ms ease;
+  }
+  [data-back-to-top].is-visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-back-to-top] {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector("[data-back-to-top]");
+  const button = root?.querySelector("button");
+  if (root && button) {
+    const update = () =>
+      root.classList.toggle("is-visible", window.scrollY > 300);
+    button.addEventListener("click", () => window.scrollTo({ top: 0 }));
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+  }
+</script>

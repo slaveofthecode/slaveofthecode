@@ -29,10 +29,17 @@ const { items, locale } = Astro.props;
             certification.name
           )}
         </h3>
-        <p class="font-mono text-xs text-muted">
-          {certification.issuer}
-          {certification.date ? ` · ${formatPoint(certification.date, locale)}` : ""}
-        </p>
+        {
+          certification.issuer || certification.date ? (
+            <p class="font-mono text-xs text-muted">
+              {certification.issuer ?? ""}
+              {certification.issuer && certification.date ? " · " : ""}
+              {certification.date
+                ? formatPoint(certification.date, locale)
+                : ""}
+            </p>
+          ) : null
+        }
       </li>
     ))
   }

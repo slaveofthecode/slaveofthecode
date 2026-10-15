@@ -1,9 +1,4 @@
 export const en = {
-  meta: {
-    title: "Gustavo Lopez — Senior Full-Stack Developer",
-    description:
-      "Living CV of Gustavo Lopez, Senior Full-Stack Developer with 15+ years of experience across banking, fintech, cybersecurity, healthcare and enterprise.",
-  },
   nav: {
     label: "Primary",
     menu: "Menu",
@@ -38,6 +33,7 @@ export const en = {
     links: "Links",
     email: "Email",
     location: "Location",
+    phone: "Phone",
     present: "Present",
   },
   now: {

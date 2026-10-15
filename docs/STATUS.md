@@ -140,19 +140,62 @@ Agent memory. Read at the start of every session; update at the end of every tas
     breathing-room padding; Now cards highlight their border (`hover:border-accent`).
   - "Now" stays the single optional collection (rendered only when `now.json` is non-empty).
 
+- PR-14 (PDF→JSON ingest + photo + language switch off) — currently shares the working tree/branch
+  with PR-13 (uncommitted), all checks green (48 tests), build OK:
+   - New `packages/content/scripts/ingest-resume.ts`, run via `bun run ingest:parse` (or
+     `bun run ingest` = `ingest:extract` + `ingest:parse`). Deterministic parser (no AI): maps
+     `content-source/resume.txt` → the schema. `now.json` never touched; validates against
+     `contentSchema`; prints counts only (no PII).
+   - **`data/en` is rebuilt from the PDF; `data/es` keeps its hand-made translations.** Entries are
+     matched across locales by a stable natural key (existing ids are reused), fields the PDF can't
+     provide are carried over (`profile.links`, cert `issuer`/`date`), and noisier PDF wording is
+     ignored when it only differs by punctuation/casing from the committed value (so `UT (Jest)`,
+     `.NET Web API`, etc. survive). Files are only rewritten when their content actually changes
+     (stable-stringify compare), so re-running the same PDF is a **no-op**.
+  - **Format-tolerant section detection** (the human's ask): sections are found by keyword in any
+    order — summary/profile/about/objective, experience (incl. work/employment/additional/other/
+    prior), skills/technical stack/competencies, education (incl. combined "Education &
+    Certifications"), certifications, languages. Experience parser splits `Company` from `Role`
+    (seniority/role/tech word heuristics), handles both `Company` + `Role DateRange` and
+    `Role DateRange` layouts, joins wrapped bullet continuations, and separates bullets from the
+    trailing `A - B - C` tech list. A table-style skills section ("Category | Technologies",
+    even when PDF-flattened) is grouped by known category labels, with a single-group fallback.
+    Education/certifications split a combined section by whether the block has a date range.
+  - **Photo extraction** (`extract-resume.ts`): pulls the largest photo-like embedded image from
+    the PDF and writes `apps/web/public/portrait.png` via a dependency-free PNG encoder
+    (`node:zlib`); removes the file when the PDF has no photo. The parser sets `profile.avatar`
+    only if that file exists, so a photo-less resume makes Header/Profile show the **initials**
+    monogram and BaseLayout fall back to `/favicon.svg`.
+  - New optional `profile.phone` (schema + `tel:` link + `phone` icon in `Profile.astro`, `cv.phone`
+    i18n). `certifications[].issuer` made **optional** (the PDF has no issuer) and
+    `Certifications.astro` renders issuer/date only when present.
+  - Language switching disabled: `LanguageSwitcher` removed from `Header` (the `/es` page + i18n
+    strings still exist for now). SEO `<title>`/description derive from the content. `Languages`
+    renders only when non-empty.
+  - Ran the pipeline against the current `resume.pdf` (Gustavo Lopez): 14 jobs, 7 skill groups,
+    1 education entry, 2 certifications, 2 languages, photo → `portrait.png`.
+
+
 ## Next steps
-- Human: review + commit/push PR-13, open the PR (base `main`, assignee @me).
-- Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
+- Human: PR-13 polish and the PR-14 ingest work share this branch (`feat/cv-contact-and-polish`)
+  by request — review and push/commit them together.
+- Human: after replacing `content-source/resume.pdf`, run `bun run ingest` locally and commit the
+  regenerated `packages/content/data/**` + `apps/web/public/portrait.png` (the PDF is gitignored, so
+  CI/Vercel only see the JSON/PNG).
+- Human: open the PR (base `main`, assignee @me) once pushed.
 - Roadmap per `docs/BOOTSTRAP.md` §12: (1) `POST /chat` + `LLMProvider` + streaming chat UI;
   (2) AI evals; (3) theme variants; (4) AWS deploy + budget alarm; (5) replace PDF ingest.
 
 ## Open decisions
-- Resume source is English → `data/en/*.json` authoritative, `data/es/*` draft (human to
-  review wording).
-- Contact data: `email` published at the human's request (PR-13); phone/address never. Profile
-  links published: Portfolio, GitHub, LinkedIn, plus the email.
-- Certifications: new `certifications[]` collection (approved). MCP vs HTML5 Specialist
-  Credly URL ambiguity → `docs/ingest-notes.md`.
+- Ingest locales (revised): `data/en` is rebuilt from the PDF; `data/es` preserves the hand-made
+  Spanish translations (matched by id / natural key) plus any field the PDF can't provide.
+  Language switching is disabled for now.
+- Contact data: the PDF→JSON ingest publishes whatever the resume header contains (location,
+  phone, email, links) — the human explicitly asked to show any PDF data (PR-14); this supersedes
+  the earlier "phone/address never" rule for PDF-derived content.
+- Certifications: `issuer` is optional (the current PDF has none). Education/certifications blocks
+  are told apart by the presence of a date range within a combined section.
+
 - Visual direction: keep the current identity as a base but with a refreshed look.
 - Branding (PR-7): Chakra Petch + Space Mono; portrait from the PDF. "Now" section labelled
   "What I'm working on now" / "¿En qué ando ahora?" with a thinking icon; real `now[]` item

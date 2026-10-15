@@ -27,9 +27,13 @@ const content = getContent(locale);
     <Skills groups={content.skills} />
   </Section>
 
-  <Section id="languages" title={t.nav.languages}>
-    <Languages items={content.languages} />
-  </Section>
+  {
+    content.languages.length > 0 ? (
+      <Section id="languages" title={t.nav.languages}>
+        <Languages items={content.languages} />
+      </Section>
+    ) : null
+  }
 
   {
     content.education.length > 0 ? (

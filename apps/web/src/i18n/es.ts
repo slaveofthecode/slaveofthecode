@@ -1,11 +1,6 @@
 import type { Strings } from "./en";
 
 export const es: Strings = {
-  meta: {
-    title: "Gustavo Lopez — Desarrollador Full-Stack Senior",
-    description:
-      "CV vivo de Gustavo Lopez, Desarrollador Full-Stack Senior con más de 15 años de experiencia en banca, fintech, ciberseguridad, salud y empresas.",
-  },
   nav: {
     label: "Principal",
     menu: "Menú",
@@ -40,6 +35,7 @@ export const es: Strings = {
     links: "Enlaces",
     email: "Correo",
     location: "Ubicación",
+    phone: "Teléfono",
     present: "Actualidad",
   },
   now: {

@@ -11,7 +11,9 @@
     "typecheck": "bun run --filter '*' typecheck",
     "test": "bun test",
     "check:boundaries": "bun scripts/check-boundaries.ts",
-    "ingest:extract": "bun packages/content/scripts/extract-resume.ts"
+    "ingest": "bun run ingest:extract && bun run ingest:parse",
+    "ingest:extract": "bun packages/content/scripts/extract-resume.ts",
+    "ingest:parse": "bun packages/content/scripts/ingest-resume.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

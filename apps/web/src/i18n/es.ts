@@ -23,11 +23,12 @@ export const es: Strings = {
   },
   language: {
     label: "Idioma",
-    en: "Inglés",
-    es: "Español",
+    en: "ENG",
+    es: "SPN",
   },
   a11y: {
     skipToContent: "Saltar al contenido",
+    backToTop: "Volver arriba",
   },
   footer: {
     builtWith: "Hecho con Astro",

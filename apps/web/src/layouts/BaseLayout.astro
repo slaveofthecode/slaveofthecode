@@ -5,6 +5,7 @@ import "@fontsource/space-mono/latin-400.css";
 import "@fontsource/space-mono/latin-700.css";
 import "../styles/global.css";
 import { getContent } from "@portfolio/content";
+import BackToTop from "../components/BackToTop.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { type Locale, getStrings, locales, localizedPath } from "../i18n";
@@ -92,5 +93,6 @@ const ogLocale = locale === "es" ? "es_ES" : "en_US";
       <slot />
     </main>
     <Footer locale={locale} />
+    <BackToTop locale={locale} />
   </body>
 </html>

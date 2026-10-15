@@ -91,19 +91,28 @@ Agent memory. Read at the start of every session; update at the end of every tas
     non-GET `/health` → 405. `test/health.test.ts` (3). `apps/api/tsconfig.json` now includes
     `test/` with `types:["bun"]`. No Bun-only APIs; imports nothing internal.
 
-## In progress
-- PR-9 (`feat/footer-links`) on top of `v2`@`83f33a4`, uncommitted, all checks green (48 tests),
-  build OK:
+- PR-9 (`feat/footer-links`) merged into `v2` (PR #15, merge `65214b6`, commit `b3a9581`), all
+  checks green (48 tests), build OK:
   - Footer profile links (Portfolio/GitHub/LinkedIn) render as **icons only** (no text label),
     keeping `aria-label`/`title` for accessibility.
   - `Built with Astro` is now a link to the project repo (`REPO_URL` in `src/lib/links.ts`) with a
     new `heart-face` inline icon; i18n `footer.source` label (`Ver el código en GitHub` / `View
     the source on GitHub`).
 
+## In progress
+- PR-10 (`feat/header-and-backtotop`) on top of `v2`@`65214b6`, uncommitted, all checks green
+  (48 tests), build + preview (`/`, `/es/`) → 200:
+  - Language switcher labels are now abbreviations **ENG/SPN** in both locales.
+  - `Header` is now a **sticky** bar; it reveals the identity (avatar + full name + headline) once
+    scrolled (JS toggles `.is-scrolled` past 140px; hidden with `opacity`/`pointer-events` at the
+    top to avoid duplicating the hero).
+  - New `BackToTop.astro`: a `fixed` bottom-left icon button (appears after 300px) that scrolls to
+    the top instantly; adds an `arrow-up` icon and i18n `a11y.backToTop`.
+
 ## Next steps
-- Human: review + commit/push PR-9, then open the PR (base `v2`, assignee @me).
+- Human: review + commit/push PR-10, then open the PR (base `v2`, assignee @me).
 - Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
-- After PR-9, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) optional AWS/Vercel
+- After PR-10, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) optional AWS/Vercel
   setup; (2) `POST /chat` + `LLMProvider` + streaming chat UI; (3) AI evals; (4) theme
   variants; (5) AWS deploy + budget alarm; (6) replace PDF ingest; (7) cutover `v2` → `main`.
 
@@ -118,6 +127,9 @@ Agent memory. Read at the start of every session; update at the end of every tas
 - Branding (PR-7): Chakra Petch + Space Mono; portrait from the PDF. "Now" section labelled
   "What I'm working on now" / "¿En qué ando ahora?" with a thinking icon; real `now[]` item
   (Commit Academy cloud/AWS course). en text is a translation of the human-authored es.
+- PR-10: language switcher uses the fixed abbreviations **ENG/SPN** in both locales (interpretation
+  of "cambiar English→ENG y Spanish→SPN y su correspondencia en español"). If the human prefers
+  endonym codes in Spanish (e.g. ING/ESP), only `language.{en,es}` in `src/i18n/es.ts` change.
 - PR-8: human asked to combine the favicon/branding change with `feat/api-skeleton` in one PR
   (deliberate deviation from the one-feature-per-branch rule). The favicon is driven by the new
   optional `profile.avatar` content field rather than a filesystem check — the earlier

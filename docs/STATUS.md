@@ -119,9 +119,13 @@ Agent memory. Read at the start of every session; update at the end of every tas
   `scripts/check-boundaries.ts`, `AGENTS.md`, `docs/architecture.md`) and added a root
   `vercel.json` so Vercel builds `apps/web` from the repo root. `main` is now the new site.
 
-## In progress
-- PR-15 (`feat/section-rules-and-ci`) branched from `main`@`9453551` (PR #20 merge); all checks
-  green (48 tests), build OK:
+## Done (continued)
+Merged into `main` after the cutover (see PRs #20/#21):
+- **PR #20** (merge `9453551`): `feat/cv-contact-and-polish` + PDF→JSON ingest.
+- **PR #21** (merge `b3bf134`): `feat/section-rules-and-ci`. Details:
+
+- PR-15 (`feat/section-rules-and-ci`) merged from `main`@`9453551`; commit `7981670`,
+  all checks green (48 tests), build OK:
   - CI (`.github/workflows/ci.yml`): the "Lint" step already ran Biome (`bun run lint` =
     `biome check .`); renamed it **"Biome (lint + format)"** and dropped the stale `v2` trigger
     (only `main` now).
@@ -192,10 +196,24 @@ Agent memory. Read at the start of every session; update at the end of every tas
     1 education entry, 2 certifications, 2 languages, photo → `portrait.png`.
 
 
+## In progress
+- `chore/cleanup-v1` (branched from `main`@`b3bf134`): post-cutover cleanup of v1 leftovers.
+  - Profile `README.md` refreshed: About Me, Projects (adds this living-CV repo), Tech Stack and
+    Connect updated; the daily-GIF block is untouched.
+  - `.github/workflows/update-readme.yml` fixed: modern actions (`checkout@v4`, `setup-node@v4`,
+    Node 20); the useless `npm install` dropped (`update-readme.js` only uses `fs`); and — because
+    `main` is branch-protected — the job now **opens a PR and merges it** with the built-in
+    `GITHUB_TOKEN` instead of pushing to `main` (fixes the old `GH013` failure). Repo setting
+    `actions/permissions/workflow.can_approve_pull_request_reviews` set to `true` (was `false`).
+  - Docs realigned to `main` (cutover done): `AGENTS.md` (title + rules 3/4 + rule 10),
+    `docs/workflows/{start-feature,open-pr}.md`, `docs/architecture.md`; ADR-0001/ADR-0005 marked
+    superseded. PR-template checklist updated to the new contact-data policy.
+
 ## Next steps
-- PR-13 polish + PR-14 ingest were merged via **PR #20** (merge `9453551`).
-- Human: PR-15 (`feat/section-rules-and-ci`) — review, push, and open the PR (base `main`,
-  assignee @me).
+- Human: review this branch, push, and open the PR (base `main`).
+- Human: after this merges, test the GIF job once with `gh workflow run update-readme.yml`.
+- Human: delete the merged v1 feature branches + `v1`/`v2` (refs only; keep the `v1.0.0`
+  tag/release — the human chose to keep it).
 - Human: after replacing `content-source/resume.pdf`, run `bun run ingest` locally and commit the
   regenerated `packages/content/data/**` + `apps/web/public/portrait.png` (the PDF is gitignored, so
   CI/Vercel only see the JSON/PNG).
@@ -211,6 +229,10 @@ Agent memory. Read at the start of every session; update at the end of every tas
   the earlier "phone/address never" rule for PDF-derived content.
 - Certifications: `issuer` is optional (the current PDF has none). Education/certifications blocks
   are told apart by the presence of a date range within a combined section.
+- Future backend: the plan is to move the backend to a separate FastAPI/Python service. The
+  structure already supports it — `apps/web` ↔ `apps/api` only ever talk over HTTP and
+  `packages/content` JSON is the shared contract — so `apps/api` can be replaced/removed without
+  touching `apps/web`.
 
 - Visual direction: keep the current identity as a base but with a refreshed look.
 - Branding (PR-7): Chakra Petch + Space Mono; portrait from the PDF. "Now" section labelled
@@ -224,14 +246,15 @@ Agent memory. Read at the start of every session; update at the end of every tas
   `existsSync` approach broke because Astro bundles server code (wrong `import.meta.url`).
 
 ## Follow-ups / risks
-- Privacy incident: the PDF blob `98825db2990add365133a536ba45c5a8cbd30c3d` was pushed
-  while the repo was public. Open a GitHub Support ticket to purge it (blob may stay
-  reachable by SHA until GC).
-- Profile infrastructure stays at the repo root: `README.md`, `update-readme.js`,
-  `.github/workflows/update-readme.yml`. Pre-existing issue: that workflow pushes directly to the
-  default branch, which is protected (`GH013`).
-- Privacy: `legacy/` (which held the old email/phone in `resume.json` and `Layout.astro`) is
-  removed at cutover; that data still lives in git history and in the `v1` tag/release.
-- Hosting: Vercel builds the repo root; the root `vercel.json` redirects the build to
-  `apps/web`. If the dashboard has a manual Root Directory/Build override, set Root Directory to
-  `apps/web` instead.
+- Privacy: the PDF-derived contact data (location, email, and phone when present) is
+  intentionally public — the human wants ALL `resume.pdf` data shown. The human decided NOT to
+  purge the historical PDF blob `98825db…` (it only exposes the job-hunting email). Git history is
+  not rewritten.
+- Ref cleanup: `v1`/`v2` and the merged v1 feature branches are deleted (refs only); the
+  `legacy/`/PDF objects stay reachable by SHA in history until GC. The `v1.0.0` tag/release is kept.
+- GIF workflow: it now merges via PR using the built-in `GITHUB_TOKEN`; requires the repo setting
+  `can_approve_pull_request_reviews: true` (set) and `contents: write` + `pull-requests: write`
+  (declared in the workflow). It will commit a new GIF roughly once per day.
+- Hosting: Vercel builds the repo root; the root `vercel.json` redirects the build to `apps/web`
+  and is the SINGLE source of build config — do not add Root Directory/Build overrides in the
+  dashboard.

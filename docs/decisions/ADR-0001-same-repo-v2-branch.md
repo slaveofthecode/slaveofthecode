@@ -8,3 +8,6 @@
 - **Consequences:** production stays stable during development. History is shared, so
   the cutover is one reviewable PR. Cost: two protected branches to maintain and a
   large final diff.
+
+- **Status:** superseded — the cutover happened (PR #19, merge `d1c617b`); `main` is now
+  the new site and `v2` is no longer used.

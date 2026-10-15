@@ -1,36 +1,66 @@
-name: Daily README Update
+name: Daily README GIF
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Esto ejecutará el workflow cada día a medianoche.
-  workflow_dispatch:  # Esto permitirá ejecutar el workflow manualmente.
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC.
+  workflow_dispatch:  # Allows running the workflow manually.
 
+# `main` is branch-protected (a PR is required), so instead of pushing
+# directly the job opens a PR and merges it with the built-in GITHUB_TOKEN.
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
-
-      - name: Install dependencies
-        run: npm install
+          node-version: '20'
 
       - name: Run update script
         run: node update-readme.js
 
-      - name: Commit and push changes
+      - name: Open and merge the README update PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          if git diff --quiet; then
+            echo "No changes to commit (same GIF picked). Nothing to do."
+            exit 0
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH="chore/readme-gif"
+          git switch -c "$BRANCH"
           git add README.md
-          git commit -m "🖼️ Update README with today's GIF" || echo "No changes to commit"
-          git push
+          git commit -m "chore: update profile README GIF"
+          git push --force origin "$BRANCH"
+
+          gh pr create --base main --head "$BRANCH" \
+            --title "chore: update profile README GIF" \
+            --body "Automated daily refresh of the profile README GIF." \
+            || echo "A pull request for this branch already exists."
+
+          # GitHub computes the mergeable state asynchronously, so retry briefly.
+          merged=""
+          for attempt in 1 2 3 4 5; do
+            if gh pr merge "$BRANCH" --squash --delete-branch; then
+              merged="yes"
+              break
+            fi
+            echo "Merge not ready yet (attempt $attempt); retrying in 10s..."
+            sleep 10
+          done
+
+          if [ -z "$merged" ]; then
+            echo "::error::Could not merge the README GIF pull request."
+            exit 1
+          fi

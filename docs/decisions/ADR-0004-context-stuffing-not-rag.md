@@ -7,3 +7,6 @@
   implementations.
 - **Consequences:** simple, no infra, answers are grounded and auditable. Cost: the
   provider's context window bounds growth; revisit only if the corpus grows a lot.
+
+- **Status:** superseded by ADR-0006 — the chat now uses RAG (embeddings + a SQLite
+  vector store) as requested.

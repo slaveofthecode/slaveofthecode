@@ -10,6 +10,7 @@ export const es: Strings = {
     education: "Educación",
     certifications: "Certificaciones",
     now: "Ahora",
+    chat: "Preguntá IA",
   },
   theme: {
     label: "Tema de color",
@@ -52,5 +53,22 @@ export const es: Strings = {
       learning: "Aprendizaje",
       other: "Otro",
     },
+  },
+  chat: {
+    heading: "Preguntá sobre mi CV",
+    intro:
+      "Preguntá lo que quieras sobre mi experiencia, skills o trayectoria. Las respuestas salen solo de este CV.",
+    label: "Tu pregunta",
+    placeholder: "ej. ¿Cuál es su experiencia con React?",
+    send: "Enviar",
+    thinking: "Pensando…",
+    roleUser: "Vos",
+    roleAssistant: "Asistente",
+    disclaimer:
+      "Generado por IA a partir del CV. Verificá los datos importantes.",
+    error: "Algo salió mal. Probá de nuevo.",
+    rateLimited:
+      "Demasiadas preguntas por ahora. Probá de nuevo en un momento.",
+    unavailable: "El chat no está disponible en este momento.",
   },
 };

@@ -8,6 +8,7 @@ export const en = {
     education: "Education",
     certifications: "Certifications",
     now: "Now",
+    chat: "Ask AI",
   },
   theme: {
     label: "Color theme",
@@ -50,6 +51,21 @@ export const en = {
       learning: "Learning",
       other: "Other",
     },
+  },
+  chat: {
+    heading: "Ask about my CV",
+    intro:
+      "Ask anything about my experience, skills or background. Answers come only from this CV.",
+    label: "Your question",
+    placeholder: "e.g. What is his experience with React?",
+    send: "Send",
+    thinking: "Thinking…",
+    roleUser: "You",
+    roleAssistant: "Assistant",
+    disclaimer: "AI-generated from the CV. Please verify important details.",
+    error: "Something went wrong. Please try again.",
+    rateLimited: "Too many questions for now. Please try again in a moment.",
+    unavailable: "The chat is unavailable right now.",
   },
 };
 

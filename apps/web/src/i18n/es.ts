@@ -32,6 +32,7 @@ export const es: Strings = {
   footer: {
     builtWith: "Hecho con Astro",
     rights: "Todos los derechos reservados.",
+    source: "Ver el código en GitHub",
   },
   home: {
     title: "Hola, construyo software confiable",

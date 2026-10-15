@@ -76,10 +76,8 @@ Agent memory. Read at the start of every session; update at the end of every tas
     ("What I'm working on now" / “¿En qué ando ahora?”); `now.{updated,status,kind}` labels.
   - `apps/web/test/links.test.ts` (3 tests) for `iconName`.
 
-## In progress
-- PR-8 (`feat/favicon-and-api-skeleton`) — **combined** PR (human choice) on top of `v2`@`823a2db`,
-  uncommitted, all checks green (48 tests, 8 test files), build + preview (`/`, `/favicon.svg`,
-  `/portrait.png`) → 200:
+- PR-8 (`feat/favicon-and-api-skeleton`) merged into `v2` (PR #14, merge `83f33a4`, commit
+  `6210a7b`) — **combined** PR (human choice), all checks green (48 tests, 8 test files):
   - **Favicon from content:** new optional `profile.avatar` field (schema + `data/{en,es}` →
     `/portrait.png`). `BaseLayout` uses it for `<link rel="icon">`/`apple-touch-icon` (type by
     extension), else falls back to `/favicon.svg`. Removed the static `public/favicon.svg`.
@@ -93,10 +91,19 @@ Agent memory. Read at the start of every session; update at the end of every tas
     non-GET `/health` → 405. `test/health.test.ts` (3). `apps/api/tsconfig.json` now includes
     `test/` with `types:["bun"]`. No Bun-only APIs; imports nothing internal.
 
+## In progress
+- PR-9 (`feat/footer-links`) on top of `v2`@`83f33a4`, uncommitted, all checks green (48 tests),
+  build OK:
+  - Footer profile links (Portfolio/GitHub/LinkedIn) render as **icons only** (no text label),
+    keeping `aria-label`/`title` for accessibility.
+  - `Built with Astro` is now a link to the project repo (`REPO_URL` in `src/lib/links.ts`) with a
+    new `heart-face` inline icon; i18n `footer.source` label (`Ver el código en GitHub` / `View
+    the source on GitHub`).
+
 ## Next steps
-- Human: review + commit/push PR-8, then open the PR (base `v2`, assignee @me).
+- Human: review + commit/push PR-9, then open the PR (base `v2`, assignee @me).
 - Human: review PR-4 JSON diff + answer `docs/ingest-notes.md` questions.
-- After PR-8, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) optional AWS/Vercel
+- After PR-9, per `docs/BOOTSTRAP.md` §12 (future roadmap, in order): (1) optional AWS/Vercel
   setup; (2) `POST /chat` + `LLMProvider` + streaming chat UI; (3) AI evals; (4) theme
   variants; (5) AWS deploy + budget alarm; (6) replace PDF ingest; (7) cutover `v2` → `main`.
 

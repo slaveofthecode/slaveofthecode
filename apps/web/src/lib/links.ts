@@ -1,5 +1,8 @@
 export type IconName = "github" | "linkedin" | "globe";
 
+/** Source repository of this project. */
+export const REPO_URL = "https://github.com/slaveofthecode/slaveofthecode";
+
 /** Pick an icon for a profile link based on the URL host. */
 export function iconName(url: string): IconName {
   let host: string;

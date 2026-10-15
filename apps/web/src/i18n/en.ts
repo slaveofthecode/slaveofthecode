@@ -30,6 +30,7 @@ export const en = {
   footer: {
     builtWith: "Built with Astro",
     rights: "All rights reserved.",
+    source: "View the source on GitHub",
   },
   home: {
     title: "Hey, I build reliable software",

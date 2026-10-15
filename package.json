@@ -11,7 +11,8 @@
     "typecheck": "bun run --filter '*' typecheck",
     "test": "bun test",
     "check:boundaries": "bun scripts/check-boundaries.ts",
-    "ingest": "bun run ingest:extract && bun run ingest:parse",
+    "format:data": "biome format --write packages/content/data",
+    "ingest": "bun run ingest:extract && bun run ingest:parse && bun run format:data",
     "ingest:extract": "bun packages/content/scripts/extract-resume.ts",
     "ingest:parse": "bun packages/content/scripts/ingest-resume.ts"
   },

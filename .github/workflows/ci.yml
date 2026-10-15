@@ -3,7 +3,6 @@ name: CI
 on:
   pull_request:
     branches:
-      - v2
       - main
 
 permissions:
@@ -24,7 +23,7 @@ jobs:
       - name: Install
         run: bun install --frozen-lockfile
 
-      - name: Lint
+      - name: Biome (lint + format)
         run: bun run lint
 
       - name: Typecheck

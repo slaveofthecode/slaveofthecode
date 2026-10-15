@@ -22,5 +22,30 @@
       "docker",
       "kubernetes"
     ]
+  },
+  {
+    "id": "personal-project-linkzen-extension",
+    "kind": "project",
+    "title": "Extensión para Google Chrome para gestionar marcadores",
+    "description": "Es una extensión de Google Chrome (Manifest V3) diseñada para reemplazar la barra de marcadores tradicional con un solo lanzador de popup minimalista. Incluye un motor de auditoría de marcadores que escanea URLs obsoletas, rotas o con formato incorrecto y proporciona un panel interactivo para gestionar y limpiarlos.",
+    "progress": 73,
+    "status": "in-progress",
+    "startedAt": "2026-09-23",
+    "updatedAt": "2026-10-08",
+    "links": [
+      {
+        "label": "linkzen-extension",
+        "url": "https://github.com/slaveofthecode/linkzen-extension"
+      }
+    ],
+    "tags": [
+      "chrome-extension",
+      "react",
+      "typescript",
+      "vite",
+      "chrome.bookmarks",
+      "chrome.tabs",
+      "chrome.storage"
+    ]
   }
 ]

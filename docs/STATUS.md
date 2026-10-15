@@ -120,8 +120,24 @@ Agent memory. Read at the start of every session; update at the end of every tas
   `vercel.json` so Vercel builds `apps/web` from the repo root. `main` is now the new site.
 
 ## In progress
-- PR-13 (`feat/cv-contact-and-polish`) branched from `main`@`d1c617b` (uncommitted), all checks
+- PR-15 (`feat/section-rules-and-ci`) branched from `main`@`9453551` (PR #20 merge); all checks
   green (48 tests), build OK:
+  - CI (`.github/workflows/ci.yml`): the "Lint" step already ran Biome (`bun run lint` =
+    `biome check .`); renamed it **"Biome (lint + format)"** and dropped the stale `v2` trigger
+    (only `main` now).
+  - Ingest pipeline now runs `biome format --write packages/content/data` after parsing
+    (`bun run ingest` → `…:extract` + `…:parse` + `format:data`). The generator's pretty-printed
+    JSON didn't match Biome's formatter, so generated data files failed `bun run lint`; it now
+    matches (compact short arrays). Content is unchanged.
+  - `Experience.astro`: removed the **per-row** `border-b` (and `last:border-b-0`); the section-level
+    `Section` top rule (`border-t`) is the only separator now.
+  - `Profile.astro`: moved the contact block (location / email / phone) out of the header row to
+    **below the summary**, left-aligned, directly above the links list.
+  - Also normalized `data/{en,es}/now.json` formatting (the human's hand-added "Linkzen" item was
+    missing a trailing newline, which failed Biome); content untouched.
+
+- PR-13 (`feat/cv-contact-and-polish`) branched from `main`@`d1c617b`; committed `26a6cb8` +
+  `0560753` and pushed, all checks green (48 tests), build OK:
   - Profile hero now shows the PDF header data: `name` (replaces a non-PDF tagline), `headline`,
     `location` (map-pin icon) and `email` (mail icon, `mailto:`); Portfolio/GitHub/LinkedIn keep
     their icons.
@@ -140,8 +156,8 @@ Agent memory. Read at the start of every session; update at the end of every tas
     breathing-room padding; Now cards highlight their border (`hover:border-accent`).
   - "Now" stays the single optional collection (rendered only when `now.json` is non-empty).
 
-- PR-14 (PDF→JSON ingest + photo + language switch off) — currently shares the working tree/branch
-  with PR-13 (uncommitted), all checks green (48 tests), build OK:
+- PR-14 (PDF→JSON ingest + photo + language switch off) — committed `3457dfd` on PR-13's branch;
+  PR #20 open (base `main`), all checks green (48 tests), build OK:
    - New `packages/content/scripts/ingest-resume.ts`, run via `bun run ingest:parse` (or
      `bun run ingest` = `ingest:extract` + `ingest:parse`). Deterministic parser (no AI): maps
      `content-source/resume.txt` → the schema. `now.json` never touched; validates against
@@ -177,12 +193,12 @@ Agent memory. Read at the start of every session; update at the end of every tas
 
 
 ## Next steps
-- Human: PR-13 polish and the PR-14 ingest work share this branch (`feat/cv-contact-and-polish`)
-  by request — review and push/commit them together.
+- PR-13 polish + PR-14 ingest were merged via **PR #20** (merge `9453551`).
+- Human: PR-15 (`feat/section-rules-and-ci`) — review, push, and open the PR (base `main`,
+  assignee @me).
 - Human: after replacing `content-source/resume.pdf`, run `bun run ingest` locally and commit the
   regenerated `packages/content/data/**` + `apps/web/public/portrait.png` (the PDF is gitignored, so
   CI/Vercel only see the JSON/PNG).
-- Human: open the PR (base `main`, assignee @me) once pushed.
 - Roadmap per `docs/BOOTSTRAP.md` §12: (1) `POST /chat` + `LLMProvider` + streaming chat UI;
   (2) AI evals; (3) theme variants; (4) AWS deploy + budget alarm; (5) replace PDF ingest.
 

@@ -34,53 +34,26 @@
   {
     "id": "ai-assisted-development",
     "name": "AI-Assisted Development",
-    "items": [
-      "LLMs",
-      "Coding Agents",
-      "MCP",
-      "Harness Engineering",
-      "RAG"
-    ]
+    "items": ["LLMs", "Coding Agents", "MCP", "Harness Engineering", "RAG"]
   },
   {
     "id": "ai-development-tools",
     "name": "AI Development Tools",
-    "items": [
-      "OpenCode",
-      "Claude",
-      "Cursor",
-      "GitHub Copilot",
-      "Gemini"
-    ]
+    "items": ["OpenCode", "Claude", "Cursor", "GitHub Copilot", "Gemini"]
   },
   {
     "id": "devops-infrastructure",
     "name": "DevOps & Infrastructure",
-    "items": [
-      "AWS",
-      "Docker",
-      "CI/CD Pipelines",
-      "Git"
-    ]
+    "items": ["AWS", "Docker", "CI/CD Pipelines", "Git"]
   },
   {
     "id": "testing-frameworks",
     "name": "Testing Frameworks",
-    "items": [
-      "Jest",
-      "Cypress",
-      "Vitest",
-      "Playwright"
-    ]
+    "items": ["Jest", "Cypress", "Vitest", "Playwright"]
   },
   {
     "id": "databases",
     "name": "Databases",
-    "items": [
-      "SQL Server",
-      "MongoDB",
-      "MySQL",
-      "SQLite"
-    ]
+    "items": ["SQL Server", "MongoDB", "MySQL", "SQLite"]
   }
 ]

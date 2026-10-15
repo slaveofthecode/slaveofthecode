@@ -21,11 +21,12 @@ export const en = {
   },
   language: {
     label: "Language",
-    en: "English",
-    es: "Spanish",
+    en: "ENG",
+    es: "SPN",
   },
   a11y: {
     skipToContent: "Skip to content",
+    backToTop: "Back to top",
   },
   footer: {
     builtWith: "Built with Astro",

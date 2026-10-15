@@ -196,8 +196,9 @@ Merged into `main` after the cutover (see PRs #20/#21):
     1 education entry, 2 certifications, 2 languages, photo → `portrait.png`.
 
 
-## In progress
-- `chore/cleanup-v1` (branched from `main`@`b3bf134`): post-cutover cleanup of v1 leftovers.
+## Done (continued)
+- `chore/cleanup-v1` merged into `main` via **PR #22** (merge `d8bb01d`): post-cutover cleanup of
+  v1 leftovers.
   - Profile `README.md` refreshed: About Me, Projects (adds this living-CV repo), Tech Stack and
     Connect updated; the daily-GIF block is untouched.
   - `.github/workflows/update-readme.yml` fixed: modern actions (`checkout@v4`, `setup-node@v4`,
@@ -209,11 +210,23 @@ Merged into `main` after the cutover (see PRs #20/#21):
     `docs/workflows/{start-feature,open-pr}.md`, `docs/architecture.md`; ADR-0001/ADR-0005 marked
     superseded. PR-template checklist updated to the new contact-data policy.
 
+## In progress
+- `fix/readme-gif-merge-method` (from `main`@`d8bb01d`): the daily-GIF job's first real run failed
+  with `GraphQL: Squash merges are not allowed on this repository`. Cause: the **`rs-validation-pr`
+  ruleset** on `main` sets `allowed_merge_methods: ["merge"]` (merge commits only). Fix: the
+  workflow now runs `gh pr merge --merge` instead of `--squash`.
+  - Repo-side cleanup done: branch protection on `v2` removed and `v2` deleted (the ruleset's
+    deletion rule only covers `main`); remote branches now only `main` (+ the bot's `chore/readme-gif`).
+  - **Also uncommitted on this branch**: `Profile.astro` restored the pre-PR-15 hero layout — the
+    contact block (location / email / phone) and the links list moved back **inside the header row,
+    below the headline** (above the summary), instead of below the summary. Human requested
+    "como estaba antes, al top del summary debajo del headline". NOTE: two unrelated changes now sit
+    on this branch (GIF fix + Profile layout); split into separate branches/commits if desired.
+  - Note: `profile.links` is currently `[]` in both `en`/`es` data, so no Link pills (LinkedIn etc.)
+    render yet — the links list is empty until content/ingest provides them.
+
 ## Next steps
-- Human: review this branch, push, and open the PR (base `main`).
-- Human: after this merges, test the GIF job once with `gh workflow run update-readme.yml`.
-- Human: delete the merged v1 feature branches + `v1`/`v2` (refs only; keep the `v1.0.0`
-  tag/release — the human chose to keep it).
+- Human: push/PR/merge this fix, then re-run the GIF job: `gh workflow run update-readme.yml`.
 - Human: after replacing `content-source/resume.pdf`, run `bun run ingest` locally and commit the
   regenerated `packages/content/data/**` + `apps/web/public/portrait.png` (the PDF is gitignored, so
   CI/Vercel only see the JSON/PNG).
@@ -250,11 +263,14 @@ Merged into `main` after the cutover (see PRs #20/#21):
   intentionally public — the human wants ALL `resume.pdf` data shown. The human decided NOT to
   purge the historical PDF blob `98825db…` (it only exposes the job-hunting email). Git history is
   not rewritten.
-- Ref cleanup: `v1`/`v2` and the merged v1 feature branches are deleted (refs only); the
-  `legacy/`/PDF objects stay reachable by SHA in history until GC. The `v1.0.0` tag/release is kept.
-- GIF workflow: it now merges via PR using the built-in `GITHUB_TOKEN`; requires the repo setting
+- Ref cleanup: all merged v1 feature branches + `v1`/`v2` are deleted (refs only; `v2`'s branch
+  protection was removed first). The `legacy/`/PDF objects stay reachable by SHA in history until
+  GC. The `v1.0.0` tag/release is kept, and main's history still contains the v1 commits
+  (`809a7ca`), so v1 is recoverable via `git checkout v1.0.0`.
+- GIF workflow: it merges via PR using the built-in `GITHUB_TOKEN`; requires the repo setting
   `can_approve_pull_request_reviews: true` (set) and `contents: write` + `pull-requests: write`
-  (declared in the workflow). It will commit a new GIF roughly once per day.
+  (declared in the workflow). The `rs-validation-pr` ruleset only allows **merge commits**, so the
+  job must use `gh pr merge --merge`. It commits a new GIF roughly once per day.
 - Hosting: Vercel builds the repo root; the root `vercel.json` redirects the build to `apps/web`
   and is the SINGLE source of build config — do not add Root Directory/Build overrides in the
   dashboard.

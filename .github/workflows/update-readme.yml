@@ -49,10 +49,12 @@ jobs:
             --body "Automated daily refresh of the profile README GIF." \
             || echo "A pull request for this branch already exists."
 
-          # GitHub computes the mergeable state asynchronously, so retry briefly.
+          # The `rs-validation-pr` ruleset on `main` allows only merge commits
+          # (not squash/rebase), so merge with --merge. GitHub computes the
+          # mergeable state asynchronously, so retry briefly.
           merged=""
           for attempt in 1 2 3 4 5; do
-            if gh pr merge "$BRANCH" --squash --delete-branch; then
+            if gh pr merge "$BRANCH" --merge --delete-branch; then
               merged="yes"
               break
             fi

@@ -16,42 +16,44 @@
 
 ### 👨‍💻 About Me
 
-I’m a passionate developer who truly enjoys programming — especially on the front-end 🎨. Although I’ve worked for many years as a fullstack developer ⚙️, I’ve always had a special love for the user experience and the creativity of front-end work.
+Senior Full-Stack Developer with 15+ years building reliable, maintainable software across Banking, Fintech, Cybersecurity, Healthcare, and Enterprise environments. I started on the front-end and never lost the love for it 🎨, though I've shipped the full stack ⚙️ for most of my career.
 
-I’m also a tech enthusiast who enjoys exploring new gadgets 📱, robotics 🤖, and emerging technologies. For me, programming isn’t just a job — it’s something inspiring 💡 that constantly pushes me to learn 📚 and grow.
+Today I'm focused on **AI-assisted software development** — LLMs, coding agents, MCP, and agent-based architectures — and on modernizing legacy platforms 💡. Programming isn't just a job; it's something that keeps pushing me to learn 📚 and grow.
 
 ---
 
-### 🚀 Projects I’ve Been Working On
+### 🚀 Projects I've Been Working On
 
-- 📦 [**mern-ql**](https://github.com/slaveofthecode/mern-ql)  
-  MERN + GraphQL example with multiple branches showing project evolution.
+- 🪪 [**slaveofthecode**](https://github.com/slaveofthecode/slaveofthecode) — my living CV: an Astro + Tailwind site that renders my profile, experience, skills and "what I'm working on now" from a single validated content source.
 
-- 🎄 [**adventjs**](https://github.com/slaveofthecode/adventjs)  
-  My personal solutions to Midudev’s AdventJS challenges since 2021.
+- 📦 [**mern-ql**](https://github.com/slaveofthecode/mern-ql) — MERN + GraphQL example with multiple branches showing project evolution.
 
-- 🎨 [**styles**](https://github.com/slaveofthecode/styles)  
-  A curated collection of reusable styles and design snippets I’ve created over time.
+- 🎄 [**adventjs**](https://github.com/slaveofthecode/adventjs) — my personal solutions to Midudev's AdventJS challenges since 2021.
 
-- 🧠 [**challenges**](https://github.com/slaveofthecode/challenges)  
-  Coding challenges inspired by real-world job offers and tech exercises.
+- 🎨 [**styles**](https://github.com/slaveofthecode/styles) — a curated collection of reusable styles and design snippets I've created over time.
+
+- 🧠 [**challenges**](https://github.com/slaveofthecode/challenges) — coding challenges inspired by real-world job offers and tech exercises.
 
 ---
 
 ### 🧰 Tech Stack
 
-![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=flat-square&logo=javascript)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-black?style=flat-square&logo=typescript)
-![Node.js](https://img.shields.io/badge/-Node.js-black?style=flat-square&logo=node.js)
+![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=flat-square&logo=javascript)
 ![React](https://img.shields.io/badge/-React-black?style=flat-square&logo=react)
-![GraphQL](https://img.shields.io/badge/-GraphQL-black?style=flat-square&logo=graphql)
-![MongoDB](https://img.shields.io/badge/-MongoDB-black?style=flat-square&logo=mongodb)
-![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-black?style=flat-square&logo=tailwind-css)
-![HTML5](https://img.shields.io/badge/-HTML5-black?style=flat-square&logo=html5)
-![CSS3](https://img.shields.io/badge/-CSS3-black?style=flat-square&logo=css3)
-![Git](https://img.shields.io/badge/-Git-black?style=flat-square&logo=git)
+![Angular](https://img.shields.io/badge/-Angular-black?style=flat-square&logo=angular)
+![Node.js](https://img.shields.io/badge/-Node.js-black?style=flat-square&logo=node.js)
 ![Astro](https://img.shields.io/badge/-Astro-black?style=flat-square&logo=astro)
-![PWA](https://img.shields.io/badge/-PWA-black?style=flat-square&logo=pwa)
+![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-black?style=flat-square&logo=tailwind-css)
+![GraphQL](https://img.shields.io/badge/-GraphQL-black?style=flat-square&logo=graphql)
+![.NET](https://img.shields.io/badge/-.NET-black?style=flat-square&logo=dotnet)
+![Python](https://img.shields.io/badge/-Python-black?style=flat-square&logo=python)
+![Bun](https://img.shields.io/badge/-Bun-black?style=flat-square&logo=bun)
+![MongoDB](https://img.shields.io/badge/-MongoDB-black?style=flat-square&logo=mongodb)
+![SQL Server](https://img.shields.io/badge/-SQL%20Server-black?style=flat-square&logo=microsoftsqlserver)
+![AWS](https://img.shields.io/badge/-AWS-black?style=flat-square&logo=amazonaws)
+![Docker](https://img.shields.io/badge/-Docker-black?style=flat-square&logo=docker)
+![Git](https://img.shields.io/badge/-Git-black?style=flat-square&logo=git)
 ![Electron](https://img.shields.io/badge/-Electron-black?style=flat-square&logo=electron)
 
 ---

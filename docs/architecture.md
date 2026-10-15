@@ -1,7 +1,7 @@
 # Architecture
 
-Living CV website. Same repo, long-lived `v2` branch, cutover to `main` at the end.
-See `docs/decisions/` for the ADRs behind each choice.
+Living CV website. The new site lives on `main` (cutover complete); see
+`docs/decisions/` for the ADRs behind each choice.
 
 ## Layout
 

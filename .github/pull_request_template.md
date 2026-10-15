@@ -4,5 +4,5 @@
 ## Checklist
 - [ ] lint / typecheck / test / build / check:boundaries pass
 - [ ] No hard-coded colors; en/es parity kept
-- [ ] No personal data (phone, address, private email) added
+- [ ] No raw PDF committed (content-source/ gitignored); PDF-derived contact data shown in full
 - [ ] docs/STATUS.md updated

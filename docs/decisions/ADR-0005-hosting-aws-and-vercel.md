@@ -7,3 +7,6 @@
   the production project.
 - **Consequences:** cheap, scalable. Mandatory before exposing the chat: budget alarm,
   rate limiting and restricted CORS. Cost: two hosting setups during the transition.
+
+- **Status:** the second Vercel project for `v2` previews is no longer needed (cutover
+  complete); the current site is built from `main` via the root `vercel.json`.

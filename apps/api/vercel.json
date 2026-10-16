@@ -4,8 +4,7 @@
   "installCommand": "bun install",
   "functions": {
     "api/*.ts": {
-      "maxDuration": 30,
-      "includeFiles": "node_modules/sql.js/dist/sql-wasm.wasm"
+      "maxDuration": 30
     }
   },
   "rewrites": [

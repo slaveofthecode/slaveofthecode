@@ -1,7 +1,6 @@
-import { readFileSync } from "node:fs";
-import { createRequire } from "node:module";
 import initSqlJs, { type Database, type SqlJsStatic } from "sql.js";
 import { ragDbBase64 } from "../../data/rag-db";
+import { sqlWasmBase64 } from "../../data/sql-wasm";
 import type { ChatLocale } from "../../domain/chat";
 import {
   type RagChunk,
@@ -24,14 +23,13 @@ CREATE TABLE IF NOT EXISTS chunks (
 
 let sqlPromise: Promise<SqlJsStatic> | undefined;
 
-/** Loads the sql.js (WASM) runtime once, reading the wasm binary from disk. */
+/** Loads the sql.js (WASM) runtime once, using the embedded wasm binary. */
 function loadSqlJs(): Promise<SqlJsStatic> {
   if (!sqlPromise) {
-    const require = createRequire(import.meta.url);
-    const wasm = readFileSync(require.resolve("sql.js/dist/sql-wasm.wasm"));
-    const wasmBinary = wasm.buffer.slice(
-      wasm.byteOffset,
-      wasm.byteOffset + wasm.byteLength,
+    const bytes = Buffer.from(sqlWasmBase64, "base64");
+    const wasmBinary = bytes.buffer.slice(
+      bytes.byteOffset,
+      bytes.byteOffset + bytes.byteLength,
     );
     sqlPromise = initSqlJs({ wasmBinary });
   }

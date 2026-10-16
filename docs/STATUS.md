@@ -251,8 +251,8 @@ Merged into `main` after the cutover (see PRs #20/#21):
     `apps/api/data/cv.sqlite` + `apps/api/src/data/rag-db.ts` (no longer empty).
   - Docs: `ADR-0006` rewritten for RAG, `ADR-0004` marked superseded, `docs/architecture.md` updated.
 
-## In progress
-- `fix/vercel-api-routing`: make the API deploy correctly as its own Vercel project. The
+## Done (continued)
+- **PR #30** (`fix/vercel-api-routing`, merge `42c43e6`): API as its own Vercel project. The
   web calls `${PUBLIC_API_URL}/chat`, but the old single entry `apps/api/api/index.ts` only
   served `/api`, so those paths would 404 in production. Changed:
   - `apps/api/api/{chat,health}.ts` (one file per route; removed `api/index.ts`).
@@ -261,6 +261,19 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - Router strips a leading `/api` segment so both `/x` and `/api/x` work.
   - `docs/architecture.md` updated. Checks green (91 tests; smoke: `/health` and `/api/health`
     both 200).
+- Vercel WASM fix (`fix/vercel-embed-sql-wasm`): the first production deploy 500'd
+  (`FUNCTION_INVOCATION_FAILED`) on every request — `SqliteRagStore.open()` runs at startup and
+  `require.resolve("sql.js/dist/sql-wasm.wasm")` failed because the hoisted wasm isn't bundled
+  into the serverless function. Fix: embed the WASM as base64 (`scripts/embed-sql-wasm.ts` →
+  `src/data/sql-wasm.ts`, `bun run build:wasm`; `sqlite-store.ts` decodes it into `wasmBinary`),
+  so no filesystem resolution is needed. Dropped the fragile `includeFiles` from `vercel.json`.
+  Reproduced + verified with an esbuild-bundled direct invocation under Node: `/health` 200,
+  `/chat` 200 (grounded answer). All checks green (91 tests).
+
+## Deploy status
+- **Blocked on human**: redeploy the API Vercel project (`slaveofthecode-api`) with this fix,
+  then confirm `curl https://slaveofthecode-api.vercel.app/health` → 200. Also confirm the web
+  project has `PUBLIC_API_URL` set (host only) and was redeployed.
 
 ## Next steps
 - Human: this deploy needs a **second Vercel project** for the API (the current
@@ -270,14 +283,15 @@ Merged into `main` after the cutover (see PRs #20/#21):
      `GEMINI_EMBED_MODEL=gemini-embedding-001`, `ALLOWED_ORIGINS=<your web origin>`.
   3. In the **web** project set `PUBLIC_API_URL` = the API project URL (host only, no `/api`),
      then redeploy.
-- Human: commit/push `fix/vercel-api-routing`, validate the deploy, then I open the PR.
+- Human: commit/push `fix/vercel-embed-sql-wasm`, redeploy the API project, validate, then I
+  open the PR.
 - Human prerequisites for production:
   1. Create a Gemini API key (`GEMINI_API_KEY`) at https://aistudio.google.com/apikey.
   2. New Vercel project with **Root Directory `apps/api`**; set `GEMINI_API_KEY`,
      `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`, `ALLOWED_ORIGINS`.
   3. In the **web** Vercel project set `PUBLIC_API_URL` to the API project URL, then redeploy.
-- Deploy caveat to validate: the API function loads the sql.js WASM at runtime; `vercel.json`
-  includes `node_modules/sql.js/dist/sql-wasm.wasm` (workspace hoisting may need adjustment).
+- Resolved: the API function no longer loads the sql.js WASM from disk — it is embedded as base64
+  (`src/data/sql-wasm.ts`, regenerated via `bun run build:wasm`), so workspace hoisting is moot.
 - Human: after replacing `content-source/resume.pdf`, run `bun run ingest` (and then
   `bun run build:rag`) locally and commit the regenerated data + snapshot.
 - Roadmap per `docs/BOOTSTRAP.md` §12: (2) AI evals expansion; (3) theme variants; (4) AWS deploy +

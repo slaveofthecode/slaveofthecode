@@ -38,6 +38,27 @@ describe("GeminiProvider", () => {
     ).toBe("Hello world");
   });
 
+  test("disables thinking so the answer is not truncated", async () => {
+    let body: { generationConfig?: Record<string, unknown> } = {};
+    globalThis.fetch = ((_url: string, init: RequestInit) => {
+      body = JSON.parse(init.body as string);
+      return Promise.resolve(
+        new Response(
+          JSON.stringify({
+            candidates: [{ content: { parts: [{ text: "ok" }] } }],
+          }),
+          { status: 200 },
+        ),
+      );
+    }) as unknown as typeof fetch;
+
+    const provider = new GeminiProvider(config);
+    await provider.generate([{ role: "user", content: "hi" }], options);
+    expect(body.generationConfig?.thinkingConfig).toEqual({
+      thinkingBudget: 0,
+    });
+  });
+
   test("throws GeminiError on a non-2xx response", async () => {
     globalThis.fetch = (() =>
       Promise.resolve(

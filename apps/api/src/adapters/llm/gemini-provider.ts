@@ -73,7 +73,11 @@ export class GeminiProvider implements LlmProvider {
         contents: toGeminiContents(messages),
         generationConfig: {
           temperature: options.temperature ?? 0.3,
-          maxOutputTokens: options.maxOutputTokens ?? 600,
+          maxOutputTokens: options.maxOutputTokens ?? 800,
+          // Gemini "thinking" models count reasoning tokens against
+          // maxOutputTokens, truncating short answers (finishReason
+          // MAX_TOKENS). This RAG answer does not need reasoning: disable it.
+          thinkingConfig: { thinkingBudget: 0 },
         },
       }),
     });

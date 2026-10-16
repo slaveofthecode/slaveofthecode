@@ -59,6 +59,8 @@ const clientStrings = {
 </div>
 
 <script>
+  import { renderMarkdown } from "../lib/markdown";
+
   const root = document.querySelector<HTMLElement>("[data-chat]");
 
   if (root) {
@@ -96,10 +98,17 @@ const clientStrings = {
       label.className = "font-mono text-[10px] uppercase tracking-wide text-muted";
       label.textContent = role === "user" ? strings.roleUser : strings.roleAssistant;
 
-      const body = document.createElement("p");
-      body.className = "mt-0.5 whitespace-pre-wrap break-words font-mono text-sm text-fg";
-      body.textContent = text;
-      if (pending) body.classList.add("animate-pulse");
+      const body = document.createElement("div");
+      body.className = pending
+        ? "mt-0.5 whitespace-pre-wrap break-words font-mono text-sm text-fg animate-pulse"
+        : role === "assistant"
+          ? "chat-markdown mt-0.5 break-words font-mono text-sm text-fg"
+          : "mt-0.5 whitespace-pre-wrap break-words font-mono text-sm text-fg";
+      if (role === "assistant" && !pending) {
+        body.innerHTML = renderMarkdown(text);
+      } else {
+        body.textContent = text;
+      }
 
       card.append(label, body);
       row.append(card);
@@ -162,3 +171,58 @@ const clientStrings = {
     });
   }
 </script>
+
+<style is:global>
+  .chat-markdown > :first-child {
+    margin-top: 0;
+  }
+  .chat-markdown > :last-child {
+    margin-bottom: 0;
+  }
+  .chat-markdown p {
+    margin: 0.4rem 0;
+  }
+  .chat-markdown h1,
+  .chat-markdown h2,
+  .chat-markdown h3 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    margin: 0.6rem 0 0.3rem;
+  }
+  .chat-markdown ul {
+    list-style: disc;
+    margin: 0.4rem 0;
+    padding-left: 1.1rem;
+  }
+  .chat-markdown ol {
+    list-style: decimal;
+    margin: 0.4rem 0;
+    padding-left: 1.3rem;
+  }
+  .chat-markdown li {
+    margin: 0.15rem 0;
+  }
+  .chat-markdown code {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    padding: 0 0.25rem;
+  }
+  .chat-markdown pre {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    margin: 0.4rem 0;
+    overflow-x: auto;
+    padding: 0.5rem 0.75rem;
+  }
+  .chat-markdown pre code {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  .chat-markdown a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

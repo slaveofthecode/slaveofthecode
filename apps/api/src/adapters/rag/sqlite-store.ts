@@ -1,13 +1,13 @@
 import initSqlJs, { type Database, type SqlJsStatic } from "sql.js";
-import { ragDbBase64 } from "../../data/rag-db";
-import { sqlWasmBase64 } from "../../data/sql-wasm";
-import type { ChatLocale } from "../../domain/chat";
+import { ragDbBase64 } from "../../data/rag-db.js";
+import { sqlWasmBase64 } from "../../data/sql-wasm.js";
+import type { ChatLocale } from "../../domain/chat.js";
 import {
   type RagChunk,
   type RagHit,
   type RagStore,
   cosineSimilarity,
-} from "../../domain/rag";
+} from "../../domain/rag.js";
 
 export type RagRecord = RagChunk & { embedding: number[] };
 

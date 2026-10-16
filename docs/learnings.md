@@ -17,5 +17,13 @@ good ones into `AGENTS.md`. Do not edit `AGENTS.md` directly.
   (`UT ( Jest )`, `.NET`→`NET`) and drops hand-added fields (`profile.links`, cert
   `issuer`/`date`). Two rules fix it: (1) match entries by a stable natural key and
   reuse ids, carrying over fields the source lacks and keeping the old value when it
-  only differs by punctuation/casing; (2) write a file only when its content changed
-  (compare a key-sorted stringify) so unchanged files keep their original formatting.
+   only differs by punctuation/casing; (2) write a file only when its content changed
+   (compare a key-sorted stringify) so unchanged files keep their original formatting.
+- (Vercel API) Vercel does **not** bundle `api/*.ts` Node functions: it transpiles each
+  file (ts-morph) and runs them under Node ESM, with `@vercel/nft` tracing but leaving
+  bare (node_modules) specifiers external. So every relative import in the traced graph
+  needs an explicit `.js` extension (`ERR_MODULE_NOT_FOUND: Cannot find module
+  '/var/task/.../src/index'`), and the runtime must not import a workspace TS package
+  (Node can't run its `.ts`); keep such values local. Loading the sql.js `.wasm` from
+  disk likewise fails — embed it (base64). Verify a fix by transpiling per-file
+  (`tsc`/type-stripping) and running the emitted ESM under Node, not by bundling.

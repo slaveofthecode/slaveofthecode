@@ -1,4 +1,4 @@
-import { handleRequest } from "../src/index";
+import { handleRequest } from "../src/index.js";
 
 /**
  * Vercel entry point (Node runtime) for the `/health` check. Also reachable at

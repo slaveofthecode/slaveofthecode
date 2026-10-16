@@ -252,12 +252,25 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - Docs: `ADR-0006` rewritten for RAG, `ADR-0004` marked superseded, `docs/architecture.md` updated.
 
 ## In progress
-- None.
+- `fix/vercel-api-routing`: make the API deploy correctly as its own Vercel project. The
+  web calls `${PUBLIC_API_URL}/chat`, but the old single entry `apps/api/api/index.ts` only
+  served `/api`, so those paths would 404 in production. Changed:
+  - `apps/api/api/{chat,health}.ts` (one file per route; removed `api/index.ts`).
+  - `apps/api/vercel.json`: `functions: {"api/*.ts"}` + `rewrites` mapping `/chat`→`/api/chat`
+    and `/health`→`/api/health` (so `PUBLIC_API_URL` stays host-only, same as local dev).
+  - Router strips a leading `/api` segment so both `/x` and `/api/x` work.
+  - `docs/architecture.md` updated. Checks green (91 tests; smoke: `/health` and `/api/health`
+    both 200).
 
 ## Next steps
-- Human: commit the populated snapshot + model changes (this branch/PR #29 or direct):
-  `apps/api/data/cv.sqlite`, `apps/api/src/data/rag-db.ts`, `apps/api/src/config.ts` (model
-  defaults), `apps/api/.env.example`.
+- Human: this deploy needs a **second Vercel project** for the API (the current
+  `slaveofthecode` project is the static web only):
+  1. Vercel → New Project → same repo, **Root Directory `apps/api`** (framework: Other).
+  2. Env: `GEMINI_API_KEY`, `GEMINI_MODEL=gemini-flash-latest`,
+     `GEMINI_EMBED_MODEL=gemini-embedding-001`, `ALLOWED_ORIGINS=<your web origin>`.
+  3. In the **web** project set `PUBLIC_API_URL` = the API project URL (host only, no `/api`),
+     then redeploy.
+- Human: commit/push `fix/vercel-api-routing`, validate the deploy, then I open the PR.
 - Human prerequisites for production:
   1. Create a Gemini API key (`GEMINI_API_KEY`) at https://aistudio.google.com/apikey.
   2. New Vercel project with **Root Directory `apps/api`**; set `GEMINI_API_KEY`,

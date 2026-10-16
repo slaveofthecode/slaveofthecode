@@ -3,9 +3,13 @@
   "framework": null,
   "installCommand": "bun install",
   "functions": {
-    "api/index.ts": {
+    "api/*.ts": {
       "maxDuration": 30,
       "includeFiles": "node_modules/sql.js/dist/sql-wasm.wasm"
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/chat", "destination": "/api/chat" },
+    { "source": "/health", "destination": "/api/health" }
+  ]
 }

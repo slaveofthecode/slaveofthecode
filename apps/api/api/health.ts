@@ -1,8 +1,8 @@
 import { handleRequest } from "../src/index";
 
 /**
- * Vercel entry point (Node runtime). Vercel supports the Web Standard `fetch`
- * export, which matches our `handleRequest(request): Promise<Response>` handler.
+ * Vercel entry point (Node runtime) for the `/health` check. Also reachable at
+ * `/api/health`; the router strips the `/api` prefix.
  */
 export default {
   fetch(request: Request): Promise<Response> {

@@ -221,12 +221,9 @@ Merged into `main` after the cutover (see PRs #20/#21):
 - **Release v2.0.0** published with curated notes (monorepo, content-driven, i18n, ingest, CI,
   daily GIF). `main` advanced to `de4e29e`. Remote branches reduced to `main` (+ the bot's
   `chore/readme-gif`).
-
-## In progress
-- `feat/recruiter-chat` (from `main`@`de4e29e`, single branch/PR by the human's "one hour"
-  request): the recruiter chat. **Final design = RAG over SQLite** (ADR-0006 supersedes
-  ADR-0004 context stuffing), per the human's request ("PDF → DB con RAG → chat con Gemini"
-  and "¿se puede usar SQLite?"). All checks green locally (89 tests). Written:
+- **PR #28** (`feat/recruiter-chat`, merge `f0941e1`, merged 2026-10-16): the recruiter chat —
+  RAG over a SQLite vector store (**ADR-0006 supersedes ADR-0004** context stuffing). 89 tests
+  green. Details:
   - **RAG core** `apps/api/src`: `domain/rag.ts` (`buildChunks(getContent(locale))` → one
     chunk per profile/role/skill-group/language/education/cert/now item; `cosineSimilarity`;
     `RagStore`), `domain/embedding-provider.ts`, `adapters/llm/gemini-embeddings.ts`
@@ -239,24 +236,28 @@ Merged into `main` after the cutover (see PRs #20/#21):
     + `vercel.json` (bundles the sql.js WASM), `.env.example`.
   - **Ingestion** `apps/api/scripts/build-rag.ts` (`bun run build:rag`, needs `GEMINI_API_KEY`;
     `--empty` writes just the schema) → `apps/api/data/cv.sqlite` + `src/data/rag-db.ts`
-    (base64 snapshot used at runtime). **Currently committed as an empty schema** — run it
-    with a key to populate. Deps: `sql.js` (+ `@types/sql.js`); Upstash removed (in-memory
-    limiter only, for simplicity).
+    (base64 snapshot used at runtime). **Committed as an empty schema** — must be run with a key.
+  - Deps: `sql.js` (+ `@types/sql.js`); Upstash removed (in-memory limiter only).
   - `apps/web`: `components/Chat.astro` island (browser `fetch` to `PUBLIC_API_URL`, client-side
     history, safe DOM, Enter-to-send), `chat` + `nav.chat` i18n (en/es), section in
     `pages/{index,es/index}.astro`, `env.d.ts` + `.env.example`.
-  - `docs/decisions/ADR-0006-chat-backend.md` (rewritten for RAG), `ADR-0004` marked
-    superseded, `docs/architecture.md` updated.
-- Endpoint contract: `POST /chat` `{ messages, locale }` → `{ reply }`; errors
-  `400/403/405/413/429/500/502`. Guardrails: answer only from retrieved excerpts, refuse
-  off-topic, resist injection. Rate limit default 20/min per IP.
+  - Contract: `POST /chat` `{ messages, locale }` → `{ reply }`; errors
+    `400/403/405/413/429/500/502`. Guardrails: answer only from retrieved excerpts, refuse
+    off-topic, resist injection. Rate limit default 20/min per IP.
+  - Model defaults set on 2026-10-16 (the old ones are retired for new projects):
+    `GEMINI_MODEL=gemini-flash-latest` (alias), `GEMINI_EMBED_MODEL=gemini-embedding-001`
+    (`text-embedding-004` is gone). Verified end-to-end with `bun run eval:chat`.
+  - **Snapshot populated**: `bun run build:rag` wrote 56 chunks (28 en + 28 es) →
+    `apps/api/data/cv.sqlite` + `apps/api/src/data/rag-db.ts` (no longer empty).
+  - Docs: `ADR-0006` rewritten for RAG, `ADR-0004` marked superseded, `docs/architecture.md` updated.
+
+## In progress
+- None.
 
 ## Next steps
-- Human: run the RAG ingestion with a key, then commit the snapshot:
-  `GEMINI_API_KEY=... bun run build:rag` (regenerates `apps/api/data/cv.sqlite` +
-  `apps/api/src/data/rag-db.ts`). Without this the chat answers "no info".
-- Human: push `feat/recruiter-chat`, open the PR (base `main`), review, merge (merge commit).
-  → **PR #28 opened** (https://github.com/slaveofthecode/slaveofthecode/pull/28), assignee @me.
+- Human: commit the populated snapshot + model changes (this branch/PR #29 or direct):
+  `apps/api/data/cv.sqlite`, `apps/api/src/data/rag-db.ts`, `apps/api/src/config.ts` (model
+  defaults), `apps/api/.env.example`.
 - Human prerequisites for production:
   1. Create a Gemini API key (`GEMINI_API_KEY`) at https://aistudio.google.com/apikey.
   2. New Vercel project with **Root Directory `apps/api`**; set `GEMINI_API_KEY`,

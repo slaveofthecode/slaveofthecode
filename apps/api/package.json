@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit",
     "test": "bun test",
     "build:rag": "bun scripts/build-rag.ts",
+    "build:wasm": "bun scripts/embed-sql-wasm.ts",
     "eval:chat": "bun scripts/eval-chat.ts"
   },
   "dependencies": {

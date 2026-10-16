@@ -271,9 +271,15 @@ Merged into `main` after the cutover (see PRs #20/#21):
   `/chat` 200 (grounded answer). All checks green (91 tests).
 
 ## Deploy status
-- **Blocked on human**: redeploy the API Vercel project (`slaveofthecode-api`) with this fix,
-  then confirm `curl https://slaveofthecode-api.vercel.app/health` → 200. Also confirm the web
-  project has `PUBLIC_API_URL` set (host only) and was redeployed.
+- API project deploy at `a40ef40` **succeeded** but still 500'd: Vercel leaves bare
+  (node_modules) specifiers **external** in the function bundle, and `domain/chat.ts` did
+  `import { LOCALES } from "@portfolio/content"` — a workspace package that resolves to `.ts`
+  source, which Node can't execute (`Directory import … is not supported`). Fixed by keeping the
+  locales local (`CHAT_LOCALES`) so the runtime imports only JS deps (`zod`, `sql.js`); parity
+  with `@portfolio/content` is guarded by `test/chat-locales.test.ts`. Reproduced with
+  `esbuild --bundle --packages=external` + Node: `/health` 200, `/chat` 200.
+- **Pending human**: commit/push the follow-up fix, redeploy the API project, then confirm
+  `curl https://slaveofthecode-api.vercel.app/health` → 200.
 
 ## Next steps
 - Human: this deploy needs a **second Vercel project** for the API (the current

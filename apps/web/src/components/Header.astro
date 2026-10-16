@@ -68,12 +68,22 @@ const navItems = [
           {
             navItems.map((item) => (
               <li>
-                <a
-                  href={localizedPath(locale, `/#${item.id}`)}
-                  class="text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-                >
-                  {item.label}
-                </a>
+                {item.id === "chat" ? (
+                  <button
+                    type="button"
+                    data-chat-open
+                    class="font-mono text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                  >
+                    {item.label}
+                  </button>
+                ) : (
+                  <a
+                    href={localizedPath(locale, `/#${item.id}`)}
+                    class="text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                  >
+                    {item.label}
+                  </a>
+                )}
               </li>
             ))
           }
@@ -106,12 +116,22 @@ const navItems = [
       {
         navItems.map((item) => (
           <li>
-            <a
-              href={localizedPath(locale, `/#${item.id}`)}
-              class="block py-2 text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-            >
-              {item.label}
-            </a>
+            {item.id === "chat" ? (
+              <button
+                type="button"
+                data-chat-open
+                class="block w-full py-2 text-left font-mono text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+              >
+                {item.label}
+              </button>
+            ) : (
+              <a
+                href={localizedPath(locale, `/#${item.id}`)}
+                class="block py-2 text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+              >
+                {item.label}
+              </a>
+            )}
           </li>
         ))
       }
@@ -159,7 +179,10 @@ const navItems = [
         setOpen(panel.hasAttribute("hidden")),
       );
       panel.addEventListener("click", (event) => {
-        if (event.target instanceof Element && event.target.closest("a")) {
+        if (
+          event.target instanceof Element &&
+          event.target.closest("a, [data-chat-open]")
+        ) {
           setOpen(false);
         }
       });

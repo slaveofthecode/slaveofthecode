@@ -54,10 +54,13 @@ export const en = {
   },
   chat: {
     heading: "Ask about my CV",
+    launcher: "Ask AI",
+    close: "Close chat",
+    greeting: "Want to ask me something? 🤖",
     intro:
       "Ask anything about my experience, skills or background. Answers come only from this CV.",
     label: "Your question",
-    placeholder: "e.g. What is his experience with React?",
+    placeholder: "e.g. What's your experience with React?",
     send: "Send",
     thinking: "Thinking…",
     roleUser: "You",

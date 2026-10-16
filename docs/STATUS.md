@@ -291,8 +291,8 @@ Merged into `main` after the cutover (see PRs #20/#21):
   value that did not include the web origin. Fixed by setting it to
   `https://slaveofthecode.vercel.app` (comma-separated host origins, no trailing slash, no `*`)
   and redeploying. Verified: preflight returns ACAO and the web chat calls succeed.
-- **`fix/chat-truncation-and-markdown` (this branch)**: two chat-quality fixes found after the
-  chat went live:
+- **`fix/chat-truncation-and-markdown`** (PR #34, merge `3f40bc5`): two chat-quality fixes found
+  after the chat went live:
   - **Truncated replies**: the default model (`gemini-flash-latest`) is a *thinking* model that
     counts reasoning tokens against `maxOutputTokens` (observed `thoughtsTokenCount: 478` of the
     600 budget → `finishReason: MAX_TOKENS`, answer cut mid-sentence). Fix:
@@ -306,10 +306,53 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - Tests: `apps/web/test/markdown.test.ts` (10) + a `thinkingConfig` assertion in
     `apps/api/test/gemini-provider.test.ts`. All checks green (103 tests).
 
+- **`feat/chat-launcher` (this branch)**: the chat was only reachable by scrolling to the bottom
+  `#chat` section (or the "Ask AI" nav link), which felt unfriendly. Turned it into a floating
+  widget:
+  - `Chat.astro` is now a **launcher** (fixed pill, bottom-right, `bg-accent`) + a **panel**
+    (fixed card, `role="dialog"`, header with a close button, scrollable messages, the same form).
+    Open/close via `data-chat-toggle` (launcher), `data-chat-open` (triggers), the close button or
+    Escape; the launcher sets `aria-expanded`/`aria-controls`. Panel hidden with CSS
+    (`[data-chat-panel]` → `display:none`, `.is-open` → `flex`) instead of the `hidden` attribute
+    (which Tailwind's display utilities would override).
+  - Header nav "Ask AI" now opens the widget (`data-chat-open` button; desktop + mobile) instead
+    of jumping to an anchor, and closes the mobile menu on click.
+  - Removed the inline `<Section id="chat">` from both pages (the widget is the only chat now).
+  - `Icon.astro` gains a `close` icon; `BackToTop` moved to `bottom-20` so it stacks above the
+    launcher instead of overlapping it.
+  - i18n: `chat.launcher` + `chat.close` (en/es parity enforced by the `Strings` type).
+  - All checks green (103 tests); build verified (launcher/panel present, old `#chat` section gone,
+    `[data-chat-panel]` CSS emitted).
+  - **Follow-up (same branch)**: chat look & feel + sizing refinements:
+    - **Greeting**: a static first assistant bubble (`chat.greeting`, e.g. "¿Querés preguntarme
+      algo? 🤖"); not part of the API history.
+    - **Avatars / first person**: the chat reads as Gustavo answering — assistant bubbles show the
+      profile photo (`profile.avatar`) or an initials monogram (`initials(name)`) and are labelled
+      with his name; the visitor bubble shows a generic person icon. `Chat.astro` takes
+      `name`/`avatar` props (passed from both pages).
+    - **Bigger input**: taller textarea (`min-h-11`) that auto-grows up to 10rem, larger send
+      button; desktop panel widened to `sm:w-[30rem]`; placeholder reworded to the second person
+      (`chat.placeholder`).
+    - **Resizable panel**: `sm:resize` (both axes) with `sm:min-w-[24rem]`/`sm:min-h-[18rem]` and
+      `sm:max-w-[min(92vw,48rem)]`/`sm:max-h-[min(80vh,44rem)]`; grows up-left from its
+      right/bottom anchor. Desktop only.
+    - **Mobile**: the panel is a **bottom sheet** (`inset-x-0 bottom-0`, `rounded-t-card`,
+      content-based height up to `max-h-[85svh]`, `env(safe-area-inset-bottom)` padding) instead of
+      a floating card that covered almost the whole screen.
+    - `BackToTop` moved to the **bottom-left** (`bottom-6 left-4`) so it never collides with the
+      launcher/panel. `Icon.astro`: added `close`; the temporary `robot` icon was removed.
+    - **First-person system prompt** (`system-prompt.ts`): the persona now IS Gustavo ("You are
+      Gustavo Lopez… ALWAYS reply in the FIRST PERSON"); added a STYLE EXAMPLE and a trailing
+      reminder after the excerpts. Verified against the real API (en + es → "I have…"/"Tengo…").
+      Note: the local `dev.ts` server had to be restarted because a stale instance kept the port
+      (its process title is `bun dev.ts`, so `pkill -f 'apps/api/dev.ts'` missed it) — the prompt
+      itself was never the problem.
+    - Tests: 104 green (`system-prompt.test.ts` gained a first-person assertion).
+
 ## Next steps
-- Human: commit/push `fix/chat-truncation-and-markdown` and redeploy (web + api); then I open
-  the PR. After deploy, re-test the chat: a `.NET` question should return a **complete** answer
-  with rendered Markdown (bold, nested bullets).
+- Human: commit/push `feat/chat-launcher`, redeploy the web project, then I open the PR. Verify
+  the floating "Ask AI" launcher opens the panel on desktop + mobile, "Ask AI" in the nav opens it,
+  the panel resizes, and replies read in the first person.
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:

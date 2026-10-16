@@ -2,7 +2,7 @@ import type {
   GenerateOptions,
   LlmMessage,
   LlmProvider,
-} from "../../domain/llm-provider";
+} from "../../domain/llm-provider.js";
 
 /**
  * Deterministic provider for tests and local dev. By default it echoes the last

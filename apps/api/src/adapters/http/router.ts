@@ -1,17 +1,17 @@
-import { answerQuestion } from "../../application/answer-question";
-import { getHealth } from "../../application/get-health";
-import { loadConfig } from "../../config";
-import { chatRequestSchema } from "../../domain/chat";
-import type { EmbeddingProvider } from "../../domain/embedding-provider";
-import type { LlmProvider } from "../../domain/llm-provider";
-import type { RagStore } from "../../domain/rag";
-import { GeminiEmbeddings } from "../llm/gemini-embeddings";
-import { GeminiError, GeminiProvider } from "../llm/gemini-provider";
-import { SqliteRagStore } from "../rag/sqlite-store";
+import { answerQuestion } from "../../application/answer-question.js";
+import { getHealth } from "../../application/get-health.js";
+import { loadConfig } from "../../config.js";
+import { chatRequestSchema } from "../../domain/chat.js";
+import type { EmbeddingProvider } from "../../domain/embedding-provider.js";
+import type { LlmProvider } from "../../domain/llm-provider.js";
+import type { RagStore } from "../../domain/rag.js";
+import { GeminiEmbeddings } from "../llm/gemini-embeddings.js";
+import { GeminiError, GeminiProvider } from "../llm/gemini-provider.js";
+import { SqliteRagStore } from "../rag/sqlite-store.js";
 import {
   InMemoryRateLimiter,
   type RateLimiter,
-} from "../rate-limit/rate-limiter";
+} from "../rate-limit/rate-limiter.js";
 
 export interface HandlerDeps {
   provider: LlmProvider;

@@ -1,6 +1,6 @@
-import type { GeminiConfig } from "../../config";
-import type { EmbeddingProvider } from "../../domain/embedding-provider";
-import { GeminiError } from "./gemini-provider";
+import type { GeminiConfig } from "../../config.js";
+import type { EmbeddingProvider } from "../../domain/embedding-provider.js";
+import { GeminiError } from "./gemini-provider.js";
 
 const BATCH_SIZE = 100;
 

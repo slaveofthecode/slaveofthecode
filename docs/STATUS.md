@@ -271,15 +271,21 @@ Merged into `main` after the cutover (see PRs #20/#21):
   `/chat` 200 (grounded answer). All checks green (91 tests).
 
 ## Deploy status
-- API project deploy at `a40ef40` **succeeded** but still 500'd: Vercel leaves bare
-  (node_modules) specifiers **external** in the function bundle, and `domain/chat.ts` did
-  `import { LOCALES } from "@portfolio/content"` — a workspace package that resolves to `.ts`
-  source, which Node can't execute (`Directory import … is not supported`). Fixed by keeping the
-  locales local (`CHAT_LOCALES`) so the runtime imports only JS deps (`zod`, `sql.js`); parity
-  with `@portfolio/content` is guarded by `test/chat-locales.test.ts`. Reproduced with
-  `esbuild --bundle --packages=external` + Node: `/health` 200, `/chat` 200.
-- **Pending human**: commit/push the follow-up fix, redeploy the API project, then confirm
-  `curl https://slaveofthecode-api.vercel.app/health` → 200.
+- **PR #32** (`fix/api-local-chat-locales`, merge `5ac4917`): the API deploy at `a40ef40`
+  still 500'd. Cause: Vercel leaves bare (node_modules) specifiers **external**, and
+  `domain/chat.ts` imported `LOCALES` from the workspace package `@portfolio/content`
+  (resolves to `.ts` source Node can't run). Fixed with a local `CHAT_LOCALES` + parity test.
+- **`fix/api-vercel-esm-extensions` (this branch)**: after `5ac4917` the deploy still 500'd.
+  Real runtime error from Vercel logs: `ERR_MODULE_NOT_FOUND: Cannot find module
+  '/var/task/apps/api/src/index' imported from /var/task/apps/api/api/health.js`. Vercel does
+  **not** bundle Node functions — it transpiles each `.ts`→`.js` and runs them under Node ESM,
+  which has no extensionless resolution. Fixed by adding explicit `.js` extensions to all 48
+  relative imports across `apps/api/api` + `apps/api/src` (Bun/tsc map `.js`→`.ts`).
+  Verified reproducing Vercel's pipeline: per-file transpile (`tsc`) + run emitted ESM under
+  Node → `/health` 200, `/chat` 200; and `@vercel/nft` (with Vercel's TS-stripping) traces the
+  whole `src/**` graph with no warnings. All checks green (92 tests).
+- **Pending human**: commit/push `fix/api-vercel-esm-extensions`, redeploy the API project,
+  then confirm `curl https://slaveofthecode-api.vercel.app/health` → 200 and the web chat works.
 
 ## Next steps
 - Human: this deploy needs a **second Vercel project** for the API (the current

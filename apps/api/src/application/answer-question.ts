@@ -1,8 +1,8 @@
-import type { ChatLocale, ChatMessage } from "../domain/chat";
-import type { EmbeddingProvider } from "../domain/embedding-provider";
-import type { LlmMessage, LlmProvider } from "../domain/llm-provider";
-import type { RagStore } from "../domain/rag";
-import { buildSystemPrompt } from "../domain/system-prompt";
+import type { ChatLocale, ChatMessage } from "../domain/chat.js";
+import type { EmbeddingProvider } from "../domain/embedding-provider.js";
+import type { LlmMessage, LlmProvider } from "../domain/llm-provider.js";
+import type { RagStore } from "../domain/rag.js";
+import { buildSystemPrompt } from "../domain/system-prompt.js";
 
 export interface AnswerQuestionDeps {
   store: RagStore;

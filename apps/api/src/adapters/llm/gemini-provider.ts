@@ -1,9 +1,9 @@
-import type { GeminiConfig } from "../../config";
+import type { GeminiConfig } from "../../config.js";
 import type {
   GenerateOptions,
   LlmMessage,
   LlmProvider,
-} from "../../domain/llm-provider";
+} from "../../domain/llm-provider.js";
 
 interface GeminiCandidate {
   content?: { parts?: { text?: string }[] };

@@ -1,5 +1,5 @@
-import type { ChatLocale } from "./chat";
-import type { RagHit } from "./rag";
+import type { ChatLocale } from "./chat.js";
+import type { RagHit } from "./rag.js";
 
 const LANGUAGE_NAME: Record<ChatLocale, string> = {
   en: "English",

@@ -67,6 +67,16 @@ no build step). `apps/api` runs on Vercel's Node runtime via Web Standard
 rewrites the clean `/chat` and `/health` paths to them and the router strips the
 Vercel `/api` prefix. AWS Lambda stays the long-term target.
 
+Vercel does **not** bundle `apps/api`: it transpiles each `.ts` to `.js` and runs them
+under Node ESM. Two consequences in `apps/api/api` and `apps/api/src`, both load-bearing:
+- Every relative import must use an explicit `.js` extension (Node ESM has no extensionless
+  resolution; the TS source imports `./x.js` and the compiler/tracer map it to `./x.ts`).
+- The runtime must not import a workspace TypeScript package (e.g. `@portfolio/content`):
+  Vercel leaves bare specifiers **external** and Node cannot execute the package's `.ts`
+  source. Values it needs are kept local (see `CHAT_LOCALES` in
+  `apps/api/src/domain/chat.ts`, parity-guarded by a test). The sql.js WASM is embedded as
+  base64 for the same reason (no runtime file resolution).
+
 ## Deployment
 
 Two Vercel projects from the same repo (ADR-0006):
@@ -74,7 +84,7 @@ Two Vercel projects from the same repo (ADR-0006):
 - **web** — root directory `/`; root `vercel.json` builds `apps/web` (static). Env:
   `PUBLIC_API_URL` = the API project URL.
 - **api** — root directory `apps/api`; `apps/api/vercel.json` builds the functions
-  (`api/chat.ts`, `api/health.ts`), rewrites `/chat` and `/health` to them, and bundles the
+  (`api/chat.ts`, `api/health.ts`), rewrites `/chat` and `/health` to them, and embeds the
   sql.js WASM. Env: `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`,
   `ALLOWED_ORIGINS`, `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS`.
 

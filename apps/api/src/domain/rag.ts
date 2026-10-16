@@ -1,5 +1,5 @@
 import type { Content } from "@portfolio/content";
-import type { ChatLocale } from "./chat";
+import type { ChatLocale } from "./chat.js";
 
 /** A retrievable piece of the CV. */
 export interface RagChunk {

@@ -28,8 +28,27 @@ const clientStrings = {
     data-chat-panel
     role="dialog"
     aria-labelledby="chat-panel-title"
-    class="fixed inset-x-0 bottom-0 z-50 max-h-[85svh] flex-col overflow-hidden rounded-t-card border border-border bg-surface shadow-lg sm:left-auto sm:right-4 sm:bottom-24 sm:min-h-[18rem] sm:w-[30rem] sm:min-w-[24rem] sm:max-w-[min(92vw,48rem)] sm:max-h-[min(80vh,44rem)] sm:resize sm:rounded-card"
+    class="fixed inset-x-0 bottom-0 z-50 max-h-[85svh] flex-col overflow-hidden rounded-t-card border border-border bg-surface shadow-lg sm:left-auto sm:right-4 sm:bottom-24 sm:min-h-[18rem] sm:w-[30rem] sm:min-w-[24rem] sm:max-w-[min(92vw,48rem)] sm:max-h-[min(80vh,44rem)] sm:rounded-card"
   >
+    <div
+      data-chat-resize
+      aria-hidden="true"
+      class="absolute left-0 top-0 z-10 hidden h-5 w-5 cursor-nwse-resize items-start justify-start p-0.5 text-muted sm:flex"
+      style="touch-action: none;"
+    >
+      <svg
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        class="h-3 w-3"
+        aria-hidden="true"
+      >
+        <path d="M2.5 9.5 9.5 2.5" />
+        <path d="M2.5 13.5 13.5 2.5" />
+      </svg>
+    </div>
     <header
       class="flex items-center justify-between gap-2 border-b border-border px-4 py-3"
     >
@@ -310,6 +329,59 @@ const clientStrings = {
         form.requestSubmit();
       }
     });
+
+    // Custom resize: the native CSS handle only sits bottom-right, but the panel
+    // is anchored bottom-right, so we grow it from a top-left grip instead.
+    const resizeHandle = root.querySelector<HTMLElement>("[data-chat-resize]");
+    if (resizeHandle) {
+      const MIN_W = 384; // 24rem
+      const MIN_H = 288; // 18rem
+      const maxW = () => Math.min(window.innerWidth * 0.92, 768); // 48rem
+      const maxH = () => Math.min(window.innerHeight * 0.8, 704); // 44rem
+      let dragging = false;
+      let startX = 0;
+      let startY = 0;
+      let startW = 0;
+      let startH = 0;
+
+      resizeHandle.addEventListener("pointerdown", (event) => {
+        if (!window.matchMedia("(min-width: 640px)").matches) return;
+        event.preventDefault();
+        dragging = true;
+        startX = event.clientX;
+        startY = event.clientY;
+        const rect = panel.getBoundingClientRect();
+        startW = rect.width;
+        startH = rect.height;
+        resizeHandle.setPointerCapture(event.pointerId);
+        document.body.style.userSelect = "none";
+      });
+
+      resizeHandle.addEventListener("pointermove", (event) => {
+        if (!dragging) return;
+        const width = Math.min(
+          Math.max(startW + (startX - event.clientX), MIN_W),
+          maxW(),
+        );
+        const height = Math.min(
+          Math.max(startH + (startY - event.clientY), MIN_H),
+          maxH(),
+        );
+        panel.style.width = `${Math.round(width)}px`;
+        panel.style.height = `${Math.round(height)}px`;
+      });
+
+      const stopResize = (event: PointerEvent) => {
+        if (!dragging) return;
+        dragging = false;
+        document.body.style.userSelect = "";
+        if (resizeHandle.hasPointerCapture(event.pointerId)) {
+          resizeHandle.releasePointerCapture(event.pointerId);
+        }
+      };
+      resizeHandle.addEventListener("pointerup", stopResize);
+      resizeHandle.addEventListener("pointercancel", stopResize);
+    }
   }
 </script>
 
@@ -319,6 +391,9 @@ const clientStrings = {
   }
   [data-chat-panel].is-open {
     display: flex;
+  }
+  [data-chat-panel].is-open ~ [data-chat-toggle] {
+    display: none;
   }
   .chat-markdown > :first-child {
     margin-top: 0;

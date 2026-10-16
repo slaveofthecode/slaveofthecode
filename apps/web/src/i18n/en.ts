@@ -8,7 +8,7 @@ export const en = {
     education: "Education",
     certifications: "Certifications",
     now: "Now",
-    chat: "Ask AI",
+    chat: "Ask me anything",
   },
   theme: {
     label: "Color theme",
@@ -54,7 +54,7 @@ export const en = {
   },
   chat: {
     heading: "Ask about my CV",
-    launcher: "Ask AI",
+    launcher: "Ask me anything",
     close: "Close chat",
     greeting: "Want to ask me something? 🤖",
     intro:

@@ -61,6 +61,9 @@ export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
       profile.email ? `Email: ${profile.email}` : null,
       profile.phone ? `Phone: ${profile.phone}` : null,
       profile.summary,
+      profile.links.length > 0
+        ? `Links: ${profile.links.map((link) => `${link.label}: ${link.url}`).join(", ")}`
+        : null,
     ]),
   });
 

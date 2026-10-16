@@ -26,3 +26,6 @@ content-source/
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# local-only personal backlog (never committed)
+docs/backlog.local.md

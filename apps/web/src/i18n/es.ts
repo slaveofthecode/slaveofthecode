@@ -10,7 +10,7 @@ export const es: Strings = {
     education: "Educación",
     certifications: "Certificaciones",
     now: "Ahora",
-    chat: "Preguntá IA",
+    chat: "Preguntame lo que quieras",
   },
   theme: {
     label: "Tema de color",
@@ -56,7 +56,7 @@ export const es: Strings = {
   },
   chat: {
     heading: "Preguntá sobre mi CV",
-    launcher: "Preguntá IA",
+    launcher: "Preguntame lo que quieras",
     close: "Cerrar el chat",
     greeting: "¿Querés preguntarme algo? 🤖",
     intro:

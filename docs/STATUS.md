@@ -333,12 +333,16 @@ Merged into `main` after the cutover (see PRs #20/#21):
     - **Bigger input**: taller textarea (`min-h-11`) that auto-grows up to 10rem, larger send
       button; desktop panel widened to `sm:w-[30rem]`; placeholder reworded to the second person
       (`chat.placeholder`).
-    - **Resizable panel**: `sm:resize` (both axes) with `sm:min-w-[24rem]`/`sm:min-h-[18rem]` and
-      `sm:max-w-[min(92vw,48rem)]`/`sm:max-h-[min(80vh,44rem)]`; grows up-left from its
-      right/bottom anchor. Desktop only.
+    - **Resizable panel**: a **custom top-left grip** (`[data-chat-resize]`, `cursor-nwse-resize`,
+      desktop only) drags the panel from its top-left corner — the native CSS `resize` handle only
+      sits bottom-right, which would be the wrong corner since the panel is anchored
+      `right`/`bottom` and grows up-left. The grip uses pointer capture (clamped to
+      `sm:min-w-[24rem]`/`sm:min-h-[18rem]` and `sm:max-w-[min(92vw,48rem)]`/`sm:max-h-[min(80vh,44rem)]`).
     - **Mobile**: the panel is a **bottom sheet** (`inset-x-0 bottom-0`, `rounded-t-card`,
       content-based height up to `max-h-[85svh]`, `env(safe-area-inset-bottom)` padding) instead of
-      a floating card that covered almost the whole screen.
+      a floating card that covered almost the whole screen. While the panel is open the launcher
+      pill is hidden (`[data-chat-panel].is-open ~ [data-chat-toggle]` → `display:none`) so it no
+      longer overlaps the sheet.
     - `BackToTop` moved to the **bottom-left** (`bottom-6 left-4`) so it never collides with the
       launcher/panel. `Icon.astro`: added `close`; the temporary `robot` icon was removed.
     - **First-person system prompt** (`system-prompt.ts`): the persona now IS Gustavo ("You are
@@ -348,6 +352,21 @@ Merged into `main` after the cutover (see PRs #20/#21):
       (its process title is `bun dev.ts`, so `pkill -f 'apps/api/dev.ts'` missed it) — the prompt
       itself was never the problem.
     - Tests: 104 green (`system-prompt.test.ts` gained a first-person assertion).
+
+    - Tests: 104 green (`system-prompt.test.ts` gained a first-person assertion).
+- **Chat CTA rename + contact links restored (same branch, `feat/chat-launcher`)**:
+  - Renamed the chat CTA everywhere: `nav.chat` and `chat.launcher` → **"Ask me anything"**
+    (en) / **"Preguntame lo que quieras"** (es). (Previously "Ask AI" / "Preguntá IA".)
+  - **Restored `profile.links`** in `data/{en,es}/profile.json` — `Portfolio`
+    `https://slaveofthecode.vercel.app/`, `GitHub` `https://github.com/slaveofthecode`,
+    `LinkedIn` `https://www.linkedin.com/in/gustavoml/`. They were blanked by the PR-14 ingest
+    (the PDF text only has the words "Portfolio • GitHub • LinkedIn"; the URLs live in the
+    original resume but not in `resume.txt` and there are **no link annotations** in the PDF —
+    verified with pdf.js). Values taken from the historical committed data (`013e4db`), not invented.
+    `Profile.astro` and `Footer.astro` already render `profile.links` → now visible in both.
+  - **RAG:** `buildChunks` profile chunk now includes `Links: <label>: <url>, …`; snapshot rebuilt
+    with `bun run build:rag` (56 chunks). Chat verified: asks for the links → returns all three.
+  - Checks green (104 tests); build shows the links twice per page (Profile + Footer).
 
 ## Next steps
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Priorities, top first:

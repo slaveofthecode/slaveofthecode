@@ -1,15 +1,19 @@
 ---
 import { type Locale, getStrings } from "../i18n";
+import Icon from "./Icon.astro";
 
 interface Props {
   locale: Locale;
+  name: string;
+  avatar?: string;
 }
 
-const { locale } = Astro.props;
+const { locale, name, avatar } = Astro.props;
 const t = getStrings(locale);
 const apiUrl = import.meta.env.PUBLIC_API_URL ?? "http://localhost:8787";
 
 const clientStrings = {
+  greeting: t.chat.greeting,
   roleUser: t.chat.roleUser,
   roleAssistant: t.chat.roleAssistant,
   thinking: t.chat.thinking,
@@ -18,47 +22,93 @@ const clientStrings = {
 };
 ---
 
-<div class="mx-auto max-w-2xl" data-chat data-api={apiUrl} data-locale={locale}>
-  <p class="font-mono text-sm text-muted">{t.chat.intro}</p>
-
-  <div
-    class="mt-4 flex flex-col gap-3"
-    data-messages
-    role="log"
-    aria-live="polite"
-    aria-label={t.chat.heading}
+<div data-chat data-api={apiUrl} data-locale={locale} data-name={name} data-avatar={avatar ?? ""}>
+  <section
+    id="chat-panel"
+    data-chat-panel
+    role="dialog"
+    aria-labelledby="chat-panel-title"
+    class="fixed inset-x-0 bottom-0 z-50 max-h-[85svh] flex-col overflow-hidden rounded-t-card border border-border bg-surface shadow-lg sm:left-auto sm:right-4 sm:bottom-24 sm:min-h-[18rem] sm:w-[30rem] sm:min-w-[24rem] sm:max-w-[min(92vw,48rem)] sm:max-h-[min(80vh,44rem)] sm:resize sm:rounded-card"
   >
-  </div>
-
-  <form class="mt-4" data-form>
-    <label class="sr-only" for="chat-input">{t.chat.label}</label>
-    <div
-      class="flex items-end gap-2 rounded-card border border-border bg-bg p-2 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent"
+    <header
+      class="flex items-center justify-between gap-2 border-b border-border px-4 py-3"
     >
-      <textarea
-        id="chat-input"
-        data-input
-        rows="1"
-        maxlength="2000"
-        placeholder={t.chat.placeholder}
-        class="max-h-40 w-full resize-none bg-transparent px-2 py-2 font-mono text-sm text-fg placeholder:text-muted focus:outline-none"
-      ></textarea>
-      <button
-        type="submit"
-        data-submit
-        class="inline-flex shrink-0 items-center rounded-card bg-accent px-3 py-2 font-mono text-xs text-accent-fg transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg disabled:opacity-50"
+      <h2
+        id="chat-panel-title"
+        class="flex items-center gap-2 font-heading text-sm uppercase tracking-widest text-muted"
       >
-        {t.chat.send}
+        <Icon name="thinking" class="h-4 w-4" />
+        {t.chat.heading}
+      </h2>
+      <button
+        type="button"
+        data-chat-close
+        aria-label={t.chat.close}
+        title={t.chat.close}
+        class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-card text-muted transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+      >
+        <Icon name="close" class="h-4 w-4" />
       </button>
+    </header>
+
+    <div
+      class="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4"
+      data-messages
+      role="log"
+      aria-live="polite"
+      aria-label={t.chat.heading}
+    >
     </div>
-  </form>
 
-  <p class="mt-3 font-mono text-xs text-muted">{t.chat.disclaimer}</p>
+    <form
+      class="border-t border-border px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+      data-form
+    >
+      <label class="sr-only" for="chat-input">{t.chat.label}</label>
+      <div
+        class="flex items-end gap-2 rounded-card border border-border bg-bg p-2 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent"
+      >
+        <textarea
+          id="chat-input"
+          data-input
+          rows="1"
+          maxlength="2000"
+          placeholder={t.chat.placeholder}
+          class="max-h-40 min-h-11 w-full resize-none bg-transparent px-2 py-2.5 font-mono text-sm text-fg placeholder:text-muted focus:outline-none"
+        ></textarea>
+        <button
+          type="submit"
+          data-submit
+          class="inline-flex shrink-0 items-center rounded-card bg-accent px-4 py-2.5 font-mono text-xs text-accent-fg transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg disabled:opacity-50"
+        >
+          {t.chat.send}
+        </button>
+      </div>
+      <p class="mt-2 font-mono text-[10px] text-muted">{t.chat.disclaimer}</p>
+    </form>
+  </section>
 
-  <script type="application/json" data-chat-strings is:inline set:html={JSON.stringify(clientStrings)}></script>
+  <button
+    type="button"
+    data-chat-toggle
+    aria-expanded="false"
+    aria-controls="chat-panel"
+    class="fixed bottom-6 right-4 z-50 inline-flex items-center gap-2 rounded-full border border-border bg-accent px-4 py-2.5 font-mono text-xs text-accent-fg shadow-sm transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+  >
+    <Icon name="thinking" class="h-4 w-4" />
+    {t.chat.launcher}
+  </button>
+
+  <script
+    type="application/json"
+    data-chat-strings
+    is:inline
+    set:html={JSON.stringify(clientStrings)}
+  ></script>
 </div>
 
 <script>
+  import { initials } from "../lib/initials";
   import { renderMarkdown } from "../lib/markdown";
 
   const root = document.querySelector<HTMLElement>("[data-chat]");
@@ -66,8 +116,11 @@ const clientStrings = {
   if (root) {
     const api = (root.dataset.api ?? "").replace(/\/$/, "");
     const locale = root.dataset.locale ?? "en";
+    const name = root.dataset.name ?? "";
+    const avatar = root.dataset.avatar ?? "";
     const stringsEl = root.querySelector<HTMLScriptElement>("[data-chat-strings]");
     const strings = JSON.parse(stringsEl?.textContent ?? "{}") as {
+      greeting: string;
       roleUser: string;
       roleAssistant: string;
       thinking: string;
@@ -75,6 +128,12 @@ const clientStrings = {
       rateLimited: string;
     };
 
+    const PERSON_SVG =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-4 w-4"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>';
+
+    const panel = root.querySelector<HTMLElement>("[data-chat-panel]")!;
+    const toggle = root.querySelector<HTMLButtonElement>("[data-chat-toggle]")!;
+    const closeButton = root.querySelector<HTMLButtonElement>("[data-chat-close]")!;
     const messagesEl = root.querySelector<HTMLElement>("[data-messages]")!;
     const form = root.querySelector<HTMLFormElement>("[data-form]")!;
     const input = root.querySelector<HTMLTextAreaElement>("[data-input]")!;
@@ -84,40 +143,96 @@ const clientStrings = {
     const history: Message[] = [];
     const MAX_MESSAGES = 12;
 
+    function avatarEl(role: Message["role"]): HTMLElement {
+      const el = document.createElement("span");
+      el.className =
+        "flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-surface";
+      if (role === "assistant") {
+        // Replies are written by Gustavo, so show his photo (or initials).
+        if (avatar) {
+          const img = document.createElement("img");
+          img.src = avatar;
+          img.alt = "";
+          img.className = "h-full w-full object-cover";
+          el.append(img);
+        } else {
+          el.classList.add("font-heading", "text-[10px]", "text-muted");
+          el.textContent = initials(name) || "?";
+        }
+      } else {
+        // The visitor asking the question: a generic person icon.
+        el.classList.add("text-muted");
+        el.innerHTML = PERSON_SVG;
+      }
+      return el;
+    }
+
     function bubble(role: Message["role"], text: string, pending = false): HTMLElement {
       const row = document.createElement("div");
-      row.className = role === "user" ? "flex justify-end" : "flex justify-start";
+      row.className =
+        role === "user"
+          ? "flex flex-row-reverse items-start gap-2"
+          : "flex items-start gap-2";
+
+      const col = document.createElement("div");
+      col.className =
+        role === "user"
+          ? "flex min-w-0 max-w-[80%] flex-col items-end"
+          : "flex min-w-0 max-w-[80%] flex-col items-start";
+
+      const label = document.createElement("p");
+      label.className = "mb-0.5 font-mono text-[10px] uppercase tracking-wide text-muted";
+      label.textContent =
+        role === "user" ? strings.roleUser : name || strings.roleAssistant;
 
       const card = document.createElement("div");
       card.className = [
-        "max-w-[85%] rounded-card border border-border px-3 py-2",
+        "max-w-full rounded-card border border-border px-3 py-2",
         role === "user" ? "bg-accent/10" : "bg-surface",
       ].join(" ");
 
-      const label = document.createElement("p");
-      label.className = "font-mono text-[10px] uppercase tracking-wide text-muted";
-      label.textContent = role === "user" ? strings.roleUser : strings.roleAssistant;
-
       const body = document.createElement("div");
       body.className = pending
-        ? "mt-0.5 whitespace-pre-wrap break-words font-mono text-sm text-fg animate-pulse"
+        ? "whitespace-pre-wrap break-words font-mono text-sm text-fg animate-pulse"
         : role === "assistant"
-          ? "chat-markdown mt-0.5 break-words font-mono text-sm text-fg"
-          : "mt-0.5 whitespace-pre-wrap break-words font-mono text-sm text-fg";
+          ? "chat-markdown break-words font-mono text-sm text-fg"
+          : "whitespace-pre-wrap break-words font-mono text-sm text-fg";
       if (role === "assistant" && !pending) {
         body.innerHTML = renderMarkdown(text);
       } else {
         body.textContent = text;
       }
 
-      card.append(label, body);
-      row.append(card);
+      card.append(body);
+      col.append(label, card);
+      row.append(avatarEl(role), col);
       return row;
+    }
+
+    function scrollToBottom() {
+      messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
     function setBusy(busy: boolean) {
       submit.disabled = busy;
       input.disabled = busy;
+    }
+
+    function resizeInput() {
+      input.style.height = "auto";
+      input.style.height = `${Math.min(input.scrollHeight, 160)}px`;
+    }
+
+    function openPanel() {
+      panel.classList.add("is-open");
+      toggle.setAttribute("aria-expanded", "true");
+      input.focus();
+      scrollToBottom();
+    }
+
+    function closePanel() {
+      panel.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
     }
 
     async function ask(question: string) {
@@ -126,7 +241,7 @@ const clientStrings = {
 
       const pending = bubble("assistant", strings.thinking, true);
       messagesEl.append(pending);
-      pending.scrollIntoView({ block: "nearest" });
+      scrollToBottom();
       setBusy(true);
 
       try {
@@ -151,17 +266,43 @@ const clientStrings = {
         pending.replaceWith(bubble("assistant", message));
       } finally {
         setBusy(false);
+        scrollToBottom();
         input.focus();
       }
     }
+
+    if (strings.greeting) {
+      messagesEl.append(bubble("assistant", strings.greeting));
+    }
+
+    toggle.addEventListener("click", () =>
+      panel.classList.contains("is-open") ? closePanel() : openPanel(),
+    );
+    closeButton.addEventListener("click", closePanel);
+
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Element && event.target.closest("[data-chat-open]")) {
+        openPanel();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && panel.classList.contains("is-open")) {
+        closePanel();
+        toggle.focus();
+      }
+    });
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const question = input.value.trim();
       if (!question) return;
       input.value = "";
+      resizeInput();
       void ask(question);
     });
+
+    input.addEventListener("input", resizeInput);
 
     input.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
@@ -173,6 +314,12 @@ const clientStrings = {
 </script>
 
 <style is:global>
+  [data-chat-panel] {
+    display: none;
+  }
+  [data-chat-panel].is-open {
+    display: flex;
+  }
   .chat-markdown > :first-child {
     margin-top: 0;
   }

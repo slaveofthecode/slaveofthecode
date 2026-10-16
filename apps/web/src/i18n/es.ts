@@ -56,10 +56,13 @@ export const es: Strings = {
   },
   chat: {
     heading: "Preguntá sobre mi CV",
+    launcher: "Preguntá IA",
+    close: "Cerrar el chat",
+    greeting: "¿Querés preguntarme algo? 🤖",
     intro:
       "Preguntá lo que quieras sobre mi experiencia, skills o trayectoria. Las respuestas salen solo de este CV.",
     label: "Tu pregunta",
-    placeholder: "ej. ¿Cuál es su experiencia con React?",
+    placeholder: "ej. ¿Cuál es tu experiencia con React?",
     send: "Enviar",
     thinking: "Pensando…",
     roleUser: "Vos",

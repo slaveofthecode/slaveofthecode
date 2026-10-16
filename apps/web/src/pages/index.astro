@@ -60,7 +60,9 @@ const content = getContent(locale);
     ) : null
   }
 
-  <Section id="chat" title={t.chat.heading}>
-    <Chat locale={locale} />
-  </Section>
+  <Chat
+    locale={locale}
+    name={content.profile.name}
+    avatar={content.profile.avatar}
+  />
 </BaseLayout>

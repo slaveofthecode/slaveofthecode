@@ -4,5 +4,5 @@
     "rootDir": ".",
     "types": ["bun"]
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "api", "scripts", "dev.ts"]
 }

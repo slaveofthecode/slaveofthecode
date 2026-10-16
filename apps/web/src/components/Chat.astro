@@ -1,0 +1,164 @@
+---
+import { type Locale, getStrings } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getStrings(locale);
+const apiUrl = import.meta.env.PUBLIC_API_URL ?? "http://localhost:8787";
+
+const clientStrings = {
+  roleUser: t.chat.roleUser,
+  roleAssistant: t.chat.roleAssistant,
+  thinking: t.chat.thinking,
+  error: t.chat.error,
+  rateLimited: t.chat.rateLimited,
+};
+---
+
+<div class="mx-auto max-w-2xl" data-chat data-api={apiUrl} data-locale={locale}>
+  <p class="font-mono text-sm text-muted">{t.chat.intro}</p>
+
+  <div
+    class="mt-4 flex flex-col gap-3"
+    data-messages
+    role="log"
+    aria-live="polite"
+    aria-label={t.chat.heading}
+  >
+  </div>
+
+  <form class="mt-4" data-form>
+    <label class="sr-only" for="chat-input">{t.chat.label}</label>
+    <div
+      class="flex items-end gap-2 rounded-card border border-border bg-bg p-2 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent"
+    >
+      <textarea
+        id="chat-input"
+        data-input
+        rows="1"
+        maxlength="2000"
+        placeholder={t.chat.placeholder}
+        class="max-h-40 w-full resize-none bg-transparent px-2 py-2 font-mono text-sm text-fg placeholder:text-muted focus:outline-none"
+      ></textarea>
+      <button
+        type="submit"
+        data-submit
+        class="inline-flex shrink-0 items-center rounded-card bg-accent px-3 py-2 font-mono text-xs text-accent-fg transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg disabled:opacity-50"
+      >
+        {t.chat.send}
+      </button>
+    </div>
+  </form>
+
+  <p class="mt-3 font-mono text-xs text-muted">{t.chat.disclaimer}</p>
+
+  <script type="application/json" data-chat-strings is:inline set:html={JSON.stringify(clientStrings)}></script>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-chat]");
+
+  if (root) {
+    const api = (root.dataset.api ?? "").replace(/\/$/, "");
+    const locale = root.dataset.locale ?? "en";
+    const stringsEl = root.querySelector<HTMLScriptElement>("[data-chat-strings]");
+    const strings = JSON.parse(stringsEl?.textContent ?? "{}") as {
+      roleUser: string;
+      roleAssistant: string;
+      thinking: string;
+      error: string;
+      rateLimited: string;
+    };
+
+    const messagesEl = root.querySelector<HTMLElement>("[data-messages]")!;
+    const form = root.querySelector<HTMLFormElement>("[data-form]")!;
+    const input = root.querySelector<HTMLTextAreaElement>("[data-input]")!;
+    const submit = root.querySelector<HTMLButtonElement>("[data-submit]")!;
+
+    type Message = { role: "user" | "assistant"; content: string };
+    const history: Message[] = [];
+    const MAX_MESSAGES = 12;
+
+    function bubble(role: Message["role"], text: string, pending = false): HTMLElement {
+      const row = document.createElement("div");
+      row.className = role === "user" ? "flex justify-end" : "flex justify-start";
+
+      const card = document.createElement("div");
+      card.className = [
+        "max-w-[85%] rounded-card border border-border px-3 py-2",
+        role === "user" ? "bg-accent/10" : "bg-surface",
+      ].join(" ");
+
+      const label = document.createElement("p");
+      label.className = "font-mono text-[10px] uppercase tracking-wide text-muted";
+      label.textContent = role === "user" ? strings.roleUser : strings.roleAssistant;
+
+      const body = document.createElement("p");
+      body.className = "mt-0.5 whitespace-pre-wrap break-words font-mono text-sm text-fg";
+      body.textContent = text;
+      if (pending) body.classList.add("animate-pulse");
+
+      card.append(label, body);
+      row.append(card);
+      return row;
+    }
+
+    function setBusy(busy: boolean) {
+      submit.disabled = busy;
+      input.disabled = busy;
+    }
+
+    async function ask(question: string) {
+      history.push({ role: "user", content: question });
+      messagesEl.append(bubble("user", question));
+
+      const pending = bubble("assistant", strings.thinking, true);
+      messagesEl.append(pending);
+      pending.scrollIntoView({ block: "nearest" });
+      setBusy(true);
+
+      try {
+        const response = await fetch(`${api}/chat`, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ messages: history.slice(-MAX_MESSAGES), locale }),
+        });
+
+        if (response.status === 429) throw new Error("rate_limited");
+        if (!response.ok) throw new Error("request_failed");
+
+        const data = (await response.json()) as { reply?: string };
+        const reply = data.reply?.trim() || strings.error;
+        history.push({ role: "assistant", content: reply });
+        pending.replaceWith(bubble("assistant", reply));
+      } catch (error) {
+        const message =
+          error instanceof Error && error.message === "rate_limited"
+            ? strings.rateLimited
+            : strings.error;
+        pending.replaceWith(bubble("assistant", message));
+      } finally {
+        setBusy(false);
+        input.focus();
+      }
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const question = input.value.trim();
+      if (!question) return;
+      input.value = "";
+      void ask(question);
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        form.requestSubmit();
+      }
+    });
+  }
+</script>

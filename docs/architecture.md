@@ -28,7 +28,7 @@ Living CV website. The new site lives on `main` (cutover complete); see
 ├─ vercel.json               # builds apps/web from the repo root
 ├─ packages/content/         # @portfolio/content (schemas + data + loader)
 ├─ apps/web/                 # @portfolio/web (Astro + Tailwind)
-├─ apps/api/                 # @portfolio/api (skeleton; chat later)
+├─ apps/api/                 # @portfolio/api (chat backend; second Vercel project)
 ├─ scripts/check-boundaries.ts
 └─ infra/                    # later (AWS IaC)
 ```
@@ -45,21 +45,48 @@ on any violation.
 
 ## Layers inside `apps/api`
 
-`domain` (pure logic, no I/O) → `application` (use cases, e.g. `answerQuestion`) →
-`adapters` (http handler, `LLMProvider` implementations, content access).
+`domain` (pure logic, no I/O: `chat`, `rag` chunking + cosine, `system-prompt`,
+`llm-provider`, `embedding-provider`, `health`) → `application` (use cases:
+`answerQuestion`, `getHealth`) → `adapters` (`http/router` web-standard handler,
+`llm/*` Gemini providers, `rag/sqlite-store` (sql.js), `rate-limit/*`, `config`).
 Dependencies point inward only.
 
+The chat (`POST /chat`, ADR-0006) is RAG: the handler validates the request (`zod`),
+rate-limits per IP (in-memory), embeds the last user message, retrieves the top-k CV
+chunks from the SQLite snapshot (cosine), grounds the model on those excerpts via the
+system prompt, and calls an `LlmProvider` (Gemini via `fetch`, or a fake in tests).
+No session is kept; the browser sends the last N turns.
+
+Ingestion (`bun run build:rag`, `apps/api/scripts/build-rag.ts`): `@portfolio/content`
+(every locale, including `now`) → `buildChunks` → Gemini embeddings → `buildRagBytes`
+(SQLite) → commits `apps/api/data/cv.sqlite` + the runtime module `apps/api/src/data/rag-db.ts`.
+
 Internal packages are consumed as TypeScript source (`"exports": "./src/index.ts"`,
-no build step). The API is bundled with esbuild at deploy time (later).
+no build step). `apps/api` runs on Vercel's Node runtime via the Web Standard
+`export default { fetch }` entry (`apps/api/api/index.ts`); AWS Lambda stays the long-term
+target.
+
+## Deployment
+
+Two Vercel projects from the same repo (ADR-0006):
+
+- **web** — root directory `/`; root `vercel.json` builds `apps/web` (static). Env:
+  `PUBLIC_API_URL` = the API project URL.
+- **api** — root directory `apps/api`; `apps/api/vercel.json` builds the function (and
+  bundles the sql.js WASM). Env: `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`,
+  `ALLOWED_ORIGINS`, `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS`.
+
+The SQLite snapshot is committed and read-only at runtime; it is not persistent storage.
+Re-run `bun run build:rag` (with `GEMINI_API_KEY`) after changing the CV.
 
 ## Data flow
 
 ```
 resume.pdf (local, gitignored)
    └─ extract-resume.ts ─▶ resume.txt (local)
-         └─ agent structures + human reviews ─▶ packages/content/data/{en,es}/*.json  (committed, sanitized)
+         └─ ingest ─▶ packages/content/data/{en,es}/*.json  (committed, sanitized; source of truth)
                   ├─▶ apps/web  (build time, static JSON imports)
-                  ├─▶ apps/api  (later: builds the chat context)
+                  ├─▶ apps/api  (build:rag → embeddings → SQLite snapshot; per request: retrieval + chat)
                   └─▶ (optional later) generated PDF
 ```
 

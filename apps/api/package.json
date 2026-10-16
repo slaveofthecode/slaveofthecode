@@ -3,14 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  },
+  "exports": "./src/index.ts",
   "scripts": {
+    "dev": "bun dev.ts",
     "typecheck": "tsc --noEmit",
-    "test": "bun test"
+    "test": "bun test",
+    "build:rag": "bun scripts/build-rag.ts",
+    "eval:chat": "bun scripts/eval-chat.ts"
+  },
+  "dependencies": {
+    "@portfolio/content": "workspace:*",
+    "sql.js": "^1.12.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/sql.js": "^1.4.9",
     "typescript": "^5.6.3"
   }
 }

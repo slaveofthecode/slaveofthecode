@@ -3,7 +3,9 @@ import { handleRequest } from "../src/index";
 
 describe("GET /health", () => {
   test("returns an ok payload", async () => {
-    const response = handleRequest(new Request("http://localhost/health"));
+    const response = await handleRequest(
+      new Request("http://localhost/health"),
+    );
     expect(response.status).toBe(200);
     const body = (await response.json()) as Record<string, unknown>;
     expect(body.status).toBe("ok");
@@ -13,13 +15,13 @@ describe("GET /health", () => {
   });
 
   test("404 for unknown paths", async () => {
-    const response = handleRequest(new Request("http://localhost/nope"));
+    const response = await handleRequest(new Request("http://localhost/nope"));
     expect(response.status).toBe(404);
     expect(await response.json()).toEqual({ error: "not_found" });
   });
 
   test("405 for non-GET on /health", async () => {
-    const response = handleRequest(
+    const response = await handleRequest(
       new Request("http://localhost/health", { method: "POST" }),
     );
     expect(response.status).toBe(405);

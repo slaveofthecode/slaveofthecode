@@ -210,28 +210,64 @@ Merged into `main` after the cutover (see PRs #20/#21):
     `docs/workflows/{start-feature,open-pr}.md`, `docs/architecture.md`; ADR-0001/ADR-0005 marked
     superseded. PR-template checklist updated to the new contact-data policy.
 
+## Done (continued)
+- **PR #24** (`fix/readme-gif-merge-method`, merge `0a01e27`): the daily-GIF job now runs
+  `gh pr merge --merge` (the `rs-validation-pr` ruleset only allows merge commits). Same PR
+  restored the `Profile.astro` hero: contact block (location/email/phone) + links list moved
+  back **inside the header row, below the headline** (above the summary). 48 tests green.
+- **PR #25 + #26**: GIF regenerated and validated end-to-end (run `38801980654` success; the
+  README GIF object changed `iIqmM5tTjmpOB9mpbn → MD0svLSDeudszrNrp0 → xT1XGJEEQTOvq7IW4g`).
+  The earlier "no change" was a stale local clone, not a failure.
+- **Release v2.0.0** published with curated notes (monorepo, content-driven, i18n, ingest, CI,
+  daily GIF). `main` advanced to `de4e29e`. Remote branches reduced to `main` (+ the bot's
+  `chore/readme-gif`).
+
 ## In progress
-- `fix/readme-gif-merge-method` (from `main`@`d8bb01d`): the daily-GIF job's first real run failed
-  with `GraphQL: Squash merges are not allowed on this repository`. Cause: the **`rs-validation-pr`
-  ruleset** on `main` sets `allowed_merge_methods: ["merge"]` (merge commits only). Fix: the
-  workflow now runs `gh pr merge --merge` instead of `--squash`.
-  - Repo-side cleanup done: branch protection on `v2` removed and `v2` deleted (the ruleset's
-    deletion rule only covers `main`); remote branches now only `main` (+ the bot's `chore/readme-gif`).
-  - **Also uncommitted on this branch**: `Profile.astro` restored the pre-PR-15 hero layout — the
-    contact block (location / email / phone) and the links list moved back **inside the header row,
-    below the headline** (above the summary), instead of below the summary. Human requested
-    "como estaba antes, al top del summary debajo del headline". NOTE: two unrelated changes now sit
-    on this branch (GIF fix + Profile layout); split into separate branches/commits if desired.
-  - Note: `profile.links` is currently `[]` in both `en`/`es` data, so no Link pills (LinkedIn etc.)
-    render yet — the links list is empty until content/ingest provides them.
+- `feat/recruiter-chat` (from `main`@`de4e29e`, single branch/PR by the human's "one hour"
+  request): the recruiter chat. **Final design = RAG over SQLite** (ADR-0006 supersedes
+  ADR-0004 context stuffing), per the human's request ("PDF → DB con RAG → chat con Gemini"
+  and "¿se puede usar SQLite?"). All checks green locally (89 tests). Written:
+  - **RAG core** `apps/api/src`: `domain/rag.ts` (`buildChunks(getContent(locale))` → one
+    chunk per profile/role/skill-group/language/education/cert/now item; `cosineSimilarity`;
+    `RagStore`), `domain/embedding-provider.ts`, `adapters/llm/gemini-embeddings.ts`
+    (`:batchEmbedContents`), `adapters/rag/sqlite-store.ts` (**sql.js** WASM — no native
+    build; opens the committed snapshot; brute-force cosine per locale).
+  - **Chat** `domain/{chat,system-prompt,llm-provider}`, `application/answer-question.ts`
+    (embed query → top-k → generate), `adapters/llm/gemini-provider.ts`,
+    `adapters/rate-limit/rate-limiter.ts` (in-memory only), `adapters/http/router.ts`
+    (`POST /chat` + `GET /health`, CORS/limits/errors), `config.ts`, `dev.ts`, `api/index.ts`
+    + `vercel.json` (bundles the sql.js WASM), `.env.example`.
+  - **Ingestion** `apps/api/scripts/build-rag.ts` (`bun run build:rag`, needs `GEMINI_API_KEY`;
+    `--empty` writes just the schema) → `apps/api/data/cv.sqlite` + `src/data/rag-db.ts`
+    (base64 snapshot used at runtime). **Currently committed as an empty schema** — run it
+    with a key to populate. Deps: `sql.js` (+ `@types/sql.js`); Upstash removed (in-memory
+    limiter only, for simplicity).
+  - `apps/web`: `components/Chat.astro` island (browser `fetch` to `PUBLIC_API_URL`, client-side
+    history, safe DOM, Enter-to-send), `chat` + `nav.chat` i18n (en/es), section in
+    `pages/{index,es/index}.astro`, `env.d.ts` + `.env.example`.
+  - `docs/decisions/ADR-0006-chat-backend.md` (rewritten for RAG), `ADR-0004` marked
+    superseded, `docs/architecture.md` updated.
+- Endpoint contract: `POST /chat` `{ messages, locale }` → `{ reply }`; errors
+  `400/403/405/413/429/500/502`. Guardrails: answer only from retrieved excerpts, refuse
+  off-topic, resist injection. Rate limit default 20/min per IP.
 
 ## Next steps
-- Human: push/PR/merge this fix, then re-run the GIF job: `gh workflow run update-readme.yml`.
-- Human: after replacing `content-source/resume.pdf`, run `bun run ingest` locally and commit the
-  regenerated `packages/content/data/**` + `apps/web/public/portrait.png` (the PDF is gitignored, so
-  CI/Vercel only see the JSON/PNG).
-- Roadmap per `docs/BOOTSTRAP.md` §12: (1) `POST /chat` + `LLMProvider` + streaming chat UI;
-  (2) AI evals; (3) theme variants; (4) AWS deploy + budget alarm; (5) replace PDF ingest.
+- Human: run the RAG ingestion with a key, then commit the snapshot:
+  `GEMINI_API_KEY=... bun run build:rag` (regenerates `apps/api/data/cv.sqlite` +
+  `apps/api/src/data/rag-db.ts`). Without this the chat answers "no info".
+- Human: push `feat/recruiter-chat`, open the PR (base `main`), review, merge (merge commit).
+  → **PR #28 opened** (https://github.com/slaveofthecode/slaveofthecode/pull/28), assignee @me.
+- Human prerequisites for production:
+  1. Create a Gemini API key (`GEMINI_API_KEY`) at https://aistudio.google.com/apikey.
+  2. New Vercel project with **Root Directory `apps/api`**; set `GEMINI_API_KEY`,
+     `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`, `ALLOWED_ORIGINS`.
+  3. In the **web** Vercel project set `PUBLIC_API_URL` to the API project URL, then redeploy.
+- Deploy caveat to validate: the API function loads the sql.js WASM at runtime; `vercel.json`
+  includes `node_modules/sql.js/dist/sql-wasm.wasm` (workspace hoisting may need adjustment).
+- Human: after replacing `content-source/resume.pdf`, run `bun run ingest` (and then
+  `bun run build:rag`) locally and commit the regenerated data + snapshot.
+- Roadmap per `docs/BOOTSTRAP.md` §12: (2) AI evals expansion; (3) theme variants; (4) AWS deploy +
+  budget alarm; (5) replace PDF ingest.
 
 ## Open decisions
 - Ingest locales (revised): `data/en` is rebuilt from the PDF; `data/es` preserves the hand-made
@@ -271,6 +307,6 @@ Merged into `main` after the cutover (see PRs #20/#21):
   `can_approve_pull_request_reviews: true` (set) and `contents: write` + `pull-requests: write`
   (declared in the workflow). The `rs-validation-pr` ruleset only allows **merge commits**, so the
   job must use `gh pr merge --merge`. It commits a new GIF roughly once per day.
-- Hosting: Vercel builds the repo root; the root `vercel.json` redirects the build to `apps/web`
-  and is the SINGLE source of build config — do not add Root Directory/Build overrides in the
-  dashboard.
+- Hosting: two Vercel projects from the same repo (ADR-0006). The **web** project uses the root
+  `vercel.json` (SINGLE source of its build config — no dashboard Build overrides) and builds
+  `apps/web`. The **api** project uses Root Directory `apps/api` + `apps/api/vercel.json`.

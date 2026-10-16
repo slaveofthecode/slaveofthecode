@@ -1,5 +1,6 @@
 ---
 import { getContent } from "@portfolio/content";
+import Chat from "../components/Chat.astro";
 import Section from "../components/Section.astro";
 import Certifications from "../components/sections/Certifications.astro";
 import Education from "../components/sections/Education.astro";
@@ -58,4 +59,8 @@ const content = getContent(locale);
       </Section>
     ) : null
   }
+
+  <Section id="chat" title={t.chat.heading}>
+    <Chat locale={locale} />
+  </Section>
 </BaseLayout>

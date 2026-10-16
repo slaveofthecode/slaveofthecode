@@ -275,35 +275,46 @@ Merged into `main` after the cutover (see PRs #20/#21):
   still 500'd. Cause: Vercel leaves bare (node_modules) specifiers **external**, and
   `domain/chat.ts` imported `LOCALES` from the workspace package `@portfolio/content`
   (resolves to `.ts` source Node can't run). Fixed with a local `CHAT_LOCALES` + parity test.
-- **`fix/api-vercel-esm-extensions` (this branch)**: after `5ac4917` the deploy still 500'd.
-  Real runtime error from Vercel logs: `ERR_MODULE_NOT_FOUND: Cannot find module
+- **PR #33** (`fix/api-vercel-esm-extensions`, merge `02e63ba`): after `5ac4917` the deploy still
+  500'd. Real runtime error from Vercel logs: `ERR_MODULE_NOT_FOUND: Cannot find module
   '/var/task/apps/api/src/index' imported from /var/task/apps/api/api/health.js`. Vercel does
   **not** bundle Node functions — it transpiles each `.ts`→`.js` and runs them under Node ESM,
   which has no extensionless resolution. Fixed by adding explicit `.js` extensions to all 48
   relative imports across `apps/api/api` + `apps/api/src` (Bun/tsc map `.js`→`.ts`).
   Verified reproducing Vercel's pipeline: per-file transpile (`tsc`) + run emitted ESM under
   Node → `/health` 200, `/chat` 200; and `@vercel/nft` (with Vercel's TS-stripping) traces the
-  whole `src/**` graph with no warnings. All checks green (92 tests).
-- **Pending human**: commit/push `fix/api-vercel-esm-extensions`, redeploy the API project,
-  then confirm `curl https://slaveofthecode-api.vercel.app/health` → 200 and the web chat works.
+  whole `src/**` graph with no warnings. All checks green (92 tests). **Merged + deployed:**
+  `GET https://slaveofthecode-api.vercel.app/health` → 200.
+- CORS fix (human, Vercel dashboard, no code): after the API came up, the browser preflight for
+  `/chat` failed (`No 'Access-Control-Allow-Origin'`), and `POST /chat` returned `403
+  {"error":"forbidden_origin"}`. Cause: `ALLOWED_ORIGINS` on the **api** project was set to a
+  value that did not include the web origin. Fixed by setting it to
+  `https://slaveofthecode.vercel.app` (comma-separated host origins, no trailing slash, no `*`)
+  and redeploying. Verified: preflight returns ACAO and the web chat calls succeed.
+- **`fix/chat-truncation-and-markdown` (this branch)**: two chat-quality fixes found after the
+  chat went live:
+  - **Truncated replies**: the default model (`gemini-flash-latest`) is a *thinking* model that
+    counts reasoning tokens against `maxOutputTokens` (observed `thoughtsTokenCount: 478` of the
+    600 budget → `finishReason: MAX_TOKENS`, answer cut mid-sentence). Fix:
+    `gemini-provider.ts` now sends `generationConfig.thinkingConfig = { thinkingBudget: 0 }` and
+    the default `maxOutputTokens` is 800. Verified against the real API: `finishReason: STOP`,
+    full grounded answer.
+  - **Markdown not rendered**: the bubble used `textContent`, so `**bold**`/bullets showed raw.
+    Added `apps/web/src/lib/markdown.ts` — a dependency-free renderer that escapes HTML first
+    (no injection), then renders fenced code, headings, nested ul/ol, bold, italic, inline code
+    and http(s) links. `Chat.astro` renders assistant replies through it; global styles added.
+  - Tests: `apps/web/test/markdown.test.ts` (10) + a `thinkingConfig` assertion in
+    `apps/api/test/gemini-provider.test.ts`. All checks green (103 tests).
 
 ## Next steps
-- Human: this deploy needs a **second Vercel project** for the API (the current
-  `slaveofthecode` project is the static web only):
-  1. Vercel → New Project → same repo, **Root Directory `apps/api`** (framework: Other).
-  2. Env: `GEMINI_API_KEY`, `GEMINI_MODEL=gemini-flash-latest`,
-     `GEMINI_EMBED_MODEL=gemini-embedding-001`, `ALLOWED_ORIGINS=<your web origin>`.
-  3. In the **web** project set `PUBLIC_API_URL` = the API project URL (host only, no `/api`),
-     then redeploy.
-- Human: commit/push `fix/vercel-embed-sql-wasm`, redeploy the API project, validate, then I
-  open the PR.
-- Human prerequisites for production:
-  1. Create a Gemini API key (`GEMINI_API_KEY`) at https://aistudio.google.com/apikey.
-  2. New Vercel project with **Root Directory `apps/api`**; set `GEMINI_API_KEY`,
-     `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`, `ALLOWED_ORIGINS`.
-  3. In the **web** Vercel project set `PUBLIC_API_URL` to the API project URL, then redeploy.
-- Resolved: the API function no longer loads the sql.js WASM from disk — it is embedded as base64
-  (`src/data/sql-wasm.ts`, regenerated via `bun run build:wasm`), so workspace hoisting is moot.
+- Human: commit/push `fix/chat-truncation-and-markdown` and redeploy (web + api); then I open
+  the PR. After deploy, re-test the chat: a `.NET` question should return a **complete** answer
+  with rendered Markdown (bold, nested bullets).
+- Production is live: web `https://slaveofthecode.vercel.app/`, API
+  `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
+  the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:
+  `GEMINI_API_KEY`, `GEMINI_MODEL=gemini-flash-latest`, `GEMINI_EMBED_MODEL=gemini-embedding-001`,
+  `ALLOWED_ORIGINS=https://slaveofthecode.vercel.app`. Web env: `PUBLIC_API_URL` (host only).
 - Human: after replacing `content-source/resume.pdf`, run `bun run ingest` (and then
   `bun run build:rag`) locally and commit the regenerated data + snapshot.
 - Roadmap per `docs/BOOTSTRAP.md` §12: (2) AI evals expansion; (3) theme variants; (4) AWS deploy +

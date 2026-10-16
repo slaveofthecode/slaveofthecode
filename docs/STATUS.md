@@ -350,9 +350,12 @@ Merged into `main` after the cutover (see PRs #20/#21):
     - Tests: 104 green (`system-prompt.test.ts` gained a first-person assertion).
 
 ## Next steps
-- Human: commit/push `feat/chat-launcher`, redeploy the web project, then I open the PR. Verify
-  the floating "Ask AI" launcher opens the panel on desktop + mobile, "Ask AI" in the nav opens it,
-  the panel resizes, and replies read in the first person.
+- **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Priorities, top first:
+  **P0 cap chat cost / stop runaway spend** (real shared-storage rate limit + Google budget/quota
+  + rotate the exposed `GEMINI_API_KEY`), **P1 re-enable the EN/ES language switcher**, **P2 resume
+  PDF download**, **P3 secure admin panel to upload `resume.pdf`** (ingest + RAG rebuild + redeploy).
+- **PR #35** (`feat/chat-launcher`, open, base `main`): the floating launcher widget + first-person
+  replies. Waiting on review/merge (human pushes; I never merge).
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:

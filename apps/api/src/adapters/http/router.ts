@@ -61,12 +61,16 @@ function clientIp(request: Request): string {
  *   GET  /health -> 200 health payload
  *   POST /chat   -> 200 { reply } grounded on the CV via RAG (ADR-0006)
  *   anything else -> 404; wrong method on a known path -> 405
+ *
+ * On Vercel the functions live under `/api` (e.g. `/api/chat`), so a leading
+ * `/api` segment is stripped before routing.
  */
 export function createHandler(
   deps: HandlerDeps,
 ): (request: Request) => Promise<Response> {
   return async (request) => {
-    const { pathname } = new URL(request.url);
+    const { pathname: raw } = new URL(request.url);
+    const pathname = raw.replace(/^\/api(?=\/|$)/, "") || "/";
     const origin = request.headers.get("origin");
     const cors = corsHeaders(origin, deps.allowedOrigins);
 

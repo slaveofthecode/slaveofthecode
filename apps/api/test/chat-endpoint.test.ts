@@ -127,3 +127,25 @@ describe("POST /chat", () => {
     expect((await handler(chatRequest(validBody))).status).toBe(500);
   });
 });
+
+describe("Vercel /api prefix", () => {
+  test("routes /api/chat like /chat", async () => {
+    const handler = createHandler(buildDeps());
+    const request = new Request("https://api.example.com/api/chat", {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: ORIGIN },
+      body: validBody,
+    });
+    const response = await handler(request);
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ reply: "Grounded answer." });
+  });
+
+  test("routes /api/health like /health", async () => {
+    const handler = createHandler(buildDeps());
+    const response = await handler(
+      new Request("https://api.example.com/api/health"),
+    );
+    expect(response.status).toBe(200);
+  });
+});

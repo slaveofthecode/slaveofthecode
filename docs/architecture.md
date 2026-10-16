@@ -62,9 +62,10 @@ Ingestion (`bun run build:rag`, `apps/api/scripts/build-rag.ts`): `@portfolio/co
 (SQLite) → commits `apps/api/data/cv.sqlite` + the runtime module `apps/api/src/data/rag-db.ts`.
 
 Internal packages are consumed as TypeScript source (`"exports": "./src/index.ts"`,
-no build step). `apps/api` runs on Vercel's Node runtime via the Web Standard
-`export default { fetch }` entry (`apps/api/api/index.ts`); AWS Lambda stays the long-term
-target.
+no build step). `apps/api` runs on Vercel's Node runtime via Web Standard
+`export default { fetch }` entries (`apps/api/api/{chat,health}.ts`); `vercel.json`
+rewrites the clean `/chat` and `/health` paths to them and the router strips the
+Vercel `/api` prefix. AWS Lambda stays the long-term target.
 
 ## Deployment
 
@@ -72,8 +73,9 @@ Two Vercel projects from the same repo (ADR-0006):
 
 - **web** — root directory `/`; root `vercel.json` builds `apps/web` (static). Env:
   `PUBLIC_API_URL` = the API project URL.
-- **api** — root directory `apps/api`; `apps/api/vercel.json` builds the function (and
-  bundles the sql.js WASM). Env: `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`,
+- **api** — root directory `apps/api`; `apps/api/vercel.json` builds the functions
+  (`api/chat.ts`, `api/health.ts`), rewrites `/chat` and `/health` to them, and bundles the
+  sql.js WASM. Env: `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`,
   `ALLOWED_ORIGINS`, `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS`.
 
 The SQLite snapshot is committed and read-only at runtime; it is not persistent storage.

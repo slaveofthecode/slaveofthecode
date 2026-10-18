@@ -10,6 +10,8 @@ import { OPS } from "unpdf/pdfjs";
  *   - `content-source/resume.txt` (plain text) for humans/agents to review.
  *   - `apps/web/public/portrait.png` (the resume photo, if any) so the site can
  *     use it as the avatar; the file is removed when the PDF has no photo.
+ *   - `apps/web/public/resume.pdf` (a byte-for-byte copy) so visitors can
+ *     download the CV — this copy is intentionally committed (public repo).
  *
  * The PDF lives in the gitignored `content-source/` folder and may contain
  * personal data (phone/address). This script never prints the text or any
@@ -23,6 +25,7 @@ const root = resolve(here, "../../..");
 const pdfPath = resolve(root, "content-source/resume.pdf");
 const txtPath = resolve(root, "content-source/resume.txt");
 const portraitPath = resolve(root, "apps/web/public/portrait.png");
+const publicPdfPath = resolve(root, "apps/web/public/resume.pdf");
 
 interface RawImage {
   width: number;
@@ -144,6 +147,8 @@ async function main(): Promise<void> {
   await mkdir(dirname(txtPath), { recursive: true });
   await writeFile(txtPath, `${text.trim()}\n`, "utf8");
 
+  await writeFile(publicPdfPath, pdfBytes);
+
   const photo = await extractPhoto(pdf);
   if (photo) {
     await writeFile(portraitPath, encodePng(photo));
@@ -153,6 +158,7 @@ async function main(): Promise<void> {
 
   console.log(`Extracted ${totalPages} page(s) → ${txtPath}`);
   console.log(`Characters: ${text.length}`);
+  console.log(`Public copy: ${publicPdfPath}`);
   console.log(
     photo
       ? `Photo: ${photo.width}×${photo.height} → ${portraitPath}`

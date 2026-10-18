@@ -3,6 +3,7 @@ import type { Profile } from "@portfolio/content";
 import { type Locale, getStrings } from "../../i18n";
 import { initials } from "../../lib/initials";
 import { iconName } from "../../lib/links";
+import { resumeFilename } from "../../lib/resume";
 import Icon from "../Icon.astro";
 
 interface Props {
@@ -92,6 +93,14 @@ const t = getStrings(locale);
           ))
         }
       </ul>
+      <a
+        href="/resume.pdf"
+        download={resumeFilename(profile.name)}
+        class="mt-4 inline-flex items-center gap-2 rounded-card bg-accent px-4 py-2 font-mono text-sm text-accent-fg transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+      >
+        <Icon name="pdf" class="h-4 w-4" />
+        {t.cv.download}
+      </a>
     </div>
   </div>
 

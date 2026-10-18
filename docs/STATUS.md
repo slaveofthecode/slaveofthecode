@@ -353,28 +353,37 @@ Merged into `main` after the cutover (see PRs #20/#21):
       itself was never the problem.
     - Tests: 104 green (`system-prompt.test.ts` gained a first-person assertion).
 
-    - Tests: 104 green (`system-prompt.test.ts` gained a first-person assertion).
-- **Chat CTA rename + contact links restored (same branch, `feat/chat-launcher`)**:
-  - Renamed the chat CTA everywhere: `nav.chat` and `chat.launcher` → **"Ask me anything"**
-    (en) / **"Preguntame lo que quieras"** (es). (Previously "Ask AI" / "Preguntá IA".)
-  - **Restored `profile.links`** in `data/{en,es}/profile.json` — `Portfolio`
-    `https://slaveofthecode.vercel.app/`, `GitHub` `https://github.com/slaveofthecode`,
-    `LinkedIn` `https://www.linkedin.com/in/gustavoml/`. They were blanked by the PR-14 ingest
-    (the PDF text only has the words "Portfolio • GitHub • LinkedIn"; the URLs live in the
-    original resume but not in `resume.txt` and there are **no link annotations** in the PDF —
-    verified with pdf.js). Values taken from the historical committed data (`013e4db`), not invented.
-    `Profile.astro` and `Footer.astro` already render `profile.links` → now visible in both.
-  - **RAG:** `buildChunks` profile chunk now includes `Links: <label>: <url>, …`; snapshot rebuilt
-    with `bun run build:rag` (56 chunks). Chat verified: asks for the links → returns all three.
-  - Checks green (104 tests); build shows the links twice per page (Profile + Footer).
+## Done (continued)
+- **PR #35** (`feat/chat-launcher`, merge `8984e6c`) + **PR #36** (merge `39e1756`):
+  floating chat launcher + first-person replies, then CTA rename + contact links.
+  - Widget: launcher pill + panel (`role="dialog"`), header "Ask AI" opens it, no `#chat`
+    section. Greeting bubble, Gustavo avatars, resizable desktop panel, mobile bottom sheet.
+  - CTA: `nav.chat` / `chat.launcher` → **"Ask me anything"** / **"Preguntame lo que quieras"**.
+  - **Restored `profile.links`** (Portfolio / GitHub / LinkedIn) from historical data
+    (`013e4db`); ingest had blanked them because `resume.txt` has labels but no URLs.
+  - RAG profile chunk includes `Links: …`; snapshot 56 chunks. 104 tests.
+- **PR #37** (`chore/readme-gif`, merge `99d03a2`): daily README GIF update.
+
+## Done (continued)
+- **`feat/resume-pdf-download` (P2, committed locally; PR pending):** let visitors download
+  the CV. Human decision: serve a **committed public copy** of the original PDF (no PDF
+  generation from content); AGENTS.md rule 10 updated accordingly.
+  - `apps/web/public/resume.pdf` — byte-for-byte copy of `content-source/resume.pdf`;
+    `packages/content/scripts/extract-resume.ts` now refreshes it on every `bun run ingest`
+    (same pattern as `portrait.png`).
+  - `Profile` hero gains a visible **"Download CV" / "Descargar CV"** accent button with a new
+    `pdf` icon (`Icon.astro`) → `/resume.pdf` with `download="<First>_<Last>_resume.pdf"` from
+    `src/lib/resume.ts` `resumeFilename(profile.name)` (unicode-safe; empty → `resume.pdf`).
+  - i18n: `cv.download` (en/es parity kept). Tests: `apps/web/test/resume.test.ts` (5).
 
 ## Next steps
-- **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Priorities, top first:
-  **P0 cap chat cost / stop runaway spend** (real shared-storage rate limit + Google budget/quota
-  + rotate the exposed `GEMINI_API_KEY`), **P1 re-enable the EN/ES language switcher**, **P2 resume
-  PDF download**, **P3 secure admin panel to upload `resume.pdf`** (ingest + RAG rebuild + redeploy).
-- **PR #35** (`feat/chat-launcher`, open, base `main`): the floating launcher widget + first-person
-  replies. Waiting on review/merge (human pushes; I never merge).
+- **Branch `feat/resume-pdf-download` (P2, this branch):** download the resume as PDF —
+  committed public copy `apps/web/public/resume.pdf` (policy decision, see AGENTS.md rule 10),
+  "Download CV" button in the hero. Awaiting human review + push + PR.
+- **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Remaining, top first:
+  **P0 cap chat cost** (an earlier WIP on `feat/chat-cost-cap` was discarded), **P1 re-enable
+  the EN/ES language switcher**, **P3 secure admin panel to upload `resume.pdf`** (ingest + RAG
+  rebuild + redeploy).
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:

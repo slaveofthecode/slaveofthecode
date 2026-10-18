@@ -38,6 +38,7 @@ export const es: Strings = {
     location: "Ubicación",
     phone: "Teléfono",
     present: "Actualidad",
+    download: "Descargar CV",
   },
   now: {
     heading: "¿En qué ando ahora?",

@@ -400,13 +400,38 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - `GEMINI_API_KEY` **rotated** (human, 2026-10-18) after the earlier exposure; the old key
     is dead. Only optional extras remain: Vercel WAF rule on `/api/chat`, Turnstile.
 
+## Done (continued)
+- **PR #41** (`feat/chat-cost-cap`, merge `4f0526d`): P0 chat cost caps — merged into `main`.
+  All guards before any Gemini call (413/400/403/429 per-IP/429 daily → 800 token clamp).
+  `InMemoryDailyLimiter` (UTC-midnight), `dailyLimiter` in `HandlerDeps`, `chat.rateLimitedDay`
+  i18n. 118 tests green. `GEMINI_API_KEY` rotated by human (2026-10-18).
+
+- **`feat/chat-retrieval-profile` (this branch, committed locally):** contact questions
+  ("Can I send you an email?", "what is your email?", "how can I contact you?") returned
+  "I don't have my email address listed in the current context of my CV" because the
+  `en:profile` chunk (name, location, email, phone, links) ranked **10th–19th** on
+  contact-related queries — outside the `retrieveK: 6` window — so the system prompt
+  never carried the contact data. Fix:
+  - `RagStore` gains `getChunk(id)` (`SqliteRagStore` + `FakeStore`).
+  - `answerQuestion` always prepends the `profile` chunk to the retrieved hits (when
+    not already present), independent of vector ranking.
+  - Verified live: "Can I send you an email?" → "Yes, absolutely! You can reach me at
+    gml.gustavoml@gmail.com"; Spanish and off-topic/injection cases still correct.
+  - Tests: +2 eval (profile always grounded, no duplicate) +2 sqlite (`getChunk`) → **122 green**.
+  - `docs/architecture.md` updated (profile grounding guarantee).
+
+- **UI (violet-accent) — rolled back:** attempted a violet-accent UI refresh (tokens,
+  component hovers, brand-colored icons). Human reviewed and preferred the original
+  grayscale look; all web changes reverted (`git restore apps/web/...`). The
+  `feat/ui-grayscale-backup` branch still holds the abandoned work if needed later.
+
 ## Next steps
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Remaining, top first:
   **P1 re-enable the EN/ES language switcher**, **P3 secure admin panel to upload
   `resume.pdf`** (ingest + RAG rebuild + redeploy).
-- **P0 branch `feat/chat-cost-cap` awaiting human push + PR** (see the Done entry above).
-- **Human actions:** none pending for P0 — the exposed `GEMINI_API_KEY` was **rotated**
-  (2026-10-18). Optional later: a Vercel WAF rate-limit rule on `/api/chat`.
+- **This branch `feat/chat-retrieval-profile` awaiting human push + PR.** Human to push,
+  then open a PR (base `main`, assignee `@me`), review + merge.
+- **Human actions:** none pending. Optional later: Vercel WAF rule on `/api/chat`, Turnstile.
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:

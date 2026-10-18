@@ -129,4 +129,28 @@ export class SqliteRagStore implements RagStore {
     hits.sort((a, b) => b.score - a.score);
     return hits.slice(0, limit);
   }
+
+  getChunk(id: string): RagHit | null {
+    const statement = this.db.prepare(
+      "SELECT id, locale, section, title, content FROM chunks WHERE id = ?",
+    );
+    statement.bind([id]);
+    if (!statement.step()) {
+      statement.free();
+      return null;
+    }
+    const row = statement.getAsObject() as unknown as Omit<
+      ChunkRow,
+      "embedding"
+    >;
+    statement.free();
+    return {
+      id: row.id,
+      locale: row.locale as ChatLocale,
+      section: row.section,
+      title: row.title,
+      content: row.content,
+      score: 1,
+    };
+  }
 }

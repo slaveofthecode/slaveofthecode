@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { FakeProvider } from "../src/adapters/llm/fake-provider";
 import { answerQuestion } from "../src/application/answer-question";
 import type { ChatLocale } from "../src/domain/chat";
+import type { RagHit, RagStore } from "../src/domain/rag";
 import { FakeEmbeddings, FakeStore, profileHit } from "./helpers";
 
 /**
@@ -73,5 +74,47 @@ describe("chat evals (deterministic)", () => {
       { ...deps(), embeddings },
     );
     expect(embeddings.calls).toBe(1);
+  });
+
+  test("always grounds the profile chunk even when retrieval misses it", async () => {
+    const provider = new FakeProvider("ok");
+    const otherHit: RagHit = {
+      id: "en:experience:acme",
+      locale: "en",
+      section: "experience",
+      title: "Acme",
+      content: "Worked at Acme",
+      score: 0.5,
+    };
+    const store: RagStore = {
+      retrieve: () => [otherHit],
+      getChunk: (id) => (id === "en:profile" ? profileHit("en") : null),
+    };
+    await answerQuestion(
+      {
+        messages: [{ role: "user", content: "Can I send you an email?" }],
+        locale: "en",
+      },
+      { ...deps(provider), store },
+    );
+    expect(provider.lastSystem).toContain("Gustavo Lopez");
+    expect(provider.lastSystem).toContain("Worked at Acme");
+  });
+
+  test("does not duplicate the profile chunk when retrieval already found it", async () => {
+    const provider = new FakeProvider("ok");
+    const profile = profileHit("en");
+    const store: RagStore = {
+      retrieve: () => [profile],
+      getChunk: (id) => (id === "en:profile" ? profile : null),
+    };
+    await answerQuestion(
+      { messages: [{ role: "user", content: "who are you?" }], locale: "en" },
+      { ...deps(provider), store },
+    );
+    const excerpts = (provider.lastSystem ?? "").split(
+      "(profile) Gustavo Lopez",
+    );
+    expect(excerpts.length - 1).toBe(1);
   });
 });

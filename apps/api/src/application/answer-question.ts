@@ -37,7 +37,19 @@ export async function answerQuestion(
     input.locale,
     deps.retrieveK ?? 6,
   );
-  const system = buildSystemPrompt(hits, input.locale);
+
+  // Grounding guarantee: identity/contact questions ("what is your email?",
+  // "how can I contact you?") rank poorly against long CV chunks, so the
+  // profile chunk is always part of the context regardless of the vector
+  // ranking. It is the smallest chunk and carries name, location, email,
+  // phone and links.
+  const profile = deps.store.getChunk(`${input.locale}:profile`);
+  const context =
+    profile && !hits.some((hit) => hit.id === profile.id)
+      ? [profile, ...hits]
+      : hits;
+
+  const system = buildSystemPrompt(context, input.locale);
 
   const messages: LlmMessage[] = input.messages.map((message) => ({
     role: message.role,

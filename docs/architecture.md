@@ -57,6 +57,12 @@ chunks from the SQLite snapshot (cosine), grounds the model on those excerpts vi
 system prompt, and calls an `LlmProvider` (Gemini via `fetch`, or a fake in tests).
 No session is kept; the browser sends the last N turns.
 
+**Profile grounding guarantee:** identity/contact questions ("what is your email?",
+"how can I contact you?") embed poorly against the long CV chunks and often miss the
+top-k window, so the `profile` chunk is always prepended to the context (via
+`RagStore.getChunk`), independent of the vector ranking. It is the smallest chunk and
+carries name, location, email, phone and links.
+
 ## Chat cost caps
 
 Every check runs **before** any Gemini call, so a blocked request costs `0`:

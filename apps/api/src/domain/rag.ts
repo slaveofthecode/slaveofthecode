@@ -17,6 +17,8 @@ export interface RagHit extends RagChunk {
 /** Vector store abstraction (ADR-0007). */
 export interface RagStore {
   retrieve(query: number[], locale: ChatLocale, limit: number): RagHit[];
+  /** Loads a single chunk by id (e.g. the always-grounded profile chunk). */
+  getChunk(id: string): RagHit | null;
 }
 
 /** Cosine similarity between two equal-length vectors. */

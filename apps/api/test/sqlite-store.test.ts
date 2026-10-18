@@ -51,4 +51,18 @@ describe("SqliteRagStore", () => {
     const store = await SqliteRagStore.open(await buildRagBytes([]));
     expect(store.retrieve([1, 0, 0], "en", 5)).toEqual([]);
   });
+
+  test("getChunk loads a chunk by id with a full score", async () => {
+    const store = await SqliteRagStore.open(await buildRagBytes(records));
+    const chunk = store.getChunk("en:node");
+    expect(chunk?.id).toBe("en:node");
+    expect(chunk?.section).toBe("skills");
+    expect(chunk?.content).toBe("Node skills");
+    expect(chunk?.score).toBe(1);
+  });
+
+  test("getChunk returns null for an unknown id", async () => {
+    const store = await SqliteRagStore.open(await buildRagBytes(records));
+    expect(store.getChunk("en:missing")).toBeNull();
+  });
 });

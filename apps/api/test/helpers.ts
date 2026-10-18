@@ -24,6 +24,10 @@ export class FakeStore implements RagStore {
   retrieve(_query: number[], locale: ChatLocale, limit: number): RagHit[] {
     return this.hits.filter((hit) => hit.locale === locale).slice(0, limit);
   }
+
+  getChunk(id: string): RagHit | null {
+    return this.hits.find((hit) => hit.id === id) ?? null;
+  }
 }
 
 export function profileHit(locale: ChatLocale = "en"): RagHit {

@@ -35,6 +35,10 @@ export class GeminiError extends Error {
   }
 }
 
+/** Hard ceiling for a single answer (cost cap): never sent higher, even if a
+ * caller passes a bigger `maxOutputTokens`. */
+const MAX_OUTPUT_TOKENS = 800;
+
 function toGeminiContents(messages: LlmMessage[]): GeminiContent[] {
   return messages.map((message) => ({
     role: message.role === "assistant" ? "model" : "user",
@@ -73,7 +77,10 @@ export class GeminiProvider implements LlmProvider {
         contents: toGeminiContents(messages),
         generationConfig: {
           temperature: options.temperature ?? 0.3,
-          maxOutputTokens: options.maxOutputTokens ?? 800,
+          maxOutputTokens: Math.min(
+            options.maxOutputTokens ?? MAX_OUTPUT_TOKENS,
+            MAX_OUTPUT_TOKENS,
+          ),
           // Gemini "thinking" models count reasoning tokens against
           // maxOutputTokens, truncating short answers (finishReason
           // MAX_TOKENS). This RAG answer does not need reasoning: disable it.

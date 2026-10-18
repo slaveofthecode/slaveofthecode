@@ -89,4 +89,26 @@ describe("GeminiProvider", () => {
       provider.generate([{ role: "user", content: "hi" }], options),
     ).rejects.toThrow(GeminiError);
   });
+
+  test("clamps maxOutputTokens to the hard cost ceiling of 800", async () => {
+    let body: { generationConfig?: Record<string, unknown> } = {};
+    globalThis.fetch = ((_url: string, init: RequestInit) => {
+      body = JSON.parse(init.body as string);
+      return Promise.resolve(
+        new Response(
+          JSON.stringify({
+            candidates: [{ content: { parts: [{ text: "ok" }] } }],
+          }),
+          { status: 200 },
+        ),
+      );
+    }) as unknown as typeof fetch;
+
+    const provider = new GeminiProvider(config);
+    await provider.generate([{ role: "user", content: "hi" }], {
+      ...options,
+      maxOutputTokens: 5000,
+    });
+    expect(body.generationConfig?.maxOutputTokens).toBe(800);
+  });
 });

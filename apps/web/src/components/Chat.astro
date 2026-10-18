@@ -19,6 +19,7 @@ const clientStrings = {
   thinking: t.chat.thinking,
   error: t.chat.error,
   rateLimited: t.chat.rateLimited,
+  rateLimitedDay: t.chat.rateLimitedDay,
 };
 ---
 
@@ -145,6 +146,7 @@ const clientStrings = {
       thinking: string;
       error: string;
       rateLimited: string;
+      rateLimitedDay: string;
     };
 
     const PERSON_SVG =
@@ -270,7 +272,14 @@ const clientStrings = {
           body: JSON.stringify({ messages: history.slice(-MAX_MESSAGES), locale }),
         });
 
-        if (response.status === 429) throw new Error("rate_limited");
+        if (response.status === 429) {
+          const body = (await response.json().catch(() => ({}))) as {
+            error?: string;
+          };
+          throw new Error(
+            body.error === "daily_limit_reached" ? "daily_limit" : "rate_limited",
+          );
+        }
         if (!response.ok) throw new Error("request_failed");
 
         const data = (await response.json()) as { reply?: string };
@@ -279,9 +288,11 @@ const clientStrings = {
         pending.replaceWith(bubble("assistant", reply));
       } catch (error) {
         const message =
-          error instanceof Error && error.message === "rate_limited"
-            ? strings.rateLimited
-            : strings.error;
+          error instanceof Error && error.message === "daily_limit"
+            ? strings.rateLimitedDay
+            : error instanceof Error && error.message === "rate_limited"
+              ? strings.rateLimited
+              : strings.error;
         pending.replaceWith(bubble("assistant", message));
       } finally {
         setBusy(false);

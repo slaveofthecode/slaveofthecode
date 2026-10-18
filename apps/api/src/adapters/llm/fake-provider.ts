@@ -10,6 +10,7 @@ import type {
  */
 export class FakeProvider implements LlmProvider {
   readonly name = "fake";
+  calls = 0;
   lastSystem?: string;
   lastMessages: LlmMessage[] = [];
 
@@ -19,6 +20,7 @@ export class FakeProvider implements LlmProvider {
     messages: LlmMessage[],
     options: GenerateOptions,
   ): Promise<string> {
+    this.calls += 1;
     this.lastSystem = options.system;
     this.lastMessages = messages;
     if (this.reply !== undefined) return this.reply;

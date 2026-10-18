@@ -44,3 +44,50 @@ export class InMemoryRateLimiter implements RateLimiter {
     };
   }
 }
+
+function nextUtcMidnight(now: number): number {
+  const date = new Date(now);
+  return Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate() + 1,
+  );
+}
+
+/**
+ * Site-wide ceiling per UTC day: at most `maxRequests` successful checks between
+ * one UTC midnight and the next, no matter the key. Kept in process memory (per
+ * instance on serverless) — the hard spend ceiling is the Google Cloud budget;
+ * see the "Chat cost caps" section in docs/architecture.md.
+ */
+export class InMemoryDailyLimiter implements RateLimiter {
+  private count = 0;
+  private resetAt = 0;
+
+  constructor(
+    private readonly maxRequests: number,
+    private readonly now: () => number = Date.now,
+  ) {}
+
+  async check(_key: string): Promise<RateLimitResult> {
+    const now = this.now();
+
+    if (now >= this.resetAt) {
+      this.count = 1;
+      this.resetAt = nextUtcMidnight(now);
+      return {
+        allowed: true,
+        remaining: this.maxRequests - 1,
+        retryAfterSeconds: 0,
+      };
+    }
+
+    this.count += 1;
+    const allowed = this.count <= this.maxRequests;
+    return {
+      allowed,
+      remaining: Math.max(0, this.maxRequests - this.count),
+      retryAfterSeconds: allowed ? 0 : Math.ceil((this.resetAt - now) / 1000),
+    };
+  }
+}

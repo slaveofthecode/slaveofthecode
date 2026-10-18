@@ -73,6 +73,8 @@ export const es: Strings = {
     error: "Algo salió mal. Probá de nuevo.",
     rateLimited:
       "Demasiadas preguntas por ahora. Probá de nuevo en un momento.",
+    rateLimitedDay:
+      "Se alcanzó el límite diario del chat. Probá de nuevo mañana.",
     unavailable: "El chat no está disponible en este momento.",
   },
 };

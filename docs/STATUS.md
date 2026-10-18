@@ -365,7 +365,7 @@ Merged into `main` after the cutover (see PRs #20/#21):
 - **PR #37** (`chore/readme-gif`, merge `99d03a2`): daily README GIF update.
 
 ## Done (continued)
-- **`feat/resume-pdf-download` (P2, committed locally; PR pending):** let visitors download
+- **`feat/resume-pdf-download` (P2, merged as PR #40):** let visitors download
   the CV. Human decision: serve a **committed public copy** of the original PDF (no PDF
   generation from content); AGENTS.md rule 10 updated accordingly.
   - `apps/web/public/resume.pdf` — byte-for-byte copy of `content-source/resume.pdf`;
@@ -376,14 +376,37 @@ Merged into `main` after the cutover (see PRs #20/#21):
     `src/lib/resume.ts` `resumeFilename(profile.name)` (unicode-safe; empty → `resume.pdf`).
   - i18n: `cv.download` (en/es parity kept). Tests: `apps/web/test/resume.test.ts` (5).
 
+## Done (continued)
+- **PR #40** (`feat/resume-pdf-download`, merge `26260ad`): P2 download the resume as PDF.
+  Committed public copy `apps/web/public/resume.pdf` (policy decision, AGENTS.md rule 10
+  updated), "Download CV" button in the hero, `bun run ingest` refreshes the copy, download
+  filename `<First>_<Last>_resume.pdf` (`src/lib/resume.ts`). 109 tests green at merge.
+
+- **`feat/chat-cost-cap` (P0, committed locally; PR pending):** hard, documented ceilings so
+  nobody can drive unnecessary Gemini spend. Human decision: **no external storage/service** —
+  in-memory limits + code caps, with the Google Cloud budget (pay-as-you-go, **USD 5 cap +
+  alerts**, already configured by the human) as the hard ceiling. Documented in
+  `docs/architecture.md` → "Chat cost caps".
+  - **Order of guards, all before any Gemini call** (blocked = 0 spend): 413 body >16 KB →
+    400 schema (12 msgs × 2000 chars) → 403 origin → **429 per-IP** (`RATE_LIMIT_MAX`
+    default **10**/min) → **429 global daily** (`RATE_LIMIT_DAILY_MAX` default **200** per
+    UTC day; checked after the per-IP guard so one abusive IP cannot burn everyone's budget)
+    → generate with `maxOutputTokens` **hard-clamped to 800** + `thinkingBudget: 0`.
+  - New `InMemoryDailyLimiter` (UTC-midnight window); `dailyLimiter` added to `HandlerDeps`.
+    Chat UI distinguishes `daily_limit_reached` → new `chat.rateLimitedDay` string (en/es).
+  - Tests: daily limiter (3), config defaults/overrides (3), router 429-daily-without-LLM-call
+    + blocked-IP-does-not-burn-daily-budget (2), token clamp (1) → **118 green**.
+  - `.env.example` documents the three `RATE_*` vars (optional overrides).
+  - `GEMINI_API_KEY` **rotated** (human, 2026-10-18) after the earlier exposure; the old key
+    is dead. Only optional extras remain: Vercel WAF rule on `/api/chat`, Turnstile.
+
 ## Next steps
-- **Branch `feat/resume-pdf-download` (P2, this branch):** download the resume as PDF —
-  committed public copy `apps/web/public/resume.pdf` (policy decision, see AGENTS.md rule 10),
-  "Download CV" button in the hero. Awaiting human review + push + PR.
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Remaining, top first:
-  **P0 cap chat cost** (an earlier WIP on `feat/chat-cost-cap` was discarded), **P1 re-enable
-  the EN/ES language switcher**, **P3 secure admin panel to upload `resume.pdf`** (ingest + RAG
-  rebuild + redeploy).
+  **P1 re-enable the EN/ES language switcher**, **P3 secure admin panel to upload
+  `resume.pdf`** (ingest + RAG rebuild + redeploy).
+- **P0 branch `feat/chat-cost-cap` awaiting human push + PR** (see the Done entry above).
+- **Human actions:** none pending for P0 — the exposed `GEMINI_API_KEY` was **rotated**
+  (2026-10-18). Optional later: a Vercel WAF rate-limit rule on `/api/chat`.
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:

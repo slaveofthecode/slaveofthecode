@@ -69,6 +69,8 @@ export const en = {
     disclaimer: "AI-generated from the CV. Please verify important details.",
     error: "Something went wrong. Please try again.",
     rateLimited: "Too many questions for now. Please try again in a moment.",
+    rateLimitedDay:
+      "The daily chat limit was reached. Please try again tomorrow.",
     unavailable: "The chat is unavailable right now.",
   },
 };

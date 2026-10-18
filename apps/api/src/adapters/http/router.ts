@@ -9,6 +9,7 @@ import { GeminiEmbeddings } from "../llm/gemini-embeddings.js";
 import { GeminiError, GeminiProvider } from "../llm/gemini-provider.js";
 import { SqliteRagStore } from "../rag/sqlite-store.js";
 import {
+  InMemoryDailyLimiter,
   InMemoryRateLimiter,
   type RateLimiter,
 } from "../rate-limit/rate-limiter.js";
@@ -18,6 +19,7 @@ export interface HandlerDeps {
   embeddings: EmbeddingProvider;
   store: RagStore;
   rateLimiter: RateLimiter;
+  dailyLimiter: RateLimiter;
   allowedOrigins: string[];
   maxOutputTokens?: number;
   retrieveK?: number;
@@ -121,11 +123,22 @@ export function createHandler(
         );
       }
 
-      const limit = await deps.rateLimiter.check(clientIp(request));
-      if (!limit.allowed) {
+      // Cost guards, cheapest first and always BEFORE any Gemini call: per-IP
+      // first (a single abusive client must not burn the shared daily budget),
+      // then the site-wide daily ceiling. See docs/architecture.md.
+      const ipLimit = await deps.rateLimiter.check(clientIp(request));
+      if (!ipLimit.allowed) {
         return json({ error: "rate_limited" }, 429, {
           ...cors,
-          "retry-after": String(limit.retryAfterSeconds),
+          "retry-after": String(ipLimit.retryAfterSeconds),
+        });
+      }
+
+      const dayLimit = await deps.dailyLimiter.check("chat:day");
+      if (!dayLimit.allowed) {
+        return json({ error: "daily_limit_reached" }, 429, {
+          ...cors,
+          "retry-after": String(dayLimit.retryAfterSeconds),
         });
       }
 
@@ -174,6 +187,7 @@ async function initDefaultHandler(): Promise<
       config.rateLimit.maxRequests,
       config.rateLimit.windowSeconds,
     ),
+    dailyLimiter: new InMemoryDailyLimiter(config.rateLimit.dailyMax),
     allowedOrigins: config.allowedOrigins,
   });
 }

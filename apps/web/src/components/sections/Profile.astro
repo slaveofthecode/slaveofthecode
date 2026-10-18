@@ -84,7 +84,7 @@ const t = getStrings(locale);
                 href={link.url}
                 rel="me noopener"
                 target="_blank"
-                class="inline-flex items-center gap-2 rounded-card border border-border px-3 py-1 text-fg transition-colors hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                class="inline-flex items-center gap-2 rounded-card border border-border px-3 py-1 text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
               >
                 <Icon name={iconName(link.url)} />
                 {link.label}
@@ -96,7 +96,7 @@ const t = getStrings(locale);
       <a
         href="/resume.pdf"
         download={resumeFilename(profile.name)}
-        class="mt-4 inline-flex items-center gap-2 rounded-card bg-accent px-4 py-2 font-mono text-sm text-accent-fg transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+        class="mt-4 inline-flex items-center gap-2 rounded-card border border-border bg-surface px-4 py-2 font-mono text-sm text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
       >
         <Icon name="pdf" class="h-4 w-4" />
         {t.cv.download}

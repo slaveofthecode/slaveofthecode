@@ -13,7 +13,7 @@ const { items } = Astro.props;
     items.map((language) => (
       <li class="flex flex-wrap items-baseline justify-between gap-x-4 font-mono text-sm">
         <span class="text-fg">{language.name}</span>
-        <span class="text-muted">{language.level}</span>
+        <span class="text-subtle">{language.level}</span>
       </li>
     ))
   }

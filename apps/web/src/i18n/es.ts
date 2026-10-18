@@ -40,6 +40,9 @@ export const es: Strings = {
     present: "Actualidad",
     download: "Descargar CV",
   },
+  certifications: {
+    validate: "Validar",
+  },
   now: {
     heading: "¿En qué ando ahora?",
     updated: "Actualizado",

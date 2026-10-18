@@ -47,7 +47,7 @@ const t = getStrings(locale);
                 style={`width: ${item.progress}%`}
               />
             </div>
-            <p class="mt-1 font-mono text-xs text-muted">{item.progress}%</p>
+            <p class="mt-1 font-mono text-xs text-subtle">{item.progress}%</p>
           </div>
 
           {item.tags.length > 0 ? (
@@ -78,7 +78,7 @@ const t = getStrings(locale);
                 ))}
               </ul>
             ) : null}
-            <p class="mt-2 font-mono text-xs text-muted">
+            <p class="mt-2 font-mono text-xs text-subtle">
               {t.now.updated} {formatPoint(item.updatedAt.slice(0, 7), locale)}
             </p>
           </div>

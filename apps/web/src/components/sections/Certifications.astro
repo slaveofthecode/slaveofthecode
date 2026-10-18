@@ -1,6 +1,6 @@
 ---
 import type { Certification } from "@portfolio/content";
-import type { Locale } from "../../i18n";
+import { type Locale, getStrings } from "../../i18n";
 import { formatPoint } from "../../lib/dates";
 
 interface Props {
@@ -9,29 +9,29 @@ interface Props {
 }
 
 const { items, locale } = Astro.props;
+const t = getStrings(locale);
 ---
 
 <ul class="space-y-4">
   {
     items.map((certification) => (
       <li>
-        <h3 class="font-mono text-sm text-fg">
+        <h3 class="flex flex-wrap items-baseline gap-x-3 font-mono text-sm text-fg">
+          <span>{certification.name}</span>
           {certification.url ? (
             <a
               href={certification.url}
               rel="noopener"
               target="_blank"
-              class="underline-offset-4 transition-colors hover:text-muted hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+              class="font-mono text-xs text-subtle underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
             >
-              {certification.name}
+              {t.certifications.validate}
             </a>
-          ) : (
-            certification.name
-          )}
+          ) : null}
         </h3>
         {
           certification.issuer || certification.date ? (
-            <p class="font-mono text-xs text-muted">
+            <p class="font-mono text-xs text-subtle">
               {certification.issuer ?? ""}
               {certification.issuer && certification.date ? " · " : ""}
               {certification.date

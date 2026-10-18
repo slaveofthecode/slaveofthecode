@@ -38,6 +38,9 @@ export const en = {
     present: "Present",
     download: "Download CV",
   },
+  certifications: {
+    validate: "Validate",
+  },
   now: {
     heading: "What I'm working on now",
     updated: "Updated",

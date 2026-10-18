@@ -406,7 +406,8 @@ Merged into `main` after the cutover (see PRs #20/#21):
   `InMemoryDailyLimiter` (UTC-midnight), `dailyLimiter` in `HandlerDeps`, `chat.rateLimitedDay`
   i18n. 118 tests green. `GEMINI_API_KEY` rotated by human (2026-10-18).
 
-- **`feat/chat-retrieval-profile` (this branch, committed locally):** contact questions
+- **PR #42** (`feat/chat-retrieval-profile`, merge `5f1696c`): always-ground the profile
+  chunk so contact questions are answered. Contact questions
   ("Can I send you an email?", "what is your email?", "how can I contact you?") returned
   "I don't have my email address listed in the current context of my CV" because the
   `en:profile` chunk (name, location, email, phone, links) ranked **10th–19th** on
@@ -425,12 +426,33 @@ Merged into `main` after the cutover (see PRs #20/#21):
   grayscale look; all web changes reverted (`git restore apps/web/...`). The
   `feat/ui-grayscale-backup` branch still holds the abandoned work if needed later.
 
+- **`feat/grayscale-ui` (this branch):** grayscale-only UI refresh, tokens only (no
+  component colors). Pure neutral ramp `--gray-50..950` in `tokens.css`. Extremes:
+  `--app-bg` is pure black `#000000` in dark / pure white `#ffffff` in light; `--app-fg`
+  is `#fafafa` / `#0a0a0a`.
+  - New role tokens: `--app-hover` (uniform hover fill), `--app-subtle` (fainter meta
+    text), `--app-header` (header, deliberately **not** the extreme bg; `#0f0f0f` /
+    `#fbfbfb`) and `--app-chat` (chat panel darker than a surface but a touch lighter
+    than the page bg: `#0d0d0d` / `#f7f7f7`). Mapped in `global.css` to `bg-hover`,
+    `text-subtle`, `bg-header`, `bg-chat`.
+  - Applied: header `bg-bg/80` → `bg-header/80`; chat panel `bg-surface` → `bg-chat`;
+    Experience + Skills row hover gradient → uniform `hover:bg-hover`; Experience dates
+    `text-subtle` → `text-muted` (more weight); Download CV button `bg-accent` (loud) →
+    `border + bg-surface + text-fg` (soft); Certifications name is no longer a link —
+    a separate `Validate`/`Validar` link (`t.certifications.validate`) points at the
+    credential URL.
+  - 122 tests green; build emits `.bg-header`, `.bg-chat`, `.hover:bg-hover`,
+    `.text-subtle`. Process change: STATUS.md edits now ride in the feature branch
+    (see rule note below).
+
 ## Next steps
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Remaining, top first:
   **P1 re-enable the EN/ES language switcher**, **P3 secure admin panel to upload
   `resume.pdf`** (ingest + RAG rebuild + redeploy).
-- **This branch `feat/chat-retrieval-profile` awaiting human push + PR.** Human to push,
-  then open a PR (base `main`, assignee `@me`), review + merge.
+- **`feat/grayscale-ui` awaiting human review** (visual pass via `bun run dev`); then human
+  commit/push + PR.
+- **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own
+  branch, so it never lingers uncommitted without an owner. PR #42 is merged (`5f1696c`).
 - **Human actions:** none pending. Optional later: Vercel WAF rule on `/api/chat`, Turnstile.
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses

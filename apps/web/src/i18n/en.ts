@@ -36,6 +36,7 @@ export const en = {
     location: "Location",
     phone: "Phone",
     present: "Present",
+    download: "Download CV",
   },
   now: {
     heading: "What I'm working on now",

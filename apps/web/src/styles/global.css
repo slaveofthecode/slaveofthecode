@@ -6,9 +6,13 @@
 @theme inline {
   --color-bg: var(--app-bg);
   --color-surface: var(--app-surface);
+  --color-header: var(--app-header);
+  --color-chat: var(--app-chat);
   --color-fg: var(--app-fg);
   --color-muted: var(--app-muted);
+  --color-subtle: var(--app-subtle);
   --color-border: var(--app-border);
+  --color-hover: var(--app-hover);
   --color-accent: var(--app-accent);
   --color-accent-fg: var(--app-accent-fg);
 

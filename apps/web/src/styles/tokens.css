@@ -1,28 +1,51 @@
-/*
- * Theme tokens. The only place colors, fonts and radii are defined.
+/* Theme tokens. The only place colors, fonts and radii are defined.
  * Components must use Tailwind utilities mapped to these variables
  * (see global.css `@theme inline`) — never hard-coded colors.
- */
+ *
+ * Pure grayscale ramp: black (#0a0a0a) is the darkest, white (#fafafa) the
+ * lightest. Role tokens below map onto it; no color, no chrome. */
+:root {
+  --gray-50: #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #e8e8e8;
+  --gray-300: #d4d4d4;
+  --gray-400: #a3a3a3;
+  --gray-500: #8a8a8a;
+  --gray-600: #636363;
+  --gray-700: #525252;
+  --gray-800: #262626;
+  --gray-900: #171717;
+  --gray-950: #0a0a0a;
+}
+
 :root,
 :root[data-theme="light"] {
-  --app-bg: #f4f4f5;
-  --app-surface: #ffffff;
-  --app-fg: #141516;
-  --app-muted: #52525b;
-  --app-border: #d6d7db;
-  --app-accent: #141516;
-  --app-accent-fg: #ffffff;
+  --app-bg: #ffffff;
+  --app-surface: #f4f4f4;
+  --app-header: #fbfbfb;
+  --app-chat: #f7f7f7;
+  --app-fg: var(--gray-950);
+  --app-muted: var(--gray-700);
+  --app-subtle: var(--gray-600);
+  --app-border: var(--gray-300);
+  --app-hover: #ededed;
+  --app-accent: var(--gray-900);
+  --app-accent-fg: var(--gray-50);
   --app-radius: 0.5rem;
 }
 
 :root[data-theme="dark"] {
-  --app-bg: #202126;
-  --app-surface: #2a2b31;
-  --app-fg: #f4f4f5;
-  --app-muted: #b1b2b9;
-  --app-border: #3b3c43;
-  --app-accent: #f4f4f5;
-  --app-accent-fg: #202126;
+  --app-bg: #000000;
+  --app-surface: var(--gray-900);
+  --app-header: #0f0f0f;
+  --app-chat: #0d0d0d;
+  --app-fg: var(--gray-50);
+  --app-muted: var(--gray-400);
+  --app-subtle: var(--gray-500);
+  --app-border: var(--gray-800);
+  --app-hover: #222222;
+  --app-accent: var(--gray-50);
+  --app-accent-fg: var(--gray-950);
   --app-radius: 0.5rem;
 }
 

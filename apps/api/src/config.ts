@@ -8,6 +8,7 @@ export interface GeminiConfig {
 export interface RateLimitConfig {
   maxRequests: number;
   windowSeconds: number;
+  dailyMax: number;
 }
 
 export interface AppConfig {
@@ -46,8 +47,9 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     },
     allowedOrigins: origins.length > 0 ? origins : DEFAULT_ORIGINS,
     rateLimit: {
-      maxRequests: positiveInt(env.RATE_LIMIT_MAX, 20),
+      maxRequests: positiveInt(env.RATE_LIMIT_MAX, 10),
       windowSeconds: positiveInt(env.RATE_LIMIT_WINDOW_SECONDS, 60),
+      dailyMax: positiveInt(env.RATE_LIMIT_DAILY_MAX, 200),
     },
   };
 }

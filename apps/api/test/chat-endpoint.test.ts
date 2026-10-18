@@ -2,7 +2,10 @@ import { describe, expect, test } from "bun:test";
 import { type HandlerDeps, createHandler } from "../src/adapters/http/router";
 import { FakeProvider } from "../src/adapters/llm/fake-provider";
 import { GeminiError } from "../src/adapters/llm/gemini-provider";
-import { InMemoryRateLimiter } from "../src/adapters/rate-limit/rate-limiter";
+import {
+  InMemoryDailyLimiter,
+  InMemoryRateLimiter,
+} from "../src/adapters/rate-limit/rate-limiter";
 import { FakeEmbeddings, FakeStore, profileHit } from "./helpers";
 
 const ORIGIN = "https://slaveofthecode.vercel.app";
@@ -13,6 +16,7 @@ function buildDeps(overrides: Partial<HandlerDeps> = {}): HandlerDeps {
     embeddings: new FakeEmbeddings(),
     store: new FakeStore([profileHit("en"), profileHit("es")]),
     rateLimiter: new InMemoryRateLimiter(20, 60),
+    dailyLimiter: new InMemoryDailyLimiter(200),
     allowedOrigins: [ORIGIN],
     ...overrides,
   };
@@ -106,7 +110,56 @@ describe("POST /chat", () => {
     expect((await handler(chatRequest(validBody))).status).toBe(200);
     const limited = await handler(chatRequest(validBody));
     expect(limited.status).toBe(429);
+    expect(((await limited.json()) as { error: string }).error).toBe(
+      "rate_limited",
+    );
     expect(limited.headers.get("retry-after")).toBeDefined();
+  });
+
+  test("429 daily_limit_reached after the daily ceiling, without further LLM calls", async () => {
+    const provider = new FakeProvider("ok");
+    const handler = createHandler(
+      buildDeps({ provider, dailyLimiter: new InMemoryDailyLimiter(1) }),
+    );
+    expect((await handler(chatRequest(validBody))).status).toBe(200);
+    expect(provider.calls).toBe(1);
+
+    const limited = await handler(chatRequest(validBody));
+    expect(limited.status).toBe(429);
+    expect(((await limited.json()) as { error: string }).error).toBe(
+      "daily_limit_reached",
+    );
+    expect(limited.headers.get("retry-after")).toBeDefined();
+    expect(provider.calls).toBe(1);
+  });
+
+  test("a per-IP block does not consume the daily budget", async () => {
+    const handler = createHandler(
+      buildDeps({
+        rateLimiter: new InMemoryRateLimiter(1, 60),
+        dailyLimiter: new InMemoryDailyLimiter(2),
+      }),
+    );
+    // IP-A spends its per-IP slot (day budget: 1).
+    expect(
+      (await handler(chatRequest(validBody, { "x-forwarded-for": "1.1.1.1" })))
+        .status,
+    ).toBe(200);
+    // Same IP is blocked; its attempts must NOT increment the daily counter.
+    expect(
+      (await handler(chatRequest(validBody, { "x-forwarded-for": "1.1.1.1" })))
+        .status,
+    ).toBe(429);
+    // IP-B still has budget left (day budget: 2) because the blocked
+    // requests above did not burn it.
+    const other = await handler(
+      chatRequest(validBody, { "x-forwarded-for": "2.2.2.2" }),
+    );
+    expect(other.status).toBe(200);
+    expect(
+      (await handler(chatRequest(validBody, { "x-forwarded-for": "3.3.3.3" })))
+        .status,
+    ).toBe(429);
   });
 
   test("502 when the provider fails upstream", async () => {

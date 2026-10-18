@@ -52,10 +52,31 @@ on any violation.
 Dependencies point inward only.
 
 The chat (`POST /chat`, ADR-0006) is RAG: the handler validates the request (`zod`),
-rate-limits per IP (in-memory), embeds the last user message, retrieves the top-k CV
+runs the cost guards (see below), embeds the last user message, retrieves the top-k CV
 chunks from the SQLite snapshot (cosine), grounds the model on those excerpts via the
 system prompt, and calls an `LlmProvider` (Gemini via `fetch`, or a fake in tests).
 No session is kept; the browser sends the last N turns.
+
+## Chat cost caps
+
+Every check runs **before** any Gemini call, so a blocked request costs `0`:
+
+1. `Content-Length` > 16 KB → `413 payload_too_large`.
+2. Body fails `chatRequestSchema` (max 12 messages, 2000 chars each) → `400 invalid_request`.
+3. Origin present but not in `ALLOWED_ORIGINS` → `403 forbidden_origin`.
+4. Per-IP window: `RATE_LIMIT_MAX` (default **10**) per `RATE_LIMIT_WINDOW_SECONDS`
+   (default **60**) → `429 rate_limited` + `Retry-After`.
+5. Global ceiling: `RATE_LIMIT_DAILY_MAX` (default **200**) per **UTC day**, shared by
+   all callers (checked after the per-IP guard, so one abusive IP cannot burn the daily
+   budget of everyone else) → `429 daily_limit_reached` + `Retry-After`.
+6. Generate: `maxOutputTokens` hard-clamped to **800**, `thinkingBudget: 0`.
+
+The counters live in process memory (`adapters/rate-limit/*`): on Vercel each
+instance/cold start has its own, so this is a **best-effort** cap, not a distributed
+one. The **hard spend ceiling is the Google Cloud budget** on the `GEMINI_API_KEY`
+project (pay-as-you-go, USD 5 limit + alerts). Optional second layers, configured by
+the human in dashboards (no code): a Vercel WAF rate-limit rule on `/api/chat`, and
+Cloudflare Turnstile in front of the chat form.
 
 Ingestion (`bun run build:rag`, `apps/api/scripts/build-rag.ts`): `@portfolio/content`
 (every locale, including `now`) → `buildChunks` → Gemini embeddings → `buildRagBytes`
@@ -86,7 +107,9 @@ Two Vercel projects from the same repo (ADR-0006):
 - **api** — root directory `apps/api`; `apps/api/vercel.json` builds the functions
   (`api/chat.ts`, `api/health.ts`), rewrites `/chat` and `/health` to them, and embeds the
   sql.js WASM. Env: `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`,
-  `ALLOWED_ORIGINS`, `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS`.
+  `ALLOWED_ORIGINS`, `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS`,
+  `RATE_LIMIT_DAILY_MAX` (the `RATE_*` vars are optional overrides of the cost-cap
+  defaults).
 
 The SQLite snapshot is committed and read-only at runtime; it is not persistent storage.
 Re-run `bun run build:rag` (with `GEMINI_API_KEY`) after changing the CV.

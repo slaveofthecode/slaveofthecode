@@ -95,6 +95,22 @@ describe("experienceSchema", () => {
     const { summary: _summary, ...withoutSummary } = validExperience;
     expect(experienceSchema.safeParse(withoutSummary).success).toBe(true);
   });
+
+  it("accepts grouped projects", () => {
+    const result = experienceSchema.safeParse({
+      ...validExperience,
+      projects: [{ name: "Project A", highlights: ["Shipped it"] }],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a project without a name", () => {
+    const result = experienceSchema.safeParse({
+      ...validExperience,
+      projects: [{ name: "", highlights: ["Shipped it"] }],
+    });
+    expect(result.success).toBe(false);
+  });
 });
 
 describe("educationSchema", () => {

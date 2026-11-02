@@ -48,7 +48,7 @@ const EMAIL_RE = /[^\s@|·•]+@[^\s@|·•]+\.\w+/;
 const PHONE_RE = /^\+?\d[\d\s().-]{6,}$/;
 const URL_RE = /https?:\/\/[^\s|·•]+|www\.[^\s|·•]+/i;
 const URL_TOKEN_RE = /^[a-z0-9%\-._~:/?#[\]@!$&'()*+,;=]+$/i;
-const BULLET_RE = /^[•*·▪‣◦-]\s+/;
+const BULLET_RE = /^[•●○*·▪▫‣◦∙-]\s+/;
 const TECH_SEP_RE = /\s+[-–—]\s+/;
 
 const MONTHS: Record<string, string> = {
@@ -423,16 +423,44 @@ function parseExperience(
 
     const highlights: string[] = [];
     const techLines: string[] = [];
+    const projects: { name: string; highlights: string[] }[] = [];
+    let currentProject: { name: string; highlights: string[] } | null = null;
     let summary = "";
     for (const raw of entryLines) {
       const line = raw.trim();
       if (!line) continue;
       if (BULLET_RE.test(line)) {
-        highlights.push(line.replace(BULLET_RE, "").trim());
+        const highlight = line.replace(BULLET_RE, "").trim();
+        if (currentProject) currentProject.highlights.push(highlight);
+        else highlights.push(highlight);
         continue;
       }
       if (TECH_SEP_RE.test(line)) {
         techLines.push(line);
+        continue;
+      }
+      if (line.endsWith(":")) {
+        const name = combine(line.replace(/[:\s]+$/, ""));
+        if (name) {
+          currentProject = { name, highlights: [] };
+          projects.push(currentProject);
+        }
+        continue;
+      }
+      if (techLines.length > 0) {
+        techLines.push(line);
+        continue;
+      }
+      if (currentProject) {
+        const last = currentProject.highlights.length - 1;
+        if (last >= 0) {
+          currentProject.highlights[last] = combine(
+            currentProject.highlights[last] ?? "",
+            line,
+          );
+        } else {
+          currentProject.highlights.push(line);
+        }
         continue;
       }
       if (highlights.length > 0) {
@@ -451,6 +479,7 @@ function parseExperience(
       endDate,
       ...(summary ? { summary } : {}),
       highlights,
+      ...(projects.length > 0 ? { projects } : {}),
       tech: parseTech(techLines),
     });
   }
@@ -515,6 +544,8 @@ function parseEducationLine(block: string): EducationDraft | null {
 }
 
 function parseCert(block: string): CertificationDraft | null {
+  const text = combine(block);
+  if (/^\(?\s*see\s+(the\s+)?certifications?\s*\)?$/i.test(text)) return null;
   const urlMatch = URL_RE.exec(block);
   let url: string | undefined;
   if (urlMatch) {
@@ -616,7 +647,14 @@ function parseLanguages(body: string[]): Content["languages"] {
 type Entry = Record<string, unknown> & { id: string };
 
 const TEXT_FIELDS = {
-  experience: ["company", "role", "location", "summary", "highlights"],
+  experience: [
+    "company",
+    "role",
+    "location",
+    "summary",
+    "highlights",
+    "projects",
+  ],
   skills: ["name", "items"],
   languages: ["name", "level"],
   education: ["institution", "title"],
@@ -719,9 +757,20 @@ function preserveCollection<T extends { id: string }>(
   old: Entry[],
 ): T[] {
   const byId = new Map(old.map((entry) => [entry.id, entry]));
-  return next.map(
-    (entry) => (byId.get(entry.id) as unknown as T | undefined) ?? entry,
-  );
+  return next.map((entry) => {
+    const oldEntry = byId.get(entry.id);
+    return oldEntry ? mergeEntry(entry, oldEntry) : entry;
+  });
+}
+
+function dropSummaryForProjects<T extends { id: string }>(entries: T[]): T[] {
+  return entries.map((entry) => {
+    const out = { ...(entry as unknown as Entry) };
+    if (Array.isArray(out.projects) && out.projects.length > 0) {
+      out.summary = undefined;
+    }
+    return out as unknown as T;
+  });
 }
 
 function translateCollection<T extends { id: string }>(
@@ -965,7 +1014,9 @@ async function main(): Promise<void> {
 
   const enContent: Content = {
     profile: mergeProfile(rawProfile, oldEn.profile),
-    experience: mergeCollection(experience, oldEn.experience),
+    experience: dropSummaryForProjects(
+      mergeCollection(experience, oldEn.experience),
+    ),
     skills: mergeCollection(skills, oldEn.skills),
     languages: mergeCollection(languages, oldEn.languages),
     education: mergeCollection(education, oldEn.education),

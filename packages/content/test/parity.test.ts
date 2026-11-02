@@ -53,7 +53,14 @@ const collections: Collection[] = [
 
 /** Text fields that are allowed to differ between locales. */
 const TEXT_FIELDS: Record<Collection, string[]> = {
-  experience: ["company", "role", "location", "summary", "highlights"],
+  experience: [
+    "company",
+    "role",
+    "location",
+    "summary",
+    "highlights",
+    "projects",
+  ],
   skills: ["name", "items"],
   languages: ["name", "level"],
   education: ["institution", "title"],

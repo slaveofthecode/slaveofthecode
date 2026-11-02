@@ -445,7 +445,41 @@ Merged into `main` after the cutover (see PRs #20/#21):
     `.text-subtle`. Process change: STATUS.md edits now ride in the feature branch
     (see rule note below).
 
+## Done (continued)
+- **`chore/resume-update-2026-11` (this branch):** refreshed the CV from the new
+  `content-source/resume.pdf` (8 pages) with `bun run ingest`. Rebuilt `data/en` (14 jobs,
+  7 skill groups, 1 education, 2 certifications, 2 languages), refreshed the committed public
+  `apps/web/public/resume.pdf` (photo unchanged at 108×108), and kept `now.json` untouched by
+  the ingest.
+  - **Ingest bug fixes:** `extract-resume.ts` writes the public PDF copy immediately after
+    reading it, because unpdf detaches the buffer and left `apps/web/public/resume.pdf` at 0
+    bytes; `ingest-resume.ts` now recognizes `●`-style bullets (plus ○/▫/∙), treats `…:`
+    project subtitles as `summary` even after bullets, appends wrapped tech-list lines (so
+    `WPF / WCF` stays together) and ignores the PDF note `(see certifications)` instead of
+    creating a fake certification.
+  - Content: new profile summary; Nybble role → Senior Full-Stack Developer; rewritten
+    project-based summaries/highlights for the recent roles and updated tech lists. `data/es`
+    experience is synced with `data/en` (it is an English draft) and the profile summary was
+    translated to Spanish.
+  - **Experience projects:** new optional `experience[].projects[]` (`{ name, highlights }`).
+    The parser turns PDF subtitle lines ending in `:` into project groups and assigns the
+    following bullets to each one, so Nybble now shows its two projects separately (Corporate
+    Financial & Stock Management Platform / Enterprise Life Settlements & Policy Servicing
+    Backend) with their own characteristics. Roles without subtitles keep top-level highlights.
+    `Experience.astro` renders each project as a labelled sub-block; RAG chunks include them.
+    Project sub-blocks use a subtle `bg-surface` card with border + padding so they read as
+    distinct from the company/role header.
+  - Certifications: the PDF's only certification hyperlink sits on `(see certifications)` and
+    points to the **Microsoft Learn transcript**; replaced the stale Credly URL in
+    `data/{en,es}/certifications.json` so the **Validate** link matches the PDF.
+  - `now.json` (en/es) reflects progress 21 / `updatedAt` 2026-11-02; RAG was rebuilt after it.
+  - Rebuilt the RAG snapshot (`bun run --filter @portfolio/api build:rag`): 56 chunks →
+    `apps/api/data/cv.sqlite` + `apps/api/src/data/rag-db.ts`.
+  - Checks green: lint, typecheck, **122 tests**, build, check:boundaries.
+
 ## Next steps
+- **`chore/resume-update-2026-11` awaiting human review/commit/push/PR** (new resume PDF
+  ingest + parser fixes).
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Remaining, top first:
   **P1 re-enable the EN/ES language switcher**, **P3 secure admin panel to upload
   `resume.pdf`** (ingest + RAG rebuild + redeploy).
@@ -459,8 +493,6 @@ Merged into `main` after the cutover (see PRs #20/#21):
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:
   `GEMINI_API_KEY`, `GEMINI_MODEL=gemini-flash-latest`, `GEMINI_EMBED_MODEL=gemini-embedding-001`,
   `ALLOWED_ORIGINS=https://slaveofthecode.vercel.app`. Web env: `PUBLIC_API_URL` (host only).
-- Human: after replacing `content-source/resume.pdf`, run `bun run ingest` (and then
-  `bun run build:rag`) locally and commit the regenerated data + snapshot.
 - Roadmap per `docs/BOOTSTRAP.md` §12: (2) AI evals expansion; (3) theme variants; (4) AWS deploy +
   budget alarm; (5) replace PDF ingest.
 

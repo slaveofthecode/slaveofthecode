@@ -4,10 +4,10 @@
     "kind": "course",
     "title": "Programa Profesional de Cloud, AWS e Infraestructura",
     "description": "Domina los fundamentos y prácticas avanzadas de Cloud Computing con AWS, aprendiendo a diseñar, desplegar y operar aplicaciones escalables en la nube. Explora tecnologías clave como Terraform, Docker y Kubernetes, con ejercicios prácticos y un proyecto final real. Incluye 16 semanas de contenido estructurado, mentoría en vivo y acceso a una cuenta AWS real para aplicar lo aprendido.",
-    "progress": 11,
+    "progress": 21,
     "status": "in-progress",
     "startedAt": "2026-09-28",
-    "updatedAt": "2026-10-14",
+    "updatedAt": "2026-11-02",
     "links": [
       {
         "label": "commitacademy.io",

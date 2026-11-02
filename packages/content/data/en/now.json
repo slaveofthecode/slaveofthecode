@@ -4,10 +4,10 @@
     "kind": "course",
     "title": "Cloud, AWS & Infrastructure Professional Program",
     "description": "Master cloud computing fundamentals and advanced practices with AWS: design, deploy and operate scalable applications in the cloud. Covers key technologies such as Terraform, Docker and Kubernetes, with hands-on exercises and a real final project. Includes 16 weeks of structured content, live mentoring and access to a real AWS account to apply what you learn.",
-    "progress": 11,
+    "progress": 21,
     "status": "in-progress",
     "startedAt": "2026-09-28",
-    "updatedAt": "2026-10-14",
+    "updatedAt": "2026-11-02",
     "links": [
       {
         "label": "commitacademy.io",

@@ -141,13 +141,14 @@ async function extractPhoto(
 
 async function main(): Promise<void> {
   const pdfBytes = new Uint8Array(await readFile(pdfPath));
+
+  await mkdir(dirname(txtPath), { recursive: true });
+  await writeFile(publicPdfPath, pdfBytes);
+
   const pdf = await getDocumentProxy(pdfBytes);
   const { totalPages, text } = await extractText(pdf, { mergePages: true });
 
-  await mkdir(dirname(txtPath), { recursive: true });
   await writeFile(txtPath, `${text.trim()}\n`, "utf8");
-
-  await writeFile(publicPdfPath, pdfBytes);
 
   const photo = await extractPhoto(pdf);
   if (photo) {

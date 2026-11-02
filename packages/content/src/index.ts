@@ -3,6 +3,7 @@ export type {
   Content,
   Education,
   Experience,
+  ExperienceProject,
   Language,
   Link,
   NowItem,

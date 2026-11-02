@@ -2,25 +2,37 @@
   {
     "id": "nybble-group",
     "company": "Nybble Group",
-    "role": "Senior Full-Stack Engineer",
+    "role": "Senior Full-Stack Developer",
     "startDate": "2024-05",
     "endDate": "2026-06",
-    "highlights": [
-      "Delivered enterprise software solutions using Angular, React, TypeScript, Node.js, Java, Docker, and AWS.",
-      "Applied AI-assisted development workflows using Claude and Cursor to support implementation, validation, and software quality.",
-      "Reviewed and validated AI-generated code to ensure maintainability, consistency, and engineering quality standards.",
-      "Collaborated in small, highly autonomous engineering teams and contributed to technical decision-making."
+    "highlights": [],
+    "projects": [
+      {
+        "name": "Corporate Financial & Stock Management Platform",
+        "highlights": [
+          "Built and maintained a full-stack web application for employee stock ownership plans, retirement accounts (401k, Profit Sharing), and vesting schedules using Meteor, Node.js, and Blaze.",
+          "Handled bulk data imports, financial growth calculations, and reporting features backed by MongoDB.",
+          "Automated version control, releases, and workflow pipelines using GitHub Actions."
+        ]
+      },
+      {
+        "name": "Enterprise Life Settlements & Policy Servicing Backend",
+        "highlights": [
+          "Migrated backend services from Java 1.8 to Java 17 with Spring Boot to modernize the system and improve performance.",
+          "Integrated Camunda for process workflows and Azure OCR to automatically read text from PDFs and scanned documents.",
+          "Managed cloud infrastructure on AWS (RDS, S3, CloudWatch) and ran containerized environments with Docker on EC2.",
+          "Built frontend features using Angular and worked with Atlassian Jira, GitHub, and Maven inside IntelliJ.",
+          "Adopted AI-driven development workflows (using GitHub Copilot, Cursor, and Claude Code), shifting toward a model where AI handled the primary coding while we focused on reviewing, testing, and guiding the logic."
+        ]
+      }
     ],
     "tech": [
       "Angular",
       "Java",
-      "React",
+      "Node",
       "TypeScript",
-      "Camunda",
-      "Spring Boot",
-      "HTML",
       "Claude Code",
-      "GitHub Copilot",
+      "AWS",
       "Cursor"
     ]
   },
@@ -30,19 +42,28 @@
     "role": "Senior React Developer",
     "startDate": "2023-01",
     "endDate": "2023-12",
-    "highlights": [
-      "Contributed to the migration of a legacy banking platform toward a Micro Frontend architecture using React and TypeScript.",
-      "Participated in modernization initiatives for core banking systems.",
-      "Served as a front-end technical reference, helping maintain consistency in architecture, code quality, and development practices across distributed teams."
+    "highlights": [],
+    "projects": [
+      {
+        "name": "Banking Sector",
+        "highlights": [
+          "Worked on building and improving core banking applications used to manage business loans, credit approvals, and interest rates.",
+          "Built, migrated, and integrated Micro Frontends (MFEs) into the main banking platform, keeping modules independent and clean.",
+          "Developed multi-screen user interfaces using React, TypeScript, and Redux, managing complex forms and global state.",
+          "Connected frontend apps with backend services via Axios, working alongside Java / Spring Boot and BFF layers.",
+          "Wrote unit tests to maintain solid code quality, keeping test coverage above 80%.",
+          "Handled daily bug fixes, code maintenance, and deployments using Jenkins, Argo, Kubernetes (GCP), Bitbucket, and Jira in an Agile team."
+        ]
+      }
     ],
     "tech": [
       "React",
       "TypeScript",
-      "JavaScript",
-      "HTML",
+      "BFF",
       "Redux",
       "Axios",
-      "Java"
+      "Java",
+      "Micro Frontends"
     ]
   },
   {
@@ -51,9 +72,16 @@
     "role": "Senior React Developer",
     "startDate": "2021-11",
     "endDate": "2022-11",
-    "highlights": [
-      "Developed financial management and payment processing features for a B2B fintech platform serving the Mexican market.",
-      "Implemented unit and integration testing practices to support application reliability and maintainability."
+    "highlights": [],
+    "projects": [
+      {
+        "name": "B2B Fintech Platform",
+        "highlights": [
+          "Developed financial management and payment processing features for a B2B fintech platform, ensuring clean and responsive layouts for laptops and tablets using React, TypeScript, Redux, and Bootstrap.",
+          "Connected frontend interfaces with Node.js and GraphQL backend services to handle secure data flow and transactions.",
+          "Implemented unit and integration testing practices to support application reliability and maintainability."
+        ]
+      }
     ],
     "tech": [
       "React",
@@ -72,14 +100,20 @@
     "role": "React Native Developer",
     "startDate": "2021-08",
     "endDate": "2021-10",
-    "highlights": [
-      "Developed mobile fintech features including payments, transfers, purchases, and account management capabilities.",
-      "Collaborated with the mobile development team to build front-end components and user interface features for financial applications."
+    "highlights": [],
+    "projects": [
+      {
+        "name": "Mobile Fintech Features",
+        "highlights": [
+          "Developed core mobile features including payments, transfers, purchases, and account management capabilities using React Native, TypeScript, HTML, and CSS.",
+          "Built accurate user interfaces from Figma designs following a pixel-to-pixel approach, collaborating closely with the mobile team."
+        ]
+      }
     ],
     "tech": [
       "HTML",
       "CSS",
-      "JavaScript",
+      "TypeScript",
       "Figma ( pixel-to-pixel )",
       "React Native"
     ]
@@ -90,11 +124,25 @@
     "role": "React Developer",
     "startDate": "2021-02",
     "endDate": "2021-07",
-    "highlights": [
-      "Implemented new features and UI enhancements for a pharmaceutical platform using React and Figma-based designs.",
-      "Delivered responsive user interface implementations based on high-fidelity designs."
+    "highlights": [],
+    "projects": [
+      {
+        "name": "Pharmaceutical Digital Platform (GSK Project)",
+        "highlights": [
+          "Developed and maintained frontend features for digital web applications in the pharmaceutical industry, building modern user interfaces using React, TypeScript, JavaScript, and Redux.",
+          "Connected web applications with backend services and APIs, ensuring reliable data flow and smooth user experiences across multi-screen workflows.",
+          "Collaborated within multidisciplinary product teams following agile methodologies, and participated in internal tech communities to share knowledge and maintain high code quality standards."
+        ]
+      }
     ],
-    "tech": ["HTML", "JavaScript", "Hooks", "React", "TypeScript"]
+    "tech": [
+      "Multi-screen",
+      "JavaScript",
+      "Hooks",
+      "React",
+      "TypeScript",
+      "Design"
+    ]
   },
   {
     "id": "mcafee",

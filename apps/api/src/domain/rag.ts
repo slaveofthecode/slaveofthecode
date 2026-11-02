@@ -82,6 +82,15 @@ export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
         job.highlights.length > 0
           ? `Highlights:\n- ${job.highlights.join("\n- ")}`
           : null,
+        job.projects?.length
+          ? `Projects:\n${job.projects
+              .map((project) =>
+                project.highlights.length > 0
+                  ? `${project.name}:\n- ${project.highlights.join("\n- ")}`
+                  : project.name,
+              )
+              .join("\n\n")}`
+          : null,
         job.tech.length > 0 ? `Tech: ${job.tech.join(", ")}` : null,
       ]),
     });

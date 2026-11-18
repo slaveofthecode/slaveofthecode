@@ -148,5 +148,20 @@ export function buildChunks(content: Content): RagChunk[] {
     });
   }
 
+  for (const project of content.personalProjects) {
+    chunks.push({
+      id: `personal-project:${project.id}`,
+      section: "personal-projects",
+      title: project.name,
+      content: joinLines([
+        `Personal project — ${project.name}`,
+        project.description,
+        project.tech.length > 0 ? `Tech: ${project.tech.join(", ")}` : null,
+        `Repository: ${project.repoUrl}`,
+        `Live: ${project.productionUrl}`,
+      ]),
+    });
+  }
+
   return chunks;
 }

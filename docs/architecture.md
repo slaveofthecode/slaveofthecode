@@ -85,7 +85,7 @@ the human in dashboards (no code): a Vercel WAF rate-limit rule on `/api/chat`, 
 Cloudflare Turnstile in front of the chat form.
 
 Ingestion (`bun run build:rag`, `apps/api/scripts/build-rag.ts`): `@portfolio/content`
-(the single `cv.json`, including `now`) → `buildChunks` → Gemini embeddings →
+(the single `cv.json`, including `now` and personal projects) → `buildChunks` → Gemini embeddings →
 `buildRagBytes` (SQLite) → commits `apps/api/data/cv.sqlite` + the runtime module
 `apps/api/src/data/rag-db.ts`.
 

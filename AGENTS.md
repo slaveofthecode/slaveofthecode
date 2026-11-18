@@ -1,8 +1,8 @@
 # slaveofthecode portfolio
 
 Living CV site: profile, experience, skills, languages, "What I'm working on now",
-and an AI chat for recruiters. English only. Talk to the human in Spanish; write
-code/docs/commits/PRs in English.
+personal projects, and an AI chat for recruiters. English only. Talk to the human in
+Spanish; write code/docs/commits/PRs in English.
 
 ## Layout
 - packages/content: Zod schemas + one CV data file (`data/cv.json`). SINGLE SOURCE OF TRUTH.

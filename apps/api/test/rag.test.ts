@@ -24,6 +24,7 @@ describe("buildChunks", () => {
     expect(sections).toContain("experience");
     expect(sections).toContain("skills");
     expect(sections).toContain("now");
+    expect(sections).toContain("personal-projects");
   });
 
   test("every chunk carries id, section, title and content", () => {

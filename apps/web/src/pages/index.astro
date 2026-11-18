@@ -7,6 +7,7 @@ import Education from "../components/sections/Education.astro";
 import Experience from "../components/sections/Experience.astro";
 import Languages from "../components/sections/Languages.astro";
 import Now from "../components/sections/Now.astro";
+import PersonalProjects from "../components/sections/PersonalProjects.astro";
 import Profile from "../components/sections/Profile.astro";
 import Skills from "../components/sections/Skills.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -54,6 +55,14 @@ const content = getContent();
     content.now.length > 0 ? (
       <Section id="now" title={t.now.heading} icon="thinking">
         <Now items={content.now} />
+      </Section>
+    ) : null
+  }
+
+  {
+    content.personalProjects.length > 0 ? (
+      <Section id="projects" title={t.projects.heading}>
+        <PersonalProjects items={content.personalProjects} />
       </Section>
     ) : null
   }

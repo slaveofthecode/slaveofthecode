@@ -6,6 +6,7 @@ import {
   experienceSchema,
   linkSchema,
   nowItemSchema,
+  personalProjectSchema,
   profileSchema,
 } from "../src/schemas";
 
@@ -47,11 +48,22 @@ const validNow = {
   kind: "course",
   title: "Course",
   description: "Learning",
+  pdfDescription: "Learning one thing.",
   progress: 50,
   status: "in-progress",
   updatedAt: "2026-10-01",
   links: [],
   tags: [],
+};
+
+const validPersonalProject = {
+  id: "demo",
+  name: "Demo",
+  description: "A small demo project.",
+  tech: ["TypeScript"],
+  repoUrl: "https://github.com/example/demo",
+  productionUrl: "https://demo.example.com",
+  thumbnailUrl: "https://example.com/demo.png",
 };
 
 describe("profileSchema", () => {
@@ -66,6 +78,14 @@ describe("profileSchema", () => {
 
   it("rejects an invalid email", () => {
     const result = profileSchema.safeParse({ ...validProfile, email: "nope" });
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects a relative avatar path", () => {
+    const result = profileSchema.safeParse({
+      ...validProfile,
+      avatar: "/portrait.png",
+    });
     expect(result.success).toBe(false);
   });
 });
@@ -197,6 +217,22 @@ describe("nowItemSchema", () => {
   });
 });
 
+describe("personalProjectSchema", () => {
+  it("accepts a valid project", () => {
+    expect(personalProjectSchema.safeParse(validPersonalProject).success).toBe(
+      true,
+    );
+  });
+
+  it("rejects an invalid thumbnail url", () => {
+    const result = personalProjectSchema.safeParse({
+      ...validPersonalProject,
+      thumbnailUrl: "not-a-url",
+    });
+    expect(result.success).toBe(false);
+  });
+});
+
 describe("contentSchema", () => {
   it("rejects content missing a required collection", () => {
     const result = contentSchema.safeParse({ profile: validProfile });
@@ -225,5 +261,17 @@ describe("contentSchema", () => {
     });
     expect(result.success).toBe(true);
     if (result.success) expect(result.data.certifications).toEqual([]);
+  });
+
+  it("defaults personalProjects to an empty array when omitted", () => {
+    const result = contentSchema.safeParse({
+      profile: validProfile,
+      experience: [validExperience],
+      skills: [],
+      languages: [],
+      now: [validNow],
+    });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.personalProjects).toEqual([]);
   });
 });

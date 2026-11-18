@@ -1,0 +1,71 @@
+---
+import type { PersonalProject } from "@portfolio/content";
+import { iconName } from "../../lib/links";
+import { strings as t } from "../../lib/strings";
+import Icon from "../Icon.astro";
+
+interface Props {
+  items: PersonalProject[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="grid gap-4 sm:grid-cols-2">
+  {
+    items.map((project) => (
+      <li>
+        <article class="flex h-full flex-col rounded-card border border-border bg-surface p-5 transition-colors hover:border-accent">
+          <img
+            src={project.thumbnailUrl}
+            alt=""
+            width="480"
+            height="270"
+            loading="lazy"
+            decoding="async"
+            class="aspect-video w-full rounded-card border border-border object-cover"
+          />
+          <h3 class="mt-4 font-heading text-base text-fg">{project.name}</h3>
+          <p class="mt-2 font-mono text-sm text-muted">{project.description}</p>
+
+          {project.tech.length > 0 ? (
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {project.tech.map((tech) => (
+                <li class="rounded-card border border-border px-2 py-0.5 font-mono text-xs text-muted">
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          <div class="mt-auto pt-4">
+            <ul class="flex flex-wrap gap-3 font-mono text-xs">
+              <li>
+                <a
+                  href={project.repoUrl}
+                  rel="noopener"
+                  target="_blank"
+                  class="inline-flex items-center gap-1.5 text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                >
+                  <Icon name={iconName(project.repoUrl)} class="h-3.5 w-3.5" />
+                  {t.projects.repo}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={project.productionUrl}
+                  rel="noopener"
+                  target="_blank"
+                  class="inline-flex items-center gap-1.5 text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                >
+                  <Icon name={iconName(project.productionUrl)} class="h-3.5 w-3.5" />
+                  {t.projects.live}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </li>
+    ))
+  }
+</ul>

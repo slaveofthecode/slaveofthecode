@@ -2,6 +2,7 @@ import type { Content } from "@portfolio/content";
 import {
   PDFDocument,
   type PDFFont,
+  type PDFImage,
   type PDFPage,
   type RGB,
   StandardFonts,
@@ -11,6 +12,10 @@ import { formatPoint, formatRange } from "./dates";
 import { strings } from "./strings";
 
 export type CvPdfMode = "designed" | "ats";
+
+export interface CvPdfOptions {
+  portraitBytes?: Uint8Array;
+}
 
 interface Context {
   doc: PDFDocument;
@@ -27,6 +32,7 @@ interface WriteOptions {
   muted?: boolean;
   indent?: number;
   gap?: number;
+  width?: number;
 }
 
 const PAGE_WIDTH = 595.28;
@@ -86,7 +92,8 @@ function write(ctx: Context, value: string, options: WriteOptions = {}): void {
   const font = options.bold ? ctx.bold : ctx.font;
   const indent = options.indent ?? 0;
   const lineHeight = size * 1.35;
-  const lines = wrap(value, font, size, PAGE_WIDTH - MARGIN * 2 - indent);
+  const width = options.width ?? PAGE_WIDTH - MARGIN * 2 - indent;
+  const lines = wrap(value, font, size, width);
 
   for (const line of lines) {
     ensure(ctx, lineHeight);
@@ -132,6 +139,7 @@ function bullet(ctx: Context, value: string): void {
 export async function renderCvPdf(
   content: Content,
   mode: CvPdfMode,
+  options: CvPdfOptions = {},
 ): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
   const font = await doc.embedFont(StandardFonts.Helvetica);
@@ -146,33 +154,58 @@ export async function renderCvPdf(
   };
   newPage(ctx);
 
+  let portrait: PDFImage | undefined;
+  if (mode === "designed" && options.portraitBytes) {
+    portrait = await doc.embedPng(options.portraitBytes);
+  }
+  const headerWidth = portrait ? PAGE_WIDTH - MARGIN * 2 - 84 : undefined;
+
   const { profile } = content;
   write(ctx, profile.name, {
     bold: true,
     size: mode === "ats" ? 15 : 20,
     gap: 2,
+    width: headerWidth,
   });
   write(ctx, profile.headline, {
     size: mode === "ats" ? 11 : 12,
     muted: true,
     gap: 6,
+    width: headerWidth,
   });
 
   if (mode === "ats") {
-    write(ctx, `Location: ${profile.location}`);
-    if (profile.email) write(ctx, `Email: ${profile.email}`);
-    if (profile.phone) write(ctx, `Phone: ${profile.phone}`);
-    for (const link of profile.links) write(ctx, `${link.label}: ${link.url}`);
+    write(ctx, `Location: ${profile.location}`, { width: headerWidth });
+    if (profile.email)
+      write(ctx, `Email: ${profile.email}`, { width: headerWidth });
+    if (profile.phone)
+      write(ctx, `Phone: ${profile.phone}`, { width: headerWidth });
+    for (const link of profile.links)
+      write(ctx, `${link.label}: ${link.url}`, { width: headerWidth });
   } else {
     const contact = [profile.location, profile.email, profile.phone]
       .filter(Boolean)
       .join("  ·  ");
-    write(ctx, contact, { muted: true, gap: 2 });
+    write(ctx, contact, { muted: true, gap: 2, width: headerWidth });
     for (const link of profile.links) {
-      write(ctx, `${link.label}: ${link.url}`, { muted: true, size: 9 });
+      write(ctx, `${link.label}: ${link.url}`, {
+        muted: true,
+        size: 9,
+        width: headerWidth,
+      });
     }
   }
   ctx.y -= 6;
+
+  if (portrait) {
+    const size = 72;
+    ctx.page.drawImage(portrait, {
+      x: PAGE_WIDTH - MARGIN - size,
+      y: PAGE_HEIGHT - MARGIN - size,
+      width: size,
+      height: size,
+    });
+  }
 
   heading(ctx, "Summary");
   write(ctx, profile.summary, { gap: 8 });
@@ -253,25 +286,26 @@ export async function renderCvPdf(
     }
   }
 
-  if (content.now.length > 0) {
+  const courses = content.now.filter((item) => item.kind === "course");
+  if (courses.length > 0) {
     heading(ctx, strings.now.heading);
-    for (const item of content.now) {
-      write(
-        ctx,
-        `${item.title} (${strings.now.kind[item.kind]} · ${strings.now.status[item.status]} · ${item.progress}%)`,
-        { bold: true, gap: 1 },
-      );
-      write(ctx, item.description, { muted: true, gap: 2 });
-      if (item.tags.length > 0) {
-        write(ctx, `Tags: ${item.tags.join(", ")}`, { size: 9, muted: true });
-      }
-      for (const link of item.links)
-        write(ctx, `${link.label}: ${link.url}`, { size: 9 });
-      write(
-        ctx,
-        `${strings.now.updated}: ${formatPoint(item.updatedAt.slice(0, 7))}`,
-        { muted: true, size: 9, gap: 8 },
-      );
+    for (const item of courses) {
+      write(ctx, item.title, { bold: true, gap: 1 });
+      write(ctx, item.pdfDescription, { muted: true, gap: 2 });
+      write(ctx, `${item.progress}%`, { muted: true, size: 9, gap: 2 });
+      if (item.academyUrl)
+        write(ctx, `${strings.now.academy}: ${item.academyUrl}`, { size: 9 });
+      ctx.y -= 8;
+    }
+  }
+
+  if (content.personalProjects.length > 0) {
+    heading(ctx, strings.projects.heading);
+    for (const project of content.personalProjects) {
+      write(ctx, project.name, { bold: true, gap: 1 });
+      write(ctx, project.description, { muted: true, gap: 2 });
+      write(ctx, `Repo: ${project.repoUrl}`, { size: 9 });
+      write(ctx, `Live: ${project.productionUrl}`, { size: 9, gap: 8 });
     }
   }
 

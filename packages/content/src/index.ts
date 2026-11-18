@@ -9,6 +9,7 @@ export type {
   NowItem,
   NowKind,
   NowStatus,
+  PersonalProject,
   Profile,
   SkillGroup,
 } from "./schemas";
@@ -22,6 +23,7 @@ export {
   nowItemSchema,
   nowKindSchema,
   nowStatusSchema,
+  personalProjectSchema,
   profileSchema,
   skillGroupSchema,
   yearMonthSchema,

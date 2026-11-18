@@ -8,6 +8,7 @@ export const strings = {
     education: "Education",
     certifications: "Certifications",
     now: "Now",
+    projects: "Projects",
     chat: "Ask me anything",
   },
   theme: {
@@ -37,8 +38,14 @@ export const strings = {
   certifications: {
     validate: "Validate",
   },
+  projects: {
+    heading: "Personal Projects",
+    repo: "Repository",
+    live: "Live demo",
+  },
   now: {
     heading: "What I'm working on now",
+    academy: "Academy",
     updated: "Updated",
     status: {
       "in-progress": "In progress",

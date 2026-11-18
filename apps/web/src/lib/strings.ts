@@ -21,6 +21,9 @@ export const strings = {
     skipToContent: "Skip to content",
     backToTop: "Back to top",
   },
+  sections: {
+    toggle: "Toggle section",
+  },
   footer: {
     builtWith: "Built with",
     rights: "All rights reserved.",

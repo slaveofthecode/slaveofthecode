@@ -74,4 +74,13 @@ describe("renderCvPdf", () => {
       "/Subtype /Image",
     );
   });
+
+  test("the designed PDF has a page footer and the ATS PDF does not", async () => {
+    const content = getContent();
+    const designedText = extractText(await renderCvPdf(content, "designed"));
+    const atsText = extractText(await renderCvPdf(content, "ats"));
+
+    expect(designedText).toMatch(/\b1 \/ \d+\b/);
+    expect(atsText).not.toMatch(/\b1 \/ \d+\b/);
+  });
 });

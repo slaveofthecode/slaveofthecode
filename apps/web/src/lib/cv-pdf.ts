@@ -39,6 +39,11 @@ const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
 const MARGIN = 48;
 const BOTTOM = 56;
+const DESIGN_HEADER_HEIGHT = 176;
+const DESIGN_ACCENT = rgb(0.16, 0.16, 0.16);
+const DESIGN_PANEL = rgb(0.965, 0.965, 0.965);
+const DESIGN_RULE = rgb(0.82, 0.82, 0.82);
+const DESIGN_MUTED = rgb(0.44, 0.44, 0.44);
 
 function newPage(ctx: Context): void {
   ctx.page = ctx.doc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
@@ -109,22 +114,36 @@ function write(ctx: Context, value: string, options: WriteOptions = {}): void {
   ctx.y -= options.gap ?? 0;
 }
 
+function drawRule(ctx: Context, y: number): void {
+  ctx.page.drawLine({
+    start: { x: MARGIN, y },
+    end: { x: PAGE_WIDTH - MARGIN, y },
+    thickness: 0.6,
+    color: DESIGN_RULE,
+  });
+}
+
 function heading(ctx: Context, title: string): void {
   ensure(ctx, 34);
   ctx.y -= 6;
-  write(ctx, title.toUpperCase(), {
-    bold: true,
-    size: ctx.mode === "ats" ? 11 : 11.5,
-    gap: 3,
-  });
   if (ctx.mode === "designed") {
-    ctx.page.drawLine({
-      start: { x: MARGIN, y: ctx.y + 2 },
-      end: { x: PAGE_WIDTH - MARGIN, y: ctx.y + 2 },
-      thickness: 0.6,
-      color: rgb(0.75, 0.75, 0.75),
+    ctx.page.drawRectangle({
+      x: MARGIN,
+      y: ctx.y + 1,
+      width: 4,
+      height: 13,
+      color: DESIGN_ACCENT,
     });
-    ctx.y -= 6;
+    write(ctx, title.toUpperCase(), {
+      bold: true,
+      size: 11.5,
+      indent: 12,
+      gap: 3,
+    });
+    drawRule(ctx, ctx.y + 3);
+    ctx.y -= 4;
+  } else {
+    write(ctx, title.toUpperCase(), { bold: true, size: 11, gap: 3 });
   }
 }
 
@@ -133,6 +152,55 @@ function bullet(ctx: Context, value: string): void {
     indent: 12,
     gap: 2,
   });
+}
+
+function drawHeaderBand(ctx: Context): void {
+  if (ctx.mode !== "designed") return;
+  ctx.page.drawRectangle({
+    x: 0,
+    y: PAGE_HEIGHT - DESIGN_HEADER_HEIGHT,
+    width: PAGE_WIDTH,
+    height: DESIGN_HEADER_HEIGHT,
+    color: DESIGN_PANEL,
+  });
+  ctx.page.drawRectangle({
+    x: 0,
+    y: PAGE_HEIGHT - DESIGN_HEADER_HEIGHT,
+    width: 6,
+    height: DESIGN_HEADER_HEIGHT,
+    color: DESIGN_ACCENT,
+  });
+}
+
+function writeRight(ctx: Context, value: string, size = 9): void {
+  const width = ctx.bold.widthOfTextAtSize(value, size);
+  ctx.page.drawText(value, {
+    x: PAGE_WIDTH - MARGIN - width,
+    y: ctx.y - size,
+    size,
+    font: ctx.bold,
+    color: ctx.mode === "ats" ? rgb(0, 0, 0) : DESIGN_ACCENT,
+  });
+}
+
+function panelText(ctx: Context, value: string): void {
+  if (ctx.mode !== "designed") {
+    write(ctx, value, { gap: 8 });
+    return;
+  }
+  const size = 10.5;
+  const width = PAGE_WIDTH - MARGIN * 2 - 24;
+  const lines = wrap(value, ctx.font, size, width);
+  const height = lines.length * size * 1.35 + 16;
+  ensure(ctx, height + 8);
+  ctx.page.drawRectangle({
+    x: MARGIN,
+    y: ctx.y - height + 4,
+    width: PAGE_WIDTH - MARGIN * 2,
+    height,
+    color: DESIGN_PANEL,
+  });
+  write(ctx, value, { indent: 8, width, gap: 8 });
 }
 
 /** Render every CV fact from the content package into one PDF. */
@@ -153,6 +221,7 @@ export async function renderCvPdf(
     y: 0,
   };
   newPage(ctx);
+  drawHeaderBand(ctx);
 
   let portrait: PDFImage | undefined;
   if (mode === "designed" && options.portraitBytes) {
@@ -163,12 +232,12 @@ export async function renderCvPdf(
   const { profile } = content;
   write(ctx, profile.name, {
     bold: true,
-    size: mode === "ats" ? 15 : 20,
+    size: mode === "ats" ? 15 : 22,
     gap: 2,
     width: headerWidth,
   });
   write(ctx, profile.headline, {
-    size: mode === "ats" ? 11 : 12,
+    size: mode === "ats" ? 11 : 12.5,
     muted: true,
     gap: 6,
     width: headerWidth,
@@ -208,7 +277,7 @@ export async function renderCvPdf(
   }
 
   heading(ctx, "Summary");
-  write(ctx, profile.summary, { gap: 8 });
+  panelText(ctx, profile.summary);
 
   heading(ctx, "Experience");
   for (const job of content.experience) {
@@ -217,7 +286,13 @@ export async function renderCvPdf(
       write(ctx, job.company, { bold: true, gap: 1 });
       write(ctx, `Dates: ${range}`, { muted: true, gap: 1 });
     } else {
-      write(ctx, `${job.company}  |  ${range}`, { bold: true, gap: 1 });
+      ensure(ctx, 14);
+      writeRight(ctx, range, 9);
+      write(ctx, job.company, {
+        bold: true,
+        gap: 1,
+        width: PAGE_WIDTH - MARGIN * 2 - bold.widthOfTextAtSize(range, 9) - 12,
+      });
     }
     write(ctx, [job.role, job.location].filter(Boolean).join(" · "), {
       gap: 3,
@@ -237,11 +312,22 @@ export async function renderCvPdf(
     } else {
       ctx.y -= 10;
     }
+    if (mode === "designed") {
+      drawRule(ctx, ctx.y + 2);
+      ctx.y -= 6;
+    }
   }
 
   heading(ctx, "Skills");
   for (const group of content.skills) {
-    write(ctx, `${group.name}: ${group.items.join(", ")}`, { gap: 4 });
+    if (mode === "ats") {
+      write(ctx, `${group.name}: ${group.items.join(", ")}`, { gap: 4 });
+    } else {
+      write(ctx, `${group.name.toUpperCase()}  ${group.items.join("  ·  ")}`, {
+        size: 9.5,
+        gap: 5,
+      });
+    }
   }
 
   heading(ctx, "Languages");
@@ -303,10 +389,69 @@ export async function renderCvPdf(
     heading(ctx, strings.projects.heading);
     for (const project of content.personalProjects) {
       write(ctx, project.name, { bold: true, gap: 1 });
+      if (mode === "designed" && project.tech.length > 0) {
+        write(ctx, project.tech.join("  ·  "), {
+          muted: true,
+          size: 9,
+          gap: 2,
+        });
+      }
       write(ctx, project.description, { muted: true, gap: 2 });
-      write(ctx, `Repo: ${project.repoUrl}`, { size: 9 });
-      write(ctx, `Live: ${project.productionUrl}`, { size: 9, gap: 8 });
+      if (mode === "ats") {
+        write(ctx, `Repo: ${project.repoUrl}`, { size: 9 });
+        write(ctx, `Live: ${project.productionUrl}`, { size: 9, gap: 8 });
+      } else {
+        write(ctx, `${strings.projects.repo}: ${project.repoUrl}`, { size: 9 });
+        write(ctx, `${strings.projects.live}: ${project.productionUrl}`, {
+          size: 9,
+          gap: 8,
+        });
+        drawRule(ctx, ctx.y + 4);
+        ctx.y -= 6;
+      }
     }
+  }
+
+  if (mode === "designed") {
+    const pages = doc.getPages();
+    pages.forEach((page, index) => {
+      if (index > 0) {
+        page.drawText(profile.name.toUpperCase(), {
+          x: MARGIN,
+          y: PAGE_HEIGHT - 38,
+          size: 8,
+          font: bold,
+          color: DESIGN_MUTED,
+        });
+        page.drawLine({
+          start: { x: MARGIN, y: PAGE_HEIGHT - 44 },
+          end: { x: PAGE_WIDTH - MARGIN, y: PAGE_HEIGHT - 44 },
+          thickness: 0.5,
+          color: DESIGN_RULE,
+        });
+      }
+      page.drawLine({
+        start: { x: MARGIN, y: 40 },
+        end: { x: PAGE_WIDTH - MARGIN, y: 40 },
+        thickness: 0.5,
+        color: DESIGN_RULE,
+      });
+      page.drawText(profile.name, {
+        x: MARGIN,
+        y: 27,
+        size: 8,
+        font,
+        color: DESIGN_MUTED,
+      });
+      const label = `${index + 1} / ${pages.length}`;
+      page.drawText(label, {
+        x: PAGE_WIDTH - MARGIN - font.widthOfTextAtSize(label, 8),
+        y: 27,
+        size: 8,
+        font,
+        color: DESIGN_MUTED,
+      });
+    });
   }
 
   return doc.save({ useObjectStreams: false });

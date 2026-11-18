@@ -14,7 +14,7 @@ export { answerQuestion } from "./application/answer-question.js";
 export { buildChunks, cosineSimilarity } from "./domain/rag.js";
 export { buildSystemPrompt } from "./domain/system-prompt.js";
 export { chatRequestSchema } from "./domain/chat.js";
-export type { ChatMessage, ChatRequest, ChatLocale } from "./domain/chat.js";
+export type { ChatMessage, ChatRequest } from "./domain/chat.js";
 export type { EmbeddingProvider } from "./domain/embedding-provider.js";
 export type { LlmProvider, LlmMessage } from "./domain/llm-provider.js";
 export type { RagChunk, RagHit, RagStore } from "./domain/rag.js";

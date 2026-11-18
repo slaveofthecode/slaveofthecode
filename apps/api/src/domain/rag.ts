@@ -1,10 +1,8 @@
 import type { Content } from "@portfolio/content";
-import type { ChatLocale } from "./chat.js";
 
 /** A retrievable piece of the CV. */
 export interface RagChunk {
   id: string;
-  locale: ChatLocale;
   section: string;
   title: string;
   content: string;
@@ -14,9 +12,9 @@ export interface RagHit extends RagChunk {
   score: number;
 }
 
-/** Vector store abstraction (ADR-0007). */
+/** Vector store abstraction (ADR-0006). */
 export interface RagStore {
-  retrieve(query: number[], locale: ChatLocale, limit: number): RagHit[];
+  retrieve(query: number[], limit: number): RagHit[];
   /** Loads a single chunk by id (e.g. the always-grounded profile chunk). */
   getChunk(id: string): RagHit | null;
 }
@@ -45,16 +43,15 @@ function joinLines(lines: (string | undefined | null)[]): string {
 }
 
 /**
- * Splits the validated CV for a locale into retrievable chunks (one per logical
- * fact: profile, each role, each skill group, each now item, ...). Deterministic.
+ * Splits the validated CV into retrievable chunks (one per logical fact: profile,
+ * each role, each skill group, each now item, ...). Deterministic.
  */
-export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
+export function buildChunks(content: Content): RagChunk[] {
   const chunks: RagChunk[] = [];
   const { profile } = content;
 
   chunks.push({
-    id: `${locale}:profile`,
-    locale,
+    id: "profile",
     section: "profile",
     title: profile.name,
     content: joinLines([
@@ -71,8 +68,7 @@ export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
 
   for (const job of content.experience) {
     chunks.push({
-      id: `${locale}:experience:${job.id}`,
-      locale,
+      id: `experience:${job.id}`,
       section: "experience",
       title: `${job.role} @ ${job.company}`,
       content: joinLines([
@@ -98,8 +94,7 @@ export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
 
   for (const group of content.skills) {
     chunks.push({
-      id: `${locale}:skills:${group.id}`,
-      locale,
+      id: `skills:${group.id}`,
       section: "skills",
       title: group.name,
       content: `Skills — ${group.name}: ${group.items.join(", ")}`,
@@ -108,8 +103,7 @@ export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
 
   if (content.languages.length > 0) {
     chunks.push({
-      id: `${locale}:languages`,
-      locale,
+      id: "languages",
       section: "languages",
       title: "Languages",
       content: `Languages: ${content.languages.map((l) => `${l.name} (${l.level})`).join(", ")}`,
@@ -118,8 +112,7 @@ export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
 
   for (const edu of content.education) {
     chunks.push({
-      id: `${locale}:education:${edu.id}`,
-      locale,
+      id: `education:${edu.id}`,
       section: "education",
       title: edu.title,
       content: joinLines([
@@ -131,8 +124,7 @@ export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
 
   for (const cert of content.certifications) {
     chunks.push({
-      id: `${locale}:certifications:${cert.id}`,
-      locale,
+      id: `certifications:${cert.id}`,
       section: "certifications",
       title: cert.name,
       content: joinLines([
@@ -145,8 +137,7 @@ export function buildChunks(content: Content, locale: ChatLocale): RagChunk[] {
 
   for (const item of content.now) {
     chunks.push({
-      id: `${locale}:now:${item.id}`,
-      locale,
+      id: `now:${item.id}`,
       section: "now",
       title: item.title,
       content: joinLines([

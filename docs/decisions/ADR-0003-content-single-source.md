@@ -1,5 +1,8 @@
 # ADR-0003 `packages/content` is the single source of truth; PDF is ingest input
 
+> **Superseded by ADR-0007.** The PDF ingest and the en/es locale split were removed;
+> `packages/content/data/cv.json` is now maintained by hand.
+
 - **Context:** the website, the future chat and any generated PDF all need the same
   CV facts; the current source is a PDF.
 - **Decision:** validated JSON (Zod) in `packages/content/data/{en,es}` is the only

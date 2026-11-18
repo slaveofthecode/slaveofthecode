@@ -1,0 +1,460 @@
+{
+  "profile": {
+    "name": "Gustavo Lopez",
+    "headline": "Senior Full-Stack Developer",
+    "location": "Córdoba, Argentina",
+    "summary": "Senior Full-Stack Developer with over 15 years of experience building scalable web applications and enterprise platforms across fintech, banking, and global media. Adaptable across diverse tech stacks, with a strong preference for React, TypeScript, JavaScript, Node.js, and GraphQL. Microsoft Certified in JavaScript, HTML5 & CSS3. Passionate about collaborative, healthy work environments built on mutual respect and common sense. Currently taking courses in AI Engineering and AWS—working toward my AWS certification—while exploring data engineering fundamentals.",
+    "links": [
+      {
+        "label": "Portfolio",
+        "url": "https://slaveofthecode.vercel.app/"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/slaveofthecode"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/gustavoml/"
+      }
+    ],
+    "email": "gml.gustavoml@gmail.com",
+    "avatar": "/portrait.png"
+  },
+  "experience": [
+    {
+      "id": "nybble-group",
+      "company": "Nybble Group",
+      "role": "Senior Full-Stack Developer",
+      "startDate": "2024-05",
+      "endDate": "2026-06",
+      "highlights": [],
+      "projects": [
+        {
+          "name": "Corporate Financial & Stock Management Platform",
+          "highlights": [
+            "Built and maintained a full-stack web application for employee stock ownership plans, retirement accounts (401k, Profit Sharing), and vesting schedules using Meteor, Node.js, and Blaze.",
+            "Handled bulk data imports, financial growth calculations, and reporting features backed by MongoDB.",
+            "Automated version control, releases, and workflow pipelines using GitHub Actions."
+          ]
+        },
+        {
+          "name": "Enterprise Life Settlements & Policy Servicing Backend",
+          "highlights": [
+            "Migrated backend services from Java 1.8 to Java 17 with Spring Boot to modernize the system and improve performance.",
+            "Integrated Camunda for process workflows and Azure OCR to automatically read text from PDFs and scanned documents.",
+            "Managed cloud infrastructure on AWS (RDS, S3, CloudWatch) and ran containerized environments with Docker on EC2.",
+            "Built frontend features using Angular and worked with Atlassian Jira, GitHub, and Maven inside IntelliJ.",
+            "Adopted AI-driven development workflows (using GitHub Copilot, Cursor, and Claude Code), shifting toward a model where AI handled the primary coding while we focused on reviewing, testing, and guiding the logic."
+          ]
+        }
+      ],
+      "tech": [
+        "Angular",
+        "Java",
+        "Node",
+        "TypeScript",
+        "Claude Code",
+        "AWS",
+        "Cursor"
+      ]
+    },
+    {
+      "id": "itlg",
+      "company": "ITLG",
+      "role": "Senior React Developer",
+      "startDate": "2023-01",
+      "endDate": "2023-12",
+      "highlights": [],
+      "projects": [
+        {
+          "name": "Banking Sector",
+          "highlights": [
+            "Worked on building and improving core banking applications used to manage business loans, credit approvals, and interest rates.",
+            "Built, migrated, and integrated Micro Frontends (MFEs) into the main banking platform, keeping modules independent and clean.",
+            "Developed multi-screen user interfaces using React, TypeScript, and Redux, managing complex forms and global state.",
+            "Connected frontend apps with backend services via Axios, working alongside Java / Spring Boot and BFF layers.",
+            "Wrote unit tests to maintain solid code quality, keeping test coverage above 80%.",
+            "Handled daily bug fixes, code maintenance, and deployments using Jenkins, Argo, Kubernetes (GCP), Bitbucket, and Jira in an Agile team."
+          ]
+        }
+      ],
+      "tech": [
+        "React",
+        "TypeScript",
+        "BFF",
+        "Redux",
+        "Axios",
+        "Java",
+        "Micro Frontends"
+      ]
+    },
+    {
+      "id": "kalto",
+      "company": "Kalto",
+      "role": "Senior React Developer",
+      "startDate": "2021-11",
+      "endDate": "2022-11",
+      "highlights": [],
+      "projects": [
+        {
+          "name": "B2B Fintech Platform",
+          "highlights": [
+            "Developed financial management and payment processing features for a B2B fintech platform, ensuring clean and responsive layouts for laptops and tablets using React, TypeScript, Redux, and Bootstrap.",
+            "Connected frontend interfaces with Node.js and GraphQL backend services to handle secure data flow and transactions.",
+            "Implemented unit and integration testing practices to support application reliability and maintainability."
+          ]
+        }
+      ],
+      "tech": [
+        "React",
+        "Redux",
+        "TypeScript",
+        "JavaScript",
+        "UT ( Jest )",
+        "Node.JS",
+        "Bootstrap",
+        "GraphQL"
+      ]
+    },
+    {
+      "id": "ohana",
+      "company": "Ohana",
+      "role": "React Native Developer",
+      "startDate": "2021-08",
+      "endDate": "2021-10",
+      "highlights": [],
+      "projects": [
+        {
+          "name": "Mobile Fintech Features",
+          "highlights": [
+            "Developed core mobile features including payments, transfers, purchases, and account management capabilities using React Native, TypeScript, HTML, and CSS.",
+            "Built accurate user interfaces from Figma designs following a pixel-to-pixel approach, collaborating closely with the mobile team."
+          ]
+        }
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "TypeScript",
+        "Figma ( pixel-to-pixel )",
+        "React Native"
+      ]
+    },
+    {
+      "id": "cognizant-softvision",
+      "company": "Cognizant Softvision",
+      "role": "React Developer",
+      "startDate": "2021-02",
+      "endDate": "2021-07",
+      "highlights": [],
+      "projects": [
+        {
+          "name": "Pharmaceutical Digital Platform (GSK Project)",
+          "highlights": [
+            "Developed and maintained frontend features for digital web applications in the pharmaceutical industry, building modern user interfaces using React, TypeScript, JavaScript, and Redux.",
+            "Connected web applications with backend services and APIs, ensuring reliable data flow and smooth user experiences across multi-screen workflows.",
+            "Collaborated within multidisciplinary product teams following agile methodologies, and participated in internal tech communities to share knowledge and maintain high code quality standards."
+          ]
+        }
+      ],
+      "tech": [
+        "Multi-screen",
+        "JavaScript",
+        "Hooks",
+        "React",
+        "TypeScript",
+        "Design"
+      ]
+    },
+    {
+      "id": "mcafee",
+      "company": "McAfee",
+      "role": "Angular Developer",
+      "startDate": "2019-10",
+      "endDate": "2021-01",
+      "highlights": [
+        "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
+      ],
+      "tech": [
+        "Angular",
+        "ElectronJS",
+        "JavaScript",
+        "Node.js",
+        "HTML",
+        "TypeScript",
+        "Jest"
+      ]
+    },
+    {
+      "id": "dxc-technology",
+      "company": "DXC Technology",
+      "role": "Full-Stack Developer",
+      "startDate": "2018-09",
+      "endDate": "2019-09",
+      "highlights": [
+        "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
+        "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
+      ],
+      "tech": [
+        "C#",
+        "CSS",
+        "ASP.Net",
+        "JavaScript",
+        "Bootstrap",
+        "HTML",
+        "jQuery"
+      ]
+    },
+    {
+      "id": "bancor",
+      "company": "Bancor",
+      "role": "Full-Stack Developer",
+      "startDate": "2013-12",
+      "endDate": "2018-09",
+      "highlights": [
+        "Designed, maintained, and modernized banking systems, intranet platforms, and customer-facing applications.",
+        "Delivered full-stack solutions using C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server, and JavaScript.",
+        "Maintained and enhanced business-critical banking applications and implemented new functionality across multiple banking products."
+      ],
+      "tech": [
+        "C#",
+        "Visual Fox",
+        "SQL Server",
+        "JavaScript",
+        "jQuery",
+        "Entity Framework",
+        "ASP.Net",
+        "CSS",
+        "MustacheJS",
+        "UnderscoreJS",
+        "RequiredJS",
+        ".NET MVC",
+        ".NET Web API",
+        "FoxPro",
+        "WPF / WCF"
+      ]
+    },
+    {
+      "id": "mystic-solutions-limited",
+      "company": "Mystic Solutions Limited",
+      "role": "Freelance Developer",
+      "startDate": "2012-08",
+      "endDate": "2016-10",
+      "highlights": [],
+      "tech": [
+        "C#",
+        ".NET",
+        "SQL Server",
+        "JavaScript",
+        ".NET MVC",
+        "HTML",
+        "jQuery",
+        "CSS"
+      ]
+    },
+    {
+      "id": "harriague-asociados",
+      "company": "Harriague + Asociados",
+      "role": "Senior Software Developer",
+      "startDate": "2013-03",
+      "endDate": "2013-12",
+      "highlights": [],
+      "tech": ["MongoDB", ".NET MVC", "JavaScript", "C#", "NET Web API"]
+    },
+    {
+      "id": "globant",
+      "company": "Globant",
+      "role": "Full-Stack Developer",
+      "startDate": "2011-07",
+      "endDate": "2013-03",
+      "highlights": [],
+      "tech": [".NET Razor", "MVC", "jQuery", "JavaScript", "C#"]
+    },
+    {
+      "id": "particular",
+      "company": "Particular",
+      "role": "Freelance Part-Time Developer",
+      "startDate": "2011-09",
+      "endDate": "2011-12",
+      "highlights": [],
+      "tech": ["ASP.NET", "ASP", "JavaScript", "C#", "SQL Server"]
+    },
+    {
+      "id": "bancor-2",
+      "company": "Bancor",
+      "role": "Full-Stack Developer",
+      "startDate": "2008-06",
+      "endDate": "2011-07",
+      "highlights": [],
+      "tech": [
+        "C#",
+        "SQL Server",
+        "JavaScript",
+        ".NET",
+        "Visual Fox",
+        "WPF / WCF",
+        "jQuery"
+      ]
+    },
+    {
+      "id": "dicicom",
+      "company": "Dicicom",
+      "role": "Full-Stack Developer",
+      "startDate": "2007-06",
+      "endDate": "2008-06",
+      "highlights": [],
+      "tech": [
+        "SQL Server",
+        "HTML",
+        "JavaScript",
+        "ASP.NET Web Forms",
+        "CSS",
+        "C#"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "id": "front-end",
+      "name": "Front-End",
+      "items": [
+        "React",
+        "TypeScript",
+        "Angular",
+        "JavaScript (ES6+)",
+        "HTML5",
+        "CSS3",
+        "Micro Frontends",
+        "Bootstrap",
+        "Tailwind CSS",
+        "Next.js",
+        "Astro"
+      ]
+    },
+    {
+      "id": "back-end",
+      "name": "Back-End",
+      "items": [
+        "Node.js",
+        "Express",
+        "C#",
+        ".NET",
+        "ASP.NET MVC",
+        "Entity Framework",
+        "Prisma",
+        "Java",
+        "Spring Boot"
+      ]
+    },
+    {
+      "id": "ai-assisted-development",
+      "name": "AI-Assisted Development",
+      "items": ["LLMs", "Coding Agents", "MCP", "Harness Engineering", "RAG"]
+    },
+    {
+      "id": "ai-development-tools",
+      "name": "AI Development Tools",
+      "items": ["OpenCode", "Claude", "Cursor", "GitHub Copilot", "Gemini"]
+    },
+    {
+      "id": "devops-infrastructure",
+      "name": "DevOps & Infrastructure",
+      "items": ["AWS", "Docker", "CI/CD Pipelines", "Git"]
+    },
+    {
+      "id": "testing-frameworks",
+      "name": "Testing Frameworks",
+      "items": ["Jest", "Cypress", "Vitest", "Playwright"]
+    },
+    {
+      "id": "databases",
+      "name": "Databases",
+      "items": ["SQL Server", "MongoDB", "MySQL", "SQLite"]
+    }
+  ],
+  "languages": [
+    {
+      "id": "spanish",
+      "name": "Spanish",
+      "level": "Native / Bilingual"
+    },
+    {
+      "id": "english",
+      "name": "English",
+      "level": "Professional Working Proficiency"
+    }
+  ],
+  "education": [
+    {
+      "id": "instituto-superior-santo-domingo-issd",
+      "institution": "Instituto Superior Santo Domingo (ISSD)",
+      "title": "Systems Analyst",
+      "startDate": "2001",
+      "endDate": "2006"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "microsoft-certified-professional-mcp",
+      "name": "Microsoft Certified Professional (MCP)",
+      "url": "https://learn.microsoft.com/en-us/users/slaveofthecode/transcript/d9r28u434xpggwp?wt.mc_id=pvue_msft_webpage_wwl+&source=docs&tab=credentials-tab"
+    },
+    {
+      "id": "programming-in-html5-with-javascript-and-css3-specialist-exam-480",
+      "name": "Programming in HTML5 with JavaScript and CSS3 Specialist (Exam 480)"
+    }
+  ],
+  "now": [
+    {
+      "id": "aws-cloud-commit-academy",
+      "kind": "course",
+      "title": "Cloud, AWS & Infrastructure Professional Program",
+      "description": "Master cloud computing fundamentals and advanced practices with AWS: design, deploy and operate scalable applications in the cloud. Covers key technologies such as Terraform, Docker and Kubernetes, with hands-on exercises and a real final project. Includes 16 weeks of structured content, live mentoring and access to a real AWS account to apply what you learn.",
+      "progress": 21,
+      "status": "in-progress",
+      "startedAt": "2026-09-28",
+      "updatedAt": "2026-11-02",
+      "links": [
+        {
+          "label": "commitacademy.io",
+          "url": "https://www.commitacademy.io/app/courses/e4efcccc-42b0-4ebb-b4fd-fc5fb38e4be9"
+        }
+      ],
+      "tags": [
+        "cloud",
+        "aws",
+        "infrastructure",
+        "terraform",
+        "docker",
+        "kubernetes"
+      ]
+    },
+    {
+      "id": "personal-project-linkzen-extension",
+      "kind": "project",
+      "title": "Extension for Google Chrome to manage bookmarks",
+      "description": "Google Chrome Extension (Manifest V3) designed to replace the traditional bookmarks bar with a single minimalist popup launcher. It includes a bookmark auditing engine that scans for obsolete, broken, or mismatched URLs and provides an interactive dashboard to manage and clean them up.",
+      "progress": 73,
+      "status": "in-progress",
+      "startedAt": "2026-09-23",
+      "updatedAt": "2026-10-08",
+      "links": [
+        {
+          "label": "linkzen-extension",
+          "url": "https://github.com/slaveofthecode/linkzen-extension"
+        }
+      ],
+      "tags": [
+        "chrome-extension",
+        "react",
+        "typescript",
+        "vite",
+        "chrome.bookmarks",
+        "chrome.tabs",
+        "chrome.storage",
+        "aws amplify"
+      ]
+    }
+  ]
+}

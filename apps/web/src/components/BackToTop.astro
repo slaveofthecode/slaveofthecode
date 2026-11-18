@@ -1,13 +1,6 @@
 ---
-import { type Locale, getStrings } from "../i18n";
+import { strings as t } from "../lib/strings";
 import Icon from "./Icon.astro";
-
-interface Props {
-  locale: Locale;
-}
-
-const { locale } = Astro.props;
-const t = getStrings(locale);
 ---
 
 <div data-back-to-top class="fixed bottom-6 left-4 z-40">

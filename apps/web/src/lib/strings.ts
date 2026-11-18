@@ -1,4 +1,4 @@
-export const en = {
+export const strings = {
   nav: {
     label: "Primary",
     menu: "Menu",
@@ -16,11 +16,6 @@ export const en = {
     light: "Light",
     dark: "Dark",
   },
-  language: {
-    label: "Language",
-    en: "EN",
-    es: "SP",
-  },
   a11y: {
     skipToContent: "Skip to content",
     backToTop: "Back to top",
@@ -37,6 +32,7 @@ export const en = {
     phone: "Phone",
     present: "Present",
     download: "Download CV",
+    downloadAts: "Download ATS CV",
   },
   certifications: {
     validate: "Validate",
@@ -77,5 +73,3 @@ export const en = {
     unavailable: "The chat is unavailable right now.",
   },
 };
-
-export type Strings = typeof en;

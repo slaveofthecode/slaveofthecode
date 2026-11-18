@@ -1,17 +1,15 @@
 ---
 import type { NowItem } from "@portfolio/content";
-import { type Locale, getStrings } from "../../i18n";
 import { formatPoint } from "../../lib/dates";
 import { iconName } from "../../lib/links";
+import { strings as t } from "../../lib/strings";
 import Icon from "../Icon.astro";
 
 interface Props {
   items: NowItem[];
-  locale: Locale;
 }
 
-const { items, locale } = Astro.props;
-const t = getStrings(locale);
+const { items } = Astro.props;
 ---
 
 <ul class="grid gap-4 sm:grid-cols-2">
@@ -79,7 +77,7 @@ const t = getStrings(locale);
               </ul>
             ) : null}
             <p class="mt-2 font-mono text-xs text-subtle">
-              {t.now.updated} {formatPoint(item.updatedAt.slice(0, 7), locale)}
+              {t.now.updated} {formatPoint(item.updatedAt.slice(0, 7))}
             </p>
           </div>
         </article>

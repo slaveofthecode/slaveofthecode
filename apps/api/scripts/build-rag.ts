@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { LOCALES, type Locale, getContent } from "@portfolio/content";
+import { getContent } from "@portfolio/content";
 import { GeminiEmbeddings } from "../src/adapters/llm/gemini-embeddings";
 import {
   type RagRecord,
@@ -12,8 +12,8 @@ import type { EmbeddingProvider } from "../src/domain/embedding-provider";
 import { buildChunks } from "../src/domain/rag";
 
 /**
- * RAG ingestion: reads the validated CV (packages/content, every locale, including
- * `now`), embeds each chunk with Gemini and writes the SQLite snapshot committed at
+ * RAG ingestion: reads the validated CV (packages/content, including `now`),
+ * embeds each chunk with Gemini and writes the SQLite snapshot committed at
  * `apps/api/data/cv.sqlite` plus the runtime module `apps/api/src/data/rag-db.ts`.
  *
  * Run: `bun run build:rag` (needs GEMINI_API_KEY). `--empty` writes just the schema.
@@ -25,20 +25,13 @@ const modulePath = join(here, "..", "src", "data", "rag-db.ts");
 async function embedAll(): Promise<RagRecord[]> {
   const config = loadConfig();
   const embeddings: EmbeddingProvider = new GeminiEmbeddings(config.gemini);
-  const records: RagRecord[] = [];
-
-  for (const locale of LOCALES as readonly Locale[]) {
-    const chunks = buildChunks(getContent(locale), locale);
-    const vectors = await embeddings.embed(
-      chunks.map((chunk) => chunk.content),
-    );
-    chunks.forEach((chunk, index) => {
-      records.push({ ...chunk, embedding: vectors[index] ?? [] });
-    });
-    console.log(`[${locale}] embedded ${chunks.length} chunks`);
-  }
-
-  return records;
+  const chunks = buildChunks(getContent());
+  const vectors = await embeddings.embed(chunks.map((chunk) => chunk.content));
+  console.log(`embedded ${chunks.length} chunks`);
+  return chunks.map((chunk, index) => ({
+    ...chunk,
+    embedding: vectors[index] ?? [],
+  }));
 }
 
 async function main(): Promise<void> {

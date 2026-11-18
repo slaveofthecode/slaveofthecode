@@ -1,7 +1,7 @@
 # @portfolio/web
 
-Astro + Tailwind, static output (`output: 'static'`). i18n: English at `/`, Spanish
-at `/es/`. May import `@portfolio/content` only. Never imports `@portfolio/api`.
+Astro + Tailwind, static output (`output: 'static'`). English only, served at `/`.
+May import `@portfolio/content` only. Never imports `@portfolio/api`.
 
-Scaffold only — the Astro app, theme tokens, layouts and sections land in PR-5..PR-7.
+CV data comes from `@portfolio/content`; UI strings are static in `src/lib/strings.ts`.
 Rules live in the root `AGENTS.md`.

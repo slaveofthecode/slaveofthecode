@@ -1,7 +1,6 @@
 import initSqlJs, { type Database, type SqlJsStatic } from "sql.js";
 import { ragDbBase64 } from "../../data/rag-db.js";
 import { sqlWasmBase64 } from "../../data/sql-wasm.js";
-import type { ChatLocale } from "../../domain/chat.js";
 import {
   type RagChunk,
   type RagHit,
@@ -14,7 +13,6 @@ export type RagRecord = RagChunk & { embedding: number[] };
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS chunks (
   id TEXT PRIMARY KEY,
-  locale TEXT NOT NULL,
   section TEXT NOT NULL,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
@@ -53,17 +51,16 @@ export async function buildRagBytes(records: RagRecord[]): Promise<Uint8Array> {
   db.run(SCHEMA);
 
   const insert = db.prepare(
-    "INSERT INTO chunks (id, locale, section, title, content, embedding) VALUES (?, ?, ?, ?, ?, ?)",
+    "INSERT INTO chunks (id, section, title, content, embedding) VALUES (?, ?, ?, ?, ?)",
   );
   db.run("BEGIN TRANSACTION");
   for (const record of records) {
     insert.run([
       record.id,
-      record.locale,
       record.section,
       record.title,
       record.content,
-      new Uint8Array(Float32Array.from(record.embedding).buffer),
+      encodeEmbedding(record.embedding),
     ]);
   }
   db.run("COMMIT");
@@ -76,7 +73,6 @@ export async function buildRagBytes(records: RagRecord[]): Promise<Uint8Array> {
 
 interface ChunkRow {
   id: string;
-  locale: string;
   section: string;
   title: string;
   content: string;
@@ -85,7 +81,7 @@ interface ChunkRow {
 
 /**
  * Read-only SQLite-backed vector store (sql.js, WASM — no native build). Loaded
- * from the committed snapshot; retrieval is brute-force cosine over that locale's
+ * from the committed snapshot; retrieval is brute-force cosine over the CV
  * chunks (the CV is small).
  */
 export class SqliteRagStore implements RagStore {
@@ -97,31 +93,20 @@ export class SqliteRagStore implements RagStore {
     return new SqliteRagStore(new SQL.Database(data));
   }
 
-  retrieve(query: number[], locale: ChatLocale, limit: number): RagHit[] {
+  retrieve(query: number[], limit: number): RagHit[] {
     const statement = this.db.prepare(
-      "SELECT id, locale, section, title, content, embedding FROM chunks WHERE locale = ?",
+      "SELECT id, section, title, content, embedding FROM chunks",
     );
     const hits: RagHit[] = [];
 
-    statement.bind([locale]);
     while (statement.step()) {
       const row = statement.getAsObject() as unknown as ChunkRow;
       hits.push({
         id: row.id,
-        locale: row.locale as ChatLocale,
         section: row.section,
         title: row.title,
         content: row.content,
-        score: cosineSimilarity(
-          query,
-          Array.from(
-            new Float32Array(
-              row.embedding.buffer,
-              row.embedding.byteOffset,
-              row.embedding.byteLength / 4,
-            ),
-          ),
-        ),
+        score: cosineSimilarity(query, decodeEmbedding(row.embedding)),
       });
     }
     statement.free();
@@ -132,7 +117,7 @@ export class SqliteRagStore implements RagStore {
 
   getChunk(id: string): RagHit | null {
     const statement = this.db.prepare(
-      "SELECT id, locale, section, title, content FROM chunks WHERE id = ?",
+      "SELECT id, section, title, content FROM chunks WHERE id = ?",
     );
     statement.bind([id]);
     if (!statement.step()) {
@@ -146,7 +131,6 @@ export class SqliteRagStore implements RagStore {
     statement.free();
     return {
       id: row.id,
-      locale: row.locale as ChatLocale,
       section: row.section,
       title: row.title,
       content: row.content,

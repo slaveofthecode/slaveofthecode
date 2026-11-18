@@ -29,5 +29,4 @@ export {
   yearSchema,
   isoDateSchema,
 } from "./schemas";
-export { getContent, parseContent, LOCALES } from "./loader";
-export type { Locale } from "./loader";
+export { getContent, parseContent } from "./loader";

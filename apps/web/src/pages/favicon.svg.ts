@@ -4,7 +4,7 @@ import { renderInitialsIcon } from "../lib/favicon";
 import { initials } from "../lib/initials";
 
 export const GET: APIRoute = () => {
-  const svg = renderInitialsIcon(initials(getContent("en").profile.name));
+  const svg = renderInitialsIcon(initials(getContent().profile.name));
   return new Response(svg, {
     headers: { "content-type": "image/svg+xml; charset=utf-8" },
   });

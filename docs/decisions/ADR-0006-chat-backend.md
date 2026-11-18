@@ -7,19 +7,20 @@
   - **Pipeline:** ingest → chunk the validated CV → embed each chunk → store in SQLite.
     At query time: embed the question → retrieve the top-k chunks by cosine similarity
     → pass them as the only context to the model.
-  - **Source of truth:** the chunks are built from `@portfolio/content` (every locale,
-    including `now`) — the exact data shown on the web. No PDF parsing at request time.
+  - **Source of truth:** the chunks are built from the single `cv.json` in
+    `@portfolio/content` (including `now`) — the exact data shown on the web. No PDF
+    parsing at request time. ADR-0007 removed the locale dimension.
   - **Store:** **SQLite** via `sql.js` (WASM, no native build), so the same code runs on
     Bun, Node and Vercel. The snapshot is a small, committed artifact: `apps/api/data/cv.sqlite`
     plus the runtime module `apps/api/src/data/rag-db.ts` (base64), regenerated with
-    `bun run build:rag`. Retrieval is brute-force cosine over that locale's chunks.
+    `bun run build:rag`. Retrieval is brute-force cosine over all chunks.
   - **Embeddings + chat:** Google Gemini (REST via `fetch`, no SDK), behind
     `EmbeddingProvider` / `LlmProvider` interfaces. Models are configurable
     (`GEMINI_EMBED_MODEL`, `GEMINI_MODEL`).
   - **Hosting:** a second Vercel project for `apps/api` (Node runtime, Web Standard
     `fetch` handler). AWS Lambda stays the long-term target (ADR-0005).
   - **No streaming** in v1: `POST /chat` returns JSON `{ reply }`. The server is
-    stateless (the client sends the last N turns) and answers in the site locale.
+    stateless (the client sends the last N turns) and answers in English.
   - **Guardrails:** answer ONLY from the retrieved excerpts; say "I don't have that
     information" otherwise; refuse off-topic; resist prompt injection; never dump the
     system prompt.

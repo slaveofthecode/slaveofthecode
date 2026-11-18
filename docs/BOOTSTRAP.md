@@ -1,5 +1,8 @@
 # BOOTSTRAP.md — Entry point for the agent
 
+> **Historical reference.** The current rules are in the root `AGENTS.md`; ADR-0007
+> supersedes the PDF ingest, en/es split and i18n plan described below.
+
 > You are an AI coding agent (OpenCode, but this file must work for Claude Code, Cursor, Codex, etc.).
 > Read this ENTIRE file before touching anything. Then follow **Section 11 (Roadmap)** one PR at a time.
 > **Language rule:** talk to the human in **Spanish**. Write code, docs, commits, branch names and PRs in **English**.

@@ -477,55 +477,69 @@ Merged into `main` after the cutover (see PRs #20/#21):
     `apps/api/data/cv.sqlite` + `apps/api/src/data/rag-db.ts`.
   - Checks green: lint, typecheck, **122 tests**, build, check:boundaries.
 
+## Done (continued)
+- **`feat/json-single-source` (this branch):** replaced the PDF ingest and the en/es
+  locale split with one hand-maintained `packages/content/data/cv.json` (ADR-0007).
+  The site and the chat are English-only.
+  - **Content:** `getContent()`/`parseContent()` read the committed JSON directly;
+    `LOCALES`, `data/en`, `data/es`, ingest scripts, parity tests and `unpdf` removed.
+  - **Web:** static UI strings in `src/lib/strings.ts`; removed `src/i18n`, `/es/`
+    and `LanguageSwitcher`; canonical `/`, `og:locale=en_US`, `/es` → `/` redirect;
+    dates always formatted in English.
+  - **PDFs:** `pdf-lib` (pure TypeScript, no native binaries) +
+    `apps/web/scripts/generate-cv-pdfs.ts` run before `astro build` and produce
+    `public/cv.pdf` and `public/cv-ats.pdf` from the same JSON. The hero links both;
+    download names come from `resumeFilename(name, variant)`. `public/resume.pdf` gone.
+  - **API:** `POST /chat` accepts only `{ messages }`; RAG chunks have unprefixed ids
+    and no locale column; the prompt always answers in English. The committed snapshot
+    was migrated from the existing 28 EN embeddings (no `GEMINI_API_KEY` needed).
+  - Checks green: lint (after `biome format`), typecheck, **120 tests**, build,
+    check:boundaries. Built HTML contains only `/cv.pdf` + `/cv-ats.pdf` and `lang="en"`.
+
 ## Next steps
-- **`chore/resume-update-2026-11` awaiting human review/commit/push/PR** (new resume PDF
-  ingest + parser fixes).
-- **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). Remaining, top first:
-  **P1 re-enable the EN/ES language switcher**, **P3 secure admin panel to upload
-  `resume.pdf`** (ingest + RAG rebuild + redeploy).
-- **`feat/grayscale-ui` awaiting human review** (visual pass via `bun run dev`); then human
-  commit/push + PR.
+- **`feat/json-single-source` awaiting human review/commit/push/PR**: single JSON source,
+  English-only site/chat, generated PDFs. No commit or push has been made by the agent.
+- After a CV edit, run `bun run build` (web + both PDFs) and
+  `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
+  then redeploy both Vercel projects.
+- **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). The old
+  **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own
   branch, so it never lingers uncommitted without an owner. PR #42 is merged (`5f1696c`).
-- **Human actions:** none pending. Optional later: Vercel WAF rule on `/api/chat`, Turnstile.
+- **Human actions:** review + commit/push this branch, then open the PR per
+  `docs/workflows/open-pr.md`. Optional later: Vercel WAF rule on `/api/chat`, Turnstile.
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:
   `GEMINI_API_KEY`, `GEMINI_MODEL=gemini-flash-latest`, `GEMINI_EMBED_MODEL=gemini-embedding-001`,
   `ALLOWED_ORIGINS=https://slaveofthecode.vercel.app`. Web env: `PUBLIC_API_URL` (host only).
 - Roadmap per `docs/BOOTSTRAP.md` §12: (2) AI evals expansion; (3) theme variants; (4) AWS deploy +
-  budget alarm; (5) replace PDF ingest.
+  budget alarm; (5) replace PDF ingest — **done** by ADR-0007 (manual JSON source).
 
 ## Open decisions
-- Ingest locales (revised): `data/en` is rebuilt from the PDF; `data/es` preserves the hand-made
-  Spanish translations (matched by id / natural key) plus any field the PDF can't provide.
-  Language switching is disabled for now.
-- Contact data: the PDF→JSON ingest publishes whatever the resume header contains (location,
-  phone, email, links) — the human explicitly asked to show any PDF data (PR-14); this supersedes
-  the earlier "phone/address never" rule for PDF-derived content.
-- Certifications: `issuer` is optional (the current PDF has none). Education/certifications blocks
-  are told apart by the presence of a date range within a combined section.
+- Data source and locales (ADR-0007): `packages/content/data/cv.json` is hand-maintained;
+  there is no PDF ingest, no `data/es` and no translation parity. Web and chat are English-only.
+- Contact data: location, phone, email and links in `cv.json` are intentionally public and
+  must be shown in full (supersedes the earlier "phone/address never" rule).
+- Certifications: `issuer` is optional; the **Validate** link comes from the CV JSON.
 - Future backend: the plan is to move the backend to a separate FastAPI/Python service. The
   structure already supports it — `apps/web` ↔ `apps/api` only ever talk over HTTP and
   `packages/content` JSON is the shared contract — so `apps/api` can be replaced/removed without
   touching `apps/web`.
 
 - Visual direction: keep the current identity as a base but with a refreshed look.
-- Branding (PR-7): Chakra Petch + Space Mono; portrait from the PDF. "Now" section labelled
-  "What I'm working on now" / "¿En qué ando ahora?" with a thinking icon; real `now[]` item
-  (Commit Academy cloud/AWS course). en text is a translation of the human-authored es.
-- PR-11: language switcher now uses locale-specific codes: EN locale → `EN`/`SP`, ES locale →
-  `IN`/`ES` (per the human's latest instruction; supersedes PR-10's ENG/SPN).
+- Branding (PR-7, still current except wording): Chakra Petch + Space Mono; portrait from the
+  old PDF. "Now" section is English-only ("What I'm working on now") with a thinking icon.
+- PR-11 language-switcher codes are obsolete: ADR-0007 removed the switcher and `/es/`.
 - PR-8: human asked to combine the favicon/branding change with `feat/api-skeleton` in one PR
   (deliberate deviation from the one-feature-per-branch rule). The favicon is driven by the new
   optional `profile.avatar` content field rather than a filesystem check — the earlier
   `existsSync` approach broke because Astro bundles server code (wrong `import.meta.url`).
 
 ## Follow-ups / risks
-- Privacy: the PDF-derived contact data (location, email, and phone when present) is
-  intentionally public — the human wants ALL `resume.pdf` data shown. The human decided NOT to
-  purge the historical PDF blob `98825db…` (it only exposes the job-hunting email). Git history is
-  not rewritten.
+- Privacy: contact data in `cv.json` (location, email, phone when present) is intentionally
+  public. The human decided NOT to purge the historical PDF blob `98825db…` (it only exposes
+  the job-hunting email). Git history is not rewritten.
 - Ref cleanup: all merged v1 feature branches + `v1`/`v2` are deleted (refs only; `v2`'s branch
   protection was removed first). The `legacy/`/PDF objects stay reachable by SHA in history until
   GC. The `v1.0.0` tag/release is kept, and main's history still contains the v1 commits

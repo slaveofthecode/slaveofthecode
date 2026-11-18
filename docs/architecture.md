@@ -21,10 +21,9 @@ Living CV website. The new site lives on `main` (cutover complete); see
 │  ├─ architecture.md
 │  ├─ STATUS.md              # agent memory: done / next
 │  ├─ learnings.md           # proposed learnings (human approves)
-│  ├─ ingest-notes.md        # open questions about the resume data
 │  ├─ decisions/             # ADR-0001...
 │  └─ workflows/             # start-feature.md, open-pr.md
-├─ content-source/           # GITIGNORED: resume.pdf, resume.txt
+├─ content-source/           # GITIGNORED: raw CV working copy (not used by the build)
 ├─ vercel.json               # builds apps/web from the repo root
 ├─ packages/content/         # @portfolio/content (schemas + data + loader)
 ├─ apps/web/                 # @portfolio/web (Astro + Tailwind)
@@ -55,7 +54,8 @@ The chat (`POST /chat`, ADR-0006) is RAG: the handler validates the request (`zo
 runs the cost guards (see below), embeds the last user message, retrieves the top-k CV
 chunks from the SQLite snapshot (cosine), grounds the model on those excerpts via the
 system prompt, and calls an `LlmProvider` (Gemini via `fetch`, or a fake in tests).
-No session is kept; the browser sends the last N turns.
+No session is kept; the browser sends the last N turns. The site and the chat are
+English-only (ADR-0007): the request has no `locale` field and chunks have no locale.
 
 **Profile grounding guarantee:** identity/contact questions ("what is your email?",
 "how can I contact you?") embed poorly against the long CV chunks and often miss the
@@ -85,8 +85,9 @@ the human in dashboards (no code): a Vercel WAF rate-limit rule on `/api/chat`, 
 Cloudflare Turnstile in front of the chat form.
 
 Ingestion (`bun run build:rag`, `apps/api/scripts/build-rag.ts`): `@portfolio/content`
-(every locale, including `now`) → `buildChunks` → Gemini embeddings → `buildRagBytes`
-(SQLite) → commits `apps/api/data/cv.sqlite` + the runtime module `apps/api/src/data/rag-db.ts`.
+(the single `cv.json`, including `now`) → `buildChunks` → Gemini embeddings →
+`buildRagBytes` (SQLite) → commits `apps/api/data/cv.sqlite` + the runtime module
+`apps/api/src/data/rag-db.ts`.
 
 Internal packages are consumed as TypeScript source (`"exports": "./src/index.ts"`,
 no build step). `apps/api` runs on Vercel's Node runtime via Web Standard
@@ -100,9 +101,8 @@ under Node ESM. Two consequences in `apps/api/api` and `apps/api/src`, both load
   resolution; the TS source imports `./x.js` and the compiler/tracer map it to `./x.ts`).
 - The runtime must not import a workspace TypeScript package (e.g. `@portfolio/content`):
   Vercel leaves bare specifiers **external** and Node cannot execute the package's `.ts`
-  source. Values it needs are kept local (see `CHAT_LOCALES` in
-  `apps/api/src/domain/chat.ts`, parity-guarded by a test). The sql.js WASM is embedded as
-  base64 for the same reason (no runtime file resolution).
+  source. The values it needs are generated into the repo (`data/rag-db.ts` and
+  `data/sql-wasm.ts`), so there is no runtime package or file resolution.
 
 ## Deployment
 
@@ -123,13 +123,21 @@ Re-run `bun run build:rag` (with `GEMINI_API_KEY`) after changing the CV.
 ## Data flow
 
 ```
-resume.pdf (local, gitignored)
-   └─ extract-resume.ts ─▶ resume.txt (local)
-         └─ ingest ─▶ packages/content/data/{en,es}/*.json  (committed, sanitized; source of truth)
-                  ├─▶ apps/web  (build time, static JSON imports)
-                  ├─▶ apps/api  (build:rag → embeddings → SQLite snapshot; per request: retrieval + chat)
-                  └─▶ (optional later) generated PDF
+packages/content/data/cv.json  (committed, hand-maintained; single source of truth)
+   ├─▶ apps/web  (build time, static JSON imports → static HTML)
+   ├─▶ apps/web/scripts/generate-cv-pdfs.ts  (build time → public/cv.pdf + cv-ats.pdf)
+   └─▶ apps/api  (build:rag → embeddings → SQLite snapshot; per request: retrieval + chat)
 ```
 
 Use static JSON imports in the loader (not `fs`) so it works in Bun, Vite/Astro and
-Lambda bundles alike.
+Lambda bundles alike. `content-source/` stays gitignored as a personal working copy;
+it is never read by the build.
+
+## Downloadable CVs
+
+`apps/web/package.json` runs `bun scripts/generate-cv-pdfs.ts` before `astro build`.
+The script calls `renderCvPdf(getContent(), mode)` in `src/lib/cv-pdf.ts`: `designed`
+(adds a dark header, section rules and accent labels) and `ats` (plain black Helvetica,
+linear sections with `-` bullets). Both are A4, use theme-independent colors, and are
+linked from the hero as `/cv.pdf` and `/cv-ats.pdf`. Download filenames come from
+`resumeFilename(name, variant)`.

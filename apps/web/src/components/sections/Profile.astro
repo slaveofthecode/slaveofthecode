@@ -1,18 +1,16 @@
 ---
 import type { Profile } from "@portfolio/content";
-import { type Locale, getStrings } from "../../i18n";
 import { initials } from "../../lib/initials";
 import { iconName } from "../../lib/links";
 import { resumeFilename } from "../../lib/resume";
+import { strings as t } from "../../lib/strings";
 import Icon from "../Icon.astro";
 
 interface Props {
   profile: Profile;
-  locale: Locale;
 }
 
-const { profile, locale } = Astro.props;
-const t = getStrings(locale);
+const { profile } = Astro.props;
 ---
 
 <section class="py-12">
@@ -93,14 +91,24 @@ const t = getStrings(locale);
           ))
         }
       </ul>
-      <a
-        href="/resume.pdf"
-        download={resumeFilename(profile.name)}
-        class="mt-4 inline-flex items-center gap-2 rounded-card border border-border bg-surface px-4 py-2 font-mono text-sm text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-      >
-        <Icon name="pdf" class="h-4 w-4" />
-        {t.cv.download}
-      </a>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <a
+          href="/cv.pdf"
+          download={resumeFilename(profile.name)}
+          class="inline-flex items-center gap-2 rounded-card border border-border bg-surface px-4 py-2 font-mono text-sm text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+        >
+          <Icon name="pdf" class="h-4 w-4" />
+          {t.cv.download}
+        </a>
+        <a
+          href="/cv-ats.pdf"
+          download={resumeFilename(profile.name, "ats")}
+          class="inline-flex items-center gap-2 rounded-card border border-border px-4 py-2 font-mono text-sm text-muted transition-colors hover:bg-hover hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+        >
+          <Icon name="pdf" class="h-4 w-4" />
+          {t.cv.downloadAts}
+        </a>
+      </div>
     </div>
   </div>
 

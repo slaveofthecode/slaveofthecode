@@ -1,16 +1,10 @@
 ---
 import { getContent } from "@portfolio/content";
-import { type Locale, getStrings } from "../i18n";
 import { REPO_URL, iconName } from "../lib/links";
+import { strings as t } from "../lib/strings";
 import Icon from "./Icon.astro";
 
-interface Props {
-  locale: Locale;
-}
-
-const { locale } = Astro.props;
-const t = getStrings(locale);
-const { profile } = getContent(locale);
+const { profile } = getContent();
 const year = new Date().getFullYear();
 ---
 

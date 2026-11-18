@@ -1,12 +1,5 @@
 ---
-import { type Locale, getStrings } from "../i18n";
-
-interface Props {
-  locale: Locale;
-}
-
-const { locale } = Astro.props;
-const t = getStrings(locale);
+import { strings as t } from "../lib/strings";
 ---
 
 <button

@@ -7,21 +7,20 @@ import Education from "../components/sections/Education.astro";
 import Experience from "../components/sections/Experience.astro";
 import Languages from "../components/sections/Languages.astro";
 import Now from "../components/sections/Now.astro";
+import PersonalProjects from "../components/sections/PersonalProjects.astro";
 import Profile from "../components/sections/Profile.astro";
 import Skills from "../components/sections/Skills.astro";
-import { getStrings } from "../i18n";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { strings as t } from "../lib/strings";
 
-const locale = "en" as const;
-const t = getStrings(locale);
-const content = getContent(locale);
+const content = getContent();
 ---
 
-<BaseLayout locale={locale} path="/">
-  <Profile profile={content.profile} locale={locale} />
+<BaseLayout>
+  <Profile profile={content.profile} />
 
   <Section id="experience" title={t.nav.experience}>
-    <Experience items={content.experience} locale={locale} />
+    <Experience items={content.experience} />
   </Section>
 
   <Section id="skills" title={t.nav.skills}>
@@ -39,7 +38,7 @@ const content = getContent(locale);
   {
     content.education.length > 0 ? (
       <Section id="education" title={t.nav.education}>
-        <Education items={content.education} locale={locale} />
+        <Education items={content.education} />
       </Section>
     ) : null
   }
@@ -47,7 +46,7 @@ const content = getContent(locale);
   {
     content.certifications.length > 0 ? (
       <Section id="certifications" title={t.nav.certifications}>
-        <Certifications items={content.certifications} locale={locale} />
+        <Certifications items={content.certifications} />
       </Section>
     ) : null
   }
@@ -55,14 +54,18 @@ const content = getContent(locale);
   {
     content.now.length > 0 ? (
       <Section id="now" title={t.now.heading} icon="thinking">
-        <Now items={content.now} locale={locale} />
+        <Now items={content.now} />
       </Section>
     ) : null
   }
 
-  <Chat
-    locale={locale}
-    name={content.profile.name}
-    avatar={content.profile.avatar}
-  />
+  {
+    content.personalProjects.length > 0 ? (
+      <Section id="projects" title={t.projects.heading}>
+        <PersonalProjects items={content.personalProjects} />
+      </Section>
+    ) : null
+  }
+
+  <Chat name={content.profile.name} avatar={content.profile.avatar} />
 </BaseLayout>

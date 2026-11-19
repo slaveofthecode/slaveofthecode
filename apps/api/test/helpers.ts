@@ -1,4 +1,3 @@
-import type { ChatLocale } from "../src/domain/chat";
 import type { EmbeddingProvider } from "../src/domain/embedding-provider";
 import type { RagHit, RagStore } from "../src/domain/rag";
 
@@ -17,12 +16,12 @@ export class FakeEmbeddings implements EmbeddingProvider {
   }
 }
 
-/** In-memory store returning a fixed set of pre-scored hits per locale. */
+/** In-memory store returning a fixed set of pre-scored hits. */
 export class FakeStore implements RagStore {
   constructor(private readonly hits: RagHit[] = []) {}
 
-  retrieve(_query: number[], locale: ChatLocale, limit: number): RagHit[] {
-    return this.hits.filter((hit) => hit.locale === locale).slice(0, limit);
+  retrieve(_query: number[], limit: number): RagHit[] {
+    return this.hits.slice(0, limit);
   }
 
   getChunk(id: string): RagHit | null {
@@ -30,10 +29,9 @@ export class FakeStore implements RagStore {
   }
 }
 
-export function profileHit(locale: ChatLocale = "en"): RagHit {
+export function profileHit(): RagHit {
   return {
-    id: `${locale}:profile`,
-    locale,
+    id: "profile",
     section: "profile",
     title: "Gustavo Lopez",
     content: "Gustavo Lopez — Senior Full-Stack Developer",

@@ -25,4 +25,11 @@ describe("resumeFilename", () => {
     expect(resumeFilename("   ")).toBe("resume.pdf");
     expect(resumeFilename("!!!")).toBe("resume.pdf");
   });
+
+  test("ATS variant gets its own suffix", () => {
+    expect(resumeFilename("Gustavo Lopez", "ats")).toBe(
+      "Gustavo_Lopez_resume_ats.pdf",
+    );
+    expect(resumeFilename("", "ats")).toBe("resume_ats.pdf");
+  });
 });

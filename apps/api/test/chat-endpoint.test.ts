@@ -14,7 +14,7 @@ function buildDeps(overrides: Partial<HandlerDeps> = {}): HandlerDeps {
   return {
     provider: new FakeProvider("Grounded answer."),
     embeddings: new FakeEmbeddings(),
-    store: new FakeStore([profileHit("en"), profileHit("es")]),
+    store: new FakeStore([profileHit()]),
     rateLimiter: new InMemoryRateLimiter(20, 60),
     dailyLimiter: new InMemoryDailyLimiter(200),
     allowedOrigins: [ORIGIN],
@@ -36,7 +36,6 @@ function chatRequest(
 
 const validBody = JSON.stringify({
   messages: [{ role: "user", content: "What about React?" }],
-  locale: "en",
 });
 
 describe("POST /chat", () => {

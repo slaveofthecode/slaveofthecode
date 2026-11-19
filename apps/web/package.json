@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "bun scripts/generate-cv-pdfs.ts && astro build",
     "preview": "astro preview",
     "typecheck": "astro check",
     "test": "bun test"
@@ -21,6 +21,7 @@
     "@portfolio/content": "workspace:*",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.8",
+    "pdf-lib": "^1.17.1",
     "tailwindcss": "^4.3.3"
   }
 }

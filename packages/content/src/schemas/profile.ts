@@ -9,8 +9,8 @@ export const profileSchema = z.object({
   links: z.array(linkSchema),
   email: z.string().email().optional(),
   phone: z.string().min(1).optional(),
-  /** Public path to the portrait used as avatar/favicon, when one exists. */
-  avatar: z.string().min(1).optional(),
+  /** Public URL to the portrait used as avatar/favicon, when one exists. */
+  avatar: z.string().url().optional(),
 });
 
 export type Profile = z.infer<typeof profileSchema>;

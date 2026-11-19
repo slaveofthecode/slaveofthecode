@@ -4,8 +4,7 @@ import { buildSystemPrompt } from "../src/domain/system-prompt";
 
 const hits: RagHit[] = [
   {
-    id: "en:profile",
-    locale: "en",
+    id: "profile",
     section: "profile",
     title: "Gustavo Lopez",
     content: "Gustavo Lopez — Senior Full-Stack Developer",
@@ -14,7 +13,7 @@ const hits: RagHit[] = [
 ];
 
 describe("buildSystemPrompt", () => {
-  const prompt = buildSystemPrompt(hits, "en");
+  const prompt = buildSystemPrompt(hits);
 
   test("embeds the retrieved excerpts as the source of truth", () => {
     expect(prompt).toContain("CONTEXT excerpts");
@@ -22,7 +21,7 @@ describe("buildSystemPrompt", () => {
   });
 
   test("handles an empty context", () => {
-    expect(buildSystemPrompt([], "en")).toContain("no relevant excerpts found");
+    expect(buildSystemPrompt([])).toContain("no relevant excerpts found");
   });
 
   test("includes grounding and injection guardrails", () => {
@@ -35,8 +34,7 @@ describe("buildSystemPrompt", () => {
     expect(prompt).toContain("FIRST PERSON");
   });
 
-  test("sets the default reply language per locale", () => {
-    expect(buildSystemPrompt(hits, "es")).toContain("use Spanish");
-    expect(buildSystemPrompt(hits, "en")).toContain("use English");
+  test("instructs the model to reply in English", () => {
+    expect(prompt).toContain("Always reply in English");
   });
 });

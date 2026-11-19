@@ -3,5 +3,6 @@
   "framework": null,
   "installCommand": "bun install",
   "buildCommand": "bun run --filter @portfolio/web build",
-  "outputDirectory": "apps/web/dist"
+  "outputDirectory": "apps/web/dist",
+  "redirects": [{ "source": "/es", "destination": "/", "permanent": true }]
 }

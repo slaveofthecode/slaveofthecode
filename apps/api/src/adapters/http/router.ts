@@ -146,7 +146,6 @@ export function createHandler(
         const reply = await answerQuestion(
           {
             messages: parsed.data.messages,
-            locale: parsed.data.locale,
             signal: request.signal,
           },
           {

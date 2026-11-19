@@ -4,6 +4,7 @@ import { educationSchema } from "./education";
 import { experienceSchema } from "./experience";
 import { languageSchema } from "./languages";
 import { nowItemSchema } from "./now";
+import { personalProjectSchema } from "./personal-project";
 import { profileSchema } from "./profile";
 import { skillGroupSchema } from "./skills";
 
@@ -15,6 +16,7 @@ export const contentSchema = z.object({
   education: z.array(educationSchema).default([]),
   certifications: z.array(certificationSchema).default([]),
   now: z.array(nowItemSchema),
+  personalProjects: z.array(personalProjectSchema).default([]),
 });
 
 export type Content = z.infer<typeof contentSchema>;
@@ -25,5 +27,6 @@ export * from "./education";
 export * from "./experience";
 export * from "./languages";
 export * from "./now";
+export * from "./personal-project";
 export * from "./profile";
 export * from "./skills";

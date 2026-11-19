@@ -1,15 +1,13 @@
 ---
 import type { Certification } from "@portfolio/content";
-import { type Locale, getStrings } from "../../i18n";
 import { formatPoint } from "../../lib/dates";
+import { strings as t } from "../../lib/strings";
 
 interface Props {
   items: Certification[];
-  locale: Locale;
 }
 
-const { items, locale } = Astro.props;
-const t = getStrings(locale);
+const { items } = Astro.props;
 ---
 
 <ul class="space-y-4">
@@ -35,7 +33,7 @@ const t = getStrings(locale);
               {certification.issuer ?? ""}
               {certification.issuer && certification.date ? " · " : ""}
               {certification.date
-                ? formatPoint(certification.date, locale)
+                ? formatPoint(certification.date)
                 : ""}
             </p>
           ) : null

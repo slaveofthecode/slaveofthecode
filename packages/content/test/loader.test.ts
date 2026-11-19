@@ -2,25 +2,17 @@ import { describe, expect, it } from "bun:test";
 import { getContent, parseContent } from "../src/loader";
 
 describe("getContent", () => {
-  it("returns validated content for en", () => {
-    const content = getContent("en");
+  it("returns validated content from the committed JSON", () => {
+    const content = getContent();
     expect(content.profile.name.length).toBeGreaterThan(0);
+    expect(content.profile.avatar).toMatch(/^https:\/\//);
     expect(Array.isArray(content.experience)).toBe(true);
-  });
-
-  it("returns validated content for es", () => {
-    const content = getContent("es");
-    expect(content.profile.name.length).toBeGreaterThan(0);
-  });
-
-  it("throws a readable error for an unknown locale", () => {
-    // @ts-expect-error intentionally passing an invalid locale
-    expect(() => getContent("de")).toThrow(/Unknown locale "de"/);
+    expect(content.personalProjects.length).toBeGreaterThan(0);
   });
 });
 
 describe("parseContent", () => {
-  it("throws a readable error that names the locale and the failing path", () => {
+  it("throws a readable error that names the failing path", () => {
     const invalid = {
       profile: { name: "Jane" },
       experience: [],
@@ -28,9 +20,7 @@ describe("parseContent", () => {
       languages: [],
       now: [],
     };
-    expect(() => parseContent("en", invalid)).toThrow(
-      /Invalid content for locale "en"/,
-    );
-    expect(() => parseContent("en", invalid)).toThrow(/profile\.headline/);
+    expect(() => parseContent(invalid)).toThrow(/Invalid CV content/);
+    expect(() => parseContent(invalid)).toThrow(/profile\.headline/);
   });
 });

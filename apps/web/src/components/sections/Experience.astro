@@ -1,15 +1,13 @@
 ---
 import type { Experience } from "@portfolio/content";
-import { type Locale, getStrings } from "../../i18n";
 import { formatRange } from "../../lib/dates";
+import { strings as t } from "../../lib/strings";
 
 interface Props {
   items: Experience[];
-  locale: Locale;
 }
 
-const { items, locale } = Astro.props;
-const t = getStrings(locale);
+const { items } = Astro.props;
 ---
 
 <ol class="space-y-4">
@@ -23,7 +21,7 @@ const t = getStrings(locale);
               datetime={job.startDate}
               class="font-mono text-xs uppercase tracking-wide text-muted"
             >
-              {formatRange(job.startDate, job.endDate, locale, t.cv.present)}
+              {formatRange(job.startDate, job.endDate, t.cv.present)}
             </time>
           </div>
           <p class="mt-1 font-mono text-sm text-fg">

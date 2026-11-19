@@ -1,15 +1,13 @@
 ---
-import { type Locale, getStrings } from "../i18n";
+import { strings as t } from "../lib/strings";
 import Icon from "./Icon.astro";
 
 interface Props {
-  locale: Locale;
   name: string;
   avatar?: string;
 }
 
-const { locale, name, avatar } = Astro.props;
-const t = getStrings(locale);
+const { name, avatar } = Astro.props;
 const apiUrl = import.meta.env.PUBLIC_API_URL ?? "http://localhost:8787";
 
 const clientStrings = {
@@ -23,7 +21,7 @@ const clientStrings = {
 };
 ---
 
-<div data-chat data-api={apiUrl} data-locale={locale} data-name={name} data-avatar={avatar ?? ""}>
+<div data-chat data-api={apiUrl} data-name={name} data-avatar={avatar ?? ""}>
   <section
     id="chat-panel"
     data-chat-panel
@@ -135,7 +133,6 @@ const clientStrings = {
 
   if (root) {
     const api = (root.dataset.api ?? "").replace(/\/$/, "");
-    const locale = root.dataset.locale ?? "en";
     const name = root.dataset.name ?? "";
     const avatar = root.dataset.avatar ?? "";
     const stringsEl = root.querySelector<HTMLScriptElement>("[data-chat-strings]");
@@ -269,7 +266,7 @@ const clientStrings = {
         const response = await fetch(`${api}/chat`, {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ messages: history.slice(-MAX_MESSAGES), locale }),
+          body: JSON.stringify({ messages: history.slice(-MAX_MESSAGES) }),
         });
 
         if (response.status === 429) {

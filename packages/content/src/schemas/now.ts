@@ -9,10 +9,12 @@ export const nowItemSchema = z.object({
   kind: nowKindSchema,
   title: z.string().min(1),
   description: z.string().min(1),
+  pdfDescription: z.string().min(1),
   progress: z.number().int().min(0).max(100),
   status: nowStatusSchema,
   startedAt: isoDateSchema.optional(),
   updatedAt: isoDateSchema,
+  academyUrl: z.string().url().optional(),
   links: z.array(linkSchema),
   tags: z.array(z.string().min(1)),
 });

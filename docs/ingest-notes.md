@@ -1,5 +1,8 @@
 # Ingest notes
 
+> Historical only: ADR-0007 replaced PDF ingest and en/es data with a single
+> hand-maintained `packages/content/data/cv.json`.
+
 Open questions from the PDF → JSON ingest (PR-4). The resume source is English, so
 `data/en/*.json` is authoritative and `data/es/*.json` is a **draft translation** awaiting
 your review. Answer or edit directly; ambiguous items must not be guessed.

@@ -8,30 +8,26 @@ import { getContent } from "@portfolio/content";
 import BackToTop from "../components/BackToTop.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { type Locale, getStrings, locales, localizedPath } from "../i18n";
+import { strings as t } from "../lib/strings";
 
 interface Props {
-  locale: Locale;
-  /** Locale-agnostic path of the current page, e.g. "/". */
-  path?: string;
   title?: string;
   description?: string;
 }
 
-const { locale, path = "/", title, description } = Astro.props;
-const t = getStrings(locale);
-const { profile } = getContent(locale);
+const { title, description } = Astro.props;
+const { profile } = getContent();
 const avatar = profile.avatar;
 const faviconType = avatar?.endsWith(".svg") ? "image/svg+xml" : "image/png";
 const pageTitle = title ?? `${profile.name} — ${profile.headline}`;
 const pageDescription = description ?? profile.summary;
 
-const canonical = new URL(localizedPath(locale, path), Astro.site);
-const ogLocale = locale === "es" ? "es_ES" : "en_US";
+const canonical = new URL("/", Astro.site);
+const ogLocale = "en_US";
 ---
 
 <!doctype html>
-<html lang={locale} data-theme="light" data-style="normal">
+<html lang="en" data-theme="light" data-style="normal">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,17 +40,6 @@ const ogLocale = locale === "es" ? "es_ES" : "en_US";
       href={avatar ?? "/favicon.svg"}
     />
     <link rel="apple-touch-icon" href={avatar ?? "/favicon.svg"} />
-
-    {
-      locales.map((code) => (
-        <link rel="alternate" hreflang={code} href={new URL(localizedPath(code, path), Astro.site)} />
-      ))
-    }
-    <link
-      rel="alternate"
-      hreflang="x-default"
-      href={new URL(localizedPath("en", path), Astro.site)}
-    />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
@@ -89,11 +74,11 @@ const ogLocale = locale === "es" ? "es_ES" : "en_US";
     >
       {t.a11y.skipToContent}
     </a>
-    <Header locale={locale} path={path} />
+    <Header />
     <main id="main" class="mx-auto w-full max-w-3xl px-5">
       <slot />
     </main>
-    <Footer locale={locale} />
-    <BackToTop locale={locale} />
+    <Footer />
+    <BackToTop />
   </body>
 </html>

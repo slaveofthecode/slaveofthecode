@@ -1,0 +1,29 @@
+# ADR-0007 Manual JSON CV source, English-only site, generated PDFs
+
+- **Context:** the PDF→JSON ingest and the en/es draft translation added a second
+  workflow and parity burden without improving the published site. The public site
+  is English-only, and the downloadable CV must always match the data shown on it.
+- **Decision:**
+  - `packages/content/data/cv.json` is the single source of truth, maintained by hand
+    and validated with Zod via `parseContent`/`getContent`.
+  - The web serves only `/` with static English UI strings in `apps/web/src/lib/strings.ts`.
+    `astro.config.mjs` has no `i18n`, `/es/` and `LanguageSwitcher` are removed, and
+    `vercel.json` redirects `/es` to `/`.
+  - `apps/web/scripts/generate-cv-pdfs.ts` runs before `astro build` and writes both
+    `apps/web/public/cv.pdf` and `apps/web/public/cv-ats.pdf` from the same JSON using
+    `pdf-lib` (pure TypeScript, no native binaries). The hero links to both.
+  - The chat has no `locale` input: `POST /chat` accepts `{ messages }`, RAG chunks
+    have unprefixed ids and no locale column, and the system prompt always answers in
+    English. The SQLite snapshot is regenerated from the EN data only.
+  - `cv.json` also owns `profile.avatar` (a public absolute URL, used by the web and
+    embedded in the designed PDF) and `personalProjects[]` (name, short description,
+    tech, repo URL, production URL and thumbnail URL). The web shows personal projects
+    after "What I'm working on now"; both PDFs show a reduced project block.
+- **Consequences:** one edit updates the web, both PDFs and the chat; no ingest step,
+  no translation drift, no committed source PDF. The generated PDFs are build outputs
+  committed as public artifacts. Changing the CV requires `bun run build` (web/PDFs)
+  and `bun run --filter @portfolio/api build:rag` (chat snapshot, needs `GEMINI_API_KEY`).
+  The ATS PDF stays text-only; the designed PDF embeds the same portrait from `cv.json`.
+  The PDF "What I'm working on now" block is intentionally reduced to courses only
+  (title, one-sentence description, progress and academy URL), while the web keeps the
+  richer cards.

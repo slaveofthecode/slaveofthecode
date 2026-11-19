@@ -1,9 +1,12 @@
 /**
- * Suggested download filename for the public resume copy served at
- * `/resume.pdf`, e.g. "Gustavo Lopez" → "Gustavo_Lopez_resume.pdf".
+ * Suggested download filename for a generated CV PDF, e.g. "Gustavo Lopez" →
+ * "Gustavo_Lopez_resume.pdf" (or "_resume_ats.pdf" for the ATS variant).
  * Keeps unicode letters/digits; any other run becomes a single "_".
  */
-export function resumeFilename(name: string): string {
+export function resumeFilename(
+  name: string,
+  variant: "designed" | "ats" = "designed",
+): string {
   const words = name
     .trim()
     .split(/\s+/)
@@ -11,6 +14,7 @@ export function resumeFilename(name: string): string {
       word.replace(/[^\p{L}\p{N}]+/gu, "_").replace(/^_+|_+$/g, ""),
     )
     .filter(Boolean);
-  if (words.length === 0) return "resume.pdf";
-  return `${words.join("_")}_resume.pdf`;
+  const suffix = variant === "ats" ? "resume_ats.pdf" : "resume.pdf";
+  if (words.length === 0) return suffix;
+  return `${words.join("_")}_${suffix}`;
 }

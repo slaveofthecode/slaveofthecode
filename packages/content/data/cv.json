@@ -3,9 +3,9 @@
     "name": "Gustavo Lopez",
     "headline": "Senior Full-Stack Developer",
     "location": "Córdoba, Argentina",
-    "summary": "\nPreferred environment: **React** - **TS** - **Node** - **Astro** - **Cursor** - **AI**\nCertifications: **Microsoft Certified Professional (MCP)**\nIn progress: _**AWS**_, _**AI Engineering**_, _**Data Engineering**_, _**Python**_",
+    "summary": "\nPreferred environment: **React** - **TS** - **Node** - **Astro** - **Cursor** - **AI**\nCertifications: **Microsoft Certified Professional (MCP)**\n - In progress: **AWS**, **AI Engineering**, **Data Engineering**, **Python**, **English**",
     "yearsOfExperience": "+15 years",
-    "englishLevel": "B2",
+    "englishLevel": "B1/B2",
     "links": [
       {
         "label": "Portfolio",
@@ -21,7 +21,7 @@
       }
     ],
     "email": "gml.gustavoml@gmail.com",
-    "avatar": "https://slaveofthecode.vercel.app/portrait.png"
+    "avatar": "/images/profile/portrait.png"
   },
   "experience": [
     {

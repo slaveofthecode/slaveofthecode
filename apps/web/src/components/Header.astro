@@ -103,24 +103,26 @@ const navItems = [
         </ul>
       </div>
       <div class="hidden items-center gap-2 sm:mr-3 sm:flex">
-        <a
-          href="/cv.pdf"
-          download={resumeFilename(profile.name)}
+        <button
+          type="button"
+          data-cv-download="designed"
+          data-filename={resumeFilename(profile.name)}
           aria-label={`${profile.name} CV`}
-          class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+          class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg disabled:cursor-wait disabled:opacity-60"
         >
           <Icon name="download" class="h-3.5 w-3.5" />
           {t.cv.download}
-        </a>
-        <a
-          href="/cv-ats.pdf"
-          download={resumeFilename(profile.name, "ats")}
+        </button>
+        <button
+          type="button"
+          data-cv-download="ats"
+          data-filename={resumeFilename(profile.name, "ats")}
           aria-label={`${profile.name} ATS CV`}
-          class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-muted transition-colors hover:bg-hover hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+          class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-muted transition-colors hover:bg-hover hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg disabled:cursor-wait disabled:opacity-60"
         >
           <Icon name="download" class="h-3.5 w-3.5" />
           {t.cv.downloadAts}
-        </a>
+        </button>
       </div>
       <button
         type="button"
@@ -201,6 +203,25 @@ const navItems = [
 </style>
 
 <script>
+  import { downloadCvPdf, isCvPdfMode } from "../lib/download-cv";
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>(
+    "[data-cv-download]",
+  )) {
+    button.addEventListener("click", async () => {
+      const mode = button.dataset.cvDownload;
+      if (!isCvPdfMode(mode)) return;
+      button.disabled = true;
+      button.setAttribute("aria-busy", "true");
+      try {
+        await downloadCvPdf(mode, button.dataset.filename ?? "resume.pdf");
+      } finally {
+        button.disabled = false;
+        button.removeAttribute("aria-busy");
+      }
+    });
+  }
+
   const header = document.querySelector<HTMLElement>("[data-header]");
   if (header) {
     const stickyActions = header.querySelector<HTMLElement>("[data-sticky-actions]");

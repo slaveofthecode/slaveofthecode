@@ -687,14 +687,22 @@ Merged into `main` after the cutover (see PRs #20/#21):
   in dark, so the panel reads clearly against the body without leaving the grayscale system. Added
   `shadow-xl` and a `bg-surface` header for subtle depth. Checks green: lint, typecheck,
   **141 tests**, build, check:boundaries.
+- **On-demand CV PDFs (`feat/on-demand-cv-pdf-download`):** the human's `cv.json` edit makes
+  `profile.avatar` root-relative (`/images/profile/portrait.png`). `astro build` no longer runs a
+  PDF generator; `apps/web/scripts/generate-cv-pdfs.ts` and both committed PDFs were removed.
+  Header download buttons now call `downloadCvPdf` in `src/lib/download-cv.ts`, which dynamically
+  imports the browser-safe renderer, fetches the portrait for `designed`, renders the bytes to a
+  `Blob`, and caches the `Blob`/object URL per variant so repeat clicks reuse the same PDF. Added
+  cache tests and relaxed the loader test to accept root-relative avatars. Checks green: lint,
+  typecheck, **145 tests**, build, check:boundaries.
 
 ## Next steps
-- **`feat/profile-highlights-default-experience` awaits human commit/push/PR**: created from
-  updated `main` per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.
-- **PRs #76–#81 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
-  `56ff58c`): single JSON source, web/PDF polish, Markdown summary and README GIF. No agent merge
-  was performed.
-- After a CV edit, run `bun run build` (web + both PDFs) and
+- **`feat/on-demand-cv-pdf-download` awaits human commit/push/PR**: created from updated `main`
+  after PR #82 was merged. No commit, push or PR by the agent yet.
+- **PRs #76–#82 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
+  `56ff58c`, `0bc6237`): single JSON source, web/PDF polish, Markdown summary and README GIF.
+  No agent merge was performed.
+- After a CV edit, run `bun run build` (web only; PDFs are generated on click) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
   then redeploy both Vercel projects. This branch updates the RAG chunk builder, but the agent did
   not regenerate `cv.sqlite` because no `GEMINI_API_KEY` is available here.

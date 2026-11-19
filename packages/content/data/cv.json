@@ -39,7 +39,15 @@
             "Handled bulk data imports, financial growth calculations, and reporting features backed by MongoDB.",
             "Automated version control, releases, and workflow pipelines using GitHub Actions."
           ],
-          "tech": ["Meteor", "Node.js", "Blaze", "MongoDB", "GitHub Actions", "Visual Studio Code", "GitHub Copilot"]
+          "tech": [
+            "Meteor",
+            "Node.js",
+            "Blaze",
+            "MongoDB",
+            "GitHub Actions",
+            "Visual Studio Code",
+            "GitHub Copilot"
+          ]
         },
         {
           "name": "Enterprise Life Settlements & Policy Servicing Backend",

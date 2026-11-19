@@ -48,6 +48,7 @@ const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
 const MARGIN = 48;
 const BOTTOM = 56;
+const LANGUAGE_BAR_SEGMENTS = 6;
 
 function newPage(ctx: Context): void {
   ctx.page = ctx.doc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
@@ -94,6 +95,25 @@ function ink(ctx: Context, muted: boolean): RGB {
   if (ctx.mode === "ats") return rgb(0, 0, 0);
   const level = muted ? 0.42 : 0.1;
   return rgb(level, level, level);
+}
+
+function drawLanguageBar(ctx: Context, proficiencyPercent: number): void {
+  const height = 4;
+  const width = 120;
+  const segmentWidth = width / LANGUAGE_BAR_SEGMENTS;
+  const filled = Math.round((proficiencyPercent / 100) * LANGUAGE_BAR_SEGMENTS);
+  ensure(ctx, height + 8);
+  for (let index = 0; index < LANGUAGE_BAR_SEGMENTS; index += 1) {
+    const shade = index < filled ? 0.1 : 0.8;
+    ctx.page.drawRectangle({
+      x: MARGIN + index * segmentWidth,
+      y: ctx.y + 2,
+      width: segmentWidth,
+      height,
+      color: rgb(shade, shade, shade),
+    });
+  }
+  ctx.y -= height + 8;
 }
 
 function write(ctx: Context, value: string, options: WriteOptions = {}): void {
@@ -410,6 +430,9 @@ export async function renderCvPdf(
     heading(ctx, "Languages");
     for (const language of content.languages) {
       write(ctx, `${language.name} — ${language.level}`, { gap: 4 });
+      if (ctx.mode === "designed") {
+        drawLanguageBar(ctx, language.proficiencyPercent);
+      }
     }
   }
 

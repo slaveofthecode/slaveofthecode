@@ -4,6 +4,7 @@ import {
   contentSchema,
   educationSchema,
   experienceSchema,
+  languageSchema,
   linkSchema,
   nowItemSchema,
   personalProjectSchema,
@@ -28,6 +29,13 @@ const validExperience = {
   endDate: null,
   summary: "Did things",
   highlights: ["One"],
+};
+
+const validLanguage = {
+  id: "english",
+  name: "English",
+  level: "Intermediate",
+  proficiencyPercent: 50,
 };
 
 const validEducation = {
@@ -165,6 +173,24 @@ describe("experienceSchema", () => {
       tech: ["Legacy"],
     });
     expect("tech" in parsed).toBe(false);
+  });
+});
+
+describe("languageSchema", () => {
+  it("accepts a proficiency percentage from 0 to 100", () => {
+    expect(languageSchema.safeParse(validLanguage).success).toBe(true);
+    expect(
+      languageSchema.safeParse({ ...validLanguage, proficiencyPercent: 100 })
+        .success,
+    ).toBe(true);
+  });
+
+  it("rejects an out-of-range proficiency percentage", () => {
+    const result = languageSchema.safeParse({
+      ...validLanguage,
+      proficiencyPercent: 101,
+    });
+    expect(result.success).toBe(false);
   });
 });
 

@@ -706,17 +706,26 @@ Merged into `main` after the cutover (see PRs #20/#21):
   Java/Spring Boot/Camunda/Azure OCR/AWS/Docker/EC2/Angular/Jira/GitHub/Maven/IntelliJ/Copilot/
   Cursor/Claude Code. Harriague and Dicicom got empty-name, tech-only projects; empty project names
   no longer render a heading. Checks green: lint, typecheck, **149 tests**, build, check:boundaries.
+- **PDF language bars (`feat/pdf-output-format`):** added `proficiencyPercent` (integer 0–100) to
+  `languages` in the schema and `cv.json` (Spanish 100, English 50). The designed PDF now draws a
+  six-segment bar under each language with no marks or labels: 6/6 filled for Spanish and 3/6 for
+  English. The same bar now renders in the web Languages section with theme tokens. ATS remains
+  text-only. The new percentage is not part of RAG chunk text, but this branch
+  also carries the earlier English-level/summary edits, so the committed RAG snapshot is stale and
+  must be regenerated before merge. Checks green: lint, typecheck, **152 tests**, build, check:boundaries.
 
 ## Next steps
-- **`feat/experience-tech-per-project` awaits human commit/push/PR**: created from updated `main`
-  after PR #85 was merged. No commit, push or PR by the agent yet.
-- **PRs #76–#85 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
-  `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`): single JSON source, web/PDF polish, Markdown summary,
-  README GIF, on-demand CV PDFs and Open Graph portrait. No agent merge was performed.
+- **`feat/pdf-output-format` awaits human commit/push/PR**: created from updated `main` after PR #86
+  was merged. No commit, push or PR by the agent yet. Regenerate RAG first with `GEMINI_API_KEY`
+  and include `apps/api/data/cv.sqlite` and `apps/api/src/data/rag-db.ts`.
+- **PRs #76–#86 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
+  `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`, `696380b`): single JSON source, web/PDF polish,
+  Markdown summary, README GIF, on-demand CV PDFs, Open Graph portrait and per-project tech.
+  No agent merge was performed.
 - After a CV edit, run `bun run build` (web only; PDFs are generated on click) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
-  then redeploy both Vercel projects. This branch updates the RAG chunk builder, but the agent did
-  not regenerate `cv.sqlite` because no `GEMINI_API_KEY` is available here.
+  then redeploy both Vercel projects. This branch changed CV text but not the chunk builder; the
+  agent did not regenerate `cv.sqlite` because no `GEMINI_API_KEY` is available here.
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). The old
   **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own

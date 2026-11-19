@@ -6,13 +6,17 @@ import { PDFDocument } from "pdf-lib";
 import { renderCvPdf } from "../src/lib/cv-pdf";
 import { strings } from "../src/lib/strings";
 
-function extractText(bytes: Uint8Array): string {
+function extractStreams(bytes: Uint8Array): string {
   const raw = Buffer.from(bytes).toString("latin1");
-  const streams = [...raw.matchAll(/stream\r?\n([\s\S]*?)\r?\nendstream/g)].map(
-    (match) =>
+  return [...raw.matchAll(/stream\r?\n([\s\S]*?)\r?\nendstream/g)]
+    .map((match) =>
       inflateSync(Buffer.from(match[1] ?? "", "latin1")).toString("latin1"),
-  );
-  return [...streams.join("\n").matchAll(/<([0-9A-Fa-f]+)>\s*Tj/g)]
+    )
+    .join("\n");
+}
+
+function extractText(bytes: Uint8Array): string {
+  return [...extractStreams(bytes).matchAll(/<([0-9A-Fa-f]+)>\s*Tj/g)]
     .map((match) => Buffer.from(match[1] ?? "", "hex").toString("latin1"))
     .join("\n");
 }
@@ -73,6 +77,15 @@ describe("renderCvPdf", () => {
     const text = extractText(await renderCvPdf(getContent(), "ats"));
     expect(text).toContain("Tech: Meteor,");
     expect(text).toContain("Tech: Java, Spring Boot,");
+  });
+
+  test("designed PDF renders language bars from proficiency percentages", async () => {
+    const designed = extractStreams(
+      await renderCvPdf(getContent(), "designed"),
+    );
+    const ats = extractStreams(await renderCvPdf(getContent(), "ats"));
+    expect(designed.match(/0\.8 0\.8 0\.8 rg/g) ?? []).toHaveLength(3);
+    expect(ats).not.toContain("0.8 0.8 0.8 rg");
   });
 
   test("the ATS variant contains plain-text contact data and sections", async () => {

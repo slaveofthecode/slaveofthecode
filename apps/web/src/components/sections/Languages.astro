@@ -6,14 +6,38 @@ interface Props {
 }
 
 const { items } = Astro.props;
+const segmentCount = 6;
+const filledSegments = (percent: number): number =>
+  Math.round((percent / 100) * segmentCount);
 ---
 
 <ul class="space-y-3">
   {
     items.map((language) => (
-      <li class="flex flex-wrap items-baseline justify-between gap-x-4 font-mono text-sm">
-        <span class="text-fg">{language.name}</span>
-        <span class="text-subtle">{language.level}</span>
+      <li class="font-mono text-sm">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+          <span class="text-fg">{language.name}</span>
+          <span class="text-subtle">{language.level}</span>
+        </div>
+        <div
+          class="mt-2 flex gap-1"
+          role="progressbar"
+          aria-valuenow={language.proficiencyPercent}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`${language.name}: ${language.proficiencyPercent}%`}
+        >
+          {Array.from({ length: segmentCount }, (_, index) => (
+            <span
+              class:list={[
+                "h-1.5 flex-1 rounded-card",
+                index < filledSegments(language.proficiencyPercent)
+                  ? "bg-accent"
+                  : "bg-border",
+              ]}
+            />
+          ))}
+        </div>
       </li>
     ))
   }

@@ -3,7 +3,7 @@
     "name": "Gustavo Lopez",
     "headline": "Senior Full-Stack Developer",
     "location": "Córdoba, Argentina",
-    "summary": "\nPreferred environment: **React** - **TS** - **Node** - **Astro** - **Cursor** - **AI**\nCertifications: **Microsoft Certified Professional (MCP)**\n - In progress: **AWS**, **AI Engineering**, **Data Engineering**, **Python**, **English**",
+    "summary": "\nPreferred environment: **React** - **TS** - **Node** - **Astro** - **Cursor** - **AI**\nCertifications: **Microsoft Certified Professional (MCP)**\n - In progress: **AWS**, **AI Engineering**, **Data Engineering**, **Python**",
     "yearsOfExperience": "+15 years",
     "englishLevel": "B1/B2",
     "links": [
@@ -482,12 +482,14 @@
     {
       "id": "spanish",
       "name": "Spanish",
-      "level": "Native / Bilingual"
+      "level": "Native / Bilingual",
+      "proficiencyPercent": 100
     },
     {
       "id": "english",
       "name": "English",
-      "level": "Professional Working Proficiency"
+      "level": "Intermediate",
+      "proficiencyPercent": 50
     }
   ],
   "education": [

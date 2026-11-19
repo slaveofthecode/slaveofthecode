@@ -556,9 +556,16 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - PDF tests now assert all `content.now` titles/descriptions/progress in both modes.
   - Checks green: lint, typecheck, **127 tests**, build, check:boundaries.
 
+## Done (continued)
+- **PR #77 opened** for `feat/web-accordion-projects-pdf-design`:
+  https://github.com/slaveofthecode/slaveofthecode/pull/77 (base `main`, assignee @me). The human
+  committed/pushed the branch; the agent only created the PR and did not merge it.
+- **PR workflow correction (this branch):** `docs/workflows/open-pr.md` now requires the final
+  STATUS.md update and human commit/push before `gh pr create`, so STATUS.md never trails the PR.
+
 ## Next steps
-- **`feat/web-accordion-projects-pdf-design` awaits human commit/push/PR**: branched from
-  `feat/json-single-source` per the user, so it depends on PR #76. No commit or push by the agent.
+- **`feat/web-accordion-projects-pdf-design` has PR #77 open**: stacked on `feat/json-single-source`
+  / PR #76 per the user, but targeting `main` per `docs/workflows/open-pr.md`.
 - **`feat/json-single-source` has PR #76 open**: https://github.com/slaveofthecode/slaveofthecode/pull/76
   (base `main`, assignee @me). Single JSON source, English-only site/chat, generated PDFs and
   personal projects. The human committed/pushed; no commit or push was made by the agent.
@@ -570,8 +577,8 @@ Merged into `main` after the cutover (see PRs #20/#21):
   **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own
   branch, so it never lingers uncommitted without an owner. PR #42 is merged (`5f1696c`).
-- **Human actions:** review PR #76; commit/push this branch and open its PR after #76 is merged.
-  Optional later: Vercel WAF rule on `/api/chat`, Turnstile.
+- **Human actions:** review PRs #76 and #77; commit/push the uncommitted STATUS.md and workflow
+  notes so they ride in this same branch. Optional later: Vercel WAF rule on `/api/chat`, Turnstile.
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:

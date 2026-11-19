@@ -15,6 +15,8 @@ const validProfile = {
   headline: "Headline",
   location: "City",
   summary: "Summary",
+  yearsOfExperience: "+10 years",
+  englishLevel: "B2",
   links: [{ label: "GitHub", url: "https://example.com/github" }],
 };
 
@@ -71,6 +73,14 @@ describe("profileSchema", () => {
     expect(profileSchema.safeParse(validProfile).success).toBe(true);
   });
 
+  it("requires experience and English level", () => {
+    const missing: Record<string, unknown> = { ...validProfile };
+    missing.yearsOfExperience = undefined;
+    missing.englishLevel = undefined;
+    const result = profileSchema.safeParse(missing);
+    expect(result.success).toBe(false);
+  });
+
   it("rejects an invalid link url", () => {
     const result = linkSchema.safeParse({ label: "x", url: "not-a-url" });
     expect(result.success).toBe(false);
@@ -81,10 +91,18 @@ describe("profileSchema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("rejects a relative avatar path", () => {
+  it("accepts a root-relative avatar path", () => {
     const result = profileSchema.safeParse({
       ...validProfile,
-      avatar: "/portrait.png",
+      avatar: "/images/profile/portrait.png",
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a non-root-relative avatar path", () => {
+    const result = profileSchema.safeParse({
+      ...validProfile,
+      avatar: "portrait.png",
     });
     expect(result.success).toBe(false);
   });
@@ -170,6 +188,22 @@ describe("certificationSchema", () => {
       url: "https://example.com/badge",
     });
     expect(result.success).toBe(true);
+  });
+
+  it("accepts a root-relative image path", () => {
+    const result = certificationSchema.safeParse({
+      ...validCertification,
+      imageUrl: "/images/certifications/cert.png",
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a non-root-relative image path", () => {
+    const result = certificationSchema.safeParse({
+      ...validCertification,
+      imageUrl: "cert.png",
+    });
+    expect(result.success).toBe(false);
   });
 
   it("rejects an invalid url", () => {

@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "./tokens.css";
 
+:root {
+  --app-header-height: 3.5rem;
+}
+
 /* Map theme tokens to Tailwind utilities. `inline` keeps the var() reference
  * so utilities follow the current `data-theme` without a rebuild. */
 @theme inline {

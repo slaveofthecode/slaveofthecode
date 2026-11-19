@@ -12,6 +12,7 @@ Living CV website. The new site lives on `main` (cutover complete); see
 ├─ opencode.json             # OpenCode permissions (soft guardrails)
 ├─ package.json              # Bun workspaces + root scripts
 ├─ biome.json
+├─ .vscode/                   # Cursor/VS Code: Biome owns save formatting
 ├─ tsconfig.base.json
 ├─ .github/workflows/ci.yml
 ├─ .opencode/command/        # tiny wrappers -> docs/workflows/*.md
@@ -31,6 +32,15 @@ Living CV website. The new site lives on `main` (cutover complete); see
 ├─ scripts/check-boundaries.ts
 └─ infra/                    # later (AWS IaC)
 ```
+
+## Editor formatting (Cursor / VS Code)
+
+`.vscode/settings.json` disables format-on-save globally and enables it only for
+languages Biome supports (JS, JSX, TS, TSX, JSON, JSONC, CSS), using the
+`biomejs.biome` extension and the root `biome.json`. Save also applies Biome's safe
+fixes and import sorting. Other file types are left untouched, so a save never
+introduces formatting that `bun run lint` will reject. Install the recommended
+extension from Open VSX in Cursor.
 
 ## Dependency rule (enforced by `scripts/check-boundaries.ts`, run in CI)
 

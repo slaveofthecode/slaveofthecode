@@ -629,16 +629,75 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - PDFs regenerated after the latest CV JSON edit; checks still green: lint, typecheck,
     **133 tests**, build, check:boundaries.
 
+## Done (continued)
+- **`feat/profile-highlights-default-experience` (this branch, from updated `main` `7c69090`):**
+  - `profile.yearsOfExperience` (`+15 years`) and `profile.englishLevel` (`B1/B2`) are now validated
+    fields in `packages/content`; `cv.json` and `cv.example.json` were updated.
+  - The human's uncommitted CV edits were preserved: expanded summary text, project names
+    "Security Products" and "Universal Music Group (UMG)", and the new Portfolio personal project.
+  - The first two summary lines are composed from those fields by `profileSummary()`, so the web
+    and both PDFs keep the same Markdown look without duplicating CV facts. `plainProfileSummary()`
+    feeds the meta description without Markdown markers.
+  - The RAG profile chunk also includes both new fields; regenerating `cv.sqlite` with
+    `bun run --filter @portfolio/api build:rag` is still required before redeploying the API.
+  - Experience is the default section, rendered open server-side and synced to `/experience` with
+    `replaceState` on load. Section tabs and links keep the URL in sync; clicking the active tab no
+    longer collapses the view.
+  - The sticky header identity and the main profile photo/name/headline now link to `/experience`,
+    so "home" lands on the open Experience panel.
+  - Scrolled header identity shows `+15 years` and `B1/B2` as separated, high-contrast badges.
+  - Both PDFs regenerated; checks green: lint, typecheck, **138 tests**, build, check:boundaries.
+
+## Done (continued)
+- **Project thumbnails (this branch):** all five `personalProjects[].thumbnailUrl` values in
+  `packages/content/data/cv.json` now point to root-relative public assets
+  (`/images/projects/thumbnail__*.png`), so they resolve identically across deployed base
+  URLs. Astro serves `apps/web/public/` from `/`, so the URL must not include `apps/web/public`.
+  The existing `assetUrlSchema` already accepts root-relative paths; no schema change was needed.
+  `format:data` normalized the human's uncommitted JSON edits, and the build regenerated both PDFs.
+  Checks green: lint, typecheck, **139 tests**, build, check:boundaries. Built HTML contains all
+  five paths and `dist/images/projects/` includes the five PNGs.
+- **Project thumbnail sizing/hover (this branch):** `PersonalProjects.astro` now renders every
+  thumbnail in the same responsive `aspect-4/3` frame (capped at 22rem on mobile, 14rem at `sm`,
+  18rem at `lg`) instead of stretching to each card's text height. `object-contain` keeps the whole
+  image visible inside the frame (no cropping); on hover the frame itself scales 105% on mobile and
+  110% on `sm+` (`cursor-zoom-in`, 300ms, disabled under `prefers-reduced-motion`), with no layout
+  shift or click interaction. Checks green: lint, typecheck, **139 tests**, build, check:boundaries;
+  built HTML has five identical wrappers and the emitted CSS includes the aspect-ratio,
+  object-fit:contain and hover scale rules.
+- **Editor save formatting (this branch):** added `.vscode/settings.json` +
+  `.vscode/extensions.json` so Cursor/VS Code uses the `biomejs.biome` extension and the root
+  `biome.json`. Format-on-save is off globally and on only for Biome-supported languages
+  (JS/JSX/TS/TSX/JSON/JSONC/CSS); safe fixes and import sorting run on save. Other file types are
+  left untouched. `docs/architecture.md` documents the setup. Checks green: lint, typecheck,
+  **139 tests**, build, check:boundaries.
+- **Certification cards (this branch):** `certificationSchema` gained optional `imageUrl`
+  (root-relative asset path) and both `cv.json` entries point to their PNGs in
+  `public/images/certifications/` (`Microsoft Certified Professional.png` and
+  `Microsoft Specialist.png`, added by the human in `fb3baf4`). `Certifications.astro` is now a
+  two-column grid of cards like `Now.astro`, with a shared `aspect-3/2` `object-contain` frame:
+  greyscale by default, full color on image hover (no crop, no layout shift).
+- **Sticky section menu (this branch):** the section tab row stays in the page flow and becomes
+  sticky below the header once scrolled to it. The header publishes its measured height as
+  `--app-header-height` (updated on scroll/resize/menu toggle), the tabs use it as `top` and the
+  same `bg-bg` token as `body` (no blur), and `Section` uses a dynamic `scroll-margin-top` so
+  anchors clear both bars even when the expanded header shows the extra facts. Checks green: lint,
+  typecheck, **141 tests**, build, check:boundaries.
+- **Chat panel contrast (this branch):** `--app-chat` now maps to `gray-200` in light and `gray-800`
+  in dark, so the panel reads clearly against the body without leaving the grayscale system. Added
+  `shadow-xl` and a `bg-surface` header for subtle depth. Checks green: lint, typecheck,
+  **141 tests**, build, check:boundaries.
+
 ## Next steps
-- **`feat/summary-markdown-rendering` awaits human commit/push/PR**: created from updated `main`
-  per `docs/workflows/start-feature.md`. The working tree mixes the Markdown summary work with the
-  header/footer/profile tweaks above, by human choice. No commit, push or PR by the agent yet.
-- **PRs #76–#79 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`): single JSON
-  source, web/PDF polish and the previous CV UI/dev guard work. No agent merge was performed.
+- **`feat/profile-highlights-default-experience` awaits human commit/push/PR**: created from
+  updated `main` per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.
+- **PRs #76–#81 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
+  `56ff58c`): single JSON source, web/PDF polish, Markdown summary and README GIF. No agent merge
+  was performed.
 - After a CV edit, run `bun run build` (web + both PDFs) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
-  then redeploy both Vercel projects. The current committed RAG snapshot already includes the
-  personal project chunks.
+  then redeploy both Vercel projects. This branch updates the RAG chunk builder, but the agent did
+  not regenerate `cv.sqlite` because no `GEMINI_API_KEY` is available here.
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). The old
   **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own

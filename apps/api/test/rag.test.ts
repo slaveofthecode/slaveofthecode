@@ -55,6 +55,16 @@ describe("buildChunks", () => {
     expect(sections).toContain("personal-projects");
   });
 
+  test("the profile chunk includes experience and English level", () => {
+    const profile = chunks.find((chunk) => chunk.id === "profile");
+    expect(profile?.content).toContain(
+      `Experience: ${content.profile.yearsOfExperience}`,
+    );
+    expect(profile?.content).toContain(
+      `English level: ${content.profile.englishLevel}`,
+    );
+  });
+
   test("every chunk carries id, section, title and content", () => {
     for (const chunk of chunks) {
       expect(chunk.id.length).toBeGreaterThan(0);

@@ -10,34 +10,49 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<ul class="space-y-4">
+<ul class="grid gap-4 sm:grid-cols-2">
   {
     items.map((certification) => (
       <li>
-        <h3 class="flex flex-wrap items-baseline gap-x-3 font-mono text-sm text-fg">
-          <span>{certification.name}</span>
-          {certification.url ? (
-            <a
-              href={certification.url}
-              rel="noopener"
-              target="_blank"
-              class="font-mono text-xs text-subtle underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-            >
-              {t.certifications.validate}
-            </a>
+        <article class="flex h-full flex-col rounded-card border border-border bg-surface p-5 transition-colors hover:border-accent">
+          {certification.imageUrl ? (
+            <div class="aspect-3/2 w-full overflow-hidden rounded-card border border-border bg-bg">
+              <img
+                src={certification.imageUrl}
+                alt=""
+                width="480"
+                height="320"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-contain grayscale transition duration-300 ease-out hover:grayscale-0 motion-reduce:transition-none"
+              />
+            </div>
           ) : null}
-        </h3>
-        {
-          certification.issuer || certification.date ? (
-            <p class="font-mono text-xs text-subtle">
-              {certification.issuer ?? ""}
-              {certification.issuer && certification.date ? " · " : ""}
-              {certification.date
-                ? formatPoint(certification.date)
-                : ""}
-            </p>
-          ) : null
-        }
+          <div class={certification.imageUrl ? "mt-4" : ""}>
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="min-w-0 font-heading text-base text-fg">
+                {certification.name}
+              </h3>
+              {certification.url ? (
+                <a
+                  href={certification.url}
+                  rel="noopener"
+                  target="_blank"
+                  class="shrink-0 font-mono text-xs text-subtle underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                >
+                  {t.certifications.validate}
+                </a>
+              ) : null}
+            </div>
+            {certification.issuer || certification.date ? (
+              <p class="mt-2 font-mono text-xs text-subtle">
+                {certification.issuer ?? ""}
+                {certification.issuer && certification.date ? " · " : ""}
+                {certification.date ? formatPoint(certification.date) : ""}
+              </p>
+            ) : null}
+          </div>
+        </article>
       </li>
     ))
   }

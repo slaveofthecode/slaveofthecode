@@ -6,6 +6,8 @@ describe("getContent", () => {
     const content = getContent();
     expect(content.profile.name.length).toBeGreaterThan(0);
     expect(content.profile.avatar).toMatch(/^https:\/\//);
+    expect(content.profile.yearsOfExperience.length).toBeGreaterThan(0);
+    expect(content.profile.englishLevel.length).toBeGreaterThan(0);
     expect(Array.isArray(content.experience)).toBe(true);
     expect(Array.isArray(content.personalProjects)).toBe(true);
   });

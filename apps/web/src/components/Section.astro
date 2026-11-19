@@ -2,16 +2,18 @@
 interface Props {
   id: string;
   title: string;
+  open?: boolean;
 }
 
-const { id, title } = Astro.props;
+const { id, title, open = false } = Astro.props;
 ---
 
 <section
   id={id}
   aria-label={title}
-  hidden
-  class="scroll-mt-24 py-10"
+  hidden={!open}
+  style="scroll-margin-top: calc(var(--app-header-height, 3.5rem) + 3rem)"
+  class="py-10"
 >
   <slot />
 </section>

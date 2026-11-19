@@ -8,6 +8,7 @@ import { getContent } from "@portfolio/content";
 import BackToTop from "../components/BackToTop.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import { plainProfileSummary } from "../lib/profile-summary";
 import { strings as t } from "../lib/strings";
 
 interface Props {
@@ -20,7 +21,7 @@ const { profile } = getContent();
 const avatar = profile.avatar;
 const faviconType = avatar?.endsWith(".svg") ? "image/svg+xml" : "image/png";
 const pageTitle = title ?? `${profile.name} — ${profile.headline}`;
-const pageDescription = description ?? profile.summary;
+const pageDescription = description ?? plainProfileSummary(profile);
 
 const canonical = new URL("/", Astro.site);
 const ogLocale = "en_US";

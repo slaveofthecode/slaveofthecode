@@ -11,7 +11,7 @@ import PersonalProjects from "../components/sections/PersonalProjects.astro";
 import Profile from "../components/sections/Profile.astro";
 import Skills from "../components/sections/Skills.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { hasCvSection } from "../lib/sections";
+import { defaultCvSectionId, hasCvSection } from "../lib/sections";
 import { strings as t } from "../lib/strings";
 
 const content = getContent();
@@ -25,6 +25,8 @@ const tabSections = [
   { id: "now" as const, label: t.now.heading },
   { id: "projects" as const, label: t.projects.heading },
 ].filter((section) => hasCvSection(content, section.id));
+
+const defaultSection = defaultCvSectionId(content);
 ---
 
 <BaseLayout>
@@ -32,14 +34,21 @@ const tabSections = [
 
   {
     tabSections.length > 0 ? (
-      <div role="group" aria-label={t.sections.label} class="flex w-full gap-1">
+      <div
+        role="group"
+        aria-label={t.sections.label}
+        data-section-tabs
+        data-default-section={defaultSection}
+        style="top: var(--app-header-height, 3.5rem)"
+        class="sticky z-30 flex w-full gap-1 border-b border-border bg-bg"
+      >
         {tabSections.map((section) => (
           <button
             type="button"
             data-section-tab
             data-section={section.id}
             aria-controls={section.id}
-            aria-expanded="false"
+            aria-expanded={section.id === defaultSection}
             class="flex min-w-0 flex-1 basis-0 items-center justify-center gap-1 border-b-2 border-transparent px-2 py-3 text-center font-mono text-[10px] uppercase leading-tight tracking-wide text-muted transition-colors hover:text-fg aria-expanded:border-fg aria-expanded:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg sm:text-xs"
           >
             <span aria-hidden="true">[</span>
@@ -53,7 +62,7 @@ const tabSections = [
 
   {
     hasCvSection(content, "experience") ? (
-      <Section id="experience" title={t.nav.experience}>
+      <Section id="experience" title={t.nav.experience} open={defaultSection === "experience"}>
         <Experience items={content.experience} />
       </Section>
     ) : null
@@ -61,7 +70,7 @@ const tabSections = [
 
   {
     hasCvSection(content, "skills") ? (
-      <Section id="skills" title={t.nav.skills}>
+      <Section id="skills" title={t.nav.skills} open={defaultSection === "skills"}>
         <Skills groups={content.skills} />
       </Section>
     ) : null
@@ -69,7 +78,7 @@ const tabSections = [
 
   {
     hasCvSection(content, "languages") ? (
-      <Section id="languages" title={t.nav.languages}>
+      <Section id="languages" title={t.nav.languages} open={defaultSection === "languages"}>
         <Languages items={content.languages} />
       </Section>
     ) : null
@@ -77,7 +86,7 @@ const tabSections = [
 
   {
     hasCvSection(content, "education") ? (
-      <Section id="education" title={t.nav.education}>
+      <Section id="education" title={t.nav.education} open={defaultSection === "education"}>
         <Education items={content.education} />
       </Section>
     ) : null
@@ -85,7 +94,7 @@ const tabSections = [
 
   {
     hasCvSection(content, "certifications") ? (
-      <Section id="certifications" title={t.nav.certifications}>
+      <Section id="certifications" title={t.nav.certifications} open={defaultSection === "certifications"}>
         <Certifications items={content.certifications} />
       </Section>
     ) : null
@@ -93,7 +102,7 @@ const tabSections = [
 
   {
     hasCvSection(content, "now") ? (
-      <Section id="now" title={t.now.heading}>
+      <Section id="now" title={t.now.heading} open={defaultSection === "now"}>
         <Now items={content.now} />
       </Section>
     ) : null
@@ -101,7 +110,7 @@ const tabSections = [
 
   {
     hasCvSection(content, "projects") ? (
-      <Section id="projects" title={t.projects.heading}>
+      <Section id="projects" title={t.projects.heading} open={defaultSection === "projects"}>
         <PersonalProjects items={content.personalProjects} />
       </Section>
     ) : null
@@ -114,12 +123,21 @@ const tabSections = [
   const tabs = Array.from(
     document.querySelectorAll<HTMLButtonElement>("[data-section-tab]"),
   );
+  const defaultSection =
+    document.querySelector<HTMLElement>("[data-section-tabs]")?.dataset
+      .defaultSection ?? "";
   const panels = new Map(
-    tabs.map((tab) => [tab.dataset.section ?? "", document.getElementById(tab.dataset.section ?? "")]),
+    tabs.map((tab) => [
+      tab.dataset.section ?? "",
+      document.getElementById(tab.dataset.section ?? ""),
+    ]),
   );
 
   const isSectionId = (id: string) =>
     tabs.some((tab) => tab.dataset.section === id);
+
+  const resolveSection = (id: string) =>
+    id && isSectionId(id) ? id : defaultSection;
 
   const setExpanded = (tab: HTMLButtonElement, expanded: boolean) => {
     tab.setAttribute("aria-expanded", String(expanded));
@@ -144,23 +162,30 @@ const tabSections = [
     );
   };
 
+  const setUrl = (id: string, replace = false) => {
+    const nextUrl = id ? `/${id}` : "/";
+    if (`${window.location.pathname}${window.location.hash}` === nextUrl) return;
+    if (replace) window.history.replaceState({ section: id }, "", nextUrl);
+    else window.history.pushState({ section: id }, "", nextUrl);
+  };
+
   const sectionFromUrl = () => {
-    const pathId = window.location.pathname.split("/").filter(Boolean).pop() ?? "";
+    const pathId =
+      window.location.pathname.split("/").filter(Boolean).pop() ?? "";
     const hashId = decodeURIComponent(window.location.hash.replace(/^#/, ""));
-    return [pathId, hashId].find(isSectionId) ?? "";
+    return resolveSection([pathId, hashId].find(isSectionId) ?? "");
   };
 
   const goToSection = (id: string, focus = false, scroll = false) => {
-    const nextUrl = id ? `/${id}` : "/";
-    if (`${window.location.pathname}${window.location.hash}` !== nextUrl) {
-      window.history.pushState({ section: id }, "", nextUrl);
-    }
-    applySection(id, focus);
-    if (scroll && id) scrollToSection(id);
+    const target = resolveSection(id);
+    setUrl(target);
+    applySection(target, focus);
+    if (scroll && target) scrollToSection(target);
   };
 
-  const syncFromUrl = (scroll = false) => {
+  const syncFromUrl = (scroll = false, replace = false) => {
     const id = sectionFromUrl();
+    if (replace) setUrl(id, true);
     applySection(id);
     if (scroll && id) scrollToSection(id);
   };
@@ -168,12 +193,7 @@ const tabSections = [
   for (const tab of tabs) {
     tab.addEventListener("click", () => {
       const id = tab.dataset.section;
-      if (!id) return;
-      if (tab.getAttribute("aria-expanded") === "true") {
-        goToSection("");
-        return;
-      }
-      goToSection(id);
+      if (id) goToSection(id);
     });
   }
 
@@ -181,7 +201,11 @@ const tabSections = [
     if (!(event.target instanceof Element)) return;
     if (
       event instanceof MouseEvent &&
-      (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+      (event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey)
     ) {
       return;
     }
@@ -198,7 +222,7 @@ const tabSections = [
     goToSection(id, true, true);
   });
 
-  window.addEventListener("popstate", () => syncFromUrl());
-  window.addEventListener("hashchange", () => syncFromUrl());
-  syncFromUrl();
+  window.addEventListener("popstate", () => syncFromUrl(false, true));
+  window.addEventListener("hashchange", () => syncFromUrl(false, true));
+  syncFromUrl(false, true);
 </script>

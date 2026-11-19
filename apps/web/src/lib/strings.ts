@@ -1,6 +1,7 @@
 export const strings = {
   nav: {
     label: "Primary",
+    home: "Home",
     menu: "Menu",
     experience: "Experience",
     skills: "Skills",
@@ -27,7 +28,7 @@ export const strings = {
   },
   footer: {
     builtWith: "Built with",
-    rights: "All rights reserved.",
+    rights: "👨🏻‍💻",
     source: "View the source on GitHub",
     iconCredit:
       "Download icon by Konstantin Filatov via SVG Repo (CC Attribution).",
@@ -38,6 +39,8 @@ export const strings = {
     location: "Location",
     phone: "Phone",
     present: "Present",
+    ofExperience: "of experience",
+    englishLevel: "English level",
     download: "CV",
     downloadAts: "ATS CV",
   },

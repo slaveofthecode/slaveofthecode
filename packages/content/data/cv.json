@@ -3,7 +3,9 @@
     "name": "Gustavo Lopez",
     "headline": "Senior Full-Stack Developer",
     "location": "Córdoba, Argentina",
-    "summary": "\n**+15 years**  of experience. \nLevel English: **B1/B2**. \nTech Stack preference: **React** - **Ts** - **Node** - **Astro**",
+    "summary": "\nPreferred environment: **React** - **TS** - **Node** - **Astro** - **Cursor** - **AI**\nCertifications: **Microsoft Certified Professional (MCP)**\nIn progress: _**AWS**_, _**AI Engineering**_, _**Data Engineering**_, _**Python**_",
+    "yearsOfExperience": "+15 years",
+    "englishLevel": "B2",
     "links": [
       {
         "label": "Portfolio",
@@ -176,7 +178,7 @@
       "highlights": [],
       "projects": [
         {
-          "name": " ",
+          "name": "Security Products",
           "highlights": [
             "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
           ]
@@ -201,7 +203,7 @@
       "highlights": [],
       "projects": [
         {
-          "name": " ",
+          "name": "Universal Music Group (UMG)",
           "highlights": [
             "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
             "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
@@ -472,11 +474,13 @@
     {
       "id": "microsoft-certified-professional-mcp",
       "name": "Microsoft Certified Professional (MCP)",
-      "url": "https://learn.microsoft.com/en-us/users/slaveofthecode/transcript/d9r28u434xpggwp?wt.mc_id=pvue_msft_webpage_wwl+&source=docs&tab=credentials-tab"
+      "url": "https://learn.microsoft.com/en-us/users/slaveofthecode/transcript/d9r28u434xpggwp?wt.mc_id=pvue_msft_webpage_wwl+&source=docs&tab=credentials-tab",
+      "imageUrl": "/images/certifications/Microsoft Certified Professional.png"
     },
     {
       "id": "programming-in-html5-with-javascript-and-css3-specialist-exam-480",
-      "name": "Programming in HTML5 with JavaScript and CSS3 Specialist (Exam 480)"
+      "name": "Programming in HTML5 with JavaScript and CSS3 Specialist (Exam 480)",
+      "imageUrl": "/images/certifications/Microsoft Specialist.png"
     }
   ],
   "now": [
@@ -490,48 +494,40 @@
       "status": "in-progress",
       "startedAt": "2026-09-28",
       "updatedAt": "2026-11-02",
-      "academyUrl": "https://www.commitacademy.io/app/courses/e4efcccc-42b0-4ebb-b4fd-fc5fb38e4be9",
+      "academyUrl": "https://www.commitacademy.io/",
       "links": [
         {
           "label": "commitacademy.io",
-          "url": "https://www.commitacademy.io/app/courses/e4efcccc-42b0-4ebb-b4fd-fc5fb38e4be9"
+          "url": "https://www.commitacademy.io/curso-cloud"
         }
       ],
       "tags": [
-        "cloud",
-        "aws",
-        "infrastructure",
-        "terraform",
-        "docker",
-        "kubernetes"
+        "Cloud",
+        "AWS",
+        "Infrastructure",
+        "Terraform",
+        "Docker",
+        "Kubernetes"
       ]
     },
     {
-      "id": "personal-project-linkzen-extension",
-      "kind": "project",
-      "title": "Extension for Google Chrome to manage bookmarks",
-      "description": "Google Chrome Extension (Manifest V3) designed to replace the traditional bookmarks bar with a single minimalist popup launcher. It includes a bookmark auditing engine that scans for obsolete, broken, or mismatched URLs and provides an interactive dashboard to manage and clean them up.",
-      "pdfDescription": "Build a minimalist Chrome bookmark launcher with broken-link auditing and cleanup tools.",
-      "progress": 73,
+      "id": "ai-engineering-commit-academy",
+      "kind": "course",
+      "title": "AI Engineering Specialization Program",
+      "pdfDescription": "18-module syllabus with hands-on labs, program schedule, and capstone project details for building, evaluating, and operating production AI systems.",
+      "description": "16-week hands-on program (18 modules, 15 labs, capstone project) in Python and TypeScript covering multi-provider LLM integration, structured outputs, RAG, tool-using agents with MCP, automated evaluations, security, observability, and cost/latency control for production AI products.",
+      "progress": 23,
       "status": "in-progress",
-      "startedAt": "2026-09-23",
-      "updatedAt": "2026-10-08",
+      "startedAt": "2026-11-10",
+      "updatedAt": "2026-11-19",
+      "academyUrl": "https://www.commitacademy.io/",
       "links": [
         {
-          "label": "linkzen-extension",
-          "url": "https://github.com/slaveofthecode/linkzen-extension"
+          "label": "commitacademy.io",
+          "url": "https://www.commitacademy.io/curso-ai-engineering"
         }
       ],
-      "tags": [
-        "chrome-extension",
-        "react",
-        "typescript",
-        "vite",
-        "chrome.bookmarks",
-        "chrome.tabs",
-        "chrome.storage",
-        "aws amplify"
-      ]
+      "tags": ["RAG", "MCP", "LLM", "AI Engineering", "Python", "Pydantic"]
     }
   ],
   "personalProjects": [
@@ -545,12 +541,12 @@
         "TypeScript",
         "Tailwind CSS",
         "Gemini AI",
-        "GitHub GraphQL API",
+        "AWS Amplify",
         "OSV.dev"
       ],
       "repoUrl": "https://github.com/slaveofthecode/github-inspector-ai",
-      "productionUrl": "https://slaveofthecode.github.io/github-inspector-ai/",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
+      "productionUrl": "https://main.d22y0lq8a3u6xm.amplifyapp.com/",
+      "thumbnailUrl": "/images/projects/thumbnail__github_inspector.png"
     },
     {
       "id": "readforme-ai",
@@ -558,34 +554,54 @@
       "description": "Upload a PDF and ask grounded questions about its content through a chat interface.",
       "tech": [
         "Next.js",
-        "React",
+        "Bun",
+        "RAG",
         "TypeScript",
         "Gemini",
         "Prisma",
         "PostgreSQL",
         "pdfjs-dist",
-        "Tailwind CSS"
+        "Harness Engineering"
       ],
       "repoUrl": "https://github.com/slaveofthecode/readforme-ai",
-      "productionUrl": "https://readforme-ai.vercel.app",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
+      "productionUrl": "https://readforme-ai.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__readforme_ai.png"
     },
     {
-      "id": "react-graphql-ts",
-      "name": "React GraphQL TS",
-      "description": "A full-stack GraphQL example with a feature-based React client and Apollo Server running on Bun.",
-      "tech": [
-        "React",
-        "TypeScript",
-        "Apollo Client",
-        "Apollo Server",
-        "GraphQL",
-        "Vite",
-        "Bun"
-      ],
-      "repoUrl": "https://github.com/slaveofthecode/react-graphql-ts",
-      "productionUrl": "https://react-graphql-ts.vercel.app",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
+      "id": "tictactoe-react-ts",
+      "name": "Tic Tac Toe Game",
+      "description": "A simple, interactive tic-tac-toe game you can play right in your browser.",
+      "tech": ["React", "Vite", "Tailwind CSS", "SCSS", "TypeScript"],
+      "repoUrl": "https://github.com/slaveofthecode/tictactoe-react-ts",
+      "productionUrl": "https://tictactoe-react-ts.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__tictactoe_game.png"
+    },
+    {
+      "id": "breakout-game",
+      "name": "BreakOut Game",
+      "description": "A classic arcade brick-breaker game you can play right in your browser.",
+      "tech": ["JavaScript", "CSS", "HTML"],
+      "repoUrl": "https://github.com/slaveofthecode/breakout-game",
+      "productionUrl": "https://my-breakout-game.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__breakout_game.png"
+    },
+    {
+      "id": "styles",
+      "name": "Styles",
+      "description": "A classic arcade brick-breaker game you can play right in your browser.",
+      "tech": ["JavaScript", "CSS", "HTML", "Node.Js", "Pug"],
+      "repoUrl": "https://github.com/slaveofthecode/styles",
+      "productionUrl": "https://root-styles.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__styles.png"
+    },
+    {
+      "id": "guess-number-game",
+      "name": "Guess Number Game",
+      "description": "Is a simple guessing game where you pick a four-digit number and the computer tries to figure it out..",
+      "tech": ["TypeScript", "Tailwind CSS", "Vite", "Bun", "Squoosh"],
+      "repoUrl": "https://github.com/slaveofthecode/guess-number",
+      "productionUrl": "https://guess-number-123.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__guess_number_game.png"
     }
   ]
 }

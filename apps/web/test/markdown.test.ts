@@ -1,10 +1,16 @@
 import { describe, expect, test } from "bun:test";
-import { renderMarkdown } from "../src/lib/markdown";
+import { parseMarkdownBlocks, renderMarkdown } from "../src/lib/markdown";
 
 describe("renderMarkdown", () => {
   test("renders bold, italic and inline code", () => {
     expect(renderMarkdown("a **b** c *d* e `f`")).toBe(
       "<p>a <strong>b</strong> c <em>d</em> e <code>f</code></p>",
+    );
+  });
+
+  test("renders underscore emphasis", () => {
+    expect(renderMarkdown("a _b_ c __d__")).toBe(
+      "<p>a <em>b</em> c <strong>d</strong></p>",
     );
   });
 
@@ -66,5 +72,45 @@ describe("renderMarkdown", () => {
     expect(renderMarkdown("```\nconst a = 1;\n```")).toBe(
       "<pre><code>const a = 1;</code></pre>",
     );
+  });
+});
+
+describe("parseMarkdownBlocks", () => {
+  test("keeps hard line breaks and inline styles", () => {
+    expect(parseMarkdownBlocks("one **two**\nthree `four` _five_")).toEqual([
+      {
+        kind: "text",
+        runs: [
+          { text: "one ", style: "text" },
+          { text: "two", style: "bold" },
+        ],
+      },
+      {
+        kind: "text",
+        runs: [
+          { text: "three ", style: "text" },
+          { text: "four", style: "code" },
+          { text: " ", style: "text" },
+          { text: "five", style: "italic" },
+        ],
+      },
+    ]);
+  });
+
+  test("parses bullet and ordered items", () => {
+    expect(parseMarkdownBlocks("- one\n2. two")).toEqual([
+      {
+        kind: "bullet",
+        indent: 0,
+        marker: "-",
+        runs: [{ text: "one", style: "text" }],
+      },
+      {
+        kind: "ordered",
+        indent: 0,
+        marker: "2.",
+        runs: [{ text: "two", style: "text" }],
+      },
+    ]);
   });
 });

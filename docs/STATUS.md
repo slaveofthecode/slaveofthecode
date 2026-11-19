@@ -695,13 +695,18 @@ Merged into `main` after the cutover (see PRs #20/#21):
   `Blob`, and caches the `Blob`/object URL per variant so repeat clicks reuse the same PDF. Added
   cache tests and relaxed the loader test to accept root-relative avatars. Checks green: lint,
   typecheck, **145 tests**, build, check:boundaries.
+- **Open Graph portrait (`fix/og-image-portrait`):** `BaseLayout` now emits absolute `og:image`
+  and `twitter:image` from `profile.avatar`, with `summary_large_image`, so shared links preview
+  `/images/profile/portrait.png` instead of the first certificate image on the page. The built HTML
+  was verified to contain the absolute portrait URL. Checks green: lint, typecheck, **145 tests**,
+  build, check:boundaries.
 
 ## Next steps
-- **`feat/on-demand-cv-pdf-download` awaits human commit/push/PR**: created from updated `main`
-  after PR #82 was merged. No commit, push or PR by the agent yet.
-- **PRs #76–#82 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
-  `56ff58c`, `0bc6237`): single JSON source, web/PDF polish, Markdown summary and README GIF.
-  No agent merge was performed.
+- **`fix/og-image-portrait` awaits human commit/push/PR**: created from updated `main` after PR #84
+  was merged. No commit, push or PR by the agent yet.
+- **PRs #76–#84 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
+  `56ff58c`, `0bc6237`, `f2123cb`): single JSON source, web/PDF polish, Markdown summary, README GIF
+  and on-demand CV PDFs. No agent merge was performed.
 - After a CV edit, run `bun run build` (web only; PDFs are generated on click) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
   then redeploy both Vercel projects. This branch updates the RAG chunk builder, but the agent did

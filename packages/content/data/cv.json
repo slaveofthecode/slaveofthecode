@@ -599,6 +599,15 @@
       "repoUrl": "https://github.com/slaveofthecode/breakout-game",
       "productionUrl": "https://my-breakout-game.vercel.app/",
       "thumbnailUrl": "/images/projects/thumbnail__breakout_game.png"
+    },
+    {
+      "id": "styles",
+      "name": "Styles",
+      "description": "A classic arcade brick-breaker game you can play right in your browser.",
+      "tech": ["JavaScript", "CSS", "HTML", "Node.Js", "Pug"],
+      "repoUrl": "https://github.com/slaveofthecode/styles",
+      "productionUrl": "https://root-styles.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__styles.png"
     }
   ]
 }

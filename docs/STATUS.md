@@ -658,12 +658,19 @@ Merged into `main` after the cutover (see PRs #20/#21):
   Checks green: lint, typecheck, **139 tests**, build, check:boundaries. Built HTML contains all
   five paths and `dist/images/projects/` includes the five PNGs.
 - **Project thumbnail sizing/hover (this branch):** `PersonalProjects.astro` now renders every
-  thumbnail in the same responsive `aspect-[4/3]` frame (capped at 22rem on mobile, 14rem at `sm`,
-  18rem at `lg`) instead of stretching to each card's text height. The frame clips overflow and the
-  image scales to 110% on hover (`cursor-zoom-in`, 300ms, disabled under `prefers-reduced-motion`),
-  so there is no layout shift or click interaction. Checks green: lint, typecheck, **139 tests**,
-  build, check:boundaries; built HTML has five identical wrappers and the emitted CSS includes the
-  aspect-ratio and group-hover scale rules.
+  thumbnail in the same responsive `aspect-4/3` frame (capped at 22rem on mobile, 14rem at `sm`,
+  18rem at `lg`) instead of stretching to each card's text height. `object-contain` keeps the whole
+  image visible inside the frame (no cropping); on hover the frame itself scales 105% on mobile and
+  110% on `sm+` (`cursor-zoom-in`, 300ms, disabled under `prefers-reduced-motion`), with no layout
+  shift or click interaction. Checks green: lint, typecheck, **139 tests**, build, check:boundaries;
+  built HTML has five identical wrappers and the emitted CSS includes the aspect-ratio,
+  object-fit:contain and hover scale rules.
+- **Editor save formatting (this branch):** added `.vscode/settings.json` +
+  `.vscode/extensions.json` so Cursor/VS Code uses the `biomejs.biome` extension and the root
+  `biome.json`. Format-on-save is off globally and on only for Biome-supported languages
+  (JS/JSX/TS/TSX/JSON/JSONC/CSS); safe fixes and import sorting run on save. Other file types are
+  left untouched. `docs/architecture.md` documents the setup. Checks green: lint, typecheck,
+  **139 tests**, build, check:boundaries.
 
 ## Next steps
 - **`feat/profile-highlights-default-experience` awaits human commit/push/PR**: created from

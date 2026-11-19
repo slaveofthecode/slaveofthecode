@@ -16,7 +16,7 @@ const { items } = Astro.props;
     items.map((project) => (
       <li class="grid gap-5 overflow-hidden rounded-card border border-border bg-surface p-4 transition-colors hover:border-accent sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] sm:p-5">
         <div
-          class="group mx-auto aspect-4/3 w-full max-w-88 cursor-zoom-in self-start overflow-hidden rounded-card border border-border sm:mx-0 sm:max-w-none"
+          class="relative mx-auto aspect-4/3 w-full max-w-88 cursor-zoom-in self-start overflow-hidden rounded-card border border-border transition-transform duration-300 ease-out hover:z-10 hover:scale-105 sm:mx-0 sm:max-w-none sm:hover:scale-110 motion-reduce:transition-none motion-reduce:hover:scale-100"
         >
           <img
             src={project.thumbnailUrl}
@@ -25,7 +25,7 @@ const { items } = Astro.props;
             height="360"
             loading="lazy"
             decoding="async"
-            class="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            class="h-full w-full object-contain"
           />
         </div>
         <div class="flex min-w-0 flex-col">

@@ -521,11 +521,20 @@ Merged into `main` after the cutover (see PRs #20/#21):
     collapses/expands it, with a rotating chevron and an English screen-reader hint.
   - **Web:** `PersonalProjects.astro` is now a vertical list with a two-column row on desktop
     (thumbnail left, name/description/tech/links right) and a stacked layout on mobile.
-  - **Web:** `main`, header and footer use `max-w-6xl` on desktop so the page is no longer narrow
-    on a laptop.
+  - **Web:** `main`, header and footer use a 1104px container on desktop, 24px narrower on each
+    side than `max-w-6xl` but still wider than the old layout.
   - **PDF:** the designed variant adds a header band, larger name, summary panel, right-aligned
     dates, accented section headings, separators, project tech and a running header/footer with
     page numbers. The ATS variant stays plain text and unchanged.
+  - Checks green: lint, typecheck, **127 tests**, build, check:boundaries.
+
+## Done (continued)
+- **`feat/web-accordion-projects-pdf-design` follow-up (this branch):** hero/layout polish.
+  - The profile summary now spans the full content width (removed `max-w-prose`).
+  - The shared container was reduced to 1104px (24px per side) across `main`, header and footer.
+  - Hero profile links are icon-only with accessible labels; both download buttons sit in the
+    same right-aligned row as those icons.
+  - The top nav menu uses a slightly larger gap between options.
   - Checks green: lint, typecheck, **127 tests**, build, check:boundaries.
 
 ## Next steps

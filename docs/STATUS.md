@@ -713,11 +713,14 @@ Merged into `main` after the cutover (see PRs #20/#21):
   text-only. The new percentage is not part of RAG chunk text, but this branch
   also carries the earlier English-level/summary edits, so the committed RAG snapshot is stale and
   must be regenerated before merge. Checks green: lint, typecheck, **152 tests**, build, check:boundaries.
+- **Vite dev optimizer guard:** pre-bundled `pdf-lib` and `zod` in `astro.config.mjs` so the CV
+  download button's dynamic imports do not invalidate stale dependency URLs on first click.
 
 ## Next steps
 - **`feat/pdf-output-format` awaits human commit/push/PR**: created from updated `main` after PR #86
   was merged. No commit, push or PR by the agent yet. Regenerate RAG first with `GEMINI_API_KEY`
-  and include `apps/api/data/cv.sqlite` and `apps/api/src/data/rag-db.ts`.
+  and include `apps/api/data/cv.sqlite` and `apps/api/src/data/rag-db.ts`. Clear
+  `apps/web/node_modules/.vite` once if a stale dev server still reports `Outdated Optimize Dep`.
 - **PRs #76–#86 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
   `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`, `696380b`): single JSON source, web/PDF polish,
   Markdown summary, README GIF, on-demand CV PDFs, Open Graph portrait and per-project tech.

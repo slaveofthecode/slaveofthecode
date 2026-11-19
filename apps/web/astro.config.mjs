@@ -8,6 +8,9 @@ export default defineConfig({
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: ["pdf-lib", "zod"],
+    },
   },
   devToolbar: {
     enabled: false,

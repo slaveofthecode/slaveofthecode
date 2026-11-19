@@ -672,22 +672,23 @@ Merged into `main` after the cutover (see PRs #20/#21):
   left untouched. `docs/architecture.md` documents the setup. Checks green: lint, typecheck,
   **139 tests**, build, check:boundaries.
 - **Certification cards (this branch):** `certificationSchema` gained optional `imageUrl`
-  (root-relative asset path) and both entries in `cv.json` point to
-  `/images/certifications/<id>.png`. `Certifications.astro` is now a two-column grid of cards like
-  `Now.astro`, with a shared `aspect-3/2` `object-contain` frame: greyscale by default, full color
-  on image hover (no crop, no layout shift). A `.gitkeep` reserves `public/images/certifications/`;
-  the human still needs to drop the two PNGs there.
+  (root-relative asset path) and both `cv.json` entries point to their PNGs in
+  `public/images/certifications/` (`Microsoft Certified Professional.png` and
+  `Microsoft Specialist.png`, added by the human in `fb3baf4`). `Certifications.astro` is now a
+  two-column grid of cards like `Now.astro`, with a shared `aspect-3/2` `object-contain` frame:
+  greyscale by default, full color on image hover (no crop, no layout shift).
 - **Sticky section menu (this branch):** the section tab row stays in the page flow and becomes
   sticky below the header once scrolled to it. The header publishes its measured height as
   `--app-header-height` (updated on scroll/resize/menu toggle), the tabs use it as `top` and the
   same `bg-bg` token as `body` (no blur), and `Section` uses a dynamic `scroll-margin-top` so
-  anchors clear both bars even when the expanded
-  header shows the extra facts. Checks green: lint, typecheck, **141 tests**, build,
-  check:boundaries.
+  anchors clear both bars even when the expanded header shows the extra facts. Checks green: lint,
+  typecheck, **141 tests**, build, check:boundaries.
+- **Chat panel contrast (this branch):** `--app-chat` now maps to `gray-200` in light and `gray-800`
+  in dark, so the panel reads clearly against the body without leaving the grayscale system. Added
+  `shadow-xl` and a `bg-surface` header for subtle depth. Checks green: lint, typecheck,
+  **141 tests**, build, check:boundaries.
 
 ## Next steps
-- **Human action:** add the two certificate PNGs at
-  `apps/web/public/images/certifications/<id>.png`; the JSON and UI already reference them.
 - **`feat/profile-highlights-default-experience` awaits human commit/push/PR**: created from
   updated `main` per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.
 - **PRs #76–#81 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,

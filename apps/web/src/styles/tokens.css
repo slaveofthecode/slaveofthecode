@@ -23,7 +23,7 @@
   --app-bg: #ffffff;
   --app-surface: #f4f4f4;
   --app-header: #fbfbfb;
-  --app-chat: #f7f7f7;
+  --app-chat: var(--gray-200);
   --app-fg: var(--gray-950);
   --app-muted: var(--gray-700);
   --app-subtle: var(--gray-600);
@@ -38,7 +38,7 @@
   --app-bg: #000000;
   --app-surface: var(--gray-900);
   --app-header: #0f0f0f;
-  --app-chat: #0d0d0d;
+  --app-chat: var(--gray-800);
   --app-fg: var(--gray-50);
   --app-muted: var(--gray-400);
   --app-subtle: var(--gray-500);

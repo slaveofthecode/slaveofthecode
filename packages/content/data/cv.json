@@ -527,14 +527,7 @@
           "url": "https://www.commitacademy.io/curso-ai-engineering"
         }
       ],
-      "tags": [
-        "RAG",
-        "MCP",
-        "LLM",
-        "AI Engineering",
-        "Python",
-        "Pydantic"
-      ]
+      "tags": ["RAG", "MCP", "LLM", "AI Engineering", "Python", "Pydantic"]
     }
   ],
   "personalProjects": [
@@ -600,6 +593,15 @@
       "repoUrl": "https://github.com/slaveofthecode/styles",
       "productionUrl": "https://root-styles.vercel.app/",
       "thumbnailUrl": "/images/projects/thumbnail__styles.png"
+    },
+    {
+      "id": "guess-number-game",
+      "name": "Guess Number Game",
+      "description": "Is a simple guessing game where you pick a four-digit number and the computer tries to figure it out..",
+      "tech": ["TypeScript", "Tailwind CSS", "Vite", "Bun", "Squoosh"],
+      "repoUrl": "https://github.com/slaveofthecode/guess-number",
+      "productionUrl": "https://guess-number-123.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__guess_number_game.png"
     }
   ]
 }

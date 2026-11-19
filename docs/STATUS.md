@@ -576,6 +576,8 @@ Merged into `main` after the cutover (see PRs #20/#21):
     when the committed JSON has those collections empty; PDFs regenerated from the current JSON.
   - The human's uncommitted `cv.json` data edits were preserved and normalized with `format:data`.
   - Checks green: lint, typecheck, **129 tests**, build, check:boundaries.
+  - `bun run dev` now runs `bun run lint` before the workspace dev servers, so formatting/lint
+    regressions fail fast instead of surfacing right before a PR.
 
 ## Next steps
 - **`feat/skills-table-now-title-conditional-nav` awaits human commit/push/PR**: created from updated

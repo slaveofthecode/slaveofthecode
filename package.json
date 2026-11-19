@@ -4,7 +4,7 @@
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "dev": "bun run --filter '*' dev",
+    "dev": "bun run lint && bun run --filter '*' dev",
     "build": "bun run --filter '*' build",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",

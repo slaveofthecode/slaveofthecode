@@ -109,6 +109,41 @@ function write(ctx: Context, value: string, options: WriteOptions = {}): void {
   ctx.y -= options.gap ?? 0;
 }
 
+function pdfUrl(value: string): string {
+  const query = value.indexOf("?");
+  const hash = value.indexOf("#");
+  const end = Math.min(
+    query === -1 ? value.length : query,
+    hash === -1 ? value.length : hash,
+  );
+  return value.slice(0, end);
+}
+
+function writeUnwrapped(
+  ctx: Context,
+  value: string,
+  options: WriteOptions = {},
+): void {
+  const indent = options.indent ?? 0;
+  const width = options.width ?? PAGE_WIDTH - MARGIN * 2 - indent;
+  const font = options.bold ? ctx.bold : ctx.font;
+  let size = options.size ?? (ctx.mode === "ats" ? 10 : 10.5);
+  while (font.widthOfTextAtSize(value, size) > width && size > 5) {
+    size -= 0.5;
+  }
+  const lineHeight = size * 1.35;
+  ensure(ctx, lineHeight);
+  ctx.page.drawText(value, {
+    x: MARGIN + indent,
+    y: ctx.y - size,
+    size,
+    font,
+    color: ink(ctx, Boolean(options.muted)),
+  });
+  ctx.y -= lineHeight;
+  ctx.y -= options.gap ?? 0;
+}
+
 function heading(ctx: Context, title: string): void {
   ensure(ctx, 34);
   ctx.y -= 6;
@@ -181,14 +216,16 @@ export async function renderCvPdf(
     if (profile.phone)
       write(ctx, `Phone: ${profile.phone}`, { width: headerWidth });
     for (const link of profile.links)
-      write(ctx, `${link.label}: ${link.url}`, { width: headerWidth });
+      writeUnwrapped(ctx, `${link.label}: ${pdfUrl(link.url)}`, {
+        width: headerWidth,
+      });
   } else {
     const contact = [profile.location, profile.email, profile.phone]
       .filter(Boolean)
       .join("  ·  ");
     write(ctx, contact, { muted: true, gap: 2, width: headerWidth });
     for (const link of profile.links) {
-      write(ctx, `${link.label}: ${link.url}`, {
+      writeUnwrapped(ctx, `${link.label}: ${pdfUrl(link.url)}`, {
         muted: true,
         size: 9,
         width: headerWidth,
@@ -281,20 +318,29 @@ export async function renderCvPdf(
         .join(" · ");
       if (details) write(ctx, details, { muted: true });
       if (certification.url)
-        write(ctx, `Validate: ${certification.url}`, { size: 9 });
+        writeUnwrapped(ctx, `Validate: ${pdfUrl(certification.url)}`, {
+          size: 9,
+        });
       ctx.y -= 6;
     }
   }
 
-  const courses = content.now.filter((item) => item.kind === "course");
-  if (courses.length > 0) {
+  if (content.now.length > 0) {
     heading(ctx, strings.now.heading);
-    for (const item of courses) {
+    for (const item of content.now) {
       write(ctx, item.title, { bold: true, gap: 1 });
       write(ctx, item.pdfDescription, { muted: true, gap: 2 });
-      write(ctx, `${item.progress}%`, { muted: true, size: 9, gap: 2 });
+      write(ctx, `${strings.now.progress}: ${item.progress}%`, {
+        muted: true,
+        size: 9,
+        gap: 2,
+      });
       if (item.academyUrl)
-        write(ctx, `${strings.now.academy}: ${item.academyUrl}`, { size: 9 });
+        writeUnwrapped(
+          ctx,
+          `${strings.now.academy}: ${pdfUrl(item.academyUrl)}`,
+          { size: 9 },
+        );
       ctx.y -= 8;
     }
   }
@@ -304,8 +350,11 @@ export async function renderCvPdf(
     for (const project of content.personalProjects) {
       write(ctx, project.name, { bold: true, gap: 1 });
       write(ctx, project.description, { muted: true, gap: 2 });
-      write(ctx, `Repo: ${project.repoUrl}`, { size: 9 });
-      write(ctx, `Live: ${project.productionUrl}`, { size: 9, gap: 8 });
+      writeUnwrapped(ctx, `Repo: ${pdfUrl(project.repoUrl)}`, { size: 9 });
+      writeUnwrapped(ctx, `Live: ${pdfUrl(project.productionUrl)}`, {
+        size: 9,
+        gap: 8,
+      });
     }
   }
 

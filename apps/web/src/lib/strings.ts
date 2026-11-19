@@ -21,6 +21,9 @@ export const strings = {
     skipToContent: "Skip to content",
     backToTop: "Back to top",
   },
+  sections: {
+    toggle: "Toggle section",
+  },
   footer: {
     builtWith: "Built with",
     rights: "All rights reserved.",
@@ -46,6 +49,7 @@ export const strings = {
   now: {
     heading: "What I'm working on now",
     academy: "Academy",
+    progress: "Progress",
     updated: "Updated",
     status: {
       "in-progress": "In progress",

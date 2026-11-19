@@ -22,12 +22,15 @@ export const strings = {
     backToTop: "Back to top",
   },
   sections: {
+    label: "CV sections",
     toggle: "Toggle section",
   },
   footer: {
     builtWith: "Built with",
     rights: "All rights reserved.",
     source: "View the source on GitHub",
+    iconCredit:
+      "Download icon by Konstantin Filatov via SVG Repo (CC Attribution).",
   },
   cv: {
     links: "Links",
@@ -35,14 +38,14 @@ export const strings = {
     location: "Location",
     phone: "Phone",
     present: "Present",
-    download: "Download CV",
-    downloadAts: "Download ATS CV",
+    download: "CV",
+    downloadAts: "ATS CV",
   },
   certifications: {
     validate: "Validate",
   },
   projects: {
-    heading: "Personal Projects",
+    heading: "Projects",
     repo: "Repository",
     live: "Live demo",
   },
@@ -51,7 +54,7 @@ export const strings = {
     technologies: "Technologies",
   },
   now: {
-    heading: "What I'm working on",
+    heading: "Working on",
     academy: "Academy",
     progress: "Progress",
     updated: "Updated",

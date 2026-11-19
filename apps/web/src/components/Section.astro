@@ -1,38 +1,17 @@
 ---
-import { strings as t } from "../lib/strings";
-import Icon from "./Icon.astro";
-
 interface Props {
   id: string;
   title: string;
-  icon?: "thinking";
 }
 
-const { id, title, icon } = Astro.props;
+const { id, title } = Astro.props;
 ---
 
-<details id={id} open class="group scroll-mt-24 border-t border-border py-10">
-  <summary
-    id={`${id}-heading`}
-    class="flex cursor-pointer list-none items-center gap-2 font-heading text-sm uppercase tracking-widest text-muted transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-  >
-    {icon ? <Icon name={icon} class="h-4 w-4" /> : null}
-    <span>{title}</span>
-    <span class="sr-only">{t.sections.toggle}</span>
-    <svg
-      class="ml-auto h-4 w-4 shrink-0 transition-transform group-open:rotate-180"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.75"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="m6 9 6 6 6-6"></path>
-    </svg>
-  </summary>
-  <div class="mt-6">
-    <slot />
-  </div>
-</details>
+<section
+  id={id}
+  aria-label={title}
+  hidden
+  class="scroll-mt-24 py-10"
+>
+  <slot />
+</section>

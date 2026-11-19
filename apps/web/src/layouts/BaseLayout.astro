@@ -67,7 +67,7 @@ const ogLocale = "en_US";
       })();
     </script>
   </head>
-  <body class="min-h-dvh bg-bg font-sans text-fg">
+  <body class="flex min-h-dvh flex-col bg-bg font-sans text-fg">
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-card focus:bg-surface focus:px-3 focus:py-2"
@@ -75,7 +75,7 @@ const ogLocale = "en_US";
       {t.a11y.skipToContent}
     </a>
     <Header />
-    <main id="main" class="mx-auto w-full max-w-[1104px] px-5 sm:px-8">
+    <main id="main" class="mx-auto flex-1 w-full max-w-[1104px] px-5 sm:px-8">
       <slot />
     </main>
     <Footer />

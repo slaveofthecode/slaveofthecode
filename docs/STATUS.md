@@ -578,12 +578,28 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - Checks green: lint, typecheck, **129 tests**, build, check:boundaries.
   - `bun run dev` now runs `bun run lint` before the workspace dev servers, so formatting/lint
     regressions fail fast instead of surfacing right before a PR.
+- **`feat/skills-table-centered-alignment` (this branch, from updated `main`):** Skills table header
+  cells and Category data cells are centered horizontally and vertically.
+  - CV sections now use a minimalist horizontal button row; exactly one panel opens at a time and all
+    panels are closed on first load. Header nav links open and scroll to the matching panel.
+  - Tab buttons fill the full row, use `[LABEL]` text and show no grey bottom line when closed; the
+    footer stays at the viewport bottom while every tab is closed.
+  - Profile account links now sit beside the name, with `CV` / `ATS CV` downloads on the next line
+    using the SVG Repo 521613 download icon by Konstantin Filatov (CC Attribution, credited in footer).
+  - Profile account icon buttons and download buttons are right-aligned; the `now` heading is now
+    `Working on` without its icon, and the `projects` heading is `Projects`.
+  - Profile actions reach the far right and account icon buttons have no border. The top header no
+    longer shows section links on laptop; once sticky it reveals account icons and CV downloads there.
+  - Header chat trigger is icon-only; profile headline and location share the download row; section
+    tabs and nav links now use `/<section>` URLs with Vercel rewrites and browser history support.
+  - Skills category column is right-aligned; the profile header puts the headline directly under the
+    name, then email/location/phone on one line with downloads on the right.
 
 ## Next steps
-- **`feat/skills-table-now-title-conditional-nav` awaits human commit/push/PR**: created from updated
-  `main` per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.
-- **PRs #76 and #77 are merged into `main`** (`044282e`, `821f21d`): single JSON source plus the
-  web/PDF polish. No agent merge was performed.
+- **`feat/skills-table-centered-alignment` awaits human commit/push/PR**: created from updated `main`
+  per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.
+- **PRs #76, #77 and #78 are merged into `main`** (`044282e`, `821f21d`, `bf91512`): single JSON
+  source, web/PDF polish and the previous CV UI/dev guard work. No agent merge was performed.
 - After a CV edit, run `bun run build` (web + both PDFs) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
   then redeploy both Vercel projects. The current committed RAG snapshot already includes the

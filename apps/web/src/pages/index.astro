@@ -15,10 +15,41 @@ import { hasCvSection } from "../lib/sections";
 import { strings as t } from "../lib/strings";
 
 const content = getContent();
+
+const tabSections = [
+  { id: "experience" as const, label: t.nav.experience },
+  { id: "skills" as const, label: t.nav.skills },
+  { id: "languages" as const, label: t.nav.languages },
+  { id: "education" as const, label: t.nav.education },
+  { id: "certifications" as const, label: t.nav.certifications },
+  { id: "now" as const, label: t.now.heading },
+  { id: "projects" as const, label: t.projects.heading },
+].filter((section) => hasCvSection(content, section.id));
 ---
 
 <BaseLayout>
   <Profile profile={content.profile} />
+
+  {
+    tabSections.length > 0 ? (
+      <div role="group" aria-label={t.sections.label} class="flex w-full gap-1">
+        {tabSections.map((section) => (
+          <button
+            type="button"
+            data-section-tab
+            data-section={section.id}
+            aria-controls={section.id}
+            aria-expanded="false"
+            class="flex min-w-0 flex-1 basis-0 items-center justify-center gap-1 border-b-2 border-transparent px-2 py-3 text-center font-mono text-[10px] uppercase leading-tight tracking-wide text-muted transition-colors hover:text-fg aria-expanded:border-fg aria-expanded:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg sm:text-xs"
+          >
+            <span aria-hidden="true">[</span>
+            <span>{section.label}</span>
+            <span aria-hidden="true">]</span>
+          </button>
+        ))}
+      </div>
+    ) : null
+  }
 
   {
     hasCvSection(content, "experience") ? (
@@ -62,7 +93,7 @@ const content = getContent();
 
   {
     hasCvSection(content, "now") ? (
-      <Section id="now" title={t.now.heading} icon="thinking">
+      <Section id="now" title={t.now.heading}>
         <Now items={content.now} />
       </Section>
     ) : null
@@ -78,3 +109,96 @@ const content = getContent();
 
   <Chat name={content.profile.name} avatar={content.profile.avatar} />
 </BaseLayout>
+
+<script>
+  const tabs = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-section-tab]"),
+  );
+  const panels = new Map(
+    tabs.map((tab) => [tab.dataset.section ?? "", document.getElementById(tab.dataset.section ?? "")]),
+  );
+
+  const isSectionId = (id: string) =>
+    tabs.some((tab) => tab.dataset.section === id);
+
+  const setExpanded = (tab: HTMLButtonElement, expanded: boolean) => {
+    tab.setAttribute("aria-expanded", String(expanded));
+    const panel = panels.get(tab.dataset.section ?? "");
+    if (panel) panel.toggleAttribute("hidden", !expanded);
+  };
+
+  const applySection = (id: string, focus = false) => {
+    for (const tab of tabs) {
+      setExpanded(tab, Boolean(id) && tab.dataset.section === id);
+    }
+    if (focus && id) {
+      tabs
+        .find((tab) => tab.dataset.section === id)
+        ?.focus({ preventScroll: true });
+    }
+  };
+
+  const scrollToSection = (id: string) => {
+    requestAnimationFrame(() =>
+      panels.get(id)?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
+  };
+
+  const sectionFromUrl = () => {
+    const pathId = window.location.pathname.split("/").filter(Boolean).pop() ?? "";
+    const hashId = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    return [pathId, hashId].find(isSectionId) ?? "";
+  };
+
+  const goToSection = (id: string, focus = false, scroll = false) => {
+    const nextUrl = id ? `/${id}` : "/";
+    if (`${window.location.pathname}${window.location.hash}` !== nextUrl) {
+      window.history.pushState({ section: id }, "", nextUrl);
+    }
+    applySection(id, focus);
+    if (scroll && id) scrollToSection(id);
+  };
+
+  const syncFromUrl = (scroll = false) => {
+    const id = sectionFromUrl();
+    applySection(id);
+    if (scroll && id) scrollToSection(id);
+  };
+
+  for (const tab of tabs) {
+    tab.addEventListener("click", () => {
+      const id = tab.dataset.section;
+      if (!id) return;
+      if (tab.getAttribute("aria-expanded") === "true") {
+        goToSection("");
+        return;
+      }
+      goToSection(id);
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+    if (
+      event instanceof MouseEvent &&
+      (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+    ) {
+      return;
+    }
+    const link = event.target.closest<HTMLAnchorElement>("a[href]");
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin) return;
+    const pathId = url.pathname.split("/").filter(Boolean).pop() ?? "";
+    const hashId = decodeURIComponent(url.hash.replace(/^#/, ""));
+    const id = [pathId, hashId].find(isSectionId);
+    if (!id) return;
+    event.preventDefault();
+    goToSection(id, true, true);
+  });
+
+  window.addEventListener("popstate", () => syncFromUrl());
+  window.addEventListener("hashchange", () => syncFromUrl());
+  syncFromUrl();
+</script>

@@ -77,7 +77,7 @@ describe("renderCvPdf", () => {
     expect(text).toContain("EXPERIENCE");
   });
 
-  test("the PDFs include every Now item and add personal projects", async () => {
+  test("the PDFs include every Now item and add projects", async () => {
     const content = getPopulatedContent();
 
     for (const mode of ["designed", "ats"] as const) {
@@ -85,7 +85,7 @@ describe("renderCvPdf", () => {
       const flat = text.replace(/\s+/g, " ");
 
       const repoUrl = content.personalProjects[0]?.repoUrl ?? "";
-      expect(text).toContain("PERSONAL PROJECTS");
+      expect(text).toContain(strings.projects.heading.toUpperCase());
       expect(text).toContain(content.personalProjects[0]?.name ?? "");
       expect(text).toContain(repoUrl.split("?")[0]?.split("#")[0] ?? "");
 
@@ -100,7 +100,7 @@ describe("renderCvPdf", () => {
       }
 
       expect(text).toContain(strings.now.heading.toUpperCase());
-      expect(text).not.toContain("WHAT I'M WORKING ON NOW");
+      expect(text).not.toContain("WHAT I'M WORKING ON");
       expect(text).not.toContain("Tags:");
       expect(text).not.toContain("Updated:");
     }

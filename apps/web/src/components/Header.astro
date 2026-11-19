@@ -1,6 +1,8 @@
 ---
 import { getContent } from "@portfolio/content";
 import { initials } from "../lib/initials";
+import { iconName } from "../lib/links";
+import { resumeFilename } from "../lib/resume";
 import { visibleCvSectionIds } from "../lib/sections";
 import { strings as t } from "../lib/strings";
 import Icon from "./Icon.astro";
@@ -64,36 +66,57 @@ const navItems = [
       </span>
     </a>
 
-    <div class="flex items-center gap-2 sm:gap-4">
-      <nav aria-label={t.nav.label} class="hidden sm:block">
-        <ul class="flex items-center gap-5 font-mono text-xs">
+    <div class="flex items-center gap-2 sm:gap-3">
+      <div data-sticky-actions class="hidden items-center gap-3">
+        <ul class="flex items-center gap-1" aria-label={t.cv.links}>
           {
-            navItems.map((item) => (
+            profile.links.map((link) => (
               <li>
-                {item.id === "chat" ? (
-                  <button
-                    type="button"
-                    data-chat-open
-                    class="font-mono text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-                  >
-                    {item.label}
-                  </button>
-                ) : (
-                  <a
-                    href={`/#${item.id}`}
-                    class="text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-                  >
-                    {item.label}
-                  </a>
-                )}
+                <a
+                  href={link.url}
+                  rel="me noopener"
+                  target="_blank"
+                  aria-label={link.label}
+                  title={link.label}
+                  class="inline-flex h-8 w-8 items-center justify-center rounded-card text-muted transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                >
+                  <Icon name={iconName(link.url)} class="h-4 w-4" />
+                </a>
               </li>
             ))
           }
         </ul>
-      </nav>
-      <div class="flex items-center gap-2">
-        <ThemeToggle />
+        <div class="flex items-center gap-2">
+          <a
+            href="/cv.pdf"
+            download={resumeFilename(profile.name)}
+            aria-label={`${profile.name} CV`}
+            class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+          >
+            <Icon name="download" class="h-3.5 w-3.5" />
+            {t.cv.download}
+          </a>
+          <a
+            href="/cv-ats.pdf"
+            download={resumeFilename(profile.name, "ats")}
+            aria-label={`${profile.name} ATS CV`}
+            class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-muted transition-colors hover:bg-hover hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+          >
+            <Icon name="download" class="h-3.5 w-3.5" />
+            {t.cv.downloadAts}
+          </a>
+        </div>
       </div>
+      <button
+        type="button"
+        data-chat-open
+        aria-label={t.nav.chat}
+        title={t.nav.chat}
+        class="hidden h-8 w-8 items-center justify-center rounded-card border border-border text-muted transition-colors hover:bg-hover hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg sm:inline-flex"
+      >
+        <Icon name="chat" class="h-4 w-4" />
+      </button>
+      <ThemeToggle />
       <button
         type="button"
         data-menu-toggle
@@ -128,7 +151,7 @@ const navItems = [
               </button>
             ) : (
               <a
-                href={`/#${item.id}`}
+                href={`/${item.id}`}
                 class="block py-2 text-muted underline-offset-4 transition-colors hover:text-fg hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
               >
                 {item.label}
@@ -165,10 +188,18 @@ const navItems = [
 <script>
   const header = document.querySelector("[data-header]");
   if (header) {
-    const update = () =>
-      header.classList.toggle("is-scrolled", window.scrollY > 140);
+    const stickyActions = header.querySelector<HTMLElement>("[data-sticky-actions]");
+    const laptop = window.matchMedia("(min-width: 640px)");
+    const update = () => {
+      const scrolled = window.scrollY > 140;
+      header.classList.toggle("is-scrolled", scrolled);
+      const showActions = scrolled && laptop.matches;
+      stickyActions?.classList.toggle("hidden", !showActions);
+      stickyActions?.classList.toggle("flex", showActions);
+    };
     update();
     window.addEventListener("scroll", update, { passive: true });
+    laptop.addEventListener("change", update);
 
     const toggle = header.querySelector("[data-menu-toggle]");
     const panel = header.querySelector("[data-menu-panel]");

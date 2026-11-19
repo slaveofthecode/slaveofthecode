@@ -24,6 +24,7 @@ const pageTitle = title ?? `${profile.name} — ${profile.headline}`;
 const pageDescription = description ?? plainProfileSummary(profile);
 
 const canonical = new URL("/", Astro.site);
+const ogImage = avatar ? new URL(avatar, Astro.site) : undefined;
 const ogLocale = "en_US";
 ---
 
@@ -47,7 +48,19 @@ const ogLocale = "en_US";
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={ogLocale} />
-    <meta name="twitter:card" content="summary" />
+    {
+      ogImage ? (
+        <>
+          <meta property="og:image" content={ogImage.href} />
+          <meta property="og:image:alt" content={profile.name} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:image" content={ogImage.href} />
+          <meta name="twitter:image:alt" content={profile.name} />
+        </>
+      ) : (
+        <meta name="twitter:card" content="summary" />
+      )
+    }
 
     <title>{pageTitle}</title>
 

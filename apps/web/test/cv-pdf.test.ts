@@ -69,6 +69,12 @@ describe("renderCvPdf", () => {
     }
   });
 
+  test("PDFs attach tech to each project", async () => {
+    const text = extractText(await renderCvPdf(getContent(), "ats"));
+    expect(text).toContain("Tech: Meteor,");
+    expect(text).toContain("Tech: Java, Spring Boot,");
+  });
+
   test("the ATS variant contains plain-text contact data and sections", async () => {
     const content = getContent();
     const bytes = await renderCvPdf(content, "ats");

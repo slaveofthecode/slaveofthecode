@@ -28,7 +28,6 @@ const validExperience = {
   endDate: null,
   summary: "Did things",
   highlights: ["One"],
-  tech: ["TypeScript"],
 };
 
 const validEducation = {
@@ -129,25 +128,43 @@ describe("experienceSchema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("accepts a missing summary (older roles only have highlights/tech)", () => {
+  it("accepts a missing summary (older roles only have highlights)", () => {
     const { summary: _summary, ...withoutSummary } = validExperience;
     expect(experienceSchema.safeParse(withoutSummary).success).toBe(true);
   });
 
-  it("accepts grouped projects", () => {
+  it("accepts grouped projects with per-project tech", () => {
     const result = experienceSchema.safeParse({
       ...validExperience,
-      projects: [{ name: "Project A", highlights: ["Shipped it"] }],
+      projects: [
+        { name: "Project A", highlights: ["Shipped it"], tech: ["TypeScript"] },
+      ],
     });
     expect(result.success).toBe(true);
   });
 
-  it("rejects a project without a name", () => {
+  it("accepts a tech-only project with an empty name", () => {
     const result = experienceSchema.safeParse({
       ...validExperience,
-      projects: [{ name: "", highlights: ["Shipped it"] }],
+      projects: [{ name: "", highlights: [], tech: ["TypeScript"] }],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a project without tech", () => {
+    const result = experienceSchema.safeParse({
+      ...validExperience,
+      projects: [{ name: "Project A", highlights: ["Shipped it"] }],
     });
     expect(result.success).toBe(false);
+  });
+
+  it("does not keep role-level tech", () => {
+    const parsed = experienceSchema.parse({
+      ...validExperience,
+      tech: ["Legacy"],
+    });
+    expect("tech" in parsed).toBe(false);
   });
 });
 

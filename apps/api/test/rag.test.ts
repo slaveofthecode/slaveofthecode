@@ -65,6 +65,18 @@ describe("buildChunks", () => {
     );
   });
 
+  test("experience chunks keep tech with each project", () => {
+    const chunk = chunks.find(
+      (chunk) => chunk.id === "experience:nybble-group",
+    );
+    expect(chunk?.content).toContain(
+      "Tech: Meteor, Node.js, Blaze, MongoDB, GitHub Actions",
+    );
+    expect(chunk?.content).toContain(
+      "Tech: Java, Spring Boot, Camunda, Azure OCR, AWS",
+    );
+  });
+
   test("every chunk carries id, section, title and content", () => {
     for (const chunk of chunks) {
       expect(chunk.id.length).toBeGreaterThan(0);

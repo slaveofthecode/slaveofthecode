@@ -24,7 +24,7 @@ your review. Answer or edit directly; ambiguous items must not be guessed.
 ## Decisions made during ingest (change if you disagree)
 - **Content model tweaks** to fit real data (schema in `packages/content`):
   - `experience[].summary` is now **optional** — several roles (especially the older
-    "Additional Experience" block) only have highlights/tech.
+    "Additional Experience" block) only have highlights and project tech.
   - `education[].startDate`/`endDate` and `certifications[].date` accept a **year (`YYYY`)
     or year-month (`YYYY-MM`)** — e.g. ISSD 2001–2006 has no months on the CV.
   - New **`certifications[]`** collection: `{ id, name, issuer, date?, url? }`.

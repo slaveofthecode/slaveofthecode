@@ -7,7 +7,7 @@ describe("getContent", () => {
     expect(content.profile.name.length).toBeGreaterThan(0);
     expect(content.profile.avatar).toMatch(/^https:\/\//);
     expect(Array.isArray(content.experience)).toBe(true);
-    expect(content.personalProjects.length).toBeGreaterThan(0);
+    expect(Array.isArray(content.personalProjects)).toBe(true);
   });
 });
 

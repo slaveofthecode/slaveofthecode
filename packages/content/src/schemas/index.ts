@@ -10,12 +10,12 @@ import { skillGroupSchema } from "./skills";
 
 export const contentSchema = z.object({
   profile: profileSchema,
-  experience: z.array(experienceSchema),
-  skills: z.array(skillGroupSchema),
-  languages: z.array(languageSchema),
+  experience: z.array(experienceSchema).default([]),
+  skills: z.array(skillGroupSchema).default([]),
+  languages: z.array(languageSchema).default([]),
   education: z.array(educationSchema).default([]),
   certifications: z.array(certificationSchema).default([]),
-  now: z.array(nowItemSchema),
+  now: z.array(nowItemSchema).default([]),
   personalProjects: z.array(personalProjectSchema).default([]),
 });
 

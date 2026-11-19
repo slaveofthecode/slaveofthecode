@@ -563,12 +563,27 @@ Merged into `main` after the cutover (see PRs #20/#21):
 - **PR workflow correction (this branch):** `docs/workflows/open-pr.md` now requires the final
   STATUS.md update and human commit/push before `gh pr create`, so STATUS.md never trails the PR.
 
+## Done (continued)
+- **`feat/skills-table-now-title-conditional-nav` (this branch, from an up-to-date `main`):** UI/UX
+  and data visibility work.
+  - Skills now render as a semantic two-column table (`Category` / `Technologies`) instead of cards.
+  - The "What I'm working on now" title became "What I'm working on" in the web section and both
+    PDFs; the JSON key stays `now` and the nav label stays `Now`.
+  - Every CV collection is optional in `contentSchema` and defaults to `[]`. Empty/missing sections
+    disappear from the page, both PDFs and the top nav; chat remains a permanent nav item.
+  - Added `src/lib/sections.ts` plus tests for section visibility, schema defaults and PDF omission.
+  - PDF/RAG/web tests now use local fixtures for now/projects, so they still exercise those paths
+    when the committed JSON has those collections empty; PDFs regenerated from the current JSON.
+  - The human's uncommitted `cv.json` data edits were preserved and normalized with `format:data`.
+  - Checks green: lint, typecheck, **129 tests**, build, check:boundaries.
+  - `bun run dev` now runs `bun run lint` before the workspace dev servers, so formatting/lint
+    regressions fail fast instead of surfacing right before a PR.
+
 ## Next steps
-- **`feat/web-accordion-projects-pdf-design` has PR #77 open**: stacked on `feat/json-single-source`
-  / PR #76 per the user, but targeting `main` per `docs/workflows/open-pr.md`.
-- **`feat/json-single-source` has PR #76 open**: https://github.com/slaveofthecode/slaveofthecode/pull/76
-  (base `main`, assignee @me). Single JSON source, English-only site/chat, generated PDFs and
-  personal projects. The human committed/pushed; no commit or push was made by the agent.
+- **`feat/skills-table-now-title-conditional-nav` awaits human commit/push/PR**: created from updated
+  `main` per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.
+- **PRs #76 and #77 are merged into `main`** (`044282e`, `821f21d`): single JSON source plus the
+  web/PDF polish. No agent merge was performed.
 - After a CV edit, run `bun run build` (web + both PDFs) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
   then redeploy both Vercel projects. The current committed RAG snapshot already includes the
@@ -577,8 +592,8 @@ Merged into `main` after the cutover (see PRs #20/#21):
   **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own
   branch, so it never lingers uncommitted without an owner. PR #42 is merged (`5f1696c`).
-- **Human actions:** review PRs #76 and #77; commit/push the uncommitted STATUS.md and workflow
-  notes so they ride in this same branch. Optional later: Vercel WAF rule on `/api/chat`, Turnstile.
+- **Human actions:** review, commit and push this branch, then ask for the PR after STATUS.md is
+  already included. Optional later: Vercel WAF rule on `/api/chat`, Turnstile.
 - Production is live: web `https://slaveofthecode.vercel.app/`, API
   `https://slaveofthecode-api.vercel.app/`. Vercel projects (from the same repo): **web** uses
   the root `vercel.json` (builds `apps/web`), **api** uses Root Directory `apps/api`. API env:
@@ -600,7 +615,7 @@ Merged into `main` after the cutover (see PRs #20/#21):
 
 - Visual direction: keep the current identity as a base but with a refreshed look.
 - Branding (PR-7, still current except wording): Chakra Petch + Space Mono; portrait from the
-  old PDF. "Now" section is English-only ("What I'm working on now") with a thinking icon.
+  old PDF. "Now" section is English-only ("What I'm working on") with a thinking icon.
 - PR-11 language-switcher codes are obsolete: ADR-0007 removed the switcher and `/es/`.
 - PR-8: human asked to combine the favicon/branding change with `feat/api-skeleton` in one PR
   (deliberate deviation from the one-feature-per-branch rule). The favicon is driven by the new

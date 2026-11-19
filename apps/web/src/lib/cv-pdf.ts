@@ -9,6 +9,7 @@ import {
   rgb,
 } from "pdf-lib";
 import { formatPoint, formatRange } from "./dates";
+import { hasCvSection } from "./sections";
 import { strings } from "./strings";
 
 export type CvPdfMode = "designed" | "ats";
@@ -247,46 +248,52 @@ export async function renderCvPdf(
   heading(ctx, "Summary");
   write(ctx, profile.summary, { gap: 8 });
 
-  heading(ctx, "Experience");
-  for (const job of content.experience) {
-    const range = formatRange(job.startDate, job.endDate, strings.cv.present);
-    if (mode === "ats") {
-      write(ctx, job.company, { bold: true, gap: 1 });
-      write(ctx, `Dates: ${range}`, { muted: true, gap: 1 });
-    } else {
-      write(ctx, `${job.company}  |  ${range}`, { bold: true, gap: 1 });
-    }
-    write(ctx, [job.role, job.location].filter(Boolean).join(" · "), {
-      gap: 3,
-    });
-    if (job.summary) write(ctx, job.summary, { muted: true, gap: 3 });
-    for (const highlight of job.highlights) bullet(ctx, highlight);
-    for (const project of job.projects ?? []) {
-      write(ctx, `Project: ${project.name}`, { bold: true, gap: 2 });
-      for (const highlight of project.highlights) bullet(ctx, highlight);
-    }
-    if (job.tech.length > 0) {
-      write(ctx, `Tech: ${job.tech.join(", ")}`, {
-        muted: true,
-        size: 9,
-        gap: 10,
+  if (hasCvSection(content, "experience")) {
+    heading(ctx, "Experience");
+    for (const job of content.experience) {
+      const range = formatRange(job.startDate, job.endDate, strings.cv.present);
+      if (mode === "ats") {
+        write(ctx, job.company, { bold: true, gap: 1 });
+        write(ctx, `Dates: ${range}`, { muted: true, gap: 1 });
+      } else {
+        write(ctx, `${job.company}  |  ${range}`, { bold: true, gap: 1 });
+      }
+      write(ctx, [job.role, job.location].filter(Boolean).join(" · "), {
+        gap: 3,
       });
-    } else {
-      ctx.y -= 10;
+      if (job.summary) write(ctx, job.summary, { muted: true, gap: 3 });
+      for (const highlight of job.highlights) bullet(ctx, highlight);
+      for (const project of job.projects ?? []) {
+        write(ctx, `Project: ${project.name}`, { bold: true, gap: 2 });
+        for (const highlight of project.highlights) bullet(ctx, highlight);
+      }
+      if (job.tech.length > 0) {
+        write(ctx, `Tech: ${job.tech.join(", ")}`, {
+          muted: true,
+          size: 9,
+          gap: 10,
+        });
+      } else {
+        ctx.y -= 10;
+      }
     }
   }
 
-  heading(ctx, "Skills");
-  for (const group of content.skills) {
-    write(ctx, `${group.name}: ${group.items.join(", ")}`, { gap: 4 });
+  if (hasCvSection(content, "skills")) {
+    heading(ctx, "Skills");
+    for (const group of content.skills) {
+      write(ctx, `${group.name}: ${group.items.join(", ")}`, { gap: 4 });
+    }
   }
 
-  heading(ctx, "Languages");
-  for (const language of content.languages) {
-    write(ctx, `${language.name} — ${language.level}`, { gap: 4 });
+  if (hasCvSection(content, "languages")) {
+    heading(ctx, "Languages");
+    for (const language of content.languages) {
+      write(ctx, `${language.name} — ${language.level}`, { gap: 4 });
+    }
   }
 
-  if (content.education.length > 0) {
+  if (hasCvSection(content, "education")) {
     heading(ctx, "Education");
     for (const entry of content.education) {
       const range = formatRange(
@@ -306,7 +313,7 @@ export async function renderCvPdf(
     }
   }
 
-  if (content.certifications.length > 0) {
+  if (hasCvSection(content, "certifications")) {
     heading(ctx, "Certifications");
     for (const certification of content.certifications) {
       write(ctx, certification.name, { bold: true, gap: 1 });
@@ -325,7 +332,7 @@ export async function renderCvPdf(
     }
   }
 
-  if (content.now.length > 0) {
+  if (hasCvSection(content, "now")) {
     heading(ctx, strings.now.heading);
     for (const item of content.now) {
       write(ctx, item.title, { bold: true, gap: 1 });
@@ -345,7 +352,7 @@ export async function renderCvPdf(
     }
   }
 
-  if (content.personalProjects.length > 0) {
+  if (hasCvSection(content, "projects")) {
     heading(ctx, strings.projects.heading);
     for (const project of content.personalProjects) {
       write(ctx, project.name, { bold: true, gap: 1 });

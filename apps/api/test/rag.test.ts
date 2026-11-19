@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { getContent } from "@portfolio/content";
+import { getContent, parseContent } from "@portfolio/content";
 import { buildChunks, cosineSimilarity } from "../src/domain/rag";
 import { profileHit } from "./helpers";
 
@@ -15,7 +15,35 @@ describe("cosineSimilarity", () => {
 });
 
 describe("buildChunks", () => {
-  const chunks = buildChunks(getContent());
+  const content = parseContent({
+    ...getContent(),
+    now: [
+      {
+        id: "now-test",
+        kind: "course",
+        title: "Test course",
+        description: "A short test description.",
+        pdfDescription: "A short PDF description.",
+        progress: 21,
+        status: "in-progress",
+        updatedAt: "2026-11-01",
+        links: [],
+        tags: [],
+      },
+    ],
+    personalProjects: [
+      {
+        id: "project-test",
+        name: "Test project",
+        description: "A short test project.",
+        tech: [],
+        repoUrl: "https://example.com/repo",
+        productionUrl: "https://example.com/app",
+        thumbnailUrl: "https://example.com/thumb.png",
+      },
+    ],
+  });
+  const chunks = buildChunks(content);
 
   test("covers every CV collection including now", () => {
     const sections = new Set(chunks.map((chunk) => chunk.section));

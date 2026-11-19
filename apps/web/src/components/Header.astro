@@ -1,20 +1,28 @@
 ---
 import { getContent } from "@portfolio/content";
 import { initials } from "../lib/initials";
+import { visibleCvSectionIds } from "../lib/sections";
 import { strings as t } from "../lib/strings";
 import Icon from "./Icon.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
-const { profile } = getContent();
+const content = getContent();
+const { profile } = content;
+
+const navLabels = {
+  experience: t.nav.experience,
+  skills: t.nav.skills,
+  education: t.nav.education,
+  now: t.nav.now,
+  projects: t.nav.projects,
+} as const;
 
 const navItems = [
-  { id: "experience", label: t.nav.experience },
-  { id: "skills", label: t.nav.skills },
-  { id: "education", label: t.nav.education },
-  { id: "now", label: t.nav.now },
-  { id: "projects", label: t.nav.projects },
+  ...visibleCvSectionIds(content)
+    .filter((id): id is keyof typeof navLabels => id in navLabels)
+    .map((id) => ({ id, label: navLabels[id] })),
   { id: "chat", label: t.nav.chat },
-] as const;
+];
 ---
 
 <header

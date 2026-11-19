@@ -173,8 +173,14 @@
       "role": "Angular Developer",
       "startDate": "2019-10",
       "endDate": "2021-01",
-      "highlights": [
-        "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
+      "highlights": [],
+      "projects": [
+        {
+          "name": " ",
+          "highlights": [
+            "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
+          ]
+        }
       ],
       "tech": [
         "Angular",
@@ -192,9 +198,15 @@
       "role": "Full-Stack Developer",
       "startDate": "2018-09",
       "endDate": "2019-09",
-      "highlights": [
-        "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
-        "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
+      "highlights": [],
+      "projects": [
+        {
+          "name": " ",
+          "highlights": [
+            "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
+            "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
+          ]
+        }
       ],
       "tech": [
         "C#",
@@ -212,10 +224,16 @@
       "role": "Full-Stack Developer",
       "startDate": "2013-12",
       "endDate": "2018-09",
-      "highlights": [
-        "Designed, maintained, and modernized banking systems, intranet platforms, and customer-facing applications.",
-        "Delivered full-stack solutions using C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server, and JavaScript.",
-        "Maintained and enhanced business-critical banking applications and implemented new functionality across multiple banking products."
+      "highlights": [],
+      "projects": [
+        {
+          "name": " ",
+          "highlights": [
+            "Designed, maintained, and modernized banking systems, intranet platforms, and customer-facing applications.",
+            "Delivered full-stack solutions using C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server, and JavaScript.",
+            "Maintained and enhanced business-critical banking applications and implemented new functionality across multiple banking products."
+          ]
+        }
       ],
       "tech": [
         "C#",
@@ -238,19 +256,26 @@
     {
       "id": "mystic-solutions-limited",
       "company": "Mystic Solutions Limited",
-      "role": "Freelance Developer",
+      "role": "Freelance Part-Time Developer",
       "startDate": "2012-08",
       "endDate": "2016-10",
       "highlights": [],
+      "projects": [
+        {
+          "name": " ",
+          "highlights": [
+            "Developed a responsive healthcare web application for wound assessment and custom topical cream formulation"
+          ]
+        }
+      ],
       "tech": [
         "C#",
         ".NET",
         "SQL Server",
         "JavaScript",
         ".NET MVC",
-        "HTML",
         "jQuery",
-        "CSS"
+        "Bootstrap"
       ]
     },
     {
@@ -260,7 +285,15 @@
       "startDate": "2013-03",
       "endDate": "2013-12",
       "highlights": [],
-      "tech": ["MongoDB", ".NET MVC", "JavaScript", "C#", "NET Web API"]
+      "tech": [
+        "JavaScript",
+        "C#",
+        ".NET MVC",
+        ".NET Web API",
+        "Azure",
+        "SQL Server",
+        "MongoDB"
+      ]
     },
     {
       "id": "globant",
@@ -269,7 +302,23 @@
       "startDate": "2011-07",
       "endDate": "2013-03",
       "highlights": [],
-      "tech": [".NET Razor", "MVC", "jQuery", "JavaScript", "C#"]
+      "projects": [
+        {
+          "name": "Colombian government humanitarian FARC",
+          "highlights": [
+            "Developed public-sector web applications for a Colombian government humanitarian initiative"
+          ]
+        }
+      ],
+      "tech": [
+        "Razor",
+        ".NET MVC",
+        ".NET Web API",
+        "SQL Server",
+        "jQuery",
+        "JavaScript",
+        "C#"
+      ]
     },
     {
       "id": "particular",
@@ -278,7 +327,23 @@
       "startDate": "2011-09",
       "endDate": "2011-12",
       "highlights": [],
-      "tech": ["ASP.NET", "ASP", "JavaScript", "C#", "SQL Server"]
+      "projects": [
+        {
+          "name": "Migration legacy website",
+          "highlights": [
+            "Migrated a legacy VB/ASP e-commerce platform for costume retail to ASP.NET Web Forms"
+          ]
+        }
+      ],
+      "tech": [
+        "ASP.NET Web Forms",
+        "ASP",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "C#",
+        "SQL Server"
+      ]
     },
     {
       "id": "bancor-2",
@@ -287,13 +352,22 @@
       "startDate": "2008-06",
       "endDate": "2011-07",
       "highlights": [],
+      "projects": [
+        {
+          "name": "Intranet & Internet App Banking",
+          "highlights": [
+            "Developed internal banking intranet systems and customer-facing web portals (including the DaleGas financing platform)"
+          ]
+        }
+      ],
       "tech": [
         "C#",
         "SQL Server",
+        "DTS/DTSX",
         "JavaScript",
         ".NET",
-        "Visual Fox",
-        "WPF / WCF",
+        "Visual Fox/Pro",
+        "WPF/WCF",
         "jQuery"
       ]
     },

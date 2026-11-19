@@ -46,8 +46,12 @@ export const strings = {
     repo: "Repository",
     live: "Live demo",
   },
+  skills: {
+    category: "Category",
+    technologies: "Technologies",
+  },
   now: {
-    heading: "What I'm working on now",
+    heading: "What I'm working on",
     academy: "Academy",
     progress: "Progress",
     updated: "Updated",

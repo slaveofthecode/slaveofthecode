@@ -39,7 +39,8 @@ const defaultSection = defaultCvSectionId(content);
         aria-label={t.sections.label}
         data-section-tabs
         data-default-section={defaultSection}
-        class="flex w-full gap-1"
+        style="top: var(--app-header-height, 3.5rem)"
+        class="sticky z-30 flex w-full gap-1 border-b border-border bg-bg"
       >
         {tabSections.map((section) => (
           <button

@@ -190,6 +190,22 @@ describe("certificationSchema", () => {
     expect(result.success).toBe(true);
   });
 
+  it("accepts a root-relative image path", () => {
+    const result = certificationSchema.safeParse({
+      ...validCertification,
+      imageUrl: "/images/certifications/cert.png",
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a non-root-relative image path", () => {
+    const result = certificationSchema.safeParse({
+      ...validCertification,
+      imageUrl: "cert.png",
+    });
+    expect(result.success).toBe(false);
+  });
+
   it("rejects an invalid url", () => {
     const result = certificationSchema.safeParse({
       ...validCertification,

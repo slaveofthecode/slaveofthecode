@@ -474,11 +474,13 @@
     {
       "id": "microsoft-certified-professional-mcp",
       "name": "Microsoft Certified Professional (MCP)",
-      "url": "https://learn.microsoft.com/en-us/users/slaveofthecode/transcript/d9r28u434xpggwp?wt.mc_id=pvue_msft_webpage_wwl+&source=docs&tab=credentials-tab"
+      "url": "https://learn.microsoft.com/en-us/users/slaveofthecode/transcript/d9r28u434xpggwp?wt.mc_id=pvue_msft_webpage_wwl+&source=docs&tab=credentials-tab",
+      "imageUrl": "/images/certifications/Microsoft Certified Professional.png"
     },
     {
       "id": "programming-in-html5-with-javascript-and-css3-specialist-exam-480",
-      "name": "Programming in HTML5 with JavaScript and CSS3 Specialist (Exam 480)"
+      "name": "Programming in HTML5 with JavaScript and CSS3 Specialist (Exam 480)",
+      "imageUrl": "/images/certifications/Microsoft Specialist.png"
     }
   ],
   "now": [
@@ -492,60 +494,50 @@
       "status": "in-progress",
       "startedAt": "2026-09-28",
       "updatedAt": "2026-11-02",
-      "academyUrl": "https://www.commitacademy.io/app/courses/e4efcccc-42b0-4ebb-b4fd-fc5fb38e4be9",
+      "academyUrl": "https://www.commitacademy.io/",
       "links": [
         {
           "label": "commitacademy.io",
-          "url": "https://www.commitacademy.io/app/courses/e4efcccc-42b0-4ebb-b4fd-fc5fb38e4be9"
+          "url": "https://www.commitacademy.io/curso-cloud"
         }
       ],
       "tags": [
-        "cloud",
-        "aws",
-        "infrastructure",
-        "terraform",
-        "docker",
-        "kubernetes"
+        "Cloud",
+        "AWS",
+        "Infrastructure",
+        "Terraform",
+        "Docker",
+        "Kubernetes"
       ]
     },
     {
-      "id": "personal-project-linkzen-extension",
-      "kind": "project",
-      "title": "Extension for Google Chrome to manage bookmarks",
-      "description": "Google Chrome Extension (Manifest V3) designed to replace the traditional bookmarks bar with a single minimalist popup launcher. It includes a bookmark auditing engine that scans for obsolete, broken, or mismatched URLs and provides an interactive dashboard to manage and clean them up.",
-      "pdfDescription": "Build a minimalist Chrome bookmark launcher with broken-link auditing and cleanup tools.",
-      "progress": 73,
+      "id": "ai-engineering-commit-academy",
+      "kind": "course",
+      "title": "AI Engineering Specialization Program",
+      "pdfDescription": "18-module syllabus with hands-on labs, program schedule, and capstone project details for building, evaluating, and operating production AI systems.",
+      "description": "16-week hands-on program (18 modules, 15 labs, capstone project) in Python and TypeScript covering multi-provider LLM integration, structured outputs, RAG, tool-using agents with MCP, automated evaluations, security, observability, and cost/latency control for production AI products.",
+      "progress": 23,
       "status": "in-progress",
-      "startedAt": "2026-09-23",
-      "updatedAt": "2026-10-08",
+      "startedAt": "2026-11-10",
+      "updatedAt": "2026-11-19",
+      "academyUrl": "https://www.commitacademy.io/",
       "links": [
         {
-          "label": "linkzen-extension",
-          "url": "https://github.com/slaveofthecode/linkzen-extension"
+          "label": "commitacademy.io",
+          "url": "https://www.commitacademy.io/curso-ai-engineering"
         }
       ],
       "tags": [
-        "chrome-extension",
-        "react",
-        "typescript",
-        "vite",
-        "chrome.bookmarks",
-        "chrome.tabs",
-        "chrome.storage",
-        "aws amplify"
+        "RAG",
+        "MCP",
+        "LLM",
+        "AI Engineering",
+        "Python",
+        "Pydantic"
       ]
     }
   ],
   "personalProjects": [
-    {
-      "id": "slaveofthecode",
-      "name": "Portfolio",
-      "description": "A personal portfolio where you can explore my IT life: experiences, projects, certifications, tech stacks, and more. ",
-      "tech": ["Astro", "TypeScript", "Bun", "API Gemini", "RAG", "SQL Lite"],
-      "repoUrl": "https://github.com/slaveofthecode/slaveofthecode",
-      "productionUrl": "https://slaveofthecode.vercel.app/",
-      "thumbnailUrl": "/images/projects/thumbnail__portfolio.png"
-    },
     {
       "id": "github-inspector-ai",
       "name": "GitHub Inspector",

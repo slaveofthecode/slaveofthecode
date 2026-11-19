@@ -12,7 +12,8 @@ const { id, title, open = false } = Astro.props;
   id={id}
   aria-label={title}
   hidden={!open}
-  class="scroll-mt-24 py-10"
+  style="scroll-margin-top: calc(var(--app-header-height, 3.5rem) + 3rem)"
+  class="py-10"
 >
   <slot />
 </section>

@@ -26,6 +26,7 @@ function getPopulatedContent() {
         name: "Test certification",
         issuer: "Test issuer",
         url: "https://learn.microsoft.com/en-us/users/slaveofthecode/transcript/demo?wt.mc_id=test&source=docs",
+        imageUrl: "/images/certifications/cert.png",
       },
     ],
     now: [

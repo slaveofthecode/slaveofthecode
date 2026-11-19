@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { yearOrYearMonthSchema } from "./common";
+import { assetUrlSchema, yearOrYearMonthSchema } from "./common";
 
 export const certificationSchema = z.object({
   id: z.string().min(1),
@@ -7,6 +7,7 @@ export const certificationSchema = z.object({
   issuer: z.string().min(1).optional(),
   date: yearOrYearMonthSchema.optional(),
   url: z.string().url().optional(),
+  imageUrl: assetUrlSchema.optional(),
 });
 
 export type Certification = z.infer<typeof certificationSchema>;

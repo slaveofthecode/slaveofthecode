@@ -28,7 +28,7 @@ export const strings = {
   },
   footer: {
     builtWith: "Built with",
-    rights: "All rights reserved.",
+    rights: "👨🏻‍💻",
     source: "View the source on GitHub",
     iconCredit:
       "Download icon by Konstantin Filatov via SVG Repo (CC Attribution).",

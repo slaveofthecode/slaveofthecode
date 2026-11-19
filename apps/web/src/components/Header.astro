@@ -201,19 +201,24 @@ const navItems = [
 </style>
 
 <script>
-  const header = document.querySelector("[data-header]");
+  const header = document.querySelector<HTMLElement>("[data-header]");
   if (header) {
     const stickyActions = header.querySelector<HTMLElement>("[data-sticky-actions]");
     const laptop = window.matchMedia("(min-width: 640px)");
     const update = () => {
       const scrolled = window.scrollY > 140;
       header.classList.toggle("is-scrolled", scrolled);
+      document.documentElement.style.setProperty(
+        "--app-header-height",
+        `${header.offsetHeight}px`,
+      );
       const showActions = scrolled && laptop.matches;
       stickyActions?.classList.toggle("hidden", !showActions);
       stickyActions?.classList.toggle("flex", showActions);
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
     laptop.addEventListener("change", update);
 
     const toggle = header.querySelector("[data-menu-toggle]");
@@ -222,6 +227,7 @@ const navItems = [
       const setOpen = (open: boolean) => {
         toggle.setAttribute("aria-expanded", String(open));
         panel.toggleAttribute("hidden", !open);
+        update();
       };
       toggle.addEventListener("click", () =>
         setOpen(panel.hasAttribute("hidden")),

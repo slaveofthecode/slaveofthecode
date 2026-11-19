@@ -572,6 +572,8 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - Every CV collection is optional in `contentSchema` and defaults to `[]`. Empty/missing sections
     disappear from the page, both PDFs and the top nav; chat remains a permanent nav item.
   - Added `src/lib/sections.ts` plus tests for section visibility, schema defaults and PDF omission.
+  - PDF/RAG/web tests now use local fixtures for now/projects, so they still exercise those paths
+    when the committed JSON has those collections empty; PDFs regenerated from the current JSON.
   - The human's uncommitted `cv.json` data edits were preserved and normalized with `format:data`.
   - Checks green: lint, typecheck, **129 tests**, build, check:boundaries.
 

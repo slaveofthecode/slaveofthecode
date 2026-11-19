@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { inflateSync } from "node:zlib";
-import { getContent } from "@portfolio/content";
+import { getContent, parseContent } from "@portfolio/content";
 import { PDFDocument } from "pdf-lib";
 import { renderCvPdf } from "../src/lib/cv-pdf";
 import { strings } from "../src/lib/strings";
@@ -15,6 +15,46 @@ function extractText(bytes: Uint8Array): string {
   return [...streams.join("\n").matchAll(/<([0-9A-Fa-f]+)>\s*Tj/g)]
     .map((match) => Buffer.from(match[1] ?? "", "hex").toString("latin1"))
     .join("\n");
+}
+
+function getPopulatedContent() {
+  return parseContent({
+    profile: getContent().profile,
+    certifications: [
+      {
+        id: "cert-test",
+        name: "Test certification",
+        issuer: "Test issuer",
+        url: "https://learn.microsoft.com/en-us/users/slaveofthecode/transcript/demo?wt.mc_id=test&source=docs",
+      },
+    ],
+    now: [
+      {
+        id: "now-test",
+        kind: "course",
+        title: "Test course",
+        description: "A short test description.",
+        pdfDescription: "A short PDF description.",
+        progress: 21,
+        status: "in-progress",
+        updatedAt: "2026-11-01",
+        academyUrl: "https://example.com/course?source=docs",
+        links: [],
+        tags: [],
+      },
+    ],
+    personalProjects: [
+      {
+        id: "project-test",
+        name: "Test project",
+        description: "A short test project.",
+        tech: [],
+        repoUrl: "https://example.com/repo?source=docs",
+        productionUrl: "https://example.com/app?source=docs",
+        thumbnailUrl: "https://example.com/thumb.png",
+      },
+    ],
+  });
 }
 
 describe("renderCvPdf", () => {
@@ -38,15 +78,16 @@ describe("renderCvPdf", () => {
   });
 
   test("the PDFs include every Now item and add personal projects", async () => {
-    const content = getContent();
+    const content = getPopulatedContent();
 
     for (const mode of ["designed", "ats"] as const) {
       const text = extractText(await renderCvPdf(content, mode));
       const flat = text.replace(/\s+/g, " ");
 
+      const repoUrl = content.personalProjects[0]?.repoUrl ?? "";
       expect(text).toContain("PERSONAL PROJECTS");
       expect(text).toContain(content.personalProjects[0]?.name ?? "");
-      expect(text).toContain(content.personalProjects[0]?.repoUrl ?? "");
+      expect(text).toContain(repoUrl.split("?")[0]?.split("#")[0] ?? "");
 
       for (const item of content.now) {
         expect(text).toContain(item.title);
@@ -82,7 +123,7 @@ describe("renderCvPdf", () => {
   });
 
   test("both PDFs keep validation URLs unwrapped and label progress", async () => {
-    const content = getContent();
+    const content = getPopulatedContent();
     const certificate = content.certifications.find((item) => item.url);
     const course = content.now.find((item) => item.kind === "course");
     expect(certificate?.url).toBeDefined();
@@ -98,6 +139,7 @@ describe("renderCvPdf", () => {
       if (certificate?.url) expect(lines).toContain(`Validate: ${cleanUrl}`);
       if (course) expect(lines).toContain(`Progress: ${course.progress}%`);
       expect(lines.join("\n")).not.toContain("wt.mc_id");
+      expect(lines.join("\n")).not.toContain("source=docs");
     }
   });
 

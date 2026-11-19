@@ -648,6 +648,23 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - Scrolled header identity shows `+15 years` and `B1/B2` as separated, high-contrast badges.
   - Both PDFs regenerated; checks green: lint, typecheck, **138 tests**, build, check:boundaries.
 
+## Done (continued)
+- **Project thumbnails (this branch):** all five `personalProjects[].thumbnailUrl` values in
+  `packages/content/data/cv.json` now point to root-relative public assets
+  (`/images/projects/thumbnail__*.png`), so they resolve identically across deployed base
+  URLs. Astro serves `apps/web/public/` from `/`, so the URL must not include `apps/web/public`.
+  The existing `assetUrlSchema` already accepts root-relative paths; no schema change was needed.
+  `format:data` normalized the human's uncommitted JSON edits, and the build regenerated both PDFs.
+  Checks green: lint, typecheck, **139 tests**, build, check:boundaries. Built HTML contains all
+  five paths and `dist/images/projects/` includes the five PNGs.
+- **Project thumbnail sizing/hover (this branch):** `PersonalProjects.astro` now renders every
+  thumbnail in the same responsive `aspect-[4/3]` frame (capped at 22rem on mobile, 14rem at `sm`,
+  18rem at `lg`) instead of stretching to each card's text height. The frame clips overflow and the
+  image scales to 110% on hover (`cursor-zoom-in`, 300ms, disabled under `prefers-reduced-motion`),
+  so there is no layout shift or click interaction. Checks green: lint, typecheck, **139 tests**,
+  build, check:boundaries; built HTML has five identical wrappers and the emitted CSS includes the
+  aspect-ratio and group-hover scale rules.
+
 ## Next steps
 - **`feat/profile-highlights-default-experience` awaits human commit/push/PR**: created from
   updated `main` per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.

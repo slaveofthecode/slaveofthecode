@@ -21,7 +21,7 @@
       }
     ],
     "email": "gml.gustavoml@gmail.com",
-    "avatar": "/images/profile/portrait.png"
+    "avatar": "https://slaveofthecode.vercel.app/portrait.png"
   },
   "experience": [
     {
@@ -426,54 +426,27 @@
     {
       "id": "ai-assisted-development",
       "name": "AI-Assisted Development",
-      "items": [
-        "LLMs",
-        "Coding Agents",
-        "MCP",
-        "Harness Engineering",
-        "RAG"
-      ]
+      "items": ["LLMs", "Coding Agents", "MCP", "Harness Engineering", "RAG"]
     },
     {
       "id": "ai-development-tools",
       "name": "AI Development Tools",
-      "items": [
-        "OpenCode",
-        "Claude",
-        "Cursor",
-        "GitHub Copilot",
-        "Gemini"
-      ]
+      "items": ["OpenCode", "Claude", "Cursor", "GitHub Copilot", "Gemini"]
     },
     {
       "id": "devops-infrastructure",
       "name": "DevOps & Infrastructure",
-      "items": [
-        "AWS",
-        "Docker",
-        "CI/CD Pipelines",
-        "Git"
-      ]
+      "items": ["AWS", "Docker", "CI/CD Pipelines", "Git"]
     },
     {
       "id": "testing-frameworks",
       "name": "Testing Frameworks",
-      "items": [
-        "Jest",
-        "Cypress",
-        "Vitest",
-        "Playwright"
-      ]
+      "items": ["Jest", "Cypress", "Vitest", "Playwright"]
     },
     {
       "id": "databases",
       "name": "Databases",
-      "items": [
-        "SQL Server",
-        "MongoDB",
-        "MySQL",
-        "SQLite"
-      ]
+      "items": ["SQL Server", "MongoDB", "MySQL", "SQLite"]
     }
   ],
   "languages": [
@@ -568,17 +541,10 @@
       "id": "slaveofthecode",
       "name": "Portfolio",
       "description": "A personal portfolio where you can explore my IT life: experiences, projects, certifications, tech stacks, and more. ",
-      "tech": [
-        "Astro",
-        "TypeScript",
-        "Bun",
-        "API Gemini",
-        "RAG",
-        "SQL Lite"
-      ],
+      "tech": ["Astro", "TypeScript", "Bun", "API Gemini", "RAG", "SQL Lite"],
       "repoUrl": "https://github.com/slaveofthecode/slaveofthecode",
       "productionUrl": "https://slaveofthecode.vercel.app/",
-      "thumbnailUrl": "/images/projects/slaveofthecode.png"
+      "thumbnailUrl": "/images/projects/thumbnail__portfolio.png"
     },
     {
       "id": "github-inspector-ai",
@@ -590,12 +556,12 @@
         "TypeScript",
         "Tailwind CSS",
         "Gemini AI",
-        "GitHub GraphQL API",
+        "AWS Amplify",
         "OSV.dev"
       ],
       "repoUrl": "https://github.com/slaveofthecode/github-inspector-ai",
-      "productionUrl": "https://slaveofthecode.github.io/github-inspector-ai/",
-      "thumbnailUrl": "/images/projects/github-inspector-ai.png"
+      "productionUrl": "https://main.d22y0lq8a3u6xm.amplifyapp.com/",
+      "thumbnailUrl": "/images/projects/thumbnail__github_inspector.png"
     },
     {
       "id": "readforme-ai",
@@ -603,34 +569,36 @@
       "description": "Upload a PDF and ask grounded questions about its content through a chat interface.",
       "tech": [
         "Next.js",
-        "React",
+        "Bun",
+        "RAG",
         "TypeScript",
         "Gemini",
         "Prisma",
         "PostgreSQL",
         "pdfjs-dist",
-        "Tailwind CSS"
+        "Harness Engineering"
       ],
       "repoUrl": "https://github.com/slaveofthecode/readforme-ai",
-      "productionUrl": "https://readforme-ai.vercel.app",
-      "thumbnailUrl": "/images/projects/readforme-ai.png"
+      "productionUrl": "https://readforme-ai.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__readforme_ai.png"
     },
     {
-      "id": "react-graphql-ts",
-      "name": "React GraphQL TS",
-      "description": "A full-stack GraphQL example with a feature-based React client and Apollo Server running on Bun.",
-      "tech": [
-        "React",
-        "TypeScript",
-        "Apollo Client",
-        "Apollo Server",
-        "GraphQL",
-        "Vite",
-        "Bun"
-      ],
-      "repoUrl": "https://github.com/slaveofthecode/react-graphql-ts",
-      "productionUrl": "https://react-graphql-ts.vercel.app",
-      "thumbnailUrl": "/images/projects/react-graphql-ts.png"
+      "id": "tictactoe-react-ts",
+      "name": "Tic Tac Toe Game",
+      "description": "A simple, interactive tic-tac-toe game you can play right in your browser.",
+      "tech": ["React", "Vite", "Tailwind CSS", "SCSS", "TypeScript"],
+      "repoUrl": "https://github.com/slaveofthecode/tictactoe-react-ts",
+      "productionUrl": "https://tictactoe-react-ts.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__tictactoe_game.png"
+    },
+    {
+      "id": "breakout-game",
+      "name": "BreakOut Game",
+      "description": "A classic arcade brick-breaker game you can play right in your browser.",
+      "tech": ["JavaScript", "CSS", "HTML"],
+      "repoUrl": "https://github.com/slaveofthecode/breakout-game",
+      "productionUrl": "https://my-breakout-game.vercel.app/",
+      "thumbnailUrl": "/images/projects/thumbnail__breakout_game.png"
     }
   ]
 }

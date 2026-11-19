@@ -14,6 +14,7 @@ import {
   type MarkdownStyle,
   parseMarkdownBlocks,
 } from "./markdown";
+import { profileSummary } from "./profile-summary";
 import { hasCvSection } from "./sections";
 import { strings } from "./strings";
 
@@ -363,7 +364,7 @@ export async function renderCvPdf(
   }
 
   heading(ctx, "Summary");
-  writeMarkdown(ctx, profile.summary, { gap: 8 });
+  writeMarkdown(ctx, profileSummary(profile), { gap: 8 });
 
   if (hasCvSection(content, "experience")) {
     heading(ctx, "Experience");

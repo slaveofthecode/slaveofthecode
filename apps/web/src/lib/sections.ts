@@ -34,3 +34,9 @@ export function hasCvSection(content: Content, id: CvSectionId): boolean {
 export function visibleCvSectionIds(content: Content): CvSectionId[] {
   return cvSectionIds.filter((id) => hasCvSection(content, id));
 }
+
+export function defaultCvSectionId(content: Content): CvSectionId | "" {
+  return hasCvSection(content, "experience")
+    ? "experience"
+    : (visibleCvSectionIds(content)[0] ?? "");
+}

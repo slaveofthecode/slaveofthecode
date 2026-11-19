@@ -3,7 +3,9 @@
     "name": "Gustavo Lopez",
     "headline": "Senior Full-Stack Developer",
     "location": "Córdoba, Argentina",
-    "summary": "\n**+15 years**  of experience. \nLevel English: **B1/B2**. \nTech Stack preference: **React** - **Ts** - **Node** - **Astro**",
+    "summary": "\nPreferred environment: **React** - **TS** - **Node** - **Astro** - **Cursor** - **AI**\nCertifications: **Microsoft Certified Professional (MCP)**\nIn progress: _**AWS**_, _**AI Engineering**_, _**Data Engineering**_, _**Python**_",
+    "yearsOfExperience": "+15 years",
+    "englishLevel": "B2",
     "links": [
       {
         "label": "Portfolio",
@@ -19,7 +21,7 @@
       }
     ],
     "email": "gml.gustavoml@gmail.com",
-    "avatar": "https://slaveofthecode.vercel.app/portrait.png"
+    "avatar": "/images/profile/portrait.png"
   },
   "experience": [
     {
@@ -176,7 +178,7 @@
       "highlights": [],
       "projects": [
         {
-          "name": " ",
+          "name": "Security Products",
           "highlights": [
             "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
           ]
@@ -201,7 +203,7 @@
       "highlights": [],
       "projects": [
         {
-          "name": " ",
+          "name": "Universal Music Group (UMG)",
           "highlights": [
             "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
             "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
@@ -424,27 +426,54 @@
     {
       "id": "ai-assisted-development",
       "name": "AI-Assisted Development",
-      "items": ["LLMs", "Coding Agents", "MCP", "Harness Engineering", "RAG"]
+      "items": [
+        "LLMs",
+        "Coding Agents",
+        "MCP",
+        "Harness Engineering",
+        "RAG"
+      ]
     },
     {
       "id": "ai-development-tools",
       "name": "AI Development Tools",
-      "items": ["OpenCode", "Claude", "Cursor", "GitHub Copilot", "Gemini"]
+      "items": [
+        "OpenCode",
+        "Claude",
+        "Cursor",
+        "GitHub Copilot",
+        "Gemini"
+      ]
     },
     {
       "id": "devops-infrastructure",
       "name": "DevOps & Infrastructure",
-      "items": ["AWS", "Docker", "CI/CD Pipelines", "Git"]
+      "items": [
+        "AWS",
+        "Docker",
+        "CI/CD Pipelines",
+        "Git"
+      ]
     },
     {
       "id": "testing-frameworks",
       "name": "Testing Frameworks",
-      "items": ["Jest", "Cypress", "Vitest", "Playwright"]
+      "items": [
+        "Jest",
+        "Cypress",
+        "Vitest",
+        "Playwright"
+      ]
     },
     {
       "id": "databases",
       "name": "Databases",
-      "items": ["SQL Server", "MongoDB", "MySQL", "SQLite"]
+      "items": [
+        "SQL Server",
+        "MongoDB",
+        "MySQL",
+        "SQLite"
+      ]
     }
   ],
   "languages": [
@@ -536,6 +565,22 @@
   ],
   "personalProjects": [
     {
+      "id": "slaveofthecode",
+      "name": "Portfolio",
+      "description": "A personal portfolio where you can explore my IT life: experiences, projects, certifications, tech stacks, and more. ",
+      "tech": [
+        "Astro",
+        "TypeScript",
+        "Bun",
+        "API Gemini",
+        "RAG",
+        "SQL Lite"
+      ],
+      "repoUrl": "https://github.com/slaveofthecode/slaveofthecode",
+      "productionUrl": "https://slaveofthecode.vercel.app/",
+      "thumbnailUrl": "/images/projects/slaveofthecode.png"
+    },
+    {
       "id": "github-inspector-ai",
       "name": "GitHub Inspector",
       "description": "Inspect any GitHub account and get a readable overview of repositories, languages and metadata, with AI summaries and dependency risk scans.",
@@ -550,7 +595,7 @@
       ],
       "repoUrl": "https://github.com/slaveofthecode/github-inspector-ai",
       "productionUrl": "https://slaveofthecode.github.io/github-inspector-ai/",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
+      "thumbnailUrl": "/images/projects/github-inspector-ai.png"
     },
     {
       "id": "readforme-ai",
@@ -568,7 +613,7 @@
       ],
       "repoUrl": "https://github.com/slaveofthecode/readforme-ai",
       "productionUrl": "https://readforme-ai.vercel.app",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
+      "thumbnailUrl": "/images/projects/readforme-ai.png"
     },
     {
       "id": "react-graphql-ts",
@@ -585,7 +630,7 @@
       ],
       "repoUrl": "https://github.com/slaveofthecode/react-graphql-ts",
       "productionUrl": "https://react-graphql-ts.vercel.app",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
+      "thumbnailUrl": "/images/projects/react-graphql-ts.png"
     }
   ]
 }

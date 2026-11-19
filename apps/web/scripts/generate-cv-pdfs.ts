@@ -10,12 +10,23 @@ const content = getContent();
 async function loadPortrait(): Promise<Uint8Array | undefined> {
   const avatar = content.profile.avatar;
   if (!avatar) return undefined;
+  if (avatar.startsWith("/")) {
+    try {
+      return await readFile(join(publicDir, avatar.slice(1)));
+    } catch {
+      return undefined;
+    }
+  }
   try {
     const response = await fetch(avatar);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return new Uint8Array(await response.arrayBuffer());
   } catch {
-    return await readFile(join(publicDir, "portrait.png"));
+    try {
+      return await readFile(join(publicDir, "images/profile/portrait.png"));
+    } catch {
+      return undefined;
+    }
   }
 }
 

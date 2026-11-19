@@ -35,7 +35,8 @@ const navItems = [
     class="mx-auto flex w-full max-w-[1104px] items-center justify-between gap-4 px-5 py-3 sm:px-8"
   >
     <a
-      href="/"
+      href="/experience"
+      aria-label={`${t.nav.home}: ${profile.name}`}
       class="header-identity flex min-w-0 items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
     >
       {
@@ -62,6 +63,20 @@ const navItems = [
         </span>
         <span class="block truncate font-mono text-xs text-muted">
           {profile.headline}
+        </span>
+        <span data-sticky-facts class="mt-1 flex flex-wrap items-center gap-1">
+          <span
+            title={`${t.cv.ofExperience}: ${profile.yearsOfExperience}`}
+            class="rounded-card border border-border bg-surface px-1.5 py-0.5 font-mono text-[10px] text-fg"
+          >
+            {profile.yearsOfExperience}
+          </span>
+          <span
+            title={`${t.cv.englishLevel}: ${profile.englishLevel}`}
+            class="rounded-card border border-border bg-surface px-1.5 py-0.5 font-mono text-[10px] text-fg"
+          >
+            {profile.englishLevel}
+          </span>
         </span>
       </span>
     </a>

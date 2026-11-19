@@ -629,16 +629,35 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - PDFs regenerated after the latest CV JSON edit; checks still green: lint, typecheck,
     **133 tests**, build, check:boundaries.
 
+## Done (continued)
+- **`feat/profile-highlights-default-experience` (this branch, from updated `main` `7c69090`):**
+  - `profile.yearsOfExperience` (`+15 years`) and `profile.englishLevel` (`B1/B2`) are now validated
+    fields in `packages/content`; `cv.json` and `cv.example.json` were updated.
+  - The human's uncommitted CV edits were preserved: expanded summary text, project names
+    "Security Products" and "Universal Music Group (UMG)", and the new Portfolio personal project.
+  - The first two summary lines are composed from those fields by `profileSummary()`, so the web
+    and both PDFs keep the same Markdown look without duplicating CV facts. `plainProfileSummary()`
+    feeds the meta description without Markdown markers.
+  - The RAG profile chunk also includes both new fields; regenerating `cv.sqlite` with
+    `bun run --filter @portfolio/api build:rag` is still required before redeploying the API.
+  - Experience is the default section, rendered open server-side and synced to `/experience` with
+    `replaceState` on load. Section tabs and links keep the URL in sync; clicking the active tab no
+    longer collapses the view.
+  - The sticky header identity and the main profile photo/name/headline now link to `/experience`,
+    so "home" lands on the open Experience panel.
+  - Scrolled header identity shows `+15 years` and `B1/B2` as separated, high-contrast badges.
+  - Both PDFs regenerated; checks green: lint, typecheck, **138 tests**, build, check:boundaries.
+
 ## Next steps
-- **`feat/summary-markdown-rendering` awaits human commit/push/PR**: created from updated `main`
-  per `docs/workflows/start-feature.md`. The working tree mixes the Markdown summary work with the
-  header/footer/profile tweaks above, by human choice. No commit, push or PR by the agent yet.
-- **PRs #76–#79 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`): single JSON
-  source, web/PDF polish and the previous CV UI/dev guard work. No agent merge was performed.
+- **`feat/profile-highlights-default-experience` awaits human commit/push/PR**: created from
+  updated `main` per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.
+- **PRs #76–#81 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
+  `56ff58c`): single JSON source, web/PDF polish, Markdown summary and README GIF. No agent merge
+  was performed.
 - After a CV edit, run `bun run build` (web + both PDFs) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
-  then redeploy both Vercel projects. The current committed RAG snapshot already includes the
-  personal project chunks.
+  then redeploy both Vercel projects. This branch updates the RAG chunk builder, but the agent did
+  not regenerate `cv.sqlite` because no `GEMINI_API_KEY` is available here.
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). The old
   **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own

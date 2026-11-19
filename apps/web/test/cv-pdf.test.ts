@@ -109,7 +109,7 @@ describe("renderCvPdf", () => {
   test("only the designed PDF embeds the portrait", async () => {
     const content = getContent();
     const portraitBytes = await readFile(
-      new URL("../public/portrait.png", import.meta.url),
+      new URL("../public/images/profile/portrait.png", import.meta.url),
     );
     const designed = await renderCvPdf(content, "designed", { portraitBytes });
     const ats = await renderCvPdf(content, "ats", { portraitBytes });
@@ -187,6 +187,8 @@ describe("renderCvPdf", () => {
         /\s+/g,
         " ",
       );
+      expect(flat).toContain(`${base.profile.yearsOfExperience} of experience`);
+      expect(flat).toContain(`English level: ${base.profile.englishLevel}`);
       expect(flat).toContain("Senior +15 years dev.");
       expect(flat).toContain("Level B1/B2");
       expect(flat).toContain("Stack preference");

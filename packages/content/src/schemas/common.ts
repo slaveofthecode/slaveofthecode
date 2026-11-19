@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+/** An absolute URL or a root-relative public asset path. */
+export const assetUrlSchema = z
+  .string()
+  .min(1)
+  .refine(
+    (value) => value.startsWith("/") || /^https?:\/\//.test(value),
+    "Expected an absolute URL or a root-relative path",
+  );
+
 /** A `YYYY-MM` month. */
 export const yearMonthSchema = z
   .string()

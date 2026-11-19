@@ -59,6 +59,8 @@ export function buildChunks(content: Content): RagChunk[] {
       `Location: ${profile.location}`,
       profile.email ? `Email: ${profile.email}` : null,
       profile.phone ? `Phone: ${profile.phone}` : null,
+      `Experience: ${profile.yearsOfExperience}`,
+      `English level: ${profile.englishLevel}`,
       profile.summary,
       profile.links.length > 0
         ? `Links: ${profile.links.map((link) => `${link.label}: ${link.url}`).join(", ")}`

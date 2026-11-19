@@ -1,6 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import { getContent, parseContent } from "@portfolio/content";
-import { hasCvSection, visibleCvSectionIds } from "../src/lib/sections";
+import {
+  defaultCvSectionId,
+  hasCvSection,
+  visibleCvSectionIds,
+} from "../src/lib/sections";
 
 const profile = getContent().profile;
 
@@ -55,5 +59,10 @@ describe("section visibility", () => {
     expect(hasCvSection(withData, "now")).toBe(true);
     expect(hasCvSection(withData, "projects")).toBe(true);
     expect(visibleCvSectionIds(withData)).toEqual(["now", "projects"]);
+  });
+
+  test("experience is the default section when data exists", () => {
+    expect(defaultCvSectionId(getContent())).toBe("experience");
+    expect(defaultCvSectionId(parseContent({ profile }))).toBe("");
   });
 });

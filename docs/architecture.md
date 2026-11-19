@@ -134,8 +134,8 @@ Re-run `bun run build:rag` (with `GEMINI_API_KEY`) after changing the CV.
 
 ```
 packages/content/data/cv.json  (committed, hand-maintained; single source of truth)
-   ├─▶ apps/web  (build time, static JSON imports → static HTML)
-   ├─▶ apps/web/scripts/generate-cv-pdfs.ts  (build time → public/cv.pdf + cv-ats.pdf)
+   ├─▶ apps/web  (build time, static JSON imports → static HTML;
+   │               download click → browser renders + caches the PDF)
    └─▶ apps/api  (build:rag → embeddings → SQLite snapshot; per request: retrieval + chat)
 ```
 
@@ -145,9 +145,10 @@ it is never read by the build.
 
 ## Downloadable CVs
 
-`apps/web/package.json` runs `bun scripts/generate-cv-pdfs.ts` before `astro build`.
-The script calls `renderCvPdf(getContent(), mode)` in `src/lib/cv-pdf.ts`: `designed`
-(adds a dark header, section rules and accent labels) and `ats` (plain black Helvetica,
-linear sections with `-` bullets). Both are A4, use theme-independent colors, and are
-linked from the hero as `/cv.pdf` and `/cv-ats.pdf`. Download filenames come from
-`resumeFilename(name, variant)`.
+`src/lib/download-cv.ts` calls `renderCvPdf(getContent(), mode)` in `src/lib/cv-pdf.ts`
+when a download button is clicked: `designed` (dark header, section rules and accent
+labels, with the portrait fetched from `profile.avatar` when available) and `ats` (plain
+black Helvetica, linear sections with `-` bullets). Both are A4 and use theme-independent
+colors. The resulting `Blob` is cached per variant, so a second click reuses the same
+generated PDF; each variant is rendered at most once per page load. Download filenames
+come from `resumeFilename(name, variant)`. No PDF files are emitted by `astro build`.

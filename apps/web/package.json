@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "bun scripts/generate-cv-pdfs.ts && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro check",
     "test": "bun test"

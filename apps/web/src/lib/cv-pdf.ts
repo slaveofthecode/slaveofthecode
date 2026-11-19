@@ -382,17 +382,19 @@ export async function renderCvPdf(
       if (job.summary) write(ctx, job.summary, { muted: true, gap: 3 });
       for (const highlight of job.highlights) bullet(ctx, highlight);
       for (const project of job.projects ?? []) {
-        write(ctx, `Project: ${project.name}`, { bold: true, gap: 2 });
+        write(
+          ctx,
+          project.name.trim() ? `Project: ${project.name}` : "Project",
+          { bold: true, gap: 2 },
+        );
         for (const highlight of project.highlights) bullet(ctx, highlight);
-      }
-      if (job.tech.length > 0) {
-        write(ctx, `Tech: ${job.tech.join(", ")}`, {
-          muted: true,
-          size: 9,
-          gap: 10,
-        });
-      } else {
-        ctx.y -= 10;
+        if (project.tech.length > 0) {
+          write(ctx, `Tech: ${project.tech.join(", ")}`, {
+            muted: true,
+            size: 9,
+            gap: 6,
+          });
+        }
       }
     }
   }

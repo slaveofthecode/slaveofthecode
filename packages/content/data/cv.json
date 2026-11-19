@@ -38,7 +38,8 @@
             "Built and maintained a full-stack web application for employee stock ownership plans, retirement accounts (401k, Profit Sharing), and vesting schedules using Meteor, Node.js, and Blaze.",
             "Handled bulk data imports, financial growth calculations, and reporting features backed by MongoDB.",
             "Automated version control, releases, and workflow pipelines using GitHub Actions."
-          ]
+          ],
+          "tech": ["Meteor", "Node.js", "Blaze", "MongoDB", "GitHub Actions", "Visual Studio Code", "GitHub Copilot"]
         },
         {
           "name": "Enterprise Life Settlements & Policy Servicing Backend",
@@ -48,17 +49,25 @@
             "Managed cloud infrastructure on AWS (RDS, S3, CloudWatch) and ran containerized environments with Docker on EC2.",
             "Built frontend features using Angular and worked with Atlassian Jira, GitHub, and Maven inside IntelliJ.",
             "Adopted AI-driven development workflows (using GitHub Copilot, Cursor, and Claude Code), shifting toward a model where AI handled the primary coding while we focused on reviewing, testing, and guiding the logic."
+          ],
+          "tech": [
+            "Java",
+            "Spring Boot",
+            "Camunda",
+            "Azure OCR",
+            "AWS",
+            "Docker",
+            "EC2",
+            "Angular",
+            "Jira",
+            "GitHub",
+            "Maven",
+            "IntelliJ",
+            "GitHub Copilot",
+            "Cursor",
+            "Claude Code"
           ]
         }
-      ],
-      "tech": [
-        "Angular",
-        "Java",
-        "Node",
-        "TypeScript",
-        "Claude Code",
-        "AWS",
-        "Cursor"
       ]
     },
     {
@@ -78,17 +87,17 @@
             "Connected frontend apps with backend services via Axios, working alongside Java / Spring Boot and BFF layers.",
             "Wrote unit tests to maintain solid code quality, keeping test coverage above 80%.",
             "Handled daily bug fixes, code maintenance, and deployments using Jenkins, Argo, Kubernetes (GCP), Bitbucket, and Jira in an Agile team."
+          ],
+          "tech": [
+            "React",
+            "TypeScript",
+            "BFF",
+            "Redux",
+            "Axios",
+            "Java",
+            "Micro Frontends"
           ]
         }
-      ],
-      "tech": [
-        "React",
-        "TypeScript",
-        "BFF",
-        "Redux",
-        "Axios",
-        "Java",
-        "Micro Frontends"
       ]
     },
     {
@@ -105,18 +114,18 @@
             "Developed financial management and payment processing features for a B2B fintech platform, ensuring clean and responsive layouts for laptops and tablets using React, TypeScript, Redux, and Bootstrap.",
             "Connected frontend interfaces with Node.js and GraphQL backend services to handle secure data flow and transactions.",
             "Implemented unit and integration testing practices to support application reliability and maintainability."
+          ],
+          "tech": [
+            "React",
+            "Redux",
+            "TypeScript",
+            "JavaScript",
+            "UT ( Jest )",
+            "Node.JS",
+            "Bootstrap",
+            "GraphQL"
           ]
         }
-      ],
-      "tech": [
-        "React",
-        "Redux",
-        "TypeScript",
-        "JavaScript",
-        "UT ( Jest )",
-        "Node.JS",
-        "Bootstrap",
-        "GraphQL"
       ]
     },
     {
@@ -132,15 +141,15 @@
           "highlights": [
             "Developed core mobile features including payments, transfers, purchases, and account management capabilities using React Native, TypeScript, HTML, and CSS.",
             "Built accurate user interfaces from Figma designs following a pixel-to-pixel approach, collaborating closely with the mobile team."
+          ],
+          "tech": [
+            "HTML",
+            "CSS",
+            "TypeScript",
+            "Figma ( pixel-to-pixel )",
+            "React Native"
           ]
         }
-      ],
-      "tech": [
-        "HTML",
-        "CSS",
-        "TypeScript",
-        "Figma ( pixel-to-pixel )",
-        "React Native"
       ]
     },
     {
@@ -157,16 +166,16 @@
             "Developed and maintained frontend features for digital web applications in the pharmaceutical industry, building modern user interfaces using React, TypeScript, JavaScript, and Redux.",
             "Connected web applications with backend services and APIs, ensuring reliable data flow and smooth user experiences across multi-screen workflows.",
             "Collaborated within multidisciplinary product teams following agile methodologies, and participated in internal tech communities to share knowledge and maintain high code quality standards."
+          ],
+          "tech": [
+            "Multi-screen",
+            "JavaScript",
+            "Hooks",
+            "React",
+            "TypeScript",
+            "Design"
           ]
         }
-      ],
-      "tech": [
-        "Multi-screen",
-        "JavaScript",
-        "Hooks",
-        "React",
-        "TypeScript",
-        "Design"
       ]
     },
     {
@@ -181,17 +190,17 @@
           "name": "Security Products",
           "highlights": [
             "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
+          ],
+          "tech": [
+            "Angular",
+            "ElectronJS",
+            "JavaScript",
+            "Node.js",
+            "HTML",
+            "TypeScript",
+            "Jest"
           ]
         }
-      ],
-      "tech": [
-        "Angular",
-        "ElectronJS",
-        "JavaScript",
-        "Node.js",
-        "HTML",
-        "TypeScript",
-        "Jest"
       ]
     },
     {
@@ -207,17 +216,17 @@
           "highlights": [
             "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
             "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
+          ],
+          "tech": [
+            "C#",
+            "CSS",
+            "ASP.Net",
+            "JavaScript",
+            "Bootstrap",
+            "HTML",
+            "jQuery"
           ]
         }
-      ],
-      "tech": [
-        "C#",
-        "CSS",
-        "ASP.Net",
-        "JavaScript",
-        "Bootstrap",
-        "HTML",
-        "jQuery"
       ]
     },
     {
@@ -229,30 +238,30 @@
       "highlights": [],
       "projects": [
         {
-          "name": " ",
+          "name": "",
           "highlights": [
             "Designed, maintained, and modernized banking systems, intranet platforms, and customer-facing applications.",
             "Delivered full-stack solutions using C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server, and JavaScript.",
             "Maintained and enhanced business-critical banking applications and implemented new functionality across multiple banking products."
+          ],
+          "tech": [
+            "C#",
+            "Visual Fox",
+            "SQL Server",
+            "JavaScript",
+            "jQuery",
+            "Entity Framework",
+            "ASP.Net",
+            "CSS",
+            "MustacheJS",
+            "UnderscoreJS",
+            "RequiredJS",
+            ".NET MVC",
+            ".NET Web API",
+            "FoxPro",
+            "WPF / WCF"
           ]
         }
-      ],
-      "tech": [
-        "C#",
-        "Visual Fox",
-        "SQL Server",
-        "JavaScript",
-        "jQuery",
-        "Entity Framework",
-        "ASP.Net",
-        "CSS",
-        "MustacheJS",
-        "UnderscoreJS",
-        "RequiredJS",
-        ".NET MVC",
-        ".NET Web API",
-        "FoxPro",
-        "WPF / WCF"
       ]
     },
     {
@@ -264,20 +273,20 @@
       "highlights": [],
       "projects": [
         {
-          "name": " ",
+          "name": "",
           "highlights": [
             "Developed a responsive healthcare web application for wound assessment and custom topical cream formulation"
+          ],
+          "tech": [
+            "C#",
+            ".NET",
+            "SQL Server",
+            "JavaScript",
+            ".NET MVC",
+            "jQuery",
+            "Bootstrap"
           ]
         }
-      ],
-      "tech": [
-        "C#",
-        ".NET",
-        "SQL Server",
-        "JavaScript",
-        ".NET MVC",
-        "jQuery",
-        "Bootstrap"
       ]
     },
     {
@@ -287,14 +296,20 @@
       "startDate": "2013-03",
       "endDate": "2013-12",
       "highlights": [],
-      "tech": [
-        "JavaScript",
-        "C#",
-        ".NET MVC",
-        ".NET Web API",
-        "Azure",
-        "SQL Server",
-        "MongoDB"
+      "projects": [
+        {
+          "name": "",
+          "highlights": [],
+          "tech": [
+            "JavaScript",
+            "C#",
+            ".NET MVC",
+            ".NET Web API",
+            "Azure",
+            "SQL Server",
+            "MongoDB"
+          ]
+        }
       ]
     },
     {
@@ -309,17 +324,17 @@
           "name": "Colombian government humanitarian FARC",
           "highlights": [
             "Developed public-sector web applications for a Colombian government humanitarian initiative"
+          ],
+          "tech": [
+            "Razor",
+            ".NET MVC",
+            ".NET Web API",
+            "SQL Server",
+            "jQuery",
+            "JavaScript",
+            "C#"
           ]
         }
-      ],
-      "tech": [
-        "Razor",
-        ".NET MVC",
-        ".NET Web API",
-        "SQL Server",
-        "jQuery",
-        "JavaScript",
-        "C#"
       ]
     },
     {
@@ -334,17 +349,17 @@
           "name": "Migration legacy website",
           "highlights": [
             "Migrated a legacy VB/ASP e-commerce platform for costume retail to ASP.NET Web Forms"
+          ],
+          "tech": [
+            "ASP.NET Web Forms",
+            "ASP",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "C#",
+            "SQL Server"
           ]
         }
-      ],
-      "tech": [
-        "ASP.NET Web Forms",
-        "ASP",
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "C#",
-        "SQL Server"
       ]
     },
     {
@@ -359,18 +374,18 @@
           "name": "Intranet & Internet App Banking",
           "highlights": [
             "Developed internal banking intranet systems and customer-facing web portals (including the DaleGas financing platform)"
+          ],
+          "tech": [
+            "C#",
+            "SQL Server",
+            "DTS/DTSX",
+            "JavaScript",
+            ".NET",
+            "Visual Fox/Pro",
+            "WPF/WCF",
+            "jQuery"
           ]
         }
-      ],
-      "tech": [
-        "C#",
-        "SQL Server",
-        "DTS/DTSX",
-        "JavaScript",
-        ".NET",
-        "Visual Fox/Pro",
-        "WPF/WCF",
-        "jQuery"
       ]
     },
     {
@@ -380,13 +395,19 @@
       "startDate": "2007-06",
       "endDate": "2008-06",
       "highlights": [],
-      "tech": [
-        "SQL Server",
-        "HTML",
-        "JavaScript",
-        "ASP.NET Web Forms",
-        "CSS",
-        "C#"
+      "projects": [
+        {
+          "name": "",
+          "highlights": [],
+          "tech": [
+            "SQL Server",
+            "HTML",
+            "JavaScript",
+            "ASP.NET Web Forms",
+            "CSS",
+            "C#"
+          ]
+        }
       ]
     }
   ],

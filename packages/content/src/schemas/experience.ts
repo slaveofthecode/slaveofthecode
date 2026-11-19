@@ -2,8 +2,9 @@ import { z } from "zod";
 import { yearMonthSchema } from "./common";
 
 export const experienceProjectSchema = z.object({
-  name: z.string().min(1),
+  name: z.string(),
   highlights: z.array(z.string().min(1)),
+  tech: z.array(z.string().min(1)),
 });
 
 export const experienceSchema = z.object({
@@ -16,7 +17,6 @@ export const experienceSchema = z.object({
   summary: z.string().min(1).optional(),
   highlights: z.array(z.string().min(1)),
   projects: z.array(experienceProjectSchema).optional(),
-  tech: z.array(z.string().min(1)),
 });
 
 export type ExperienceProject = z.infer<typeof experienceProjectSchema>;

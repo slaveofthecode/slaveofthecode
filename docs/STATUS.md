@@ -700,13 +700,19 @@ Merged into `main` after the cutover (see PRs #20/#21):
   `/images/profile/portrait.png` instead of the first certificate image on the page. The built HTML
   was verified to contain the absolute portrait URL. Checks green: lint, typecheck, **145 tests**,
   build, check:boundaries.
+- **Per-project experience tech (`feat/experience-tech-per-project`):** removed role-level `tech`
+  from the schema, web, PDF and RAG; each experience project now owns its `tech` array. Nybble's two
+  projects were split from their highlights: Meteor/Node.js/Blaze/MongoDB/GitHub Actions and
+  Java/Spring Boot/Camunda/Azure OCR/AWS/Docker/EC2/Angular/Jira/GitHub/Maven/IntelliJ/Copilot/
+  Cursor/Claude Code. Harriague and Dicicom got empty-name, tech-only projects; empty project names
+  no longer render a heading. Checks green: lint, typecheck, **149 tests**, build, check:boundaries.
 
 ## Next steps
-- **`fix/og-image-portrait` awaits human commit/push/PR**: created from updated `main` after PR #84
-  was merged. No commit, push or PR by the agent yet.
-- **PRs #76–#84 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
-  `56ff58c`, `0bc6237`, `f2123cb`): single JSON source, web/PDF polish, Markdown summary, README GIF
-  and on-demand CV PDFs. No agent merge was performed.
+- **`feat/experience-tech-per-project` awaits human commit/push/PR**: created from updated `main`
+  after PR #85 was merged. No commit, push or PR by the agent yet.
+- **PRs #76–#85 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
+  `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`): single JSON source, web/PDF polish, Markdown summary,
+  README GIF, on-demand CV PDFs and Open Graph portrait. No agent merge was performed.
 - After a CV edit, run `bun run build` (web only; PDFs are generated on click) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
   then redeploy both Vercel projects. This branch updates the RAG chunk builder, but the agent did

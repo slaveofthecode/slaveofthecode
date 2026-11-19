@@ -83,13 +83,18 @@ export function buildChunks(content: Content): RagChunk[] {
         job.projects?.length
           ? `Projects:\n${job.projects
               .map((project) =>
-                project.highlights.length > 0
-                  ? `${project.name}:\n- ${project.highlights.join("\n- ")}`
-                  : project.name,
+                joinLines([
+                  project.name.trim() ? project.name : null,
+                  project.highlights.length > 0
+                    ? `- ${project.highlights.join("\n- ")}`
+                    : null,
+                  project.tech.length > 0
+                    ? `Tech: ${project.tech.join(", ")}`
+                    : null,
+                ]),
               )
               .join("\n\n")}`
           : null,
-        job.tech.length > 0 ? `Tech: ${job.tech.join(", ")}` : null,
       ]),
     });
   }

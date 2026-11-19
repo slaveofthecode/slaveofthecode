@@ -68,7 +68,7 @@ const navItems = [
 
     <div class="flex items-center gap-2 sm:gap-3">
       <div data-sticky-actions class="hidden items-center gap-3">
-        <ul class="flex items-center gap-1" aria-label={t.cv.links}>
+        <ul class="flex items-center gap-px" aria-label={t.cv.links}>
           {
             profile.links.map((link) => (
               <li>
@@ -86,26 +86,26 @@ const navItems = [
             ))
           }
         </ul>
-        <div class="flex items-center gap-2">
-          <a
-            href="/cv.pdf"
-            download={resumeFilename(profile.name)}
-            aria-label={`${profile.name} CV`}
-            class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-          >
-            <Icon name="download" class="h-3.5 w-3.5" />
-            {t.cv.download}
-          </a>
-          <a
-            href="/cv-ats.pdf"
-            download={resumeFilename(profile.name, "ats")}
-            aria-label={`${profile.name} ATS CV`}
-            class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-muted transition-colors hover:bg-hover hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-          >
-            <Icon name="download" class="h-3.5 w-3.5" />
-            {t.cv.downloadAts}
-          </a>
-        </div>
+      </div>
+      <div class="hidden items-center gap-2 sm:mr-3 sm:flex">
+        <a
+          href="/cv.pdf"
+          download={resumeFilename(profile.name)}
+          aria-label={`${profile.name} CV`}
+          class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-fg transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+        >
+          <Icon name="download" class="h-3.5 w-3.5" />
+          {t.cv.download}
+        </a>
+        <a
+          href="/cv-ats.pdf"
+          download={resumeFilename(profile.name, "ats")}
+          aria-label={`${profile.name} ATS CV`}
+          class="inline-flex items-center gap-1.5 rounded-card border border-border px-2.5 py-1 font-mono text-xs text-muted transition-colors hover:bg-hover hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+        >
+          <Icon name="download" class="h-3.5 w-3.5" />
+          {t.cv.downloadAts}
+        </a>
       </div>
       <button
         type="button"

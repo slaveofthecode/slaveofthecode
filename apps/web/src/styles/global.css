@@ -27,3 +27,53 @@ html {
   font-family: var(--font-sans);
   scroll-behavior: smooth;
 }
+
+.summary-markdown > :first-child {
+  margin-top: 0;
+}
+
+.summary-markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.summary-markdown p {
+  margin: 0.35rem 0;
+}
+
+.summary-markdown strong {
+  color: var(--color-fg);
+  font-weight: 700;
+}
+
+.summary-markdown em {
+  font-style: italic;
+}
+
+.summary-markdown code {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  font-family: var(--font-mono);
+  padding: 0 0.25rem;
+}
+
+.summary-markdown ul {
+  list-style: disc;
+  margin: 0.35rem 0;
+  padding-left: 1.1rem;
+}
+
+.summary-markdown ol {
+  list-style: decimal;
+  margin: 0.35rem 0;
+  padding-left: 1.3rem;
+}
+
+.summary-markdown li {
+  margin: 0.1rem 0;
+}
+
+.summary-markdown a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

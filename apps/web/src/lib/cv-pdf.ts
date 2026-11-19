@@ -9,6 +9,11 @@ import {
   rgb,
 } from "pdf-lib";
 import { formatPoint, formatRange } from "./dates";
+import {
+  type MarkdownRun,
+  type MarkdownStyle,
+  parseMarkdownBlocks,
+} from "./markdown";
 import { hasCvSection } from "./sections";
 import { strings } from "./strings";
 
@@ -23,6 +28,8 @@ interface Context {
   page: PDFPage;
   font: PDFFont;
   bold: PDFFont;
+  italic: PDFFont;
+  code: PDFFont;
   mode: CvPdfMode;
   y: number;
 }
@@ -110,6 +117,112 @@ function write(ctx: Context, value: string, options: WriteOptions = {}): void {
   ctx.y -= options.gap ?? 0;
 }
 
+function fontFor(ctx: Context, style: MarkdownStyle): PDFFont {
+  switch (style) {
+    case "bold":
+      return ctx.bold;
+    case "italic":
+      return ctx.italic;
+    case "code":
+      return ctx.code;
+    default:
+      return ctx.font;
+  }
+}
+
+interface PlacedRun {
+  text: string;
+  font: PDFFont;
+  width: number;
+}
+
+function drawRuns(
+  ctx: Context,
+  runs: MarkdownRun[],
+  options: WriteOptions = {},
+): void {
+  const size = options.size ?? (ctx.mode === "ats" ? 10 : 10.5);
+  const indent = options.indent ?? 0;
+  const width = options.width ?? PAGE_WIDTH - MARGIN * 2 - indent;
+  const lineHeight = size * 1.35;
+  const startX = MARGIN + indent;
+  let line: PlacedRun[] = [];
+  let lineWidth = 0;
+
+  const flush = (): void => {
+    if (line.length === 0) return;
+    ensure(ctx, lineHeight);
+    let x = startX;
+    for (const part of line) {
+      ctx.page.drawText(part.text, {
+        x,
+        y: ctx.y - size,
+        size,
+        font: part.font,
+        color: ink(ctx, Boolean(options.muted)),
+      });
+      x += part.width;
+    }
+    ctx.y -= lineHeight;
+    line = [];
+    lineWidth = 0;
+  };
+
+  for (const run of runs) {
+    const font = fontFor(ctx, run.style);
+    for (const token of run.text.split(/(\s+)/).filter(Boolean)) {
+      const tokenWidth = font.widthOfTextAtSize(token, size);
+      if (/^\s+$/.test(token)) {
+        const last = line.at(-1);
+        if (last) {
+          last.text += token;
+          last.width += tokenWidth;
+          lineWidth += tokenWidth;
+        }
+        continue;
+      }
+      if (lineWidth > 0 && lineWidth + tokenWidth > width) flush();
+      line.push({ text: token, font, width: tokenWidth });
+      lineWidth += tokenWidth;
+    }
+  }
+
+  flush();
+}
+
+function writeMarkdown(
+  ctx: Context,
+  value: string,
+  options: WriteOptions = {},
+): void {
+  const { gap = 0, ...lineOptions } = options;
+  const listIndent = (options.indent ?? 0) + 12;
+
+  for (const block of parseMarkdownBlocks(value)) {
+    if (block.kind === "blank") {
+      ctx.y -= 6;
+      continue;
+    }
+
+    if (block.kind === "text") {
+      drawRuns(ctx, block.runs, { ...lineOptions, gap: 0 });
+      continue;
+    }
+
+    const prefix =
+      block.kind === "ordered"
+        ? `${block.marker} `
+        : `${ctx.mode === "ats" ? "-" : "•"} `;
+    drawRuns(ctx, [{ text: prefix, style: "text" }, ...block.runs], {
+      ...lineOptions,
+      indent: listIndent + block.indent,
+      gap: 2,
+    });
+  }
+
+  ctx.y -= gap;
+}
+
 function pdfUrl(value: string): string {
   const query = value.indexOf("?");
   const hash = value.indexOf("#");
@@ -180,11 +293,15 @@ export async function renderCvPdf(
   const doc = await PDFDocument.create();
   const font = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+  const italic = await doc.embedFont(StandardFonts.HelveticaOblique);
+  const code = await doc.embedFont(StandardFonts.Courier);
   const ctx: Context = {
     doc,
     page: undefined as unknown as PDFPage,
     font,
     bold,
+    italic,
+    code,
     mode,
     y: 0,
   };
@@ -246,7 +363,7 @@ export async function renderCvPdf(
   }
 
   heading(ctx, "Summary");
-  write(ctx, profile.summary, { gap: 8 });
+  writeMarkdown(ctx, profile.summary, { gap: 8 });
 
   if (hasCvSection(content, "experience")) {
     heading(ctx, "Experience");

@@ -595,10 +595,45 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - Skills category column is right-aligned; the profile header puts the headline directly under the
     name, then email/location/phone on one line with downloads on the right.
 
+## Done (continued)
+- **PR #79 is merged into `main`** (`c9ba2ed`): CV UI layout, clean `/<section>` URLs and the
+  centered Skills category. No agent merge was performed.
+- **`feat/web-typography-density` was discarded after human review**: the fonts/colors/spacing
+  experiment was rolled back to `origin/main`, `@fontsource/chakra-petch` restored and no commit,
+  push or PR was made.
+- **`feat/summary-markdown-rendering` (this branch, from updated `main`):**
+  - `profile.summary` now supports Markdown in the web and both PDFs: bold, italic (`*` and `_`),
+    inline code, hard line breaks and lists.
+  - Web uses the existing escaped `renderMarkdown` renderer plus global `.summary-markdown` styles.
+  - PDFs use styled `pdf-lib` runs (Helvetica, Oblique, Courier) so syntax markers are not printed.
+  - The human-provided summary was applied; subsequent live edits to its Markdown markers were
+    preserved and normalized with `format:data`. A stray literal `markdown ` prefix was removed.
+  - The human's uncommitted `astro.config.mjs` `devToolbar.enabled = false` was preserved.
+  - PDFs regenerated; checks green: lint, typecheck, **133 tests**, build, check:boundaries.
+- **Header/footer/profile tweaks on the same uncommitted branch (human chose to keep them here):**
+  - CV and ATS downloads are back in the sticky site header on `sm+`, immediately before the chat
+    button with an extra `sm:mr-3` gap; they were removed from the profile header.
+  - Account icons remain in the scroll-only `data-sticky-actions` group; their gap was reduced to
+    `gap-px` there and to `gap-0.5` in the profile header.
+  - Footer no longer renders the Portfolio/LinkedIn/GitHub icon list; the "Built with heart" repo
+    link and the download-icon attribution stay.
+  - Profile email and location links stack directly under the account icons, one per line; the
+    phone link was removed from the web profile only (the value stays in `cv.json` and both PDFs).
+  - The profile headline lives in the same column as the name with `mt-0`, directly beneath it.
+  - The summary section top margin increased from `mt-6` to `mt-12`.
+  - The Skills "Technologies" header is left-aligned again; "Category" stays right-aligned.
+  - Experience rows no longer change their background on hover; they now use a transparent border
+    with `hover:border-accent`, matching Personal Projects rows (white-ish in dark theme).
+  - The open chat panel uses `sm:bottom-4`, the same 1rem inset as `sm:right-4`; mobile stays a
+    full-width bottom sheet (`bottom-0`).
+  - PDFs regenerated after the latest CV JSON edit; checks still green: lint, typecheck,
+    **133 tests**, build, check:boundaries.
+
 ## Next steps
-- **`feat/skills-table-centered-alignment` awaits human commit/push/PR**: created from updated `main`
-  per `docs/workflows/start-feature.md`. No commit, push or PR by the agent yet.
-- **PRs #76, #77 and #78 are merged into `main`** (`044282e`, `821f21d`, `bf91512`): single JSON
+- **`feat/summary-markdown-rendering` awaits human commit/push/PR**: created from updated `main`
+  per `docs/workflows/start-feature.md`. The working tree mixes the Markdown summary work with the
+  header/footer/profile tweaks above, by human choice. No commit, push or PR by the agent yet.
+- **PRs #76–#79 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`): single JSON
   source, web/PDF polish and the previous CV UI/dev guard work. No agent merge was performed.
 - After a CV edit, run `bun run build` (web + both PDFs) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),

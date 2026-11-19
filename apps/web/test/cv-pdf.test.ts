@@ -170,4 +170,30 @@ describe("renderCvPdf", () => {
       for (const heading of hiddenHeadings) expect(text).not.toContain(heading);
     }
   });
+
+  test("summary markdown is rendered with styled runs in both PDFs", async () => {
+    const base = getContent();
+    const content = {
+      ...base,
+      profile: {
+        ...base.profile,
+        summary:
+          "Senior **+15 years** dev.\nLevel `B1/B2`.\nStack _preference_: React",
+      },
+    };
+
+    for (const mode of ["designed", "ats"] as const) {
+      const flat = extractText(await renderCvPdf(content, mode)).replace(
+        /\s+/g,
+        " ",
+      );
+      expect(flat).toContain("Senior +15 years dev.");
+      expect(flat).toContain("Level B1/B2");
+      expect(flat).toContain("Stack preference");
+      expect(flat).toContain("React");
+      expect(flat).not.toContain("**");
+      expect(flat).not.toContain("`");
+      expect(flat).not.toContain("_preference_");
+    }
+  });
 });

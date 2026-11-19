@@ -19,7 +19,9 @@ function renderInline(text: string): string {
   return text
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/__([^_]+)__/g, "<strong>$1</strong>")
     .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>")
+    .replace(/(^|[^A-Za-z0-9_])_([^_\n]+)_/g, "$1<em>$2</em>")
     .replace(
       /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
       '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>',
@@ -157,4 +159,79 @@ export function renderMarkdown(input: string): string {
   closeLists();
 
   return nodes.map(serialize).join("\n");
+}
+
+export type MarkdownStyle = "text" | "bold" | "italic" | "code";
+
+export interface MarkdownRun {
+  text: string;
+  style: MarkdownStyle;
+}
+
+export type MarkdownBlock =
+  | { kind: "blank" }
+  | { kind: "text"; runs: MarkdownRun[] }
+  | { kind: "bullet"; indent: number; marker: string; runs: MarkdownRun[] }
+  | {
+      kind: "ordered";
+      indent: number;
+      marker: string;
+      runs: MarkdownRun[];
+    };
+
+const INLINE_PATTERN =
+  /`([^`]+)`|\*\*([^*]+)\*\*|__([^_]+)__|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*([^*]+)\*|_([^_]+)_/g;
+
+function inlineRuns(text: string): MarkdownRun[] {
+  const runs: MarkdownRun[] = [];
+  let cursor = 0;
+
+  for (const match of text.matchAll(INLINE_PATTERN)) {
+    const index = match.index ?? 0;
+    if (index > cursor) {
+      runs.push({ text: text.slice(cursor, index), style: "text" });
+    }
+
+    const [full, code, bold, strong, label, url, italic, emphasis] = match;
+    if (code) runs.push({ text: code, style: "code" });
+    else if (bold || strong) {
+      runs.push({ text: bold ?? strong ?? "", style: "bold" });
+    } else if (label && url) runs.push({ text: label, style: "text" });
+    else runs.push({ text: italic ?? emphasis ?? "", style: "italic" });
+
+    cursor = index + (full ?? "").length;
+  }
+
+  if (cursor < text.length) {
+    runs.push({ text: text.slice(cursor), style: "text" });
+  }
+
+  return runs.filter((run) => run.text.length > 0);
+}
+
+export function parseMarkdownBlocks(input: string): MarkdownBlock[] {
+  const blocks: MarkdownBlock[] = [];
+
+  for (const line of input.replace(/\r\n?/g, "\n").split("\n")) {
+    if (line.trim() === "") {
+      blocks.push({ kind: "blank" });
+      continue;
+    }
+
+    const item = line.match(/^(\s*)([-*+]|\d+\.)\s+(.*)$/);
+    if (item) {
+      const marker = item[2] ?? "";
+      blocks.push({
+        kind: /^\d/.test(marker) ? "ordered" : "bullet",
+        indent: (item[1] ?? "").length,
+        marker,
+        runs: inlineRuns(item[3] ?? ""),
+      });
+      continue;
+    }
+
+    blocks.push({ kind: "text", runs: inlineRuns(line) });
+  }
+
+  return blocks;
 }

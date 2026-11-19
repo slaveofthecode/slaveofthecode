@@ -29,3 +29,5 @@ content-source/
 
 # local-only personal backlog (never committed)
 docs/backlog.local.md
+
+packages/content/data/cv.example.json

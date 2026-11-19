@@ -234,44 +234,30 @@ describe("personalProjectSchema", () => {
 });
 
 describe("contentSchema", () => {
-  it("rejects content missing a required collection", () => {
-    const result = contentSchema.safeParse({ profile: validProfile });
+  it("rejects content missing the profile", () => {
+    const result = contentSchema.safeParse({ experience: [] });
     expect(result.success).toBe(false);
   });
 
-  it("defaults education to an empty array when omitted", () => {
-    const result = contentSchema.safeParse({
-      profile: validProfile,
-      experience: [validExperience],
-      skills: [],
-      languages: [],
-      now: [validNow],
-    });
+  it("defaults every collection except profile when omitted", () => {
+    const result = contentSchema.safeParse({ profile: validProfile });
     expect(result.success).toBe(true);
-    if (result.success) expect(result.data.education).toEqual([]);
+    if (result.success) {
+      expect(result.data.experience).toEqual([]);
+      expect(result.data.skills).toEqual([]);
+      expect(result.data.languages).toEqual([]);
+      expect(result.data.education).toEqual([]);
+      expect(result.data.certifications).toEqual([]);
+      expect(result.data.now).toEqual([]);
+      expect(result.data.personalProjects).toEqual([]);
+    }
   });
 
-  it("defaults certifications to an empty array when omitted", () => {
+  it("rejects an invalid collection even when others are omitted", () => {
     const result = contentSchema.safeParse({
       profile: validProfile,
-      experience: [validExperience],
-      skills: [],
-      languages: [],
-      now: [validNow],
+      now: [{ ...validNow, progress: 101 }],
     });
-    expect(result.success).toBe(true);
-    if (result.success) expect(result.data.certifications).toEqual([]);
-  });
-
-  it("defaults personalProjects to an empty array when omitted", () => {
-    const result = contentSchema.safeParse({
-      profile: validProfile,
-      experience: [validExperience],
-      skills: [],
-      languages: [],
-      now: [validNow],
-    });
-    expect(result.success).toBe(true);
-    if (result.success) expect(result.data.personalProjects).toEqual([]);
+    expect(result.success).toBe(false);
   });
 });

@@ -58,6 +58,8 @@ describe("renderCvPdf", () => {
         }
       }
 
+      expect(text).toContain(strings.now.heading.toUpperCase());
+      expect(text).not.toContain("WHAT I'M WORKING ON NOW");
       expect(text).not.toContain("Tags:");
       expect(text).not.toContain("Updated:");
     }
@@ -96,6 +98,34 @@ describe("renderCvPdf", () => {
       if (certificate?.url) expect(lines).toContain(`Validate: ${cleanUrl}`);
       if (course) expect(lines).toContain(`Progress: ${course.progress}%`);
       expect(lines.join("\n")).not.toContain("wt.mc_id");
+    }
+  });
+
+  test("empty collections omit their PDF sections", async () => {
+    const content = {
+      ...getContent(),
+      experience: [],
+      skills: [],
+      languages: [],
+      education: [],
+      certifications: [],
+      now: [],
+      personalProjects: [],
+    };
+    const hiddenHeadings = [
+      "EXPERIENCE",
+      "SKILLS",
+      "LANGUAGES",
+      "EDUCATION",
+      "CERTIFICATIONS",
+      strings.now.heading.toUpperCase(),
+      strings.projects.heading.toUpperCase(),
+    ];
+
+    for (const mode of ["designed", "ats"] as const) {
+      const text = extractText(await renderCvPdf(content, mode));
+      expect(text).toContain("SUMMARY");
+      for (const heading of hiddenHeadings) expect(text).not.toContain(heading);
     }
   });
 });

@@ -11,6 +11,7 @@ import PersonalProjects from "../components/sections/PersonalProjects.astro";
 import Profile from "../components/sections/Profile.astro";
 import Skills from "../components/sections/Skills.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { hasCvSection } from "../lib/sections";
 import { strings as t } from "../lib/strings";
 
 const content = getContent();
@@ -19,16 +20,24 @@ const content = getContent();
 <BaseLayout>
   <Profile profile={content.profile} />
 
-  <Section id="experience" title={t.nav.experience}>
-    <Experience items={content.experience} />
-  </Section>
-
-  <Section id="skills" title={t.nav.skills}>
-    <Skills groups={content.skills} />
-  </Section>
+  {
+    hasCvSection(content, "experience") ? (
+      <Section id="experience" title={t.nav.experience}>
+        <Experience items={content.experience} />
+      </Section>
+    ) : null
+  }
 
   {
-    content.languages.length > 0 ? (
+    hasCvSection(content, "skills") ? (
+      <Section id="skills" title={t.nav.skills}>
+        <Skills groups={content.skills} />
+      </Section>
+    ) : null
+  }
+
+  {
+    hasCvSection(content, "languages") ? (
       <Section id="languages" title={t.nav.languages}>
         <Languages items={content.languages} />
       </Section>
@@ -36,7 +45,7 @@ const content = getContent();
   }
 
   {
-    content.education.length > 0 ? (
+    hasCvSection(content, "education") ? (
       <Section id="education" title={t.nav.education}>
         <Education items={content.education} />
       </Section>
@@ -44,7 +53,7 @@ const content = getContent();
   }
 
   {
-    content.certifications.length > 0 ? (
+    hasCvSection(content, "certifications") ? (
       <Section id="certifications" title={t.nav.certifications}>
         <Certifications items={content.certifications} />
       </Section>
@@ -52,7 +61,7 @@ const content = getContent();
   }
 
   {
-    content.now.length > 0 ? (
+    hasCvSection(content, "now") ? (
       <Section id="now" title={t.now.heading} icon="thinking">
         <Now items={content.now} />
       </Section>
@@ -60,7 +69,7 @@ const content = getContent();
   }
 
   {
-    content.personalProjects.length > 0 ? (
+    hasCvSection(content, "projects") ? (
       <Section id="projects" title={t.projects.heading}>
         <PersonalProjects items={content.personalProjects} />
       </Section>

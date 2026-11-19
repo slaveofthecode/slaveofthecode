@@ -173,8 +173,14 @@
       "role": "Angular Developer",
       "startDate": "2019-10",
       "endDate": "2021-01",
-      "highlights": [
-        "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
+      "highlights": [],
+      "projects": [
+        {
+          "name": " ",
+          "highlights": [
+            "Developed core dashboard components for enterprise cybersecurity products, improving user tracking, log management, and real-time data visualization."
+          ]
+        }
       ],
       "tech": [
         "Angular",
@@ -192,9 +198,15 @@
       "role": "Full-Stack Developer",
       "startDate": "2018-09",
       "endDate": "2019-09",
-      "highlights": [
-        "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
-        "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
+      "highlights": [],
+      "projects": [
+        {
+          "name": " ",
+          "highlights": [
+            "Implemented enhancements and new functionality for a global music industry platform supporting artists, albums, and content management.",
+            "Contributed to both front-end and back-end development using C#, ASP.NET, JavaScript, and related web technologies."
+          ]
+        }
       ],
       "tech": [
         "C#",
@@ -212,10 +224,16 @@
       "role": "Full-Stack Developer",
       "startDate": "2013-12",
       "endDate": "2018-09",
-      "highlights": [
-        "Designed, maintained, and modernized banking systems, intranet platforms, and customer-facing applications.",
-        "Delivered full-stack solutions using C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server, and JavaScript.",
-        "Maintained and enhanced business-critical banking applications and implemented new functionality across multiple banking products."
+      "highlights": [],
+      "projects": [
+        {
+          "name": " ",
+          "highlights": [
+            "Designed, maintained, and modernized banking systems, intranet platforms, and customer-facing applications.",
+            "Delivered full-stack solutions using C#, .NET Framework, ASP.NET MVC, Entity Framework, SQL Server, and JavaScript.",
+            "Maintained and enhanced business-critical banking applications and implemented new functionality across multiple banking products."
+          ]
+        }
       ],
       "tech": [
         "C#",
@@ -238,19 +256,26 @@
     {
       "id": "mystic-solutions-limited",
       "company": "Mystic Solutions Limited",
-      "role": "Freelance Developer",
+      "role": "Freelance Part-Time Developer",
       "startDate": "2012-08",
       "endDate": "2016-10",
       "highlights": [],
+      "projects": [
+        {
+          "name": " ",
+          "highlights": [
+            "Developed a responsive healthcare web application for wound assessment and custom topical cream formulation"
+          ]
+        }
+      ],
       "tech": [
         "C#",
         ".NET",
         "SQL Server",
         "JavaScript",
         ".NET MVC",
-        "HTML",
         "jQuery",
-        "CSS"
+        "Bootstrap"
       ]
     },
     {
@@ -260,7 +285,15 @@
       "startDate": "2013-03",
       "endDate": "2013-12",
       "highlights": [],
-      "tech": ["MongoDB", ".NET MVC", "JavaScript", "C#", "NET Web API"]
+      "tech": [
+        "JavaScript",
+        "C#",
+        ".NET MVC",
+        ".NET Web API",
+        "Azure",
+        "SQL Server",
+        "MongoDB"
+      ]
     },
     {
       "id": "globant",
@@ -269,7 +302,23 @@
       "startDate": "2011-07",
       "endDate": "2013-03",
       "highlights": [],
-      "tech": [".NET Razor", "MVC", "jQuery", "JavaScript", "C#"]
+      "projects": [
+        {
+          "name": "Colombian government humanitarian FARC",
+          "highlights": [
+            "Developed public-sector web applications for a Colombian government humanitarian initiative"
+          ]
+        }
+      ],
+      "tech": [
+        "Razor",
+        ".NET MVC",
+        ".NET Web API",
+        "SQL Server",
+        "jQuery",
+        "JavaScript",
+        "C#"
+      ]
     },
     {
       "id": "particular",
@@ -278,7 +327,23 @@
       "startDate": "2011-09",
       "endDate": "2011-12",
       "highlights": [],
-      "tech": ["ASP.NET", "ASP", "JavaScript", "C#", "SQL Server"]
+      "projects": [
+        {
+          "name": "Migration legacy website",
+          "highlights": [
+            "Migrated a legacy VB/ASP e-commerce platform for costume retail to ASP.NET Web Forms"
+          ]
+        }
+      ],
+      "tech": [
+        "ASP.NET Web Forms",
+        "ASP",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "C#",
+        "SQL Server"
+      ]
     },
     {
       "id": "bancor-2",
@@ -287,13 +352,22 @@
       "startDate": "2008-06",
       "endDate": "2011-07",
       "highlights": [],
+      "projects": [
+        {
+          "name": "Intranet & Internet App Banking",
+          "highlights": [
+            "Developed internal banking intranet systems and customer-facing web portals (including the DaleGas financing platform)"
+          ]
+        }
+      ],
       "tech": [
         "C#",
         "SQL Server",
+        "DTS/DTSX",
         "JavaScript",
         ".NET",
-        "Visual Fox",
-        "WPF / WCF",
+        "Visual Fox/Pro",
+        "WPF/WCF",
         "jQuery"
       ]
     },
@@ -350,27 +424,54 @@
     {
       "id": "ai-assisted-development",
       "name": "AI-Assisted Development",
-      "items": ["LLMs", "Coding Agents", "MCP", "Harness Engineering", "RAG"]
+      "items": [
+        "LLMs",
+        "Coding Agents",
+        "MCP",
+        "Harness Engineering",
+        "RAG"
+      ]
     },
     {
       "id": "ai-development-tools",
       "name": "AI Development Tools",
-      "items": ["OpenCode", "Claude", "Cursor", "GitHub Copilot", "Gemini"]
+      "items": [
+        "OpenCode",
+        "Claude",
+        "Cursor",
+        "GitHub Copilot",
+        "Gemini"
+      ]
     },
     {
       "id": "devops-infrastructure",
       "name": "DevOps & Infrastructure",
-      "items": ["AWS", "Docker", "CI/CD Pipelines", "Git"]
+      "items": [
+        "AWS",
+        "Docker",
+        "CI/CD Pipelines",
+        "Git"
+      ]
     },
     {
       "id": "testing-frameworks",
       "name": "Testing Frameworks",
-      "items": ["Jest", "Cypress", "Vitest", "Playwright"]
+      "items": [
+        "Jest",
+        "Cypress",
+        "Vitest",
+        "Playwright"
+      ]
     },
     {
       "id": "databases",
       "name": "Databases",
-      "items": ["SQL Server", "MongoDB", "MySQL", "SQLite"]
+      "items": [
+        "SQL Server",
+        "MongoDB",
+        "MySQL",
+        "SQLite"
+      ]
     }
   ],
   "languages": [
@@ -405,113 +506,6 @@
       "name": "Programming in HTML5 with JavaScript and CSS3 Specialist (Exam 480)"
     }
   ],
-  "now": [
-    {
-      "id": "aws-cloud-commit-academy",
-      "kind": "course",
-      "title": "Cloud, AWS & Infrastructure Professional Program",
-      "description": "Master cloud computing fundamentals and advanced practices with AWS: design, deploy and operate scalable applications in the cloud. Covers key technologies such as Terraform, Docker and Kubernetes, with hands-on exercises and a real final project. Includes 16 weeks of structured content, live mentoring and access to a real AWS account to apply what you learn.",
-      "pdfDescription": "Master AWS fundamentals and infrastructure practices with Terraform, Docker, Kubernetes and a hands-on final project.",
-      "progress": 21,
-      "status": "in-progress",
-      "startedAt": "2026-09-28",
-      "updatedAt": "2026-11-02",
-      "academyUrl": "https://www.commitacademy.io/app/courses/e4efcccc-42b0-4ebb-b4fd-fc5fb38e4be9",
-      "links": [
-        {
-          "label": "commitacademy.io",
-          "url": "https://www.commitacademy.io/app/courses/e4efcccc-42b0-4ebb-b4fd-fc5fb38e4be9"
-        }
-      ],
-      "tags": [
-        "cloud",
-        "aws",
-        "infrastructure",
-        "terraform",
-        "docker",
-        "kubernetes"
-      ]
-    },
-    {
-      "id": "personal-project-linkzen-extension",
-      "kind": "project",
-      "title": "Extension for Google Chrome to manage bookmarks",
-      "description": "Google Chrome Extension (Manifest V3) designed to replace the traditional bookmarks bar with a single minimalist popup launcher. It includes a bookmark auditing engine that scans for obsolete, broken, or mismatched URLs and provides an interactive dashboard to manage and clean them up.",
-      "pdfDescription": "Build a minimalist Chrome bookmark launcher with broken-link auditing and cleanup tools.",
-      "progress": 73,
-      "status": "in-progress",
-      "startedAt": "2026-09-23",
-      "updatedAt": "2026-10-08",
-      "links": [
-        {
-          "label": "linkzen-extension",
-          "url": "https://github.com/slaveofthecode/linkzen-extension"
-        }
-      ],
-      "tags": [
-        "chrome-extension",
-        "react",
-        "typescript",
-        "vite",
-        "chrome.bookmarks",
-        "chrome.tabs",
-        "chrome.storage",
-        "aws amplify"
-      ]
-    }
-  ],
-  "personalProjects": [
-    {
-      "id": "github-inspector-ai",
-      "name": "GitHub Inspector",
-      "description": "Inspect any GitHub account and get a readable overview of repositories, languages and metadata, with AI summaries and dependency risk scans.",
-      "tech": [
-        "Next.js",
-        "React",
-        "TypeScript",
-        "Tailwind CSS",
-        "Gemini AI",
-        "GitHub GraphQL API",
-        "OSV.dev"
-      ],
-      "repoUrl": "https://github.com/slaveofthecode/github-inspector-ai",
-      "productionUrl": "https://slaveofthecode.github.io/github-inspector-ai/",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
-    },
-    {
-      "id": "readforme-ai",
-      "name": "ReadForMe AI",
-      "description": "Upload a PDF and ask grounded questions about its content through a chat interface.",
-      "tech": [
-        "Next.js",
-        "React",
-        "TypeScript",
-        "Gemini",
-        "Prisma",
-        "PostgreSQL",
-        "pdfjs-dist",
-        "Tailwind CSS"
-      ],
-      "repoUrl": "https://github.com/slaveofthecode/readforme-ai",
-      "productionUrl": "https://readforme-ai.vercel.app",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
-    },
-    {
-      "id": "react-graphql-ts",
-      "name": "React GraphQL TS",
-      "description": "A full-stack GraphQL example with a feature-based React client and Apollo Server running on Bun.",
-      "tech": [
-        "React",
-        "TypeScript",
-        "Apollo Client",
-        "Apollo Server",
-        "GraphQL",
-        "Vite",
-        "Bun"
-      ],
-      "repoUrl": "https://github.com/slaveofthecode/react-graphql-ts",
-      "productionUrl": "https://react-graphql-ts.vercel.app",
-      "thumbnailUrl": "https://media.licdn.com/dms/image/v2/D4D2DAQGS3RNcrJkgnA/profile-treasury-image-shrink_800_800/B4DaGmgb_lIcAI-/0/1793794884532?e=1795640400&v=beta&t=OuZCN6vDdzigtWtdQigyNqJXAovXmScKKV5Lpg2UJAg"
-    }
-  ]
+  "now": [],
+  "personalProjects": []
 }

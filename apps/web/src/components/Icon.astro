@@ -5,6 +5,7 @@ interface Props {
   name:
     | IconName
     | "thinking"
+    | "chat"
     | "heart"
     | "arrow-up"
     | "menu"
@@ -12,7 +13,8 @@ interface Props {
     | "map-pin"
     | "mail"
     | "phone"
-    | "pdf";
+    | "pdf"
+    | "download";
   class?: string;
 }
 
@@ -43,6 +45,20 @@ const { name, class: className = "h-4 w-4" } = Astro.props;
       <circle cx="8.5" cy="12" r="0.75" fill="currentColor" stroke="none" />
       <circle cx="12" cy="12" r="0.75" fill="currentColor" stroke="none" />
       <circle cx="15.5" cy="12" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  ) : name === "chat" ? (
+    <svg
+      class={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M20 15a8 8 0 1 0-4.6 4.6L20 22l-1.4-4.4A8 8 0 0 0 20 15z" />
+      <path d="M8 11h8M8 15h5" />
     </svg>
   ) : name === "menu" ? (
     <svg
@@ -114,6 +130,11 @@ const { name, class: className = "h-4 w-4" } = Astro.props;
     >
       <path d="M4 6h16v12H4z" />
       <path d="M4 7l8 6 8-6" />
+    </svg>
+  ) : name === "download" ? (
+    <svg class={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M23 22C23 22.5523 22.5523 23 22 23H2C1.44772 23 1 22.5523 1 22C1 21.4477 1.44772 21 2 21H22C22.5523 21 23 21.4477 23 22Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3099 18.6881C12.5581 19.3396 11.4419 19.3396 10.6901 18.6881L5.87088 14.5114C4.47179 13.2988 5.32933 11 7.18074 11L9.00001 11V3C9.00001 1.89543 9.89544 1 11 1L13 1C14.1046 1 15 1.89543 15 3L15 11H16.8193C18.6707 11 19.5282 13.2988 18.1291 14.5114L13.3099 18.6881ZM11.3451 16.6091C11.7209 16.9348 12.2791 16.9348 12.6549 16.6091L16.8193 13H14.5C13.6716 13 13 12.3284 13 11.5V3L11 3V11.5C11 12.3284 10.3284 13 9.50001 13L7.18074 13L11.3451 16.6091Z" />
     </svg>
   ) : name === "pdf" ? (
     <svg

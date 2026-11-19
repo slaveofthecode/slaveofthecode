@@ -4,5 +4,14 @@
   "installCommand": "bun install",
   "buildCommand": "bun run --filter @portfolio/web build",
   "outputDirectory": "apps/web/dist",
-  "redirects": [{ "source": "/es", "destination": "/", "permanent": true }]
+  "redirects": [{ "source": "/es", "destination": "/", "permanent": true }],
+  "rewrites": [
+    { "source": "/experience", "destination": "/index.html" },
+    { "source": "/skills", "destination": "/index.html" },
+    { "source": "/languages", "destination": "/index.html" },
+    { "source": "/education", "destination": "/index.html" },
+    { "source": "/certifications", "destination": "/index.html" },
+    { "source": "/now", "destination": "/index.html" },
+    { "source": "/projects", "destination": "/index.html" }
+  ]
 }

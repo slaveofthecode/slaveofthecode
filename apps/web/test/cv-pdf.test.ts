@@ -4,6 +4,7 @@ import { inflateSync } from "node:zlib";
 import { getContent } from "@portfolio/content";
 import { PDFDocument } from "pdf-lib";
 import { renderCvPdf } from "../src/lib/cv-pdf";
+import { strings } from "../src/lib/strings";
 
 function extractText(bytes: Uint8Array): string {
   const raw = Buffer.from(bytes).toString("latin1");
@@ -36,27 +37,30 @@ describe("renderCvPdf", () => {
     expect(text).toContain("EXPERIENCE");
   });
 
-  test("the PDFs use the reduced Now layout and add personal projects", async () => {
+  test("the PDFs include every Now item and add personal projects", async () => {
     const content = getContent();
-    const bytes = await renderCvPdf(content, "ats");
-    const text = extractText(bytes);
-    const flat = text.replace(/\s+/g, " ");
 
-    expect(text).toContain("PERSONAL PROJECTS");
-    expect(text).toContain(content.personalProjects[0]?.name ?? "");
-    expect(text).toContain(content.personalProjects[0]?.repoUrl ?? "");
+    for (const mode of ["designed", "ats"] as const) {
+      const text = extractText(await renderCvPdf(content, mode));
+      const flat = text.replace(/\s+/g, " ");
 
-    const course = content.now.find((item) => item.kind === "course");
-    expect(course).toBeDefined();
-    if (course) {
-      expect(flat).toContain(course.pdfDescription);
-      expect(flat).toContain(course.academyUrl ?? "");
+      expect(text).toContain("PERSONAL PROJECTS");
+      expect(text).toContain(content.personalProjects[0]?.name ?? "");
+      expect(text).toContain(content.personalProjects[0]?.repoUrl ?? "");
+
+      for (const item of content.now) {
+        expect(text).toContain(item.title);
+        expect(flat).toContain(item.pdfDescription);
+        expect(text).toContain(`${strings.now.progress}: ${item.progress}%`);
+        if (item.academyUrl) {
+          const url = item.academyUrl.split("?")[0]?.split("#")[0] ?? "";
+          expect(flat).toContain(url);
+        }
+      }
+
+      expect(text).not.toContain("Tags:");
+      expect(text).not.toContain("Updated:");
     }
-
-    const project = content.now.find((item) => item.kind === "project");
-    if (project) expect(text).not.toContain(project.title);
-    expect(text).not.toContain("Tags:");
-    expect(text).not.toContain("Updated:");
   });
 
   test("only the designed PDF embeds the portrait", async () => {
@@ -75,12 +79,23 @@ describe("renderCvPdf", () => {
     );
   });
 
-  test("the designed PDF has a page footer and the ATS PDF does not", async () => {
+  test("both PDFs keep validation URLs unwrapped and label progress", async () => {
     const content = getContent();
-    const designedText = extractText(await renderCvPdf(content, "designed"));
-    const atsText = extractText(await renderCvPdf(content, "ats"));
+    const certificate = content.certifications.find((item) => item.url);
+    const course = content.now.find((item) => item.kind === "course");
+    expect(certificate?.url).toBeDefined();
+    expect(course).toBeDefined();
 
-    expect(designedText).toMatch(/\b1 \/ \d+\b/);
-    expect(atsText).not.toMatch(/\b1 \/ \d+\b/);
+    const cleanUrl = certificate?.url?.split("?")[0]?.split("#")[0] ?? "";
+
+    for (const mode of ["designed", "ats"] as const) {
+      const lines = extractText(await renderCvPdf(content, mode))
+        .split("\n")
+        .map((line) => line.trim());
+
+      if (certificate?.url) expect(lines).toContain(`Validate: ${cleanUrl}`);
+      if (course) expect(lines).toContain(`Progress: ${course.progress}%`);
+      expect(lines.join("\n")).not.toContain("wt.mc_id");
+    }
   });
 });

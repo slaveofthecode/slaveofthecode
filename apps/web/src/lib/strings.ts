@@ -49,6 +49,7 @@ export const strings = {
   now: {
     heading: "What I'm working on now",
     academy: "Academy",
+    progress: "Progress",
     updated: "Updated",
     status: {
       "in-progress": "In progress",

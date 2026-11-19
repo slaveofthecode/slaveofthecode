@@ -24,6 +24,7 @@
   committed as public artifacts. Changing the CV requires `bun run build` (web/PDFs)
   and `bun run --filter @portfolio/api build:rag` (chat snapshot, needs `GEMINI_API_KEY`).
   The ATS PDF stays text-only; the designed PDF embeds the same portrait from `cv.json`.
-  The PDF "What I'm working on now" block is intentionally reduced to courses only
-  (title, one-sentence description, progress and academy URL), while the web keeps the
-  richer cards.
+  The PDF "What I'm working on now" block shows every JSON item with a reduced field set
+  (title, one-sentence description, labelled progress and optional academy URL), while the web
+  keeps the richer cards. The earlier courses-only filter was removed after the human reported
+  the mismatch between the web and the PDFs.

@@ -39,11 +39,6 @@ const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
 const MARGIN = 48;
 const BOTTOM = 56;
-const DESIGN_HEADER_HEIGHT = 176;
-const DESIGN_ACCENT = rgb(0.16, 0.16, 0.16);
-const DESIGN_PANEL = rgb(0.965, 0.965, 0.965);
-const DESIGN_RULE = rgb(0.82, 0.82, 0.82);
-const DESIGN_MUTED = rgb(0.44, 0.44, 0.44);
 
 function newPage(ctx: Context): void {
   ctx.page = ctx.doc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
@@ -114,36 +109,57 @@ function write(ctx: Context, value: string, options: WriteOptions = {}): void {
   ctx.y -= options.gap ?? 0;
 }
 
-function drawRule(ctx: Context, y: number): void {
-  ctx.page.drawLine({
-    start: { x: MARGIN, y },
-    end: { x: PAGE_WIDTH - MARGIN, y },
-    thickness: 0.6,
-    color: DESIGN_RULE,
+function pdfUrl(value: string): string {
+  const query = value.indexOf("?");
+  const hash = value.indexOf("#");
+  const end = Math.min(
+    query === -1 ? value.length : query,
+    hash === -1 ? value.length : hash,
+  );
+  return value.slice(0, end);
+}
+
+function writeUnwrapped(
+  ctx: Context,
+  value: string,
+  options: WriteOptions = {},
+): void {
+  const indent = options.indent ?? 0;
+  const width = options.width ?? PAGE_WIDTH - MARGIN * 2 - indent;
+  const font = options.bold ? ctx.bold : ctx.font;
+  let size = options.size ?? (ctx.mode === "ats" ? 10 : 10.5);
+  while (font.widthOfTextAtSize(value, size) > width && size > 5) {
+    size -= 0.5;
+  }
+  const lineHeight = size * 1.35;
+  ensure(ctx, lineHeight);
+  ctx.page.drawText(value, {
+    x: MARGIN + indent,
+    y: ctx.y - size,
+    size,
+    font,
+    color: ink(ctx, Boolean(options.muted)),
   });
+  ctx.y -= lineHeight;
+  ctx.y -= options.gap ?? 0;
 }
 
 function heading(ctx: Context, title: string): void {
   ensure(ctx, 34);
   ctx.y -= 6;
+  write(ctx, title.toUpperCase(), {
+    bold: true,
+    size: ctx.mode === "ats" ? 11 : 11.5,
+    gap: 3,
+  });
   if (ctx.mode === "designed") {
-    ctx.page.drawRectangle({
-      x: MARGIN,
-      y: ctx.y + 1,
-      width: 4,
-      height: 13,
-      color: DESIGN_ACCENT,
+    ctx.page.drawLine({
+      start: { x: MARGIN, y: ctx.y + 2 },
+      end: { x: PAGE_WIDTH - MARGIN, y: ctx.y + 2 },
+      thickness: 0.6,
+      color: rgb(0.75, 0.75, 0.75),
     });
-    write(ctx, title.toUpperCase(), {
-      bold: true,
-      size: 11.5,
-      indent: 12,
-      gap: 3,
-    });
-    drawRule(ctx, ctx.y + 3);
-    ctx.y -= 4;
-  } else {
-    write(ctx, title.toUpperCase(), { bold: true, size: 11, gap: 3 });
+    ctx.y -= 6;
   }
 }
 
@@ -152,55 +168,6 @@ function bullet(ctx: Context, value: string): void {
     indent: 12,
     gap: 2,
   });
-}
-
-function drawHeaderBand(ctx: Context): void {
-  if (ctx.mode !== "designed") return;
-  ctx.page.drawRectangle({
-    x: 0,
-    y: PAGE_HEIGHT - DESIGN_HEADER_HEIGHT,
-    width: PAGE_WIDTH,
-    height: DESIGN_HEADER_HEIGHT,
-    color: DESIGN_PANEL,
-  });
-  ctx.page.drawRectangle({
-    x: 0,
-    y: PAGE_HEIGHT - DESIGN_HEADER_HEIGHT,
-    width: 6,
-    height: DESIGN_HEADER_HEIGHT,
-    color: DESIGN_ACCENT,
-  });
-}
-
-function writeRight(ctx: Context, value: string, size = 9): void {
-  const width = ctx.bold.widthOfTextAtSize(value, size);
-  ctx.page.drawText(value, {
-    x: PAGE_WIDTH - MARGIN - width,
-    y: ctx.y - size,
-    size,
-    font: ctx.bold,
-    color: ctx.mode === "ats" ? rgb(0, 0, 0) : DESIGN_ACCENT,
-  });
-}
-
-function panelText(ctx: Context, value: string): void {
-  if (ctx.mode !== "designed") {
-    write(ctx, value, { gap: 8 });
-    return;
-  }
-  const size = 10.5;
-  const width = PAGE_WIDTH - MARGIN * 2 - 24;
-  const lines = wrap(value, ctx.font, size, width);
-  const height = lines.length * size * 1.35 + 16;
-  ensure(ctx, height + 8);
-  ctx.page.drawRectangle({
-    x: MARGIN,
-    y: ctx.y - height + 4,
-    width: PAGE_WIDTH - MARGIN * 2,
-    height,
-    color: DESIGN_PANEL,
-  });
-  write(ctx, value, { indent: 8, width, gap: 8 });
 }
 
 /** Render every CV fact from the content package into one PDF. */
@@ -221,7 +188,6 @@ export async function renderCvPdf(
     y: 0,
   };
   newPage(ctx);
-  drawHeaderBand(ctx);
 
   let portrait: PDFImage | undefined;
   if (mode === "designed" && options.portraitBytes) {
@@ -232,12 +198,12 @@ export async function renderCvPdf(
   const { profile } = content;
   write(ctx, profile.name, {
     bold: true,
-    size: mode === "ats" ? 15 : 22,
+    size: mode === "ats" ? 15 : 20,
     gap: 2,
     width: headerWidth,
   });
   write(ctx, profile.headline, {
-    size: mode === "ats" ? 11 : 12.5,
+    size: mode === "ats" ? 11 : 12,
     muted: true,
     gap: 6,
     width: headerWidth,
@@ -250,14 +216,16 @@ export async function renderCvPdf(
     if (profile.phone)
       write(ctx, `Phone: ${profile.phone}`, { width: headerWidth });
     for (const link of profile.links)
-      write(ctx, `${link.label}: ${link.url}`, { width: headerWidth });
+      writeUnwrapped(ctx, `${link.label}: ${pdfUrl(link.url)}`, {
+        width: headerWidth,
+      });
   } else {
     const contact = [profile.location, profile.email, profile.phone]
       .filter(Boolean)
       .join("  ·  ");
     write(ctx, contact, { muted: true, gap: 2, width: headerWidth });
     for (const link of profile.links) {
-      write(ctx, `${link.label}: ${link.url}`, {
+      writeUnwrapped(ctx, `${link.label}: ${pdfUrl(link.url)}`, {
         muted: true,
         size: 9,
         width: headerWidth,
@@ -277,7 +245,7 @@ export async function renderCvPdf(
   }
 
   heading(ctx, "Summary");
-  panelText(ctx, profile.summary);
+  write(ctx, profile.summary, { gap: 8 });
 
   heading(ctx, "Experience");
   for (const job of content.experience) {
@@ -286,13 +254,7 @@ export async function renderCvPdf(
       write(ctx, job.company, { bold: true, gap: 1 });
       write(ctx, `Dates: ${range}`, { muted: true, gap: 1 });
     } else {
-      ensure(ctx, 14);
-      writeRight(ctx, range, 9);
-      write(ctx, job.company, {
-        bold: true,
-        gap: 1,
-        width: PAGE_WIDTH - MARGIN * 2 - bold.widthOfTextAtSize(range, 9) - 12,
-      });
+      write(ctx, `${job.company}  |  ${range}`, { bold: true, gap: 1 });
     }
     write(ctx, [job.role, job.location].filter(Boolean).join(" · "), {
       gap: 3,
@@ -312,22 +274,11 @@ export async function renderCvPdf(
     } else {
       ctx.y -= 10;
     }
-    if (mode === "designed") {
-      drawRule(ctx, ctx.y + 2);
-      ctx.y -= 6;
-    }
   }
 
   heading(ctx, "Skills");
   for (const group of content.skills) {
-    if (mode === "ats") {
-      write(ctx, `${group.name}: ${group.items.join(", ")}`, { gap: 4 });
-    } else {
-      write(ctx, `${group.name.toUpperCase()}  ${group.items.join("  ·  ")}`, {
-        size: 9.5,
-        gap: 5,
-      });
-    }
+    write(ctx, `${group.name}: ${group.items.join(", ")}`, { gap: 4 });
   }
 
   heading(ctx, "Languages");
@@ -367,20 +318,29 @@ export async function renderCvPdf(
         .join(" · ");
       if (details) write(ctx, details, { muted: true });
       if (certification.url)
-        write(ctx, `Validate: ${certification.url}`, { size: 9 });
+        writeUnwrapped(ctx, `Validate: ${pdfUrl(certification.url)}`, {
+          size: 9,
+        });
       ctx.y -= 6;
     }
   }
 
-  const courses = content.now.filter((item) => item.kind === "course");
-  if (courses.length > 0) {
+  if (content.now.length > 0) {
     heading(ctx, strings.now.heading);
-    for (const item of courses) {
+    for (const item of content.now) {
       write(ctx, item.title, { bold: true, gap: 1 });
       write(ctx, item.pdfDescription, { muted: true, gap: 2 });
-      write(ctx, `${item.progress}%`, { muted: true, size: 9, gap: 2 });
+      write(ctx, `${strings.now.progress}: ${item.progress}%`, {
+        muted: true,
+        size: 9,
+        gap: 2,
+      });
       if (item.academyUrl)
-        write(ctx, `${strings.now.academy}: ${item.academyUrl}`, { size: 9 });
+        writeUnwrapped(
+          ctx,
+          `${strings.now.academy}: ${pdfUrl(item.academyUrl)}`,
+          { size: 9 },
+        );
       ctx.y -= 8;
     }
   }
@@ -389,69 +349,13 @@ export async function renderCvPdf(
     heading(ctx, strings.projects.heading);
     for (const project of content.personalProjects) {
       write(ctx, project.name, { bold: true, gap: 1 });
-      if (mode === "designed" && project.tech.length > 0) {
-        write(ctx, project.tech.join("  ·  "), {
-          muted: true,
-          size: 9,
-          gap: 2,
-        });
-      }
       write(ctx, project.description, { muted: true, gap: 2 });
-      if (mode === "ats") {
-        write(ctx, `Repo: ${project.repoUrl}`, { size: 9 });
-        write(ctx, `Live: ${project.productionUrl}`, { size: 9, gap: 8 });
-      } else {
-        write(ctx, `${strings.projects.repo}: ${project.repoUrl}`, { size: 9 });
-        write(ctx, `${strings.projects.live}: ${project.productionUrl}`, {
-          size: 9,
-          gap: 8,
-        });
-        drawRule(ctx, ctx.y + 4);
-        ctx.y -= 6;
-      }
+      writeUnwrapped(ctx, `Repo: ${pdfUrl(project.repoUrl)}`, { size: 9 });
+      writeUnwrapped(ctx, `Live: ${pdfUrl(project.productionUrl)}`, {
+        size: 9,
+        gap: 8,
+      });
     }
-  }
-
-  if (mode === "designed") {
-    const pages = doc.getPages();
-    pages.forEach((page, index) => {
-      if (index > 0) {
-        page.drawText(profile.name.toUpperCase(), {
-          x: MARGIN,
-          y: PAGE_HEIGHT - 38,
-          size: 8,
-          font: bold,
-          color: DESIGN_MUTED,
-        });
-        page.drawLine({
-          start: { x: MARGIN, y: PAGE_HEIGHT - 44 },
-          end: { x: PAGE_WIDTH - MARGIN, y: PAGE_HEIGHT - 44 },
-          thickness: 0.5,
-          color: DESIGN_RULE,
-        });
-      }
-      page.drawLine({
-        start: { x: MARGIN, y: 40 },
-        end: { x: PAGE_WIDTH - MARGIN, y: 40 },
-        thickness: 0.5,
-        color: DESIGN_RULE,
-      });
-      page.drawText(profile.name, {
-        x: MARGIN,
-        y: 27,
-        size: 8,
-        font,
-        color: DESIGN_MUTED,
-      });
-      const label = `${index + 1} / ${pages.length}`;
-      page.drawText(label, {
-        x: PAGE_WIDTH - MARGIN - font.widthOfTextAtSize(label, 8),
-        y: 27,
-        size: 8,
-        font,
-        color: DESIGN_MUTED,
-      });
-    });
   }
 
   return doc.save({ useObjectStreams: false });

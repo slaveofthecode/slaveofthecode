@@ -523,9 +523,9 @@ Merged into `main` after the cutover (see PRs #20/#21):
     (thumbnail left, name/description/tech/links right) and a stacked layout on mobile.
   - **Web:** `main`, header and footer use a 1104px container on desktop, 24px narrower on each
     side than `max-w-6xl` but still wider than the old layout.
-  - **PDF:** the designed variant adds a header band, larger name, summary panel, right-aligned
-    dates, accented section headings, separators, project tech and a running header/footer with
-    page numbers. The ATS variant stays plain text and unchanged.
+  - **PDF:** the designed variant was briefly restyled, then reverted at the user's request; it
+    keeps the earlier simple layout with portrait. Both variants now use unwrapped,
+    tracking-free URLs and a labelled progress line.
   - Checks green: lint, typecheck, **127 tests**, build, check:boundaries.
 
 ## Done (continued)
@@ -535,6 +535,25 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - Hero profile links are icon-only with accessible labels; both download buttons sit in the
     same right-aligned row as those icons.
   - The top nav menu uses a slightly larger gap between options.
+  - Checks green: lint, typecheck, **127 tests**, build, check:boundaries.
+
+## Done (continued)
+- **ATS validation fixes (this branch):** applied from the human's ATS check.
+  - The designed PDF renderer was reverted to the pre-redesign layout; the new decorative
+    header/panel/footer format was rejected by the human.
+  - Both PDFs now print URLs without query/hash tracking params and draw them as one unwrapped
+    line, so the Microsoft validation URL is no longer split into broken strings. JSON unchanged.
+  - The "What I'm working on now" progress is labelled (`Progress: 21%`) in both variants instead
+    of appearing as an orphan percentage.
+  - Checks green: lint, typecheck, **127 tests**, build, check:boundaries.
+
+## Done (continued)
+- **Now section parity (this branch):** fixed the web/PDF mismatch reported by the human.
+  - Both PDFs now print every `now[]` item from `cv.json`, not just the AWS course; the Chrome
+    bookmark extension appears in the designed and ATS variants too.
+  - Each item keeps the reduced PDF fields: title, `pdfDescription`, labelled progress and an
+    optional tracking-free academy URL. The web cards stay richer.
+  - PDF tests now assert all `content.now` titles/descriptions/progress in both modes.
   - Checks green: lint, typecheck, **127 tests**, build, check:boundaries.
 
 ## Next steps

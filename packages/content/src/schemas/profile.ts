@@ -11,6 +11,7 @@ export const profileSchema = z.object({
   links: z.array(linkSchema),
   email: z.string().email().optional(),
   phone: z.string().min(1).optional(),
+  atsPhone: z.string().min(1).optional(),
   /** Public URL or root-relative path to the portrait used as avatar/favicon. */
   avatar: assetUrlSchema.optional(),
 });

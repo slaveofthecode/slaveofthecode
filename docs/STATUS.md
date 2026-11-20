@@ -715,6 +715,19 @@ Merged into `main` after the cutover (see PRs #20/#21):
   must be regenerated before merge. Checks green: lint, typecheck, **152 tests**, build, check:boundaries.
 - **Vite dev optimizer guard:** pre-bundled `pdf-lib` and `zod` in `astro.config.mjs` so the CV
   download button's dynamic imports do not invalidate stale dependency URLs on first click.
+- **Designed PDF project cards:** personal projects now render as padded cards with a bold name,
+  italic description, muted tech line and underlined `Repository`/`Live demo` labels. Raw URLs are
+  hidden in the designed variant only; ATS keeps `Repo: <url>` and `Live: <url>` unchanged.
+  Checks green: lint, typecheck, **153 tests**, build, check:boundaries.
+- **Designed PDF Now/Certifications styling:** Now items use a timeline rule with a continuous
+  progress bar and an underlined `Academy` label (no kind/status row); certifications use a centered
+  marker, bottom rule, italic issuer/date and an underlined `Validate` label inline with the name.
+  Raw URLs are hidden in the designed variant only. The certification marker is centered on the
+  text block rather than the full row. Checks green: lint, typecheck, **154 tests**, build, check:boundaries.
+- **Designed PDF experience cards:** experience entries use the same padded-card language as projects
+  with a left marker, bold company/dates header, italic role/summary, indented bullets and nested
+  project blocks. ATS keeps its plain `Dates:` layout. Checks green: lint, typecheck, **155 tests**,
+  build, check:boundaries.
 
 ## Next steps
 - **`feat/pdf-output-format` awaits human commit/push/PR**: created from updated `main` after PR #86

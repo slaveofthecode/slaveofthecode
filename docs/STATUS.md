@@ -741,11 +741,14 @@ Merged into `main` after the cutover (see PRs #20/#21):
   CV, rendered only in the ATS header; experience started in or before `current year - 15` is
   collapsed into an `EARLIER EXPERIENCE` block with one compact line per company in ATS only.
   Checks green: lint, typecheck, **160 tests**, build, check:boundaries.
+- **Workflow rule**: `docs/STATUS.md` must be updated with each change and included before every
+  human push. `docs/workflows/open-pr.md` now verifies the final note instead of adding it late.
 
 ## Next steps
-- **`feat/ats-pdf-format`**: changes are ready but uncommitted; the human should review, commit and
-  push. RAG snapshot is still stale from the previous CV edit, so regenerate it with
-  `GEMINI_API_KEY` and include `apps/api/data/cv.sqlite` and `apps/api/src/data/rag-db.ts`.
+- **`feat/ats-pdf-format` final branch note**: committed and pushed by the human from updated
+  `main` after PR #87 was merged; the agent is preparing the PR per `docs/workflows/open-pr.md`.
+  RAG snapshot is still stale from the previous CV edit, so regenerate it with `GEMINI_API_KEY`
+  and include `apps/api/data/cv.sqlite` and `apps/api/src/data/rag-db.ts`.
 - **`feat/pdf-output-format` final branch note**: PR #87 was created by the agent and merged by the
   human. Clear `apps/web/node_modules/.vite` once if a stale dev server still reports
   `Outdated Optimize Dep`.

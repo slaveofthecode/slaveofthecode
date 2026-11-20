@@ -739,10 +739,11 @@ Merged into `main` after the cutover (see PRs #20/#21):
   typecheck, **157 tests**, build, check:boundaries.
 
 ## Next steps
-- **`feat/pdf-output-format` awaits human commit/push/PR**: created from updated `main` after PR #86
-  was merged. No commit, push or PR by the agent yet. Regenerate RAG first with `GEMINI_API_KEY`
-  and include `apps/api/data/cv.sqlite` and `apps/api/src/data/rag-db.ts`. Clear
-  `apps/web/node_modules/.vite` once if a stale dev server still reports `Outdated Optimize Dep`.
+- **`feat/pdf-output-format` final branch note**: committed and pushed by the human from updated
+  `main` after PR #86 was merged; the agent is preparing the PR per `docs/workflows/open-pr.md`.
+  Regenerate RAG first with `GEMINI_API_KEY` and include `apps/api/data/cv.sqlite` and
+  `apps/api/src/data/rag-db.ts`. Clear `apps/web/node_modules/.vite` once if a stale dev server still
+  reports `Outdated Optimize Dep`.
 - **PRs #76–#86 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
   `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`, `696380b`): single JSON source, web/PDF polish,
   Markdown summary, README GIF, on-demand CV PDFs, Open Graph portrait and per-project tech.

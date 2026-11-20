@@ -2,6 +2,7 @@ import type {
   Certification,
   Content,
   Experience,
+  Link,
   NowItem,
   PersonalProject,
   SkillGroup,
@@ -10,7 +11,9 @@ import {
   PDFDocument,
   type PDFFont,
   type PDFImage,
+  PDFName,
   type PDFPage,
+  PDFString,
   type RGB,
   StandardFonts,
   rgb,
@@ -140,6 +143,7 @@ function drawUnderlinedLabel(
   x: number,
   size: number,
   baseline?: number,
+  url?: string,
 ): number {
   const width = ctx.font.widthOfTextAtSize(label, size);
   const y = baseline ?? ctx.y - size;
@@ -156,18 +160,34 @@ function drawUnderlinedLabel(
     thickness: 0.5,
     color: ink(ctx, false),
   });
+  if (url) {
+    addLinkAnnotation(ctx, url, {
+      x,
+      y: y - 2,
+      width,
+      height: size + 3,
+    });
+  }
   return width;
 }
 
-function drawProjectLinks(ctx: Context, indent: number, size: number): void {
-  const labels = [strings.projects.repo, strings.projects.live];
+function drawProjectLinks(
+  ctx: Context,
+  project: PersonalProject,
+  indent: number,
+  size: number,
+): void {
+  const links = [
+    { label: strings.projects.repo, url: project.repoUrl },
+    { label: strings.projects.live, url: project.productionUrl },
+  ];
   const separator = "  ·  ";
   const separatorWidth = ctx.font.widthOfTextAtSize(separator, size);
   let x = MARGIN + indent;
 
-  for (const [index, label] of labels.entries()) {
-    x += drawUnderlinedLabel(ctx, label, x, size);
-    if (index < labels.length - 1) {
+  for (const [index, link] of links.entries()) {
+    x += drawUnderlinedLabel(ctx, link.label, x, size, undefined, link.url);
+    if (index < links.length - 1) {
       ctx.page.drawText(separator, {
         x,
         y: ctx.y - size,
@@ -236,7 +256,7 @@ function drawProjectCard(ctx: Context, project: PersonalProject): void {
       gap: 5,
     });
   }
-  drawProjectLinks(ctx, indent, linkSize);
+  drawProjectLinks(ctx, project, indent, linkSize);
   ctx.y = top - height - 10;
 }
 
@@ -327,7 +347,14 @@ function drawNowItem(ctx: Context, item: NowItem): void {
     gap: hasAcademy ? 2 : 0,
   });
   if (item.academyUrl) {
-    drawUnderlinedLabel(ctx, strings.now.academy, MARGIN + indent, linkSize);
+    drawUnderlinedLabel(
+      ctx,
+      strings.now.academy,
+      MARGIN + indent,
+      linkSize,
+      undefined,
+      item.academyUrl,
+    );
     ctx.y -= linkSize * 1.35;
   }
   ctx.y = top - height - 8;
@@ -392,6 +419,7 @@ function drawCertification(ctx: Context, certification: Certification): void {
       MARGIN + indent + nameWidth + 8,
       linkSize,
       top - 4 - nameSize,
+      certification.url,
     );
   }
   if (details) {
@@ -801,6 +829,84 @@ function pdfUrl(value: string): string {
   return value.slice(0, end);
 }
 
+function addLinkAnnotation(
+  ctx: Context,
+  url: string,
+  rect: { x: number; y: number; width: number; height: number },
+): void {
+  const { context } = ctx.doc;
+  const action = context.obj({
+    S: PDFName.of("URI"),
+    URI: PDFString.of(url),
+  });
+  const annotation = context.obj({
+    Type: PDFName.of("Annot"),
+    Subtype: PDFName.of("Link"),
+    Rect: [rect.x, rect.y, rect.x + rect.width, rect.y + rect.height],
+    Border: [0, 0, 0],
+    A: action,
+  });
+  ctx.page.node.addAnnot(context.register(annotation));
+}
+
+function writeInlineLinks(
+  ctx: Context,
+  links: Link[],
+  options: WriteOptions = {},
+): void {
+  if (links.length === 0) return;
+  const size = options.size ?? 9;
+  const width = options.width ?? PAGE_WIDTH - MARGIN * 2;
+  const lineHeight = size * 1.35;
+  const separator = "  ·  ";
+  const separatorWidth = ctx.font.widthOfTextAtSize(separator, size);
+  const color = ink(ctx, Boolean(options.muted));
+  let x = MARGIN;
+
+  for (const link of links) {
+    const labelWidth = ctx.font.widthOfTextAtSize(link.label, size);
+    const needsSeparator = x > MARGIN;
+    const nextWidth = labelWidth + (needsSeparator ? separatorWidth : 0);
+    if (x + nextWidth > MARGIN + width && x > MARGIN) {
+      ctx.y -= lineHeight;
+      x = MARGIN;
+    }
+    ensure(ctx, lineHeight);
+    const baseline = ctx.y - size;
+    if (x > MARGIN) {
+      ctx.page.drawText(separator, {
+        x,
+        y: baseline,
+        size,
+        font: ctx.font,
+        color,
+      });
+      x += separatorWidth;
+    }
+    ctx.page.drawText(link.label, {
+      x,
+      y: baseline,
+      size,
+      font: ctx.font,
+      color,
+    });
+    ctx.page.drawLine({
+      start: { x, y: baseline - 1.5 },
+      end: { x: x + labelWidth, y: baseline - 1.5 },
+      thickness: 0.5,
+      color,
+    });
+    addLinkAnnotation(ctx, link.url, {
+      x,
+      y: baseline - 2,
+      width: labelWidth,
+      height: size + 3,
+    });
+    x += labelWidth;
+  }
+  ctx.y -= lineHeight + (options.gap ?? 0);
+}
+
 function writeUnwrapped(
   ctx: Context,
   value: string,
@@ -827,8 +933,9 @@ function writeUnwrapped(
 }
 
 function heading(ctx: Context, title: string): void {
+  const sectionGap = ctx.mode === "ats" ? 6 : 9;
   ensure(ctx, 34);
-  ctx.y -= 6;
+  ctx.y -= sectionGap;
   write(ctx, title.toUpperCase(), {
     bold: true,
     size: ctx.mode === "ats" ? 11 : 11.5,
@@ -841,7 +948,7 @@ function heading(ctx: Context, title: string): void {
       thickness: 0.6,
       color: rgb(0.75, 0.75, 0.75),
     });
-    ctx.y -= 6;
+    ctx.y -= sectionGap;
   }
 }
 
@@ -910,15 +1017,14 @@ export async function renderCvPdf(
       .filter(Boolean)
       .join("  ·  ");
     write(ctx, contact, { muted: true, gap: 2, width: headerWidth });
-    for (const link of profile.links) {
-      writeUnwrapped(ctx, `${link.label}: ${pdfUrl(link.url)}`, {
-        muted: true,
-        size: 9,
-        width: headerWidth,
-      });
-    }
+    writeInlineLinks(ctx, profile.links, {
+      muted: true,
+      size: 9,
+      width: headerWidth,
+      gap: 2,
+    });
   }
-  ctx.y -= 6;
+  ctx.y -= ctx.mode === "ats" ? 6 : 9;
 
   if (portrait) {
     const size = 72;

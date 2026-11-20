@@ -77,6 +77,22 @@ describe("renderCvPdf", () => {
     }
   });
 
+  test("designed PDF renders header links as labeled clickable links", async () => {
+    const content = getContent();
+    const bytes = await renderCvPdf(content, "designed");
+    const designed = extractText(bytes).replace(/\s+/g, " ");
+    const raw = Buffer.from(bytes).toString("latin1");
+    const ats = extractText(await renderCvPdf(content, "ats"));
+
+    for (const link of content.profile.links) {
+      expect(designed).toContain(link.label);
+      expect(designed).not.toContain(link.url);
+      expect(raw).toContain(link.url);
+      expect(ats).toContain(`${link.label}: ${cleanUrl(link.url)}`);
+    }
+    expect(raw).toContain("/Subtype /Link");
+  });
+
   test("PDFs attach tech to each project", async () => {
     const text = extractText(await renderCvPdf(getContent(), "ats"));
     expect(text).toContain("Tech: Meteor,");
@@ -97,6 +113,7 @@ describe("renderCvPdf", () => {
     const bytes = await renderCvPdf(content, "designed");
     const streams = extractStreams(bytes);
     const flat = extractText(bytes).replace(/\s+/g, " ");
+    const raw = Buffer.from(bytes).toString("latin1");
 
     expect(streams).toContain("0.965 0.965 0.965 rg");
     expect(flat).toContain(strings.projects.repo);
@@ -105,6 +122,8 @@ describe("renderCvPdf", () => {
     for (const project of content.personalProjects) {
       expect(flat).not.toContain(cleanUrl(project.repoUrl));
       expect(flat).not.toContain(cleanUrl(project.productionUrl));
+      expect(raw).toContain(project.repoUrl);
+      expect(raw).toContain(project.productionUrl);
     }
 
     const ats = extractText(await renderCvPdf(content, "ats"));
@@ -152,6 +171,7 @@ describe("renderCvPdf", () => {
     const bytes = await renderCvPdf(content, "designed");
     const streams = extractStreams(bytes);
     const flat = extractText(bytes).replace(/\s+/g, " ");
+    const raw = Buffer.from(bytes).toString("latin1");
     const certUrl = cleanUrl(certification?.url ?? "");
     const academyUrl = cleanUrl(course?.academyUrl ?? "");
 
@@ -164,6 +184,7 @@ describe("renderCvPdf", () => {
       expect(flat).toContain(
         `${certification.name} ${strings.certifications.validate}`,
       );
+      expect(raw).toContain(certification.url ?? "");
     }
     expect(flat).toContain(strings.now.academy);
     if (course) {
@@ -171,6 +192,7 @@ describe("renderCvPdf", () => {
       expect(flat).not.toContain(
         `${strings.now.kind[course.kind]} · ${strings.now.status[course.status]}`,
       );
+      expect(raw).toContain(course.academyUrl ?? "");
     }
 
     const ats = extractText(await renderCvPdf(content, "ats"));

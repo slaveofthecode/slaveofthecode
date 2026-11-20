@@ -731,6 +731,12 @@ Merged into `main` after the cutover (see PRs #20/#21):
 - **Designed PDF skills table:** skills render as a two-column `CATEGORY` / `TECHNOLOGIES` table
   with a shaded header, horizontal row lines, right-aligned categories and wrapped technology cells;
   ATS keeps `Category: items`. Checks green: lint, typecheck, **156 tests**, build, check:boundaries.
+- **Designed PDF header and spacing:** profile links render as underlined labeled links with URI
+  annotations instead of raw URLs, while ATS keeps `Label: URL`. Section gaps around headings grew
+  from 6pt to 9pt (~50%). Checks green: lint, typecheck, **157 tests**, build, check:boundaries.
+- **Designed PDF section links:** `Validate`, `Academy`, `Repository` and `Live demo` now carry URI
+  annotations with their source URLs; ATS keeps plain `Label: URL` lines. Checks green: lint,
+  typecheck, **157 tests**, build, check:boundaries.
 
 ## Next steps
 - **`feat/pdf-output-format` awaits human commit/push/PR**: created from updated `main` after PR #86

@@ -4,6 +4,7 @@ import type {
   Experience,
   NowItem,
   PersonalProject,
+  SkillGroup,
 } from "@portfolio/content";
 import {
   PDFDocument,
@@ -540,6 +541,128 @@ function drawExperienceCard(ctx: Context, job: Experience): void {
   ctx.y = top - height - 10;
 }
 
+function drawSkillsTable(ctx: Context, groups: SkillGroup[]): void {
+  const tableWidth = PAGE_WIDTH - MARGIN * 2;
+  const categoryWidth = tableWidth / 3;
+  const techWidth = tableWidth - categoryWidth;
+  const padding = 10;
+  const rowPadding = 7;
+  const headerHeight = 20;
+  const headerSize = 8.5;
+  const cellSize = 9;
+  const lineHeight = cellSize * 1.35;
+  const categoryX = MARGIN + categoryWidth - padding;
+  const techX = MARGIN + categoryWidth + padding;
+  const categoryTextWidth = categoryWidth - padding * 2;
+  const techTextWidth = techWidth - padding * 2;
+  const headerCenterY = headerHeight / 2;
+  const headerBaseline = headerCenterY + headerSize * 0.35;
+  const rows = groups.map((group) => {
+    const categoryLines = wrap(
+      group.name,
+      ctx.code,
+      cellSize,
+      categoryTextWidth,
+    );
+    const techLines = wrap(
+      group.items.join(", "),
+      ctx.code,
+      cellSize,
+      techTextWidth,
+    );
+    return {
+      categoryLines,
+      techLines,
+      height:
+        Math.max(categoryLines.length, techLines.length) * lineHeight +
+        rowPadding * 2,
+    };
+  });
+  const height = headerHeight + rows.reduce((sum, row) => sum + row.height, 0);
+
+  ensure(ctx, height + 8);
+  const top = ctx.y + 2;
+  const bottom = top - height;
+  ctx.page.drawRectangle({
+    x: MARGIN,
+    y: bottom,
+    width: tableWidth,
+    height,
+    color: rgb(0.965, 0.965, 0.965),
+  });
+  ctx.page.drawRectangle({
+    x: MARGIN,
+    y: top - headerHeight,
+    width: tableWidth,
+    height: headerHeight,
+    color: rgb(0.94, 0.94, 0.94),
+  });
+  ctx.page.drawRectangle({
+    x: MARGIN,
+    y: bottom,
+    width: tableWidth,
+    height,
+    borderColor: rgb(0.86, 0.86, 0.86),
+    borderWidth: 0.5,
+  });
+  ctx.page.drawLine({
+    start: { x: MARGIN, y: top - headerHeight },
+    end: { x: MARGIN + tableWidth, y: top - headerHeight },
+    thickness: 0.6,
+    color: rgb(0.75, 0.75, 0.75),
+  });
+
+  const categoryHeader = strings.skills.category.toUpperCase();
+  const techHeader = strings.skills.technologies.toUpperCase();
+  ctx.page.drawText(categoryHeader, {
+    x: categoryX - ctx.bold.widthOfTextAtSize(categoryHeader, headerSize),
+    y: top - headerBaseline,
+    size: headerSize,
+    font: ctx.bold,
+    color: ink(ctx, true),
+  });
+  ctx.page.drawText(techHeader, {
+    x: techX,
+    y: top - headerBaseline,
+    size: headerSize,
+    font: ctx.bold,
+    color: ink(ctx, true),
+  });
+
+  let rowTop = top - headerHeight;
+  rows.forEach((row, index) => {
+    if (index > 0) {
+      ctx.page.drawLine({
+        start: { x: MARGIN, y: rowTop },
+        end: { x: MARGIN + tableWidth, y: rowTop },
+        thickness: 0.5,
+        color: rgb(0.86, 0.86, 0.86),
+      });
+    }
+    const baseline = rowTop - rowPadding - cellSize;
+    row.categoryLines.forEach((line, lineIndex) => {
+      ctx.page.drawText(line, {
+        x: categoryX - ctx.code.widthOfTextAtSize(line, cellSize),
+        y: baseline - lineIndex * lineHeight,
+        size: cellSize,
+        font: ctx.code,
+        color: ink(ctx, false),
+      });
+    });
+    row.techLines.forEach((line, lineIndex) => {
+      ctx.page.drawText(line, {
+        x: techX,
+        y: baseline - lineIndex * lineHeight,
+        size: cellSize,
+        font: ctx.code,
+        color: ink(ctx, true),
+      });
+    });
+    rowTop -= row.height;
+  });
+  ctx.y = bottom - 10;
+}
+
 function write(ctx: Context, value: string, options: WriteOptions = {}): void {
   const size = options.size ?? (ctx.mode === "ats" ? 10 : 10.5);
   const font = options.bold ? ctx.bold : options.italic ? ctx.italic : ctx.font;
@@ -849,8 +972,12 @@ export async function renderCvPdf(
 
   if (hasCvSection(content, "skills")) {
     heading(ctx, "Skills");
-    for (const group of content.skills) {
-      write(ctx, `${group.name}: ${group.items.join(", ")}`, { gap: 4 });
+    if (ctx.mode === "designed") {
+      drawSkillsTable(ctx, content.skills);
+    } else {
+      for (const group of content.skills) {
+        write(ctx, `${group.name}: ${group.items.join(", ")}`, { gap: 4 });
+      }
     }
   }
 

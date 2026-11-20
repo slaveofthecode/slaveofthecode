@@ -728,6 +728,9 @@ Merged into `main` after the cutover (see PRs #20/#21):
   with a left marker, bold company/dates header, italic role/summary, indented bullets and nested
   project blocks. ATS keeps its plain `Dates:` layout. Checks green: lint, typecheck, **155 tests**,
   build, check:boundaries.
+- **Designed PDF skills table:** skills render as a two-column `CATEGORY` / `TECHNOLOGIES` table
+  with a shaded header, horizontal row lines, right-aligned categories and wrapped technology cells;
+  ATS keeps `Category: items`. Checks green: lint, typecheck, **156 tests**, build, check:boundaries.
 
 ## Next steps
 - **`feat/pdf-output-format` awaits human commit/push/PR**: created from updated `main` after PR #86

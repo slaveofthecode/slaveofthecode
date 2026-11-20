@@ -128,6 +128,23 @@ describe("renderCvPdf", () => {
     expect(ats).toContain("Dates:");
   });
 
+  test("designed PDF renders Skills as a two-column table", async () => {
+    const content = getContent();
+    const designed = extractText(
+      await renderCvPdf(content, "designed"),
+    ).replace(/\s+/g, " ");
+    const ats = extractText(await renderCvPdf(content, "ats"));
+
+    expect(designed).toContain(strings.skills.category.toUpperCase());
+    expect(designed).toContain(strings.skills.technologies.toUpperCase());
+    expect(designed).toContain(content.skills[0]?.name ?? "");
+    expect(designed).toContain(
+      content.skills[0]?.items.slice(0, 2).join(", ") ?? "",
+    );
+    expect(designed).not.toContain(`${content.skills[0]?.name}:`);
+    expect(ats).toContain(`${content.skills[0]?.name}:`);
+  });
+
   test("designed PDF styles Now and Certifications without raw URLs", async () => {
     const content = getPopulatedContent();
     const course = content.now[0];

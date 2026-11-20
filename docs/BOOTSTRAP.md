@@ -167,7 +167,7 @@ All text fields are plain strings in the locale of the file (`data/en/*`, `data/
 - `profile`: `name`, `headline`, `location`, `summary` (string), `links` (`{ label, url }[]`: GitHub, LinkedIn, etc.), optional `email` (only if the human approves publishing it).
 - `experience[]`: `id`, `company`, `role`, `startDate` (YYYY-MM), `endDate` (YYYY-MM | null = present), `location?`, `summary`, `highlights: string[]`, optional `projects[]` (`{ name, highlights: string[], tech: string[] }[]`). Tech belongs to each project, never to the role; an empty `name` hides the project title.
 - `skills[]` (groups): `id`, `name`, `items: string[]`.
-- `languages[]`: `id`, `name`, `level` (free text, e.g. "Native", "C1").
+- `languages[]`: `id`, `name`, `level` (free text, e.g. "Native", "C1"), `proficiencyPercent` (integer 0–100 used by the language bars on the web and in the designed PDF).
 - `education[]` (optional): `id`, `institution`, `title`, `startDate`, `endDate | null`.
 - `now[]` — **the "What I'm working on now" items:**
   - `id`, `kind: 'course' | 'project' | 'learning' | 'other'`

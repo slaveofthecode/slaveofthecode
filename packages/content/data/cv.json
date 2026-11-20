@@ -3,7 +3,7 @@
     "name": "Gustavo Lopez",
     "headline": "Senior Full-Stack Developer",
     "location": "Córdoba, Argentina",
-    "summary": "\nPreferred environment: **React** - **TS** - **Node** - **Astro** - **Cursor** - **AI**\nCertifications: **Microsoft Certified Professional (MCP)**\n - In progress: **AWS**, **AI Engineering**, **Data Engineering**, **Python**, **English**",
+    "summary": "\nPreferred environment: **React** - **TS** - **Node** - **Astro** - **Cursor** - **AI**\nCertifications: **Microsoft Certified Professional (MCP)**\n - In progress: **AWS**, **AI Engineering**, **Data Engineering**, **Python**",
     "yearsOfExperience": "+15 years",
     "englishLevel": "B1/B2",
     "links": [
@@ -482,12 +482,14 @@
     {
       "id": "spanish",
       "name": "Spanish",
-      "level": "Native / Bilingual"
+      "level": "Native / Bilingual",
+      "proficiencyPercent": 100
     },
     {
       "id": "english",
       "name": "English",
-      "level": "Professional Working Proficiency"
+      "level": "Intermediate",
+      "proficiencyPercent": 50
     }
   ],
   "education": [
@@ -523,7 +525,7 @@
       "status": "in-progress",
       "startedAt": "2026-09-28",
       "updatedAt": "2026-11-02",
-      "academyUrl": "https://www.commitacademy.io/",
+      "academyUrl": "https://www.commitacademy.io/curso-cloud",
       "links": [
         {
           "label": "commitacademy.io",
@@ -549,7 +551,7 @@
       "status": "in-progress",
       "startedAt": "2026-11-10",
       "updatedAt": "2026-11-19",
-      "academyUrl": "https://www.commitacademy.io/",
+      "academyUrl": "https://www.commitacademy.io/curso-ai-engineering",
       "links": [
         {
           "label": "commitacademy.io",

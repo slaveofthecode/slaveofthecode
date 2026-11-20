@@ -6,15 +6,23 @@ import { PDFDocument } from "pdf-lib";
 import { renderCvPdf } from "../src/lib/cv-pdf";
 import { strings } from "../src/lib/strings";
 
-function extractText(bytes: Uint8Array): string {
+function extractStreams(bytes: Uint8Array): string {
   const raw = Buffer.from(bytes).toString("latin1");
-  const streams = [...raw.matchAll(/stream\r?\n([\s\S]*?)\r?\nendstream/g)].map(
-    (match) =>
+  return [...raw.matchAll(/stream\r?\n([\s\S]*?)\r?\nendstream/g)]
+    .map((match) =>
       inflateSync(Buffer.from(match[1] ?? "", "latin1")).toString("latin1"),
-  );
-  return [...streams.join("\n").matchAll(/<([0-9A-Fa-f]+)>\s*Tj/g)]
+    )
+    .join("\n");
+}
+
+function extractText(bytes: Uint8Array): string {
+  return [...extractStreams(bytes).matchAll(/<([0-9A-Fa-f]+)>\s*Tj/g)]
     .map((match) => Buffer.from(match[1] ?? "", "hex").toString("latin1"))
     .join("\n");
+}
+
+function cleanUrl(value: string): string {
+  return value.split("?")[0]?.split("#")[0] ?? "";
 }
 
 function getPopulatedContent() {
@@ -69,10 +77,126 @@ describe("renderCvPdf", () => {
     }
   });
 
+  test("designed PDF renders header links as labeled clickable links", async () => {
+    const content = getContent();
+    const bytes = await renderCvPdf(content, "designed");
+    const designed = extractText(bytes).replace(/\s+/g, " ");
+    const raw = Buffer.from(bytes).toString("latin1");
+    const ats = extractText(await renderCvPdf(content, "ats"));
+
+    for (const link of content.profile.links) {
+      expect(designed).toContain(link.label);
+      expect(designed).not.toContain(link.url);
+      expect(raw).toContain(link.url);
+      expect(ats).toContain(`${link.label}: ${cleanUrl(link.url)}`);
+    }
+    expect(raw).toContain("/Subtype /Link");
+  });
+
   test("PDFs attach tech to each project", async () => {
     const text = extractText(await renderCvPdf(getContent(), "ats"));
     expect(text).toContain("Tech: Meteor,");
     expect(text).toContain("Tech: Java, Spring Boot,");
+  });
+
+  test("designed PDF renders language bars from proficiency percentages", async () => {
+    const designed = extractStreams(
+      await renderCvPdf(getContent(), "designed"),
+    );
+    const ats = extractStreams(await renderCvPdf(getContent(), "ats"));
+    expect(designed.match(/0\.8 0\.8 0\.8 rg/g) ?? []).toHaveLength(3);
+    expect(ats).not.toContain("0.8 0.8 0.8 rg");
+  });
+
+  test("designed PDF renders project cards with link labels instead of URLs", async () => {
+    const content = getContent();
+    const bytes = await renderCvPdf(content, "designed");
+    const streams = extractStreams(bytes);
+    const flat = extractText(bytes).replace(/\s+/g, " ");
+    const raw = Buffer.from(bytes).toString("latin1");
+
+    expect(streams).toContain("0.965 0.965 0.965 rg");
+    expect(flat).toContain(strings.projects.repo);
+    expect(flat).toContain(strings.projects.live);
+    expect(flat).toContain("Tech: Next.js, React,");
+    for (const project of content.personalProjects) {
+      expect(flat).not.toContain(cleanUrl(project.repoUrl));
+      expect(flat).not.toContain(cleanUrl(project.productionUrl));
+      expect(raw).toContain(project.repoUrl);
+      expect(raw).toContain(project.productionUrl);
+    }
+
+    const ats = extractText(await renderCvPdf(content, "ats"));
+    expect(ats).toContain(
+      `Repo: ${cleanUrl(content.personalProjects[0]?.repoUrl ?? "")}`,
+    );
+  });
+
+  test("designed PDF renders experience cards with bullets and inline dates", async () => {
+    const content = getContent();
+    const designed = extractText(
+      await renderCvPdf(content, "designed"),
+    ).replace(/\s+/g, " ");
+    const ats = extractText(await renderCvPdf(content, "ats"));
+
+    expect(designed).toContain(`${content.experience[0]?.company} |`);
+    expect(designed).toContain(
+      content.experience[0]?.projects?.[0]?.name?.trim() || "Project",
+    );
+    expect(designed).not.toContain("Dates:");
+    expect(ats).toContain("Dates:");
+  });
+
+  test("designed PDF renders Skills as a two-column table", async () => {
+    const content = getContent();
+    const designed = extractText(
+      await renderCvPdf(content, "designed"),
+    ).replace(/\s+/g, " ");
+    const ats = extractText(await renderCvPdf(content, "ats"));
+
+    expect(designed).toContain(strings.skills.category.toUpperCase());
+    expect(designed).toContain(strings.skills.technologies.toUpperCase());
+    expect(designed).toContain(content.skills[0]?.name ?? "");
+    expect(designed).toContain(
+      content.skills[0]?.items.slice(0, 2).join(", ") ?? "",
+    );
+    expect(designed).not.toContain(`${content.skills[0]?.name}:`);
+    expect(ats).toContain(`${content.skills[0]?.name}:`);
+  });
+
+  test("designed PDF styles Now and Certifications without raw URLs", async () => {
+    const content = getPopulatedContent();
+    const course = content.now[0];
+    const certification = content.certifications[0];
+    const bytes = await renderCvPdf(content, "designed");
+    const streams = extractStreams(bytes);
+    const flat = extractText(bytes).replace(/\s+/g, " ");
+    const raw = Buffer.from(bytes).toString("latin1");
+    const certUrl = cleanUrl(certification?.url ?? "");
+    const academyUrl = cleanUrl(course?.academyUrl ?? "");
+
+    expect(streams).toContain("0.32 0.32 0.32 rg");
+    expect(streams).toContain("0.35 0.35 0.35 rg");
+    expect(flat).not.toContain(certUrl);
+    expect(flat).not.toContain(academyUrl);
+    expect(flat).toContain(strings.certifications.validate);
+    if (certification) {
+      expect(flat).toContain(
+        `${certification.name} ${strings.certifications.validate}`,
+      );
+      expect(raw).toContain(certification.url ?? "");
+    }
+    expect(flat).toContain(strings.now.academy);
+    if (course) {
+      expect(flat).toContain(course.title);
+      expect(flat).not.toContain(
+        `${strings.now.kind[course.kind]} · ${strings.now.status[course.status]}`,
+      );
+      expect(raw).toContain(course.academyUrl ?? "");
+    }
+
+    const ats = extractText(await renderCvPdf(content, "ats"));
+    expect(ats).toContain(`Academy: ${academyUrl}`);
   });
 
   test("the ATS variant contains plain-text contact data and sections", async () => {
@@ -92,17 +216,29 @@ describe("renderCvPdf", () => {
       const flat = text.replace(/\s+/g, " ");
 
       const repoUrl = content.personalProjects[0]?.repoUrl ?? "";
+      const cleanRepoUrl = cleanUrl(repoUrl);
       expect(text).toContain(strings.projects.heading.toUpperCase());
       expect(text).toContain(content.personalProjects[0]?.name ?? "");
-      expect(text).toContain(repoUrl.split("?")[0]?.split("#")[0] ?? "");
+      if (mode === "ats") {
+        expect(text).toContain(cleanRepoUrl);
+      } else {
+        expect(text).not.toContain(cleanRepoUrl);
+        expect(text).toContain(strings.projects.repo);
+        expect(text).toContain(strings.projects.live);
+      }
 
       for (const item of content.now) {
         expect(text).toContain(item.title);
         expect(flat).toContain(item.pdfDescription);
         expect(text).toContain(`${strings.now.progress}: ${item.progress}%`);
         if (item.academyUrl) {
-          const url = item.academyUrl.split("?")[0]?.split("#")[0] ?? "";
-          expect(flat).toContain(url);
+          const url = cleanUrl(item.academyUrl);
+          if (mode === "ats") {
+            expect(flat).toContain(url);
+          } else {
+            expect(flat).not.toContain(url);
+            expect(flat).toContain(strings.now.academy);
+          }
         }
       }
 
@@ -143,7 +279,14 @@ describe("renderCvPdf", () => {
         .split("\n")
         .map((line) => line.trim());
 
-      if (certificate?.url) expect(lines).toContain(`Validate: ${cleanUrl}`);
+      if (certificate?.url) {
+        if (mode === "ats") {
+          expect(lines).toContain(`Validate: ${cleanUrl}`);
+        } else {
+          expect(lines.join("\n")).not.toContain(cleanUrl);
+          expect(lines).toContain(strings.certifications.validate);
+        }
+      }
       if (course) expect(lines).toContain(`Progress: ${course.progress}%`);
       expect(lines.join("\n")).not.toContain("wt.mc_id");
       expect(lines.join("\n")).not.toContain("source=docs");

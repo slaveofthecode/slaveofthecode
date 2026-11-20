@@ -706,17 +706,52 @@ Merged into `main` after the cutover (see PRs #20/#21):
   Java/Spring Boot/Camunda/Azure OCR/AWS/Docker/EC2/Angular/Jira/GitHub/Maven/IntelliJ/Copilot/
   Cursor/Claude Code. Harriague and Dicicom got empty-name, tech-only projects; empty project names
   no longer render a heading. Checks green: lint, typecheck, **149 tests**, build, check:boundaries.
+- **PDF language bars (`feat/pdf-output-format`):** added `proficiencyPercent` (integer 0–100) to
+  `languages` in the schema and `cv.json` (Spanish 100, English 50). The designed PDF now draws a
+  six-segment bar under each language with no marks or labels: 6/6 filled for Spanish and 3/6 for
+  English. The same bar now renders in the web Languages section with theme tokens. ATS remains
+  text-only. The new percentage is not part of RAG chunk text, but this branch
+  also carries the earlier English-level/summary edits, so the committed RAG snapshot is stale and
+  must be regenerated before merge. Checks green: lint, typecheck, **152 tests**, build, check:boundaries.
+- **Vite dev optimizer guard:** pre-bundled `pdf-lib` and `zod` in `astro.config.mjs` so the CV
+  download button's dynamic imports do not invalidate stale dependency URLs on first click.
+- **Designed PDF project cards:** personal projects now render as padded cards with a bold name,
+  italic description, muted tech line and underlined `Repository`/`Live demo` labels. Raw URLs are
+  hidden in the designed variant only; ATS keeps `Repo: <url>` and `Live: <url>` unchanged.
+  Checks green: lint, typecheck, **153 tests**, build, check:boundaries.
+- **Designed PDF Now/Certifications styling:** Now items use a timeline rule with a continuous
+  progress bar and an underlined `Academy` label (no kind/status row); certifications use a centered
+  marker, bottom rule, italic issuer/date and an underlined `Validate` label inline with the name.
+  Raw URLs are hidden in the designed variant only. The certification marker is centered on the
+  text block rather than the full row. Checks green: lint, typecheck, **154 tests**, build, check:boundaries.
+- **Designed PDF experience cards:** experience entries use the same padded-card language as projects
+  with a left marker, bold company/dates header, italic role/summary, indented bullets and nested
+  project blocks. ATS keeps its plain `Dates:` layout. Checks green: lint, typecheck, **155 tests**,
+  build, check:boundaries.
+- **Designed PDF skills table:** skills render as a two-column `CATEGORY` / `TECHNOLOGIES` table
+  with a shaded header, horizontal row lines, right-aligned categories and wrapped technology cells;
+  ATS keeps `Category: items`. Checks green: lint, typecheck, **156 tests**, build, check:boundaries.
+- **Designed PDF header and spacing:** profile links render as underlined labeled links with URI
+  annotations instead of raw URLs, while ATS keeps `Label: URL`. Section gaps around headings grew
+  from 6pt to 9pt (~50%). Checks green: lint, typecheck, **157 tests**, build, check:boundaries.
+- **Designed PDF section links:** `Validate`, `Academy`, `Repository` and `Live demo` now carry URI
+  annotations with their source URLs; ATS keeps plain `Label: URL` lines. Checks green: lint,
+  typecheck, **157 tests**, build, check:boundaries.
 
 ## Next steps
-- **`feat/experience-tech-per-project` awaits human commit/push/PR**: created from updated `main`
-  after PR #85 was merged. No commit, push or PR by the agent yet.
-- **PRs #76–#85 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
-  `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`): single JSON source, web/PDF polish, Markdown summary,
-  README GIF, on-demand CV PDFs and Open Graph portrait. No agent merge was performed.
+- **`feat/pdf-output-format` final branch note**: committed and pushed by the human from updated
+  `main` after PR #86 was merged; the agent is preparing the PR per `docs/workflows/open-pr.md`.
+  Regenerate RAG first with `GEMINI_API_KEY` and include `apps/api/data/cv.sqlite` and
+  `apps/api/src/data/rag-db.ts`. Clear `apps/web/node_modules/.vite` once if a stale dev server still
+  reports `Outdated Optimize Dep`.
+- **PRs #76–#86 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
+  `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`, `696380b`): single JSON source, web/PDF polish,
+  Markdown summary, README GIF, on-demand CV PDFs, Open Graph portrait and per-project tech.
+  No agent merge was performed.
 - After a CV edit, run `bun run build` (web only; PDFs are generated on click) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
-  then redeploy both Vercel projects. This branch updates the RAG chunk builder, but the agent did
-  not regenerate `cv.sqlite` because no `GEMINI_API_KEY` is available here.
+  then redeploy both Vercel projects. This branch changed CV text but not the chunk builder; the
+  agent did not regenerate `cv.sqlite` because no `GEMINI_API_KEY` is available here.
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). The old
   **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own

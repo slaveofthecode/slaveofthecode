@@ -39,6 +39,7 @@ export const strings = {
     location: "Location",
     phone: "Phone",
     present: "Present",
+    earlierExperience: "Earlier Experience",
     ofExperience: "of experience",
     englishLevel: "English level",
     download: "CV",

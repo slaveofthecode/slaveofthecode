@@ -60,6 +60,18 @@ const PAGE_HEIGHT = 841.89;
 const MARGIN = 48;
 const BOTTOM = 56;
 const LANGUAGE_BAR_SEGMENTS = 6;
+const ATS_EXPERIENCE_LOOKBACK_YEARS = 15;
+const ATS_EARLY_STACK_LIMIT = 6;
+const ATS_TECH_ALIASES: Record<string, string> = {
+  ".NET": ".Net",
+  ".NET MVC": "MVC",
+  ".NET Web API": "Web API",
+  "ASP.NET Web Forms": "ASP.NET Forms",
+  JavaScript: "JS",
+  "SQL Server": "SQL",
+  "Visual Fox/Pro": "FoxPro",
+  "WPF / WCF": "WPF/WCF",
+};
 
 function newPage(ctx: Context): void {
   ctx.page = ctx.doc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
@@ -960,6 +972,34 @@ function bullet(ctx: Context, value: string): void {
 }
 
 /** Render every CV fact from the content package into one PDF. */
+function isEarlierAtsExperience(job: Experience, cutoffYear: number): boolean {
+  const startYear = Number(job.startDate.slice(0, 4));
+  return Number.isFinite(startYear) && startYear <= cutoffYear;
+}
+
+function atsEarlyStack(job: Experience): string {
+  const tech = new Map<string, string>();
+  for (const project of job.projects ?? []) {
+    for (const item of project.tech) {
+      const label = ATS_TECH_ALIASES[item] ?? item;
+      if (!tech.has(label)) tech.set(label, label);
+    }
+  }
+  return [...tech.keys()].slice(0, ATS_EARLY_STACK_LIMIT).join("-");
+}
+
+function writeEarlierAtsExperience(ctx: Context, jobs: Experience[]): void {
+  const ordered = [...jobs].sort((a, b) =>
+    a.startDate.localeCompare(b.startDate),
+  );
+  for (const job of ordered) {
+    const range = formatRange(job.startDate, job.endDate, strings.cv.present);
+    const stack = atsEarlyStack(job);
+    const line = `${job.company} (${range}) | ${job.role}${stack ? ` | ${stack}` : ""}`;
+    writeUnwrapped(ctx, line, { gap: 3 });
+  }
+}
+
 export async function renderCvPdf(
   content: Content,
   mode: CvPdfMode,
@@ -1006,8 +1046,9 @@ export async function renderCvPdf(
     write(ctx, `Location: ${profile.location}`, { width: headerWidth });
     if (profile.email)
       write(ctx, `Email: ${profile.email}`, { width: headerWidth });
-    if (profile.phone)
-      write(ctx, `Phone: ${profile.phone}`, { width: headerWidth });
+    const atsPhone = profile.atsPhone ?? profile.phone;
+    if (atsPhone)
+      write(ctx, `${strings.cv.phone}: ${atsPhone}`, { width: headerWidth });
     for (const link of profile.links)
       writeUnwrapped(ctx, `${link.label}: ${pdfUrl(link.url)}`, {
         width: headerWidth,
@@ -1041,7 +1082,15 @@ export async function renderCvPdf(
 
   if (hasCvSection(content, "experience")) {
     heading(ctx, "Experience");
+    const cutoffYear = new Date().getFullYear() - ATS_EXPERIENCE_LOOKBACK_YEARS;
+    const earlierJobs =
+      mode === "ats"
+        ? content.experience.filter((job) =>
+            isEarlierAtsExperience(job, cutoffYear),
+          )
+        : [];
     for (const job of content.experience) {
+      if (mode === "ats" && isEarlierAtsExperience(job, cutoffYear)) continue;
       if (mode === "ats") {
         const range = formatRange(
           job.startDate,
@@ -1073,6 +1122,10 @@ export async function renderCvPdf(
       } else {
         drawExperienceCard(ctx, job);
       }
+    }
+    if (earlierJobs.length > 0) {
+      heading(ctx, strings.cv.earlierExperience);
+      writeEarlierAtsExperience(ctx, earlierJobs);
     }
   }
 

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, setSystemTime, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { inflateSync } from "node:zlib";
 import { getContent, parseContent } from "@portfolio/content";
@@ -206,6 +206,42 @@ describe("renderCvPdf", () => {
     expect(text).toContain(content.profile.name);
     expect(text).toContain("Email:");
     expect(text).toContain("EXPERIENCE");
+  });
+
+  test("ATS header uses the ATS-only phone without showing it in designed PDF", async () => {
+    const content = getContent();
+    const ats = extractText(await renderCvPdf(content, "ats"));
+    const designed = extractText(await renderCvPdf(content, "designed"));
+
+    expect(ats).toContain(`Phone: ${content.profile.atsPhone}`);
+    if (content.profile.atsPhone) {
+      expect(designed).not.toContain(content.profile.atsPhone);
+    }
+  });
+
+  test("ATS collapses experience started 15 or more years ago", async () => {
+    setSystemTime(new Date("2026-11-19T00:00:00Z"));
+    try {
+      const content = getContent();
+      const ats = extractText(await renderCvPdf(content, "ats")).replace(
+        /\s+/g,
+        " ",
+      );
+      const designed = extractText(await renderCvPdf(content, "designed"));
+
+      expect(ats).toContain(strings.cv.earlierExperience.toUpperCase());
+      expect(ats).toContain("Dicicom (Jun 2007");
+      expect(ats).toContain("Full-Stack Developer | SQL-HTML-JS");
+      expect(ats).toContain("Bancor (Jun 2008");
+      expect(ats).toContain("Full-Stack Developer | C#-SQL-DTS/DTSX-JS-.Net");
+      expect(ats).not.toContain("Project: Intranet & Internet App Banking");
+      expect(designed).not.toContain(
+        strings.cv.earlierExperience.toUpperCase(),
+      );
+      expect(designed).toContain("Project: Intranet & Internet App Banking");
+    } finally {
+      setSystemTime();
+    }
   });
 
   test("the PDFs include every Now item and add projects", async () => {

@@ -80,6 +80,14 @@ describe("profileSchema", () => {
     expect(profileSchema.safeParse(validProfile).success).toBe(true);
   });
 
+  it("accepts an ATS-only phone", () => {
+    const result = profileSchema.safeParse({
+      ...validProfile,
+      atsPhone: "+54 9 3515 091235",
+    });
+    expect(result.success).toBe(true);
+  });
+
   it("requires experience and English level", () => {
     const missing: Record<string, unknown> = { ...validProfile };
     missing.yearsOfExperience = undefined;

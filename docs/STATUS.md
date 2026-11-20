@@ -737,16 +737,21 @@ Merged into `main` after the cutover (see PRs #20/#21):
 - **Designed PDF section links:** `Validate`, `Academy`, `Repository` and `Live demo` now carry URI
   annotations with their source URLs; ATS keeps plain `Label: URL` lines. Checks green: lint,
   typecheck, **157 tests**, build, check:boundaries.
+- **ATS-only PDF improvements (`feat/ats-pdf-format`)**: added `atsPhone` to the profile schema and
+  CV, rendered only in the ATS header; experience started in or before `current year - 15` is
+  collapsed into an `EARLIER EXPERIENCE` block with one compact line per company in ATS only.
+  Checks green: lint, typecheck, **160 tests**, build, check:boundaries.
 
 ## Next steps
-- **`feat/pdf-output-format` final branch note**: committed and pushed by the human from updated
-  `main` after PR #86 was merged; the agent is preparing the PR per `docs/workflows/open-pr.md`.
-  Regenerate RAG first with `GEMINI_API_KEY` and include `apps/api/data/cv.sqlite` and
-  `apps/api/src/data/rag-db.ts`. Clear `apps/web/node_modules/.vite` once if a stale dev server still
-  reports `Outdated Optimize Dep`.
-- **PRs #76–#86 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
-  `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`, `696380b`): single JSON source, web/PDF polish,
-  Markdown summary, README GIF, on-demand CV PDFs, Open Graph portrait and per-project tech.
+- **`feat/ats-pdf-format`**: changes are ready but uncommitted; the human should review, commit and
+  push. RAG snapshot is still stale from the previous CV edit, so regenerate it with
+  `GEMINI_API_KEY` and include `apps/api/data/cv.sqlite` and `apps/api/src/data/rag-db.ts`.
+- **`feat/pdf-output-format` final branch note**: PR #87 was created by the agent and merged by the
+  human. Clear `apps/web/node_modules/.vite` once if a stale dev server still reports
+  `Outdated Optimize Dep`.
+- **PRs #76–#87 are merged into `main`** (`044282e`, `821f21d`, `bf91512`, `c9ba2ed`, `4fffa5d`,
+  `56ff58c`, `0bc6237`, `f2123cb`, `ecb2410`, `696380b`, `ad5f04b`): single JSON source, web/PDF
+  polish, Markdown summary, README GIF, on-demand CV PDFs, Open Graph portrait and per-project tech.
   No agent merge was performed.
 - After a CV edit, run `bun run build` (web only; PDFs are generated on click) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),

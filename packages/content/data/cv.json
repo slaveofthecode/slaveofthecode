@@ -5,7 +5,7 @@
     "location": "Córdoba, Argentina",
     "summary": "\nPreferred environment: **React** - **TypeScript** - **Node** - **Astro** - **Claude** - **AI-Assisted** \nCertifications: **Microsoft Certified Professional (MCP)** \n - Working on: **AWS**, **AI Engineering**, **Data Engineering**, **Python**",
     "yearsOfExperience": "+15 years",
-    "englishLevel": "B1/B2",
+    "englishLevel": "B2",
     "links": [
       {
         "label": "Portfolio",
@@ -522,7 +522,7 @@
       "title": "Cloud, AWS & Infrastructure Professional Program",
       "description": "Master cloud computing fundamentals and advanced practices with AWS: design, deploy and operate scalable applications in the cloud. Covers key technologies such as Terraform, Docker and Kubernetes, with hands-on exercises and a real final project. Includes 16 weeks of structured content, live mentoring and access to a real AWS account to apply what you learn.",
       "pdfDescription": "Master AWS fundamentals and infrastructure practices with Terraform, Docker, Kubernetes and a hands-on final project.",
-      "progress": 21,
+      "progress": 32,
       "status": "in-progress",
       "startedAt": "2026-09-28",
       "updatedAt": "2026-11-02",

@@ -109,12 +109,13 @@ const clientStrings = {
   <button
     type="button"
     data-chat-toggle
+    aria-label={t.chat.launcher}
+    title={t.chat.launcher}
     aria-expanded="false"
     aria-controls="chat-panel"
-    class="fixed bottom-6 right-4 z-50 inline-flex items-center gap-2 rounded-full border border-border bg-accent px-4 py-2.5 font-mono text-xs text-accent-fg shadow-sm transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+    class="fixed bottom-6 right-4 z-50 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-accent text-accent-fg shadow-sm transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
   >
-    <Icon name="thinking" class="h-4 w-4" />
-    {t.chat.launcher}
+    <Icon name="thinking" class="h-5 w-5" />
   </button>
 
   <script
@@ -306,12 +307,6 @@ const clientStrings = {
       panel.classList.contains("is-open") ? closePanel() : openPanel(),
     );
     closeButton.addEventListener("click", closePanel);
-
-    document.addEventListener("click", (event) => {
-      if (event.target instanceof Element && event.target.closest("[data-chat-open]")) {
-        openPanel();
-      }
-    });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && panel.classList.contains("is-open")) {

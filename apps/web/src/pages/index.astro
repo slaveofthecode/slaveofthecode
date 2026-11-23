@@ -40,7 +40,7 @@ const defaultSection = defaultCvSectionId(content);
         data-section-tabs
         data-default-section={defaultSection}
         style="top: var(--app-header-height, 3.5rem)"
-        class="sticky z-30 flex w-full gap-1 border-b border-border bg-bg"
+        class="sticky z-30 flex w-full gap-1 overflow-x-auto border-b border-border bg-bg"
       >
         {tabSections.map((section) => (
           <button
@@ -49,7 +49,7 @@ const defaultSection = defaultCvSectionId(content);
             data-section={section.id}
             aria-controls={section.id}
             aria-expanded={section.id === defaultSection}
-            class="flex min-w-0 flex-1 basis-0 items-center justify-center gap-1 border-b-2 border-transparent px-2 py-3 text-center font-mono text-[10px] uppercase leading-tight tracking-wide text-muted transition-colors hover:text-fg aria-expanded:border-fg aria-expanded:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg sm:text-xs"
+            class="flex shrink-0 items-center justify-center gap-1 whitespace-nowrap border-b-2 border-transparent px-3 py-3 text-center font-mono text-[11px] uppercase leading-tight tracking-wide text-muted transition-colors hover:text-fg aria-expanded:border-fg aria-expanded:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg sm:flex-1 sm:basis-0 sm:px-2 sm:text-xs"
           >
             <span aria-hidden="true">[</span>
             <span>{section.label}</span>
@@ -133,6 +133,19 @@ const defaultSection = defaultCvSectionId(content);
     ]),
   );
 
+  const tabBar = document.querySelector<HTMLElement>("[data-section-tabs]");
+
+  const revealTab = (id: string) => {
+    const tab = tabs.find((item) => item.dataset.section === id);
+    if (!tab || !tabBar || tabBar.scrollWidth <= tabBar.clientWidth) return;
+    const left =
+      tab.getBoundingClientRect().left -
+      tabBar.getBoundingClientRect().left +
+      tabBar.scrollLeft -
+      (tabBar.clientWidth - tab.offsetWidth) / 2;
+    tabBar.scrollTo({ left, behavior: "smooth" });
+  };
+
   const isSectionId = (id: string) =>
     tabs.some((tab) => tab.dataset.section === id);
 
@@ -149,6 +162,7 @@ const defaultSection = defaultCvSectionId(content);
     for (const tab of tabs) {
       setExpanded(tab, Boolean(id) && tab.dataset.section === id);
     }
+    if (id) revealTab(id);
     if (focus && id) {
       tabs
         .find((tab) => tab.dataset.section === id)
@@ -173,7 +187,9 @@ const defaultSection = defaultCvSectionId(content);
     const pathId =
       window.location.pathname.split("/").filter(Boolean).pop() ?? "";
     const hashId = decodeURIComponent(window.location.hash.replace(/^#/, ""));
-    return resolveSection([pathId, hashId].find(isSectionId) ?? "");
+    const requested = [pathId, hashId].find(isSectionId);
+    if (requested) return requested;
+    return window.matchMedia("(max-width: 639px)").matches ? "" : defaultSection;
   };
 
   const goToSection = (id: string, focus = false, scroll = false) => {

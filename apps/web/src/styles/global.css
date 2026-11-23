@@ -32,6 +32,10 @@ html {
   scroll-behavior: smooth;
 }
 
+.summary-markdown {
+  overflow-wrap: anywhere;
+}
+
 .summary-markdown > :first-child {
   margin-top: 0;
 }
@@ -80,4 +84,16 @@ html {
 .summary-markdown a {
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+@media (max-width: 639px) {
+  .summary-markdown p {
+    margin: 0.9rem 0;
+  }
+
+  .summary-markdown ul {
+    list-style: none;
+    margin: 0.9rem 0;
+    padding-left: 0.9rem;
+  }
 }

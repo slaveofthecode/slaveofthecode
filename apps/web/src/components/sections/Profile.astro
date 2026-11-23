@@ -15,7 +15,7 @@ const { profile } = Astro.props;
 ---
 
 <section class="py-12">
-  <div class="flex items-start gap-5">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
     {profile.avatar ? (
       <a
         href="/experience"
@@ -40,7 +40,7 @@ const { profile } = Astro.props;
       </a>
     )}
     <div class="min-w-0 flex-1">
-      <div class="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
+      <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-x-3 sm:gap-y-2">
         <a
           href="/experience"
           class="min-w-0 rounded-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
@@ -52,7 +52,7 @@ const { profile } = Astro.props;
             {profile.headline}
           </p>
         </a>
-        <div class="flex flex-col items-end gap-1">
+        <div class="flex flex-col items-start gap-1 sm:items-end">
           <ul class="flex items-center gap-0.5" aria-label={t.cv.links}>
             {
               profile.links.map((link) => (
@@ -71,15 +71,15 @@ const { profile } = Astro.props;
               ))
             }
           </ul>
-          <div class="flex flex-col items-end gap-0.5 font-mono text-xs text-muted">
+          <div class="flex flex-col items-start gap-0.5 font-mono text-xs text-muted sm:items-end">
             {
               profile.email ? (
                 <a
                   href={`mailto:${profile.email}`}
                   aria-label={`${t.cv.email}: ${profile.email}`}
-                  class="inline-flex items-center gap-1.5 transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                  class="inline-flex max-w-full items-center gap-1.5 break-all transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
                 >
-                  <Icon name="mail" class="h-3.5 w-3.5" />
+                  <Icon name="mail" class="h-3.5 w-3.5 shrink-0" />
                   {profile.email}
                 </a>
               ) : null
@@ -89,9 +89,9 @@ const { profile } = Astro.props;
               rel="noopener"
               target="_blank"
               aria-label={`${t.cv.location}: ${profile.location}`}
-              class="inline-flex items-center gap-1.5 transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+              class="inline-flex max-w-full items-center gap-1.5 break-all transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
             >
-              <Icon name="map-pin" class="h-3.5 w-3.5" />
+              <Icon name="map-pin" class="h-3.5 w-3.5 shrink-0" />
               {profile.location}
             </a>
           </div>
@@ -100,8 +100,15 @@ const { profile } = Astro.props;
     </div>
   </div>
 
-  <div
-    class="summary-markdown mt-12 font-mono text-base text-muted"
-    set:html={renderMarkdown(profileSummary(profile))}
-  />
+  <div class="mt-8 sm:mt-12">
+    <h2 class="mb-3 font-heading text-xs uppercase tracking-widest text-subtle sm:hidden">
+      {t.cv.about}
+    </h2>
+    <div class="p-4 sm:p-0">
+      <div
+        class="summary-markdown font-mono text-base leading-7 text-fg sm:text-base sm:leading-relaxed sm:text-muted"
+        set:html={renderMarkdown(profileSummary(profile))}
+      />
+    </div>
+  </div>
 </section>

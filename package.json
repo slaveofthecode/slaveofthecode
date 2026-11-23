@@ -11,7 +11,8 @@
     "typecheck": "bun run --filter '*' typecheck",
     "test": "bun test",
     "check:boundaries": "bun scripts/check-boundaries.ts",
-    "format:data": "biome format --write packages/content/data"
+    "format:data": "biome format --write packages/content/data",
+    "build_data": "bun run --filter @portfolio/api build:rag"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

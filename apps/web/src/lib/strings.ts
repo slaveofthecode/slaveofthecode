@@ -10,7 +10,6 @@ export const strings = {
     certifications: "Certifications",
     now: "Now",
     projects: "Projects",
-    chat: "Ask me anything",
   },
   theme: {
     label: "Color theme",
@@ -42,6 +41,8 @@ export const strings = {
     earlierExperience: "Earlier Experience",
     ofExperience: "of experience",
     englishLevel: "English level",
+    about: "About",
+    downloads: "Downloads",
     download: "CV",
     downloadAts: "ATS CV",
   },

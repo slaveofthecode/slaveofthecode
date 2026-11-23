@@ -744,7 +744,38 @@ Merged into `main` after the cutover (see PRs #20/#21):
 - **Workflow rule**: `docs/STATUS.md` must be updated with each change and included before every
   human push. `docs/workflows/open-pr.md` now verifies the final note instead of adding it late.
 
+## Done (continued)
+- **`feat/mobile-ui-improvements` (this branch, from up-to-date `main` `72e8fb7`):** mobile UI
+  fixes reported by the human, iterated after review:
+  - **Sticky header:** the original behavior/distribution is preserved (scroll-revealed identity,
+    sticky social icons, theme, menu). The CV/ATS buttons are back on `sm+` immediately before the
+    theme toggle (`hidden … sm:flex`, with `sm:mr-3`); on mobile they live only in the `Downloads`
+    menu group (divider + label) and reuse the same `[data-cv-download]` handlers. The chat control
+    is gone in every mode; the now-unused `nav.chat` string, `chat` icon and `[data-chat-open]`
+    listeners were removed.
+  - **Profile summary:** the hero stacks (`flex-col sm:flex-row`), contact/social blocks are
+    left-aligned on mobile (`sm:items-end` on desktop), email/location wrap (`max-w-full break-all`).
+    The summary sits in a borderless, background-free `About` block. On mobile every `<p>` is
+    larger, full-contrast (`text-fg`) and generously spaced; the `Working on` list keeps a small
+    left indent without a bullet. Desktop keeps the old muted bare full-width summary.
+  - **No section on mobile load:** `sectionFromUrl()` keeps the default Experience panel on
+    desktop but returns `""` on a mobile root URL, so only the profile is visible on first load.
+    Explicit `/<section>` deep links still open that section on any width.
+  - **Section tabs:** seven `flex-1 basis-0` tabs overlapped on narrow screens. The sticky row is
+    now `overflow-x-auto` with `shrink-0 whitespace-nowrap` tabs (equal flex cells restored at
+    `sm`), plus `revealTab()` keeps the active tab scrolled into view when navigating by URL/menu.
+  - **Chat launcher:** the floating bottom-right button is now a round icon-only control; its label
+    stays in `aria-label`/`title` via `chat.launcher`, so it stays accessible without the pill text.
+  - **Footer:** the GitHub repo icon is right-aligned on mobile too (`self-end sm:self-auto`).
+  - New UI strings: `cv.about`, `cv.downloads`. Checks green: lint, typecheck, **160 tests**,
+    build, check:boundaries. Built HTML/CSS contain the new utilities. Manual viewport review
+    still pending with the human.
+
 ## Next steps
+- **`feat/mobile-ui-improvements` (this branch):** human to review the third iteration at
+  320–390px (borderless About, icon-only chat, right-aligned footer GitHub, no header chat, downloads
+  only in the menu) and the restored desktop sticky CV/ATS buttons; then commit/push and ask for the
+  PR when ready.
 - **`feat/ats-pdf-format` final branch note**: committed and pushed by the human from updated
   `main` after PR #87 was merged; the agent is preparing the PR per `docs/workflows/open-pr.md`.
   RAG snapshot is still stale from the previous CV edit, so regenerate it with `GEMINI_API_KEY`

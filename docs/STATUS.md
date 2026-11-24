@@ -861,23 +861,29 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - `docs/architecture.md`, `ADR-0006` and `ADR-0007` describe the PR-time sync.
   - Checks green: lint, typecheck, **183 tests**, build, check:boundaries, check:rag-freshness.
     Workflow YAML parses cleanly; `actionlint` is not installed locally.
-- PR #100 merged into `main` (`7f907b8`). PR #101 is open (`Mendoza` → `El Chaltén`) with only
-  `cv.json` changed; CI is stale as expected and the sync job failed with `Missing GEMINI_API_KEY`.
-- **`fix/rag-secret-preflight` (this branch, from updated `main` `7f907b8`):**
+- PR #100 merged into `main` (`7f907b8`). PR #101 was closed after the maintainer re-applied the CV
+  edit in PR #103; PR #102 fixed the missing-secret message and is merged.
+- **`fix/rag-secret-preflight` (from updated `main` `7f907b8`):**
   - `gh secret list` returned no repository secrets; the failed run log showed `GEMINI_API_KEY: `
     empty, so the new PR trigger worked but the build could not embed.
   - `sync-rag.yml` now fails early with an explicit `::error::` annotation telling the human to add
     the repository secret before re-running, instead of a stack trace from `GeminiEmbeddings`.
   - Checks green: lint, typecheck, **183 tests**, build, check:boundaries, check:rag-freshness.
+- PR #103 (`El Chaltén`) and PR #104 (name + `El Bolson`) merged into `main` (`ba501a1`);
+  `sync-rag.yml` refreshed both RAG snapshots successfully, so the Actions secret is configured.
+- **`test/rag-generation` (this branch, from updated `main` `ba501a1`):**
+  - Human edit reverts `profile.name` to `Gustavo Lopez` and sets `location` to `Córdoba, Argentina`.
+  - Only `packages/content/data/cv.json` changed; generated RAG artifacts are intentionally not
+    regenerated in this test branch, so `check:rag-freshness` fails by design.
+  - Checks green: lint, typecheck, **183 tests**, build, check:boundaries.
 
 ## Next steps
-- **`fix/rag-secret-preflight` (this branch):** human to review, commit and push, then ask for the
-  PR. No agent commit, push or PR was made in this branch.
-- **Required before re-running PR #101:** add repository secret `GEMINI_API_KEY` (Settings → Secrets
-  and variables → Actions → New repository secret; or `gh secret set GEMINI_API_KEY`). Optional
-  repo variable `GEMINI_EMBED_MODEL` only if it differs from `gemini-embedding-001`. Then re-run
-  `Sync RAG snapshot` on PR #101; it will push the fresh snapshot into `slaveofthecode-patch-5` and
-  CI will go green on the new head. After merging the CV change, redeploy the API project.
+- **`test/rag-generation` (this branch):** human to commit and push this STATUS update, then ask for
+  the PR. No agent commit, push or PR was made in this branch. CI is expected to show a stale RAG
+  snapshot until the bot refresh runs on the PR.
+- Keep the repository secret `GEMINI_API_KEY` configured (already proven by the successful sync
+  commits for PR #103/#104). Optional repo variable `GEMINI_EMBED_MODEL` only if it differs from
+  `gemini-embedding-001`. After merging a CV change, redeploy the API project.
 - **`feat/mobile-ui-improvements` (this branch):** human to review the third iteration at
   320–390px (borderless About, icon-only chat, right-aligned footer GitHub, no header chat, downloads
   only in the menu) and the restored desktop sticky CV/ATS buttons; then commit/push and ask for the
@@ -949,5 +955,6 @@ Merged into `main` after the cutover (see PRs #20/#21):
 
 ## Automated RAG sync
 <!-- rag-sync-log -->
+- Automated RAG snapshot sync for cv.json commit `ff649ab6392c7c2cf08c7b38995e83b7a7375dd8` (workflow run 45472045377).
 - Automated RAG snapshot sync for cv.json commit `54e1c472126d3fecf9c901e8b20ee04f4077e447` (workflow run 45469838250).
 - Automated RAG snapshot sync for cv.json commit `ac630a010292ab9ebb4ebdfcdc40e2a714ca0786` (workflow run 45469211422).

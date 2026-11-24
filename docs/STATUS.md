@@ -807,7 +807,25 @@ Merged into `main` after the cutover (see PRs #20/#21):
     toggle was simulated with 12 cards (5 → 10 → 12 → 5) and with the real 6 (6 → 5 + one smooth
     scroll), and the generated CSS contains the `group-aria-expanded` rules.
 
+## Done (continued)
+- **`feat/ui-pdf-polish` (this branch, from up-to-date `main` `a197bd2`):**
+  - The Portfolio link is hidden in the web UI only. New `isSameOrigin` helper in
+    `apps/web/src/lib/links.ts` lets both `Profile.astro` and `Header.astro` skip links whose origin
+    matches `Astro.site`; both PDFs still render every `profile.links` entry. Built HTML has no
+    `<a href="https://slaveofthecode.vercel.app/">` or `aria-label="Portfolio"`.
+  - The designed PDF's "Working on" block now prints the `now[].kind` label (e.g. `Course`) above
+    each title. ATS output is unchanged.
+  - The designed PDF's "Projects" block uses `sortProjectsByLastCommit` (same order as the web) and
+    prints `Last commit: <full English month date>` on each card. ATS output is unchanged.
+  - Follow-up (human review): the last-commit text shares the footer baseline with `Repository` and
+    `Live demo`, is right-aligned inside the card, and only the date is bold (the label stays muted).
+    A stream-level test checks the shared `y`, increasing `x`, and the bold date font.
+  - New tests: `isSameOrigin` and designed-PDF ordering/date/footer. Checks green: lint, typecheck,
+    **172 tests**, build, check:boundaries.
+
 ## Next steps
+- **`feat/ui-pdf-polish` (this branch):** human to review, commit and push; ask for the PR after
+  this STATUS note is included. No commit, push or PR was made by the agent.
 - **`feat/mobile-ui-improvements` (this branch):** human to review the third iteration at
   320–390px (borderless About, icon-only chat, right-aligned footer GitHub, no header chat, downloads
   only in the menu) and the restored desktop sticky CV/ATS buttons; then commit/push and ask for the

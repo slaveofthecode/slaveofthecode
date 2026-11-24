@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { iconName } from "../src/lib/links";
+import { iconName, isSameOrigin } from "../src/lib/links";
 
 describe("iconName", () => {
   test("maps known profile hosts", () => {
@@ -14,5 +14,17 @@ describe("iconName", () => {
 
   test("handles invalid URLs", () => {
     expect(iconName("not a url")).toBe("globe");
+  });
+});
+
+describe("isSameOrigin", () => {
+  test("matches links to the configured site only", () => {
+    const site = new URL("https://slaveofthecode.vercel.app/");
+    expect(isSameOrigin("https://slaveofthecode.vercel.app/", site)).toBe(true);
+    expect(isSameOrigin("https://github.com/slaveofthecode", site)).toBe(false);
+    expect(isSameOrigin("not a url", site)).toBe(false);
+    expect(isSameOrigin("https://slaveofthecode.vercel.app/", undefined)).toBe(
+      false,
+    );
   });
 });

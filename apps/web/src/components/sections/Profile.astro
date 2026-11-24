@@ -1,7 +1,7 @@
 ---
 import type { Profile } from "@portfolio/content";
 import { initials } from "../../lib/initials";
-import { iconName } from "../../lib/links";
+import { iconName, isSameOrigin } from "../../lib/links";
 import { renderMarkdown } from "../../lib/markdown";
 import { profileSummary } from "../../lib/profile-summary";
 import { strings as t } from "../../lib/strings";
@@ -12,6 +12,9 @@ interface Props {
 }
 
 const { profile } = Astro.props;
+const profileLinks = profile.links.filter(
+  (link) => !isSameOrigin(link.url, Astro.site),
+);
 ---
 
 <section class="py-12">
@@ -55,7 +58,7 @@ const { profile } = Astro.props;
         <div class="flex flex-col items-start gap-1 sm:items-end">
           <ul class="flex items-center gap-0.5" aria-label={t.cv.links}>
             {
-              profile.links.map((link) => (
+              profileLinks.map((link) => (
                 <li>
                   <a
                     href={link.url}

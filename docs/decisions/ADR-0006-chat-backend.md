@@ -29,6 +29,6 @@
 - **Consequences:** real RAG with zero external services (the DB is a committed file),
   cheap and reproducible. Cost: `build:rag` needs `GEMINI_API_KEY` and must be re-run
   when the CV changes; `check:rag-freshness` (no key) plus `sync-rag.yml` enforce that
-  on every `cv.json` change and open a review PR with the regenerated artifacts. On
-  serverless the SQLite snapshot is read-only (bundled, not persisted). Revisit if the
-  corpus grows a lot.
+  on every `cv.json` change. Same-repo PRs receive the regenerated artifacts directly in the PR
+  branch; a post-merge PR is kept as a fallback. On serverless the SQLite snapshot is read-only
+  (bundled, not persisted). Revisit if the corpus grows a lot.

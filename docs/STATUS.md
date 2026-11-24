@@ -850,12 +850,26 @@ Merged into `main` after the cutover (see PRs #20/#21):
     `docs/architecture.md` describe the new flow.
   - Checks green: lint, typecheck, **183 tests**, build, check:boundaries, check:rag-freshness;
     `sync:rag-local` was also verified to skip when the snapshot is fresh.
+- PR #98 merged into `main` (`5851712`). PR #99 changes only `cv.json` (Mendoza → Ushuaia), so
+  CI's freshness check failed before any sync could run: the trigger watched only pushes to `main`.
+- **`fix/rag-sync-pr-trigger` (this branch, from updated `main` `5851712`):**
+  - `sync-rag.yml` now also runs on same-repo PRs that change `cv.json`. When stale, it rebuilds
+    both artifacts, runs all checks, appends the STATUS log and pushes the generated commit to the
+    PR branch; CI then re-runs on the new head. Fork PRs are reported but never pushed.
+  - The post-merge trigger remains as a fallback and still opens/updates the review PR. Concurrency
+    is per PR/ref instead of global, so PR refreshes and `main` fallbacks do not block each other.
+  - `docs/architecture.md`, `ADR-0006` and `ADR-0007` describe the PR-time sync.
+  - Checks green: lint, typecheck, **183 tests**, build, check:boundaries, check:rag-freshness.
+    Workflow YAML parses cleanly; `actionlint` is not installed locally.
 
 ## Next steps
-- **`chore/rag-sync` (this branch):** human to add the repository secret `GEMINI_API_KEY` (and
-  optional variable `GEMINI_EMBED_MODEL` if it differs from `gemini-embedding-001`), then review,
-  commit and push including the regenerated artifacts and this STATUS note; ask for the PR after
-  that. No commit, push or PR was made by the agent. After merge, redeploy the API project.
+- **`fix/rag-sync-pr-trigger` (this branch):** human to review, commit and push, then ask for the
+  PR. No agent commit, push or PR was made in this branch. After merge, merge `main` into
+  `slaveofthecode-patch-4` (PR #99) so that PR uses the new workflow; it will then push the fresh
+  snapshot into the PR and CI will go green on the new head.
+- Keep the repository secret `GEMINI_API_KEY` (and optional variable `GEMINI_EMBED_MODEL` if it
+  differs from `gemini-embedding-001`) configured. After merging the CV change, redeploy the API
+  project.
 - **`feat/mobile-ui-improvements` (this branch):** human to review the third iteration at
   320–390px (borderless About, icon-only chat, right-aligned footer GitHub, no header chat, downloads
   only in the menu) and the restored desktop sticky CV/ATS buttons; then commit/push and ask for the
@@ -873,8 +887,8 @@ Merged into `main` after the cutover (see PRs #20/#21):
   No agent merge was performed.
 - After a CV edit, run `bun run build` (web only; PDFs are generated on click) and
   `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings), then
-  redeploy both Vercel projects. `check:rag-freshness` guards CI and `sync-rag.yml` opens a review
-  PR when a `main` push changes `cv.json` without fresh artifacts.
+  redeploy both Vercel projects. `check:rag-freshness` guards CI; `sync-rag.yml` pushes regenerated
+  artifacts into same-repo PRs that change `cv.json`, with a post-merge PR as fallback.
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). The old
   **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own

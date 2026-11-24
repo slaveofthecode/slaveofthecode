@@ -1227,6 +1227,11 @@ export async function renderCvPdf(
     heading(ctx, strings.now.heading);
     for (const item of content.now) {
       if (mode === "ats") {
+        write(ctx, strings.now.kind[item.kind], {
+          muted: true,
+          size: 9,
+          gap: 1,
+        });
         write(ctx, item.title, { bold: true, gap: 1 });
         write(ctx, item.pdfDescription, { muted: true, gap: 2 });
         write(ctx, `${strings.now.progress}: ${item.progress}%`, {
@@ -1257,6 +1262,11 @@ export async function renderCvPdf(
       if (mode === "ats") {
         write(ctx, project.name, { bold: true, gap: 1 });
         write(ctx, project.description, { muted: true, gap: 2 });
+        write(
+          ctx,
+          `${strings.projects.lastCommit}: ${formatLongDate(project.lastCommit)}`,
+          { size: 9, gap: 2 },
+        );
         writeUnwrapped(ctx, `Repo: ${pdfUrl(project.repoUrl)}`, { size: 9 });
         writeUnwrapped(ctx, `Live: ${pdfUrl(project.productionUrl)}`, {
           size: 9,

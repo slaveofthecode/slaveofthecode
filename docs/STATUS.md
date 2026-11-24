@@ -822,9 +822,22 @@ Merged into `main` after the cutover (see PRs #20/#21):
     A stream-level test checks the shared `y`, increasing `x`, and the bold date font.
   - New tests: `isSameOrigin` and designed-PDF ordering/date/footer. Checks green: lint, typecheck,
     **172 tests**, build, check:boundaries.
+- **PR #96** (`feat/ui-pdf-polish`) was merged into `main` (`930fc48`). No agent merge was performed.
+
+## Done (continued)
+- **`feat/ats-pdf-summary` (this branch, from updated `main` `930fc48`):**
+  - Human-provided `cv.json` edit: the summary now uses `Node.js`, `AI-Assisted Development` and
+    `RAG`, drops `Astro`, and removes `Python` from the "Working on" line.
+  - The ATS PDF now prints `now[].kind` (e.g. `Course`) above each title and
+    `Last commit: <full English month date>` on each project, with the same label/date format as the
+    web. ATS project order is unchanged.
+  - New test checks ATS kind-before-title ordering and one formatted last-commit line per project.
+  - The committed RAG snapshot is stale because the profile chunk includes the summary; regenerate
+    it with `GEMINI_API_KEY` before deploying the API.
+  - Checks green: lint, typecheck, **173 tests**, build, check:boundaries.
 
 ## Next steps
-- **`feat/ui-pdf-polish` (this branch):** human to review, commit and push; ask for the PR after
+- **`feat/ats-pdf-summary` (this branch):** human to review, commit and push; ask for the PR after
   this STATUS note is included. No commit, push or PR was made by the agent.
 - **`feat/mobile-ui-improvements` (this branch):** human to review the third iteration at
   320–390px (borderless About, icon-only chat, right-aligned footer GitHub, no header chat, downloads

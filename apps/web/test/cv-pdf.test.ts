@@ -374,7 +374,9 @@ describe("renderCvPdf", () => {
     expect(designed.replace(/\s+/g, " ")).toContain(
       `${strings.projects.lastCommit}: ${formatLongDate(newest?.lastCommit ?? "")}`,
     );
-    expect(ats).not.toContain(`${strings.projects.lastCommit}:`);
+    expect(ats).toContain(
+      `${strings.projects.lastCommit}: ${formatLongDate(newest?.lastCommit ?? "")}`,
+    );
 
     const repo = findTextPlacement(streams, strings.projects.repo);
     const prefix = findTextPlacement(
@@ -393,6 +395,26 @@ describe("renderCvPdf", () => {
     expect(prefix?.x ?? 0).toBeGreaterThan(repo?.x ?? 0);
     expect(value?.x ?? 0).toBeGreaterThan(prefix?.x ?? 0);
     expect(value?.font).toContain("Helvetica-Bold");
+  });
+
+  test("ATS PDF includes now kinds and project last-commit dates", async () => {
+    const content = getContent();
+    const lines = extractText(await renderCvPdf(content, "ats"))
+      .split("\n")
+      .map((line) => line.trim());
+
+    for (const item of content.now) {
+      const kindIndex = lines.indexOf(strings.now.kind[item.kind]);
+      const titleIndex = lines.indexOf(item.title);
+      expect(kindIndex).toBeGreaterThan(-1);
+      expect(titleIndex).toBeGreaterThan(-1);
+      expect(kindIndex).toBeLessThan(titleIndex);
+    }
+    for (const project of content.personalProjects) {
+      expect(lines).toContain(
+        `${strings.projects.lastCommit}: ${formatLongDate(project.lastCommit)}`,
+      );
+    }
   });
 
   test("empty collections omit their PDF sections", async () => {

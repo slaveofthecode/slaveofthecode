@@ -102,8 +102,10 @@ Ingestion (`bun run build:rag`, `apps/api/scripts/build-rag.ts`): `@portfolio/co
 Locally, `bun run dev` runs `sync:rag-local` before starting the API: it rebuilds only when the
 snapshot is stale, and warns instead of blocking when `GEMINI_API_KEY` is unavailable. `sync-rag.yml`
 also runs on same-repo PRs touching `cv.json`: if the snapshot is stale it regenerates both
-artifacts, runs all checks and pushes them into the PR branch so CI re-runs green. A push to `main`
-touching `cv.json` keeps a post-merge fallback that opens a PR for human review (never auto-merge).
+artifacts, runs all checks and pushes them into the PR branch so CI re-runs green. Regeneration
+requires the `GEMINI_API_KEY` repository secret; the workflow fails early with a clear message when
+it is missing. A push to `main` touching `cv.json` keeps a post-merge fallback that opens a PR for
+human review (never auto-merge).
 
 Internal packages are consumed as TypeScript source (`"exports": "./src/index.ts"`,
 no build step). `apps/api` runs on Vercel's Node runtime via Web Standard

@@ -77,6 +77,16 @@ jobs:
         if: steps.freshness.outcome == 'success'
         run: echo "RAG snapshot already matches cv.json."
 
+      - name: Require GEMINI_API_KEY
+        if: steps.freshness.outcome == 'failure' && steps.target.outputs.mode != 'fork'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::GEMINI_API_KEY is not configured. Add it under Settings > Secrets and variables > Actions, then re-run this workflow."
+            exit 1
+          fi
+
       - name: Regenerate snapshot
         if: steps.freshness.outcome == 'failure' && steps.target.outputs.mode != 'fork'
         env:

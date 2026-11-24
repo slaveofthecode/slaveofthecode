@@ -18,13 +18,14 @@ import {
   StandardFonts,
   rgb,
 } from "pdf-lib";
-import { formatPoint, formatRange } from "./dates";
+import { formatLongDate, formatPoint, formatRange } from "./dates";
 import {
   type MarkdownRun,
   type MarkdownStyle,
   parseMarkdownBlocks,
 } from "./markdown";
 import { profileSummary } from "./profile-summary";
+import { sortProjectsByLastCommit } from "./projects";
 import { hasCvSection } from "./sections";
 import { strings } from "./strings";
 
@@ -183,10 +184,11 @@ function drawUnderlinedLabel(
   return width;
 }
 
-function drawProjectLinks(
+function drawProjectFooter(
   ctx: Context,
   project: PersonalProject,
   indent: number,
+  rightInset: number,
   size: number,
 ): void {
   const links = [
@@ -195,6 +197,11 @@ function drawProjectLinks(
   ];
   const separator = "  ·  ";
   const separatorWidth = ctx.font.widthOfTextAtSize(separator, size);
+  const trailingPrefix = `${strings.projects.lastCommit}: `;
+  const trailingValue = formatLongDate(project.lastCommit);
+  const prefixWidth = ctx.font.widthOfTextAtSize(trailingPrefix, size);
+  const valueWidth = ctx.bold.widthOfTextAtSize(trailingValue, size);
+  const trailingX = PAGE_WIDTH - MARGIN - rightInset - prefixWidth - valueWidth;
   let x = MARGIN + indent;
 
   for (const [index, link] of links.entries()) {
@@ -210,6 +217,20 @@ function drawProjectLinks(
       x += separatorWidth;
     }
   }
+  ctx.page.drawText(trailingPrefix, {
+    x: trailingX,
+    y: ctx.y - size,
+    size,
+    font: ctx.font,
+    color: ink(ctx, true),
+  });
+  ctx.page.drawText(trailingValue, {
+    x: trailingX + prefixWidth,
+    y: ctx.y - size,
+    size,
+    font: ctx.bold,
+    color: ink(ctx, false),
+  });
   ctx.y -= size * 1.35;
 }
 
@@ -268,7 +289,7 @@ function drawProjectCard(ctx: Context, project: PersonalProject): void {
       gap: 5,
     });
   }
-  drawProjectLinks(ctx, project, indent, linkSize);
+  drawProjectFooter(ctx, project, indent, cardPadding, linkSize);
   ctx.y = top - height - 10;
 }
 
@@ -309,9 +330,11 @@ function drawNowItem(ctx: Context, item: NowItem): void {
   const linkSize = 9;
   const progressBarHeight = 3;
   const progressLabel = `${strings.now.progress}: ${item.progress}%`;
+  const kindLabel = strings.now.kind[item.kind];
   const hasAcademy = Boolean(item.academyUrl);
   const height =
     8 +
+    wrappedHeight(kindLabel, ctx.font, linkSize, width, 2) +
     wrappedHeight(item.title, ctx.bold, titleSize, width, 2) +
     wrappedHeight(item.pdfDescription, ctx.italic, descriptionSize, width, 4) +
     progressBarHeight +
@@ -335,6 +358,13 @@ function drawNowItem(ctx: Context, item: NowItem): void {
   });
   ctx.y = top - 6;
 
+  write(ctx, kindLabel, {
+    muted: true,
+    size: linkSize,
+    indent,
+    width,
+    gap: 2,
+  });
   write(ctx, item.title, {
     bold: true,
     size: titleSize,
@@ -1219,7 +1249,11 @@ export async function renderCvPdf(
 
   if (hasCvSection(content, "projects")) {
     heading(ctx, strings.projects.heading);
-    for (const project of content.personalProjects) {
+    const projects =
+      mode === "ats"
+        ? content.personalProjects
+        : sortProjectsByLastCommit(content.personalProjects);
+    for (const project of projects) {
       if (mode === "ats") {
         write(ctx, project.name, { bold: true, gap: 1 });
         write(ctx, project.description, { muted: true, gap: 2 });

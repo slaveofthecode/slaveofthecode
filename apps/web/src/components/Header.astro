@@ -1,7 +1,7 @@
 ---
 import { getContent } from "@portfolio/content";
 import { initials } from "../lib/initials";
-import { iconName } from "../lib/links";
+import { iconName, isSameOrigin } from "../lib/links";
 import { resumeFilename } from "../lib/resume";
 import { visibleCvSectionIds } from "../lib/sections";
 import { strings as t } from "../lib/strings";
@@ -10,6 +10,9 @@ import ThemeToggle from "./ThemeToggle.astro";
 
 const content = getContent();
 const { profile } = content;
+const profileLinks = profile.links.filter(
+  (link) => !isSameOrigin(link.url, Astro.site),
+);
 
 const navLabels = {
   experience: t.nav.experience,
@@ -82,7 +85,7 @@ const navItems = visibleCvSectionIds(content)
       <div data-sticky-actions class="hidden items-center gap-3">
         <ul class="flex items-center gap-px" aria-label={t.cv.links}>
           {
-            profile.links.map((link) => (
+            profileLinks.map((link) => (
               <li>
                 <a
                   href={link.url}

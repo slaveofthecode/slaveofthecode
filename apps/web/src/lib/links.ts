@@ -3,6 +3,15 @@ export type IconName = "github" | "linkedin" | "globe";
 /** Source repository of this project. */
 export const REPO_URL = "https://github.com/slaveofthecode/slaveofthecode";
 
+export function isSameOrigin(url: string, site: URL | undefined): boolean {
+  if (!site) return false;
+  try {
+    return new URL(url).origin === site.origin;
+  } catch {
+    return false;
+  }
+}
+
 /** Pick an icon for a profile link based on the URL host. */
 export function iconName(url: string): IconName {
   let host: string;

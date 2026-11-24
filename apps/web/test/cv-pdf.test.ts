@@ -4,6 +4,8 @@ import { inflateSync } from "node:zlib";
 import { getContent, parseContent } from "@portfolio/content";
 import { PDFDocument } from "pdf-lib";
 import { renderCvPdf } from "../src/lib/cv-pdf";
+import { formatLongDate } from "../src/lib/dates";
+import { sortProjectsByLastCommit } from "../src/lib/projects";
 import { strings } from "../src/lib/strings";
 
 function extractStreams(bytes: Uint8Array): string {
@@ -19,6 +21,34 @@ function extractText(bytes: Uint8Array): string {
   return [...extractStreams(bytes).matchAll(/<([0-9A-Fa-f]+)>\s*Tj/g)]
     .map((match) => Buffer.from(match[1] ?? "", "hex").toString("latin1"))
     .join("\n");
+}
+
+interface TextPlacement {
+  x: number;
+  y: number;
+  font: string;
+}
+
+function findTextPlacement(
+  streams: string,
+  label: string,
+): TextPlacement | undefined {
+  const lines = streams.split("\n");
+  for (const [index, line] of lines.entries()) {
+    const match = /<([0-9A-Fa-f]+)>\s*Tj/.exec(line);
+    if (!match) continue;
+    if (Buffer.from(match[1] ?? "", "hex").toString("latin1") !== label)
+      continue;
+    const context = lines.slice(Math.max(0, index - 8), index).join("\n");
+    const transform = /1 0 0 1 ([-\d.]+) ([-\d.]+) Tm/.exec(context);
+    if (!transform) continue;
+    return {
+      x: Number(transform[1]),
+      y: Number(transform[2]),
+      font: /(\/[\w-]+) [\d.]+ Tf/.exec(context)?.[1] ?? "",
+    };
+  }
+  return undefined;
 }
 
 function cleanUrl(value: string): string {
@@ -190,9 +220,7 @@ describe("renderCvPdf", () => {
     expect(flat).toContain(strings.now.academy);
     if (course) {
       expect(flat).toContain(course.title);
-      expect(flat).not.toContain(
-        `${strings.now.kind[course.kind]} · ${strings.now.status[course.status]}`,
-      );
+      expect(flat).toContain(strings.now.kind[course.kind]);
       expect(raw).toContain(course.academyUrl ?? "");
     }
 
@@ -328,6 +356,43 @@ describe("renderCvPdf", () => {
       expect(lines.join("\n")).not.toContain("wt.mc_id");
       expect(lines.join("\n")).not.toContain("source=docs");
     }
+  });
+
+  test("designed PDF orders Projects by lastCommit and shows the date", async () => {
+    const content = getContent();
+    const sorted = sortProjectsByLastCommit(content.personalProjects);
+    const designedBytes = await renderCvPdf(content, "designed");
+    const designed = extractText(designedBytes);
+    const streams = extractStreams(designedBytes);
+    const ats = extractText(await renderCvPdf(content, "ats"));
+
+    const newest = sorted[0];
+    expect(newest).toBeDefined();
+    const positions = sorted.map((project) => designed.indexOf(project.name));
+    expect(positions.every((position) => position >= 0)).toBe(true);
+    expect(positions).toEqual([...positions].sort((a, b) => a - b));
+    expect(designed.replace(/\s+/g, " ")).toContain(
+      `${strings.projects.lastCommit}: ${formatLongDate(newest?.lastCommit ?? "")}`,
+    );
+    expect(ats).not.toContain(`${strings.projects.lastCommit}:`);
+
+    const repo = findTextPlacement(streams, strings.projects.repo);
+    const prefix = findTextPlacement(
+      streams,
+      `${strings.projects.lastCommit}: `,
+    );
+    const value = findTextPlacement(
+      streams,
+      formatLongDate(newest?.lastCommit ?? ""),
+    );
+    expect(repo).toBeDefined();
+    expect(prefix).toBeDefined();
+    expect(value).toBeDefined();
+    expect(repo?.y).toBe(prefix?.y);
+    expect(repo?.y).toBe(value?.y);
+    expect(prefix?.x ?? 0).toBeGreaterThan(repo?.x ?? 0);
+    expect(value?.x ?? 0).toBeGreaterThan(prefix?.x ?? 0);
+    expect(value?.font).toContain("Helvetica-Bold");
   });
 
   test("empty collections omit their PDF sections", async () => {

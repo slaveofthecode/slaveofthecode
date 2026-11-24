@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import {
+  type RagMeta,
   type RagRecord,
   SqliteRagStore,
   buildRagBytes,
@@ -22,9 +23,15 @@ const records: RagRecord[] = [
   },
 ];
 
+const meta: RagMeta = {
+  cvSha256: "abc123",
+  embeddingModel: "test-embed-model",
+  builtAt: "2026-01-01T00:00:00.000Z",
+};
+
 describe("SqliteRagStore", () => {
   test("returns the nearest chunk for the query", async () => {
-    const store = await SqliteRagStore.open(await buildRagBytes(records));
+    const store = await SqliteRagStore.open(await buildRagBytes(records, meta));
     const hits = store.retrieve([1, 0, 0], 1);
     expect(hits).toHaveLength(1);
     expect(hits[0]?.id).toBe("react");
@@ -32,18 +39,18 @@ describe("SqliteRagStore", () => {
   });
 
   test("orders by descending similarity and respects the limit", async () => {
-    const store = await SqliteRagStore.open(await buildRagBytes(records));
+    const store = await SqliteRagStore.open(await buildRagBytes(records, meta));
     const hits = store.retrieve([0, 1, 0], 5);
     expect(hits.map((hit) => hit.id)).toEqual(["node", "react"]);
   });
 
   test("returns nothing for an empty snapshot", async () => {
-    const store = await SqliteRagStore.open(await buildRagBytes([]));
+    const store = await SqliteRagStore.open(await buildRagBytes([], meta));
     expect(store.retrieve([1, 0, 0], 5)).toEqual([]);
   });
 
   test("getChunk loads a chunk by id with a full score", async () => {
-    const store = await SqliteRagStore.open(await buildRagBytes(records));
+    const store = await SqliteRagStore.open(await buildRagBytes(records, meta));
     const chunk = store.getChunk("node");
     expect(chunk?.id).toBe("node");
     expect(chunk?.section).toBe("skills");
@@ -52,7 +59,12 @@ describe("SqliteRagStore", () => {
   });
 
   test("getChunk returns null for an unknown id", async () => {
-    const store = await SqliteRagStore.open(await buildRagBytes(records));
+    const store = await SqliteRagStore.open(await buildRagBytes(records, meta));
     expect(store.getChunk("missing")).toBeNull();
+  });
+
+  test("getMeta returns the snapshot provenance", async () => {
+    const store = await SqliteRagStore.open(await buildRagBytes(records, meta));
+    expect(store.getMeta()).toEqual(meta);
   });
 });

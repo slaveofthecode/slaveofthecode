@@ -1,15 +1,17 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getContent } from "@portfolio/content";
-import { GeminiEmbeddings } from "../src/adapters/llm/gemini-embeddings";
+import { GeminiEmbeddings } from "../src/adapters/llm/gemini-embeddings.js";
 import {
+  type RagMeta,
   type RagRecord,
   buildRagBytes,
-} from "../src/adapters/rag/sqlite-store";
-import { loadConfig } from "../src/config";
-import type { EmbeddingProvider } from "../src/domain/embedding-provider";
-import { buildChunks } from "../src/domain/rag";
+} from "../src/adapters/rag/sqlite-store.js";
+import { loadConfig } from "../src/config.js";
+import type { EmbeddingProvider } from "../src/domain/embedding-provider.js";
+import { buildChunks } from "../src/domain/rag.js";
 
 /**
  * RAG ingestion: reads the validated CV (packages/content, including `now`),
@@ -21,6 +23,16 @@ import { buildChunks } from "../src/domain/rag";
 const here = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(here, "..", "data");
 const modulePath = join(here, "..", "src", "data", "rag-db.ts");
+const cvPath = join(
+  here,
+  "..",
+  "..",
+  "..",
+  "packages",
+  "content",
+  "data",
+  "cv.json",
+);
 
 async function embedAll(): Promise<RagRecord[]> {
   const config = loadConfig();
@@ -37,7 +49,13 @@ async function embedAll(): Promise<RagRecord[]> {
 async function main(): Promise<void> {
   const empty = process.argv.includes("--empty");
   const records = empty ? [] : await embedAll();
-  const bytes = await buildRagBytes(records);
+  const config = loadConfig();
+  const meta: RagMeta = {
+    cvSha256: createHash("sha256").update(readFileSync(cvPath)).digest("hex"),
+    embeddingModel: config.gemini.embedModel,
+    builtAt: new Date().toISOString(),
+  };
+  const bytes = await buildRagBytes(records, meta);
 
   mkdirSync(dataDir, { recursive: true });
   writeFileSync(join(dataDir, "cv.sqlite"), bytes);
@@ -49,7 +67,7 @@ async function main(): Promise<void> {
   );
 
   console.log(
-    `Wrote ${records.length} chunks (${bytes.length} bytes) -> data/cv.sqlite + src/data/rag-db.ts`,
+    `Wrote ${records.length} chunks (${bytes.length} bytes) for cv.json ${meta.cvSha256} -> data/cv.sqlite + src/data/rag-db.ts`,
   );
 }
 

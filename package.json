@@ -11,6 +11,7 @@
     "typecheck": "bun run --filter '*' typecheck",
     "test": "bun test",
     "check:boundaries": "bun scripts/check-boundaries.ts",
+    "check:rag-freshness": "bun run --filter @portfolio/api check:rag-freshness",
     "format:data": "biome format --write packages/content/data",
     "build_data": "bun run --filter @portfolio/api build:rag"
   },

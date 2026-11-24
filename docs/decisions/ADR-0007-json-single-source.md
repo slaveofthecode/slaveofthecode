@@ -20,9 +20,11 @@
     fetched in the browser for the designed PDF) and `personalProjects[]` (name, short description,
     tech, repo URL, production URL and thumbnail URL). The web shows personal projects
     after "What I'm working on now"; both PDFs show a reduced project block.
-- **Consequences:** one edit updates the web, both PDFs and the chat; no ingest step,
-  no translation drift, no committed PDF artifacts. Changing the CV requires a web build
-  and `bun run --filter @portfolio/api build:rag` (chat snapshot, needs `GEMINI_API_KEY`);
+- **Consequences:** one edit updates the web and both PDFs immediately; the chat catches
+  up when `sync-rag.yml` regenerates its snapshot after any `cv.json` change, with a human
+  reviewing the follow-up PR. No ingest step, no translation drift, no committed PDF
+  artifacts. Changing the CV still requires a web build and
+  `bun run --filter @portfolio/api build:rag` locally (chat snapshot, needs `GEMINI_API_KEY`);
   PDFs always reflect the current JSON at click time.
   The ATS PDF stays text-only; the designed PDF embeds the same portrait from `cv.json`.
   The PDF "What I'm working on now" block shows every JSON item with a reduced field set

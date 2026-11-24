@@ -1,0 +1,96 @@
+name: Sync RAG snapshot
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/content/data/cv.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sync-rag
+  cancel-in-progress: false
+
+jobs:
+  sync-rag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Check snapshot freshness
+        id: freshness
+        continue-on-error: true
+        run: bun run check:rag-freshness
+
+      - name: Skip when snapshot is fresh
+        if: steps.freshness.outcome == 'success'
+        run: echo "RAG snapshot already matches cv.json."
+
+      - name: Regenerate snapshot
+        if: steps.freshness.outcome == 'failure'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_EMBED_MODEL: ${{ vars.GEMINI_EMBED_MODEL || 'gemini-embedding-001' }}
+        run: bun run --filter @portfolio/api build:rag
+
+      - name: Verify regenerated snapshot
+        if: steps.freshness.outcome == 'failure'
+        run: |
+          bun run check:rag-freshness
+          bun run lint
+          bun run typecheck
+          bun test
+          bun run build
+          bun run check:boundaries
+
+      - name: Record sync in STATUS
+        if: steps.freshness.outcome == 'failure'
+        env:
+          RAG_SYNC_SOURCE_SHA: ${{ github.sha }}
+          RAG_SYNC_RUN_ID: ${{ github.run_id }}
+        run: bun scripts/record-rag-sync.ts
+
+      - name: Open sync PR
+        if: steps.freshness.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          if git diff --quiet; then
+            echo "No generated changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH="chore/rag-sync"
+          git switch -c "$BRANCH"
+          git add apps/api/data/cv.sqlite apps/api/src/data/rag-db.ts docs/STATUS.md
+          git commit -m "chore(rag): sync snapshot with cv.json"
+          git push --force origin "$BRANCH"
+
+          TITLE="chore(rag): sync snapshot with cv.json"
+          BODY="Automated RAG snapshot refresh for \`${SOURCE_SHA}\` (workflow run ${RUN_ID}). Both generated artifacts were rebuilt from \`packages/content/data/cv.json\`."
+          if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
+            gh pr edit "$BRANCH" --title "$TITLE" --body "$BODY"
+          else
+            gh pr create --base main --head "$BRANCH" --title "$TITLE" --body "$BODY" --assignee @me
+          fi

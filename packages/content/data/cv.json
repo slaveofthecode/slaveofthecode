@@ -566,6 +566,7 @@
     {
       "id": "github-inspector-ai",
       "name": "GitHub Inspector",
+      "lastCommit": "2026-09-14",
       "description": "Inspect any GitHub account and get a readable overview of repositories, languages and metadata, with AI summaries and dependency risk scans.",
       "tech": [
         "Next.js",
@@ -583,6 +584,7 @@
     {
       "id": "readforme-ai",
       "name": "ReadForMe AI",
+      "lastCommit": "2026-07-20",
       "description": "Upload a PDF and ask grounded questions about its content through a chat interface.",
       "tech": [
         "Next.js",
@@ -602,6 +604,7 @@
     {
       "id": "tictactoe-react-ts",
       "name": "Tic Tac Toe Game",
+      "lastCommit": "2024-03-22",
       "description": "A simple, interactive tic-tac-toe game you can play right in your browser.",
       "tech": ["React", "Vite", "Tailwind CSS", "SCSS", "TypeScript"],
       "repoUrl": "https://github.com/slaveofthecode/tictactoe-react-ts",
@@ -611,6 +614,7 @@
     {
       "id": "breakout-game",
       "name": "BreakOut Game",
+      "lastCommit": "2024-02-26",
       "description": "A classic arcade brick-breaker game you can play right in your browser.",
       "tech": ["JavaScript", "CSS", "HTML"],
       "repoUrl": "https://github.com/slaveofthecode/breakout-game",
@@ -620,6 +624,7 @@
     {
       "id": "styles",
       "name": "Styles",
+      "lastCommit": "2024-03-19",
       "description": "A classic arcade brick-breaker game you can play right in your browser.",
       "tech": ["JavaScript", "CSS", "HTML", "Node.Js", "Pug"],
       "repoUrl": "https://github.com/slaveofthecode/styles",
@@ -629,6 +634,7 @@
     {
       "id": "guess-number-game",
       "name": "Guess Number Game",
+      "lastCommit": "2025-05-09",
       "description": "Is a simple guessing game where you pick a four-digit number and the computer tries to figure it out..",
       "tech": ["TypeScript", "Tailwind CSS", "Vite", "Bun", "Squoosh"],
       "repoUrl": "https://github.com/slaveofthecode/guess-number",

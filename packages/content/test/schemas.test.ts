@@ -68,6 +68,7 @@ const validNow = {
 const validPersonalProject = {
   id: "demo",
   name: "Demo",
+  lastCommit: "2026-11-01",
   description: "A small demo project.",
   tech: ["TypeScript"],
   repoUrl: "https://github.com/example/demo",
@@ -315,6 +316,23 @@ describe("personalProjectSchema", () => {
       thumbnailUrl: "not-a-url",
     });
     expect(result.success).toBe(false);
+  });
+
+  it("rejects a lastCommit that is not a YYYY-MM-DD date", () => {
+    for (const lastCommit of [
+      "2026-11",
+      "2026-11-01T10:00:00Z",
+      "2026-13-01",
+      "2026-02-30",
+      "not-a-date",
+    ]) {
+      expect(
+        personalProjectSchema.safeParse({
+          ...validPersonalProject,
+          lastCommit,
+        }).success,
+      ).toBe(false);
+    }
   });
 });
 

@@ -32,6 +32,25 @@ html {
   scroll-behavior: smooth;
 }
 
+[data-project-details] {
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+@media (hover: hover) {
+  [data-project-details] {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.35rem);
+  }
+
+  [data-project-card]:hover [data-project-details],
+  [data-project-details]:focus-within {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
 .summary-markdown {
   overflow-wrap: anywhere;
 }

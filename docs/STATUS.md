@@ -768,8 +768,44 @@ Merged into `main` after the cutover (see PRs #20/#21):
     stays in `aria-label`/`title` via `chat.launcher`, so it stays accessible without the pill text.
   - **Footer:** the GitHub repo icon is right-aligned on mobile too (`self-end sm:self-auto`).
   - New UI strings: `cv.about`, `cv.downloads`. Checks green: lint, typecheck, **160 tests**,
-    build, check:boundaries. Built HTML/CSS contain the new utilities. Manual viewport review
-    still pending with the human.
+  build, check:boundaries. Built HTML/CSS contain the new utilities. Manual viewport review
+  still pending with the human.
+
+## Done (continued)
+- **`feat/projects-last-commit` (this branch, from up-to-date `main` `31c9228`):**
+  - `personalProjects[].lastCommit` is now required and validated as a real calendar date in
+    `YYYY-MM-DD` format (new `isoDateOnlySchema` in `packages/content/src/schemas/common.ts`).
+  - Six `lastCommit` dates were added to `cv.json` (the human replaced the initial placeholders
+    with their own dates before this follow-up).
+  - `PersonalProjects.astro` sorts projects by `lastCommit` descending (non-mutating
+    `sortProjectsByLastCommit` in `apps/web/src/lib/projects.ts`) and shows
+    `Last commit <date>` at the bottom-right of each card in a `<time>` element, using the new
+    `t.projects.lastCommit` string and theme tokens only.
+  - Follow-up: the visible date uses a full English month (`formatLongDate` in
+    `apps/web/src/lib/dates.ts` → `November 24, 2026`); the JSON value and the machine-readable
+    `<time datetime>` stay `YYYY-MM-DD`.
+  - Style follow-up (human choice): each card shows only image, title, description and tech by
+    default. The links + last-commit row is hidden behind a 300ms opacity/slide transition on
+    hover and keyboard focus-within; on devices without hover (`@media (hover: none)`) it stays
+    visible. Human chose `text-fg` (white in dark, black in light) over literal white for the
+    bold last-commit value, which stays smaller than the title. Implemented with
+    `data-project-card`/`data-project-details` selectors in `global.css` (no new colors).
+  - Preview follow-up: the section shows the five newest projects; the rest stay `hidden` in the
+    same list. A centered `See more` / `Show less` button reveals **five more per click**;
+    `aria-expanded` (and the label/chevron) only flips to `Show less` once everything is visible,
+    and that click resets to the first five. The pure next-count logic is
+    `nextVisibleProjectCount` (`apps/web/src/lib/projects.ts`) with tests; the button uses no JS
+    framework and keeps `aria-controls`/theme tokens.
+  - Human-reported fix: the label/chevron never changed because Tailwind's `aria-expanded:`
+    variant targets the element carrying the attribute, not its children; the button now uses
+    `group` + `group-aria-expanded:` so `See more` → `Show less` and the chevron flips when every
+    project is visible. The reset click also scrolls smoothly to `#projects` (`behavior: "auto"`
+    under `prefers-reduced-motion`). Proposal for `docs/learnings.md`: remember the `group-`
+    prefix for ARIA variants on descendants.
+  - RAG chunk text is unchanged, so the committed snapshot does not need regeneration for this
+    field alone. Checks green: lint, typecheck, **170 tests**, build, check:boundaries; the built
+    toggle was simulated with 12 cards (5 → 10 → 12 → 5) and with the real 6 (6 → 5 + one smooth
+    scroll), and the generated CSS contains the `group-aria-expanded` rules.
 
 ## Next steps
 - **`feat/mobile-ui-improvements` (this branch):** human to review the third iteration at

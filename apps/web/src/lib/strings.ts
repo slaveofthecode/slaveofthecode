@@ -53,6 +53,9 @@ export const strings = {
     heading: "Projects",
     repo: "Repository",
     live: "Live demo",
+    lastCommit: "Last commit",
+    seeMore: "See more",
+    showLess: "Show less",
   },
   skills: {
     category: "Category",

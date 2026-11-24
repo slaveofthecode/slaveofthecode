@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { assetUrlSchema } from "./common";
+import { assetUrlSchema, isoDateOnlySchema } from "./common";
 
 export const personalProjectSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
+  lastCommit: isoDateOnlySchema,
   description: z.string().min(1),
   tech: z.array(z.string().min(1)),
   repoUrl: z.string().url(),

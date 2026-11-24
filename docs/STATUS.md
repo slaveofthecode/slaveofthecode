@@ -949,4 +949,5 @@ Merged into `main` after the cutover (see PRs #20/#21):
 
 ## Automated RAG sync
 <!-- rag-sync-log -->
+- Automated RAG snapshot sync for cv.json commit `54e1c472126d3fecf9c901e8b20ee04f4077e447` (workflow run 45469838250).
 - Automated RAG snapshot sync for cv.json commit `ac630a010292ab9ebb4ebdfcdc40e2a714ca0786` (workflow run 45469211422).

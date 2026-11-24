@@ -30,5 +30,6 @@ export {
   yearOrYearMonthSchema,
   yearSchema,
   isoDateSchema,
+  isoDateOnlySchema,
 } from "./schemas";
 export { getContent, parseContent } from "./loader";

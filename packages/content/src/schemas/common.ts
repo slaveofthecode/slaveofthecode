@@ -38,6 +38,17 @@ export const isoDateSchema = z
     "Expected an ISO 8601 date (YYYY-MM-DD or a full timestamp)",
   );
 
+/** A calendar date in `YYYY-MM-DD` format (no time or timezone). */
+export const isoDateOnlySchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "Expected a date in YYYY-MM-DD format")
+  .refine((value) => {
+    const date = new Date(`${value}T00:00:00Z`);
+    return (
+      !Number.isNaN(date.valueOf()) && date.toISOString().slice(0, 10) === value
+    );
+  }, "Expected a real calendar date in YYYY-MM-DD format");
+
 export const linkSchema = z.object({
   label: z.string().min(1),
   url: z.string().url(),

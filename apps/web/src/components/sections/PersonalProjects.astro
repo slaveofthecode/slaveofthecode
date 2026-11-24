@@ -1,6 +1,11 @@
 ---
 import type { PersonalProject } from "@portfolio/content";
+import { formatLongDate } from "../../lib/dates";
 import { iconName } from "../../lib/links";
+import {
+  sortProjectsByLastCommit,
+  splitProjectPreview,
+} from "../../lib/projects";
 import { strings as t } from "../../lib/strings";
 import Icon from "../Icon.astro";
 
@@ -9,12 +14,20 @@ interface Props {
 }
 
 const { items } = Astro.props;
+const sortedItems = sortProjectsByLastCommit(items);
+const { preview, rest } = splitProjectPreview(sortedItems);
 ---
 
-<ul class="space-y-5">
+<ul id="projects-list" class="space-y-5">
   {
-    items.map((project) => (
-      <li class="grid gap-5 overflow-hidden rounded-card border border-border bg-surface p-4 transition-colors hover:border-accent sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] sm:p-5">
+    sortedItems.map((project, index) => {
+      const isExtra = index >= preview.length;
+      return (
+      <li
+        data-project-card
+        hidden={isExtra}
+        class="grid gap-5 overflow-hidden rounded-card border border-border bg-surface p-4 transition-colors hover:border-accent sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] sm:p-5"
+      >
         <div
           class="relative mx-auto aspect-4/3 w-full max-w-88 cursor-zoom-in self-start overflow-hidden rounded-card border border-border transition-transform duration-300 ease-out hover:z-10 hover:scale-105 sm:mx-0 sm:max-w-none sm:hover:scale-110 motion-reduce:transition-none motion-reduce:hover:scale-100"
         >
@@ -44,7 +57,10 @@ const { items } = Astro.props;
             </ul>
           ) : null}
 
-          <div class="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-5 font-mono text-xs">
+          <div
+            data-project-details
+            class="mt-auto flex flex-wrap gap-x-5 gap-y-2 border-t border-border pt-4 font-mono text-xs"
+          >
             <a
               href={project.repoUrl}
               rel="noopener"
@@ -63,9 +79,80 @@ const { items } = Astro.props;
               <Icon name={iconName(project.productionUrl)} class="h-3.5 w-3.5" />
               {t.projects.live}
             </a>
+            <span class="ml-auto inline-flex items-center gap-1.5 whitespace-nowrap">
+              <span class="text-subtle">{t.projects.lastCommit}</span>
+              <time datetime={project.lastCommit} class="font-bold text-fg">
+                {formatLongDate(project.lastCommit)}
+              </time>
+            </span>
           </div>
         </div>
       </li>
-    ))
+      );
+    })
   }
 </ul>
+
+{
+  rest.length > 0 ? (
+    <div class="mt-5 flex justify-center">
+      <button
+        type="button"
+        data-projects-toggle
+        aria-controls="projects-list"
+        aria-expanded="false"
+        class="group inline-flex items-center gap-2 rounded-card border border-border bg-surface px-4 py-2 font-mono text-xs uppercase tracking-wide text-muted transition-colors hover:bg-hover hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg aria-expanded:text-fg"
+      >
+        <span class="group-aria-expanded:hidden">{t.projects.seeMore}</span>
+        <span class="hidden group-aria-expanded:inline">{t.projects.showLess}</span>
+        <svg
+          class="h-3.5 w-3.5 transition-transform duration-200 group-aria-expanded:rotate-180"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+    </div>
+  ) : null
+}
+
+<script>
+  import {
+    PROJECTS_PREVIEW_LIMIT,
+    nextVisibleProjectCount,
+  } from "../../lib/projects";
+
+  const toggle = document.querySelector<HTMLButtonElement>("[data-projects-toggle]");
+  const cards = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-project-card]"),
+  );
+
+  if (toggle) {
+    let visibleCount = Math.min(PROJECTS_PREVIEW_LIMIT, cards.length);
+
+    toggle.addEventListener("click", () => {
+      const wasFullyExpanded = visibleCount >= cards.length;
+      visibleCount = nextVisibleProjectCount(visibleCount, cards.length);
+      cards.forEach((card, index) => {
+        card.hidden = index >= visibleCount;
+      });
+      toggle.setAttribute("aria-expanded", String(visibleCount >= cards.length));
+
+      if (wasFullyExpanded) {
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        document.getElementById("projects")?.scrollIntoView({
+          behavior: reducedMotion ? "auto" : "smooth",
+          block: "start",
+        });
+      }
+    });
+  }
+</script>

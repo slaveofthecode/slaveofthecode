@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { formatPoint, formatRange } from "../src/lib/dates";
+import { formatLongDate, formatPoint, formatRange } from "../src/lib/dates";
 
 describe("formatPoint", () => {
   test("keeps a four-digit year as-is", () => {
@@ -14,6 +14,18 @@ describe("formatPoint", () => {
 
   test("returns unrecognized input unchanged", () => {
     expect(formatPoint("unknown")).toBe("unknown");
+  });
+});
+
+describe("formatLongDate", () => {
+  test("renders a date with the full English month", () => {
+    expect(formatLongDate("2026-11-24")).toBe("November 24, 2026");
+    expect(formatLongDate("2026-01-05")).toBe("January 5, 2026");
+  });
+
+  test("returns unrecognized input unchanged", () => {
+    expect(formatLongDate("2026-11")).toBe("2026-11");
+    expect(formatLongDate("unknown")).toBe("unknown");
   });
 });
 

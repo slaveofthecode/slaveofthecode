@@ -13,6 +13,30 @@ const MONTHS = [
   "Dec",
 ];
 
+const LONG_MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+/** Format a `YYYY-MM-DD` date for display. */
+export function formatLongDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return value;
+  const month = LONG_MONTHS[Number(match[2]) - 1];
+  if (!month) return value;
+  return `${month} ${Number(match[3])}, ${match[1]}`;
+}
+
 /** Format a `YYYY` year or `YYYY-MM` month for display. */
 export function formatPoint(value: string): string {
   const match = /^(\d{4})(?:-(\d{2}))?$/.exec(value);

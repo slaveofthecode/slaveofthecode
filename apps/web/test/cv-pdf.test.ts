@@ -56,6 +56,7 @@ function getPopulatedContent() {
       {
         id: "project-test",
         name: "Test project",
+        lastCommit: "2026-11-01",
         description: "A short test project.",
         tech: [],
         repoUrl: "https://example.com/repo?source=docs",

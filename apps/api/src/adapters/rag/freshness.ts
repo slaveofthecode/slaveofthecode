@@ -1,26 +1,11 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { DEFAULT_EMBED_MODEL } from "../../config.js";
 import { ragDbBase64 } from "../../data/rag-db.js";
+import { CV_PATH, SNAPSHOT_PATH } from "./paths.js";
 import { SqliteRagStore } from "./sqlite-store.js";
 
-const here = dirname(fileURLToPath(import.meta.url));
-
-export const CV_PATH = join(
-  here,
-  "..",
-  "..",
-  "..",
-  "..",
-  "..",
-  "packages",
-  "content",
-  "data",
-  "cv.json",
-);
-export const SNAPSHOT_PATH = join(here, "..", "..", "..", "data", "cv.sqlite");
+export { CV_PATH, SNAPSHOT_PATH } from "./paths.js";
 
 export function sha256OfCv(cvPath = CV_PATH): string {
   return createHash("sha256").update(readFileSync(cvPath)).digest("hex");

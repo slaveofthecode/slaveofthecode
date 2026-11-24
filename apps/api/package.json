@@ -5,7 +5,8 @@
   "type": "module",
   "exports": "./src/index.ts",
   "scripts": {
-    "dev": "bun dev.ts",
+    "dev": "bun run sync:rag-local && bun dev.ts",
+    "sync:rag-local": "bun scripts/sync-rag-local.ts",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
     "build:rag": "bun scripts/build-rag.ts",

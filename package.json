@@ -5,6 +5,7 @@
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "bun run lint && bun run --filter '*' dev",
+    "sync:rag-local": "bun run --filter @portfolio/api sync:rag-local",
     "build": "bun run --filter '*' build",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",

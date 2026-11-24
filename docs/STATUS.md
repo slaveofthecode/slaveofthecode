@@ -842,9 +842,14 @@ Merged into `main` after the cutover (see PRs #20/#21):
     model and `apps/api/data/cv.sqlite` vs `apps/api/src/data/rag-db.ts` without needing a key.
   - New `sync-rag.yml` watches pushes to `main` touching `cv.json`; on drift it regenerates both
     artifacts with `GEMINI_API_KEY`, runs all checks and opens a PR for human review (no auto-merge).
-  - The current snapshot was regenerated from the latest `cv.json`, fixing the stale summary from
-    PR #97 locally. `ADR-0006`, `ADR-0007` and `docs/architecture.md` describe the new flow.
-  - Checks green: lint, typecheck, **179 tests**, build, check:boundaries, check:rag-freshness.
+  - Local dev now runs `sync:rag-local` before starting the API. It reuses the same checker and only
+    calls `buildRagSnapshot()` when drift is detected; a missing local key warns and skips instead of
+    blocking. The build logic was extracted so the CLI, CI workflow and local dev share one path.
+  - The current snapshot was regenerated from the latest `cv.json`, covering the stale summary from
+    PR #97 and the human's `location` update to Mendoza. `ADR-0006`, `ADR-0007` and
+    `docs/architecture.md` describe the new flow.
+  - Checks green: lint, typecheck, **183 tests**, build, check:boundaries, check:rag-freshness;
+    `sync:rag-local` was also verified to skip when the snapshot is fresh.
 
 ## Next steps
 - **`chore/rag-sync` (this branch):** human to add the repository secret `GEMINI_API_KEY` (and

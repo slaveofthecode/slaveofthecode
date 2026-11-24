@@ -861,15 +861,23 @@ Merged into `main` after the cutover (see PRs #20/#21):
   - `docs/architecture.md`, `ADR-0006` and `ADR-0007` describe the PR-time sync.
   - Checks green: lint, typecheck, **183 tests**, build, check:boundaries, check:rag-freshness.
     Workflow YAML parses cleanly; `actionlint` is not installed locally.
+- PR #100 merged into `main` (`7f907b8`). PR #101 is open (`Mendoza` → `El Chaltén`) with only
+  `cv.json` changed; CI is stale as expected and the sync job failed with `Missing GEMINI_API_KEY`.
+- **`fix/rag-secret-preflight` (this branch, from updated `main` `7f907b8`):**
+  - `gh secret list` returned no repository secrets; the failed run log showed `GEMINI_API_KEY: `
+    empty, so the new PR trigger worked but the build could not embed.
+  - `sync-rag.yml` now fails early with an explicit `::error::` annotation telling the human to add
+    the repository secret before re-running, instead of a stack trace from `GeminiEmbeddings`.
+  - Checks green: lint, typecheck, **183 tests**, build, check:boundaries, check:rag-freshness.
 
 ## Next steps
-- **`fix/rag-sync-pr-trigger` (this branch):** human to review, commit and push, then ask for the
-  PR. No agent commit, push or PR was made in this branch. After merge, merge `main` into
-  `slaveofthecode-patch-4` (PR #99) so that PR uses the new workflow; it will then push the fresh
-  snapshot into the PR and CI will go green on the new head.
-- Keep the repository secret `GEMINI_API_KEY` (and optional variable `GEMINI_EMBED_MODEL` if it
-  differs from `gemini-embedding-001`) configured. After merging the CV change, redeploy the API
-  project.
+- **`fix/rag-secret-preflight` (this branch):** human to review, commit and push, then ask for the
+  PR. No agent commit, push or PR was made in this branch.
+- **Required before re-running PR #101:** add repository secret `GEMINI_API_KEY` (Settings → Secrets
+  and variables → Actions → New repository secret; or `gh secret set GEMINI_API_KEY`). Optional
+  repo variable `GEMINI_EMBED_MODEL` only if it differs from `gemini-embedding-001`. Then re-run
+  `Sync RAG snapshot` on PR #101; it will push the fresh snapshot into `slaveofthecode-patch-5` and
+  CI will go green on the new head. After merging the CV change, redeploy the API project.
 - **`feat/mobile-ui-improvements` (this branch):** human to review the third iteration at
   320–390px (borderless About, icon-only chat, right-aligned footer GitHub, no header chat, downloads
   only in the menu) and the restored desktop sticky CV/ATS buttons; then commit/push and ask for the

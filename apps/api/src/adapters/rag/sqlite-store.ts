@@ -10,6 +10,18 @@ import {
 
 export type RagRecord = RagChunk & { embedding: number[] };
 
+export const RAG_META_KEYS = {
+  cvSha256: "cv_sha256",
+  embeddingModel: "embedding_model",
+  builtAt: "built_at",
+} as const;
+
+export interface RagMeta {
+  cvSha256: string;
+  embeddingModel: string;
+  builtAt: string;
+}
+
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS chunks (
   id TEXT PRIMARY KEY,
@@ -17,6 +29,10 @@ CREATE TABLE IF NOT EXISTS chunks (
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   embedding BLOB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS meta (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL
 );`;
 
 let sqlPromise: Promise<SqlJsStatic> | undefined;
@@ -45,7 +61,10 @@ function decodeEmbedding(bytes: Uint8Array): number[] {
 }
 
 /** Serializes chunks + embeddings into a SQLite database (for `build:rag`). */
-export async function buildRagBytes(records: RagRecord[]): Promise<Uint8Array> {
+export async function buildRagBytes(
+  records: RagRecord[],
+  meta: RagMeta,
+): Promise<Uint8Array> {
   const SQL = await loadSqlJs();
   const db = new SQL.Database();
   db.run(SCHEMA);
@@ -53,6 +72,7 @@ export async function buildRagBytes(records: RagRecord[]): Promise<Uint8Array> {
   const insert = db.prepare(
     "INSERT INTO chunks (id, section, title, content, embedding) VALUES (?, ?, ?, ?, ?)",
   );
+  const insertMeta = db.prepare("INSERT INTO meta (key, value) VALUES (?, ?)");
   db.run("BEGIN TRANSACTION");
   for (const record of records) {
     insert.run([
@@ -63,8 +83,12 @@ export async function buildRagBytes(records: RagRecord[]): Promise<Uint8Array> {
       encodeEmbedding(record.embedding),
     ]);
   }
+  insertMeta.run([RAG_META_KEYS.cvSha256, meta.cvSha256]);
+  insertMeta.run([RAG_META_KEYS.embeddingModel, meta.embeddingModel]);
+  insertMeta.run([RAG_META_KEYS.builtAt, meta.builtAt]);
   db.run("COMMIT");
   insert.free();
+  insertMeta.free();
 
   const bytes = db.export();
   db.close();
@@ -136,5 +160,31 @@ export class SqliteRagStore implements RagStore {
       content: row.content,
       score: 1,
     };
+  }
+
+  getMeta(): RagMeta | null {
+    let statement: ReturnType<Database["prepare"]>;
+    try {
+      statement = this.db.prepare("SELECT key, value FROM meta");
+    } catch {
+      return null;
+    }
+    const values: Record<string, string> = {};
+
+    while (statement.step()) {
+      const row = statement.getAsObject() as unknown as {
+        key: string;
+        value: string;
+      };
+      values[row.key] = row.value;
+    }
+    statement.free();
+
+    const cvSha256 = values[RAG_META_KEYS.cvSha256];
+    const embeddingModel = values[RAG_META_KEYS.embeddingModel];
+    const builtAt = values[RAG_META_KEYS.builtAt];
+    if (!cvSha256 || !embeddingModel || !builtAt) return null;
+
+    return { cvSha256, embeddingModel, builtAt };
   }
 }

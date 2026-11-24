@@ -832,13 +832,30 @@ Merged into `main` after the cutover (see PRs #20/#21):
     `Last commit: <full English month date>` on each project, with the same label/date format as the
     web. ATS project order is unchanged.
   - New test checks ATS kind-before-title ordering and one formatted last-commit line per project.
-  - The committed RAG snapshot is stale because the profile chunk includes the summary; regenerate
-    it with `GEMINI_API_KEY` before deploying the API.
+  - The committed RAG snapshot was stale because the profile chunk includes the summary; it is
+    regenerated in `chore/rag-sync` below.
   - Checks green: lint, typecheck, **173 tests**, build, check:boundaries.
+- **`chore/rag-sync` (this branch, from updated `main` `3bca99d`):**
+  - The generated SQLite snapshot now stores `cv_sha256`, `embedding_model` and `built_at` in a
+    `meta` table; `build:rag` hashes the raw `packages/content/data/cv.json`.
+  - New `check:rag-freshness` (CI step + root script) compares that hash, the configured embedding
+    model and `apps/api/data/cv.sqlite` vs `apps/api/src/data/rag-db.ts` without needing a key.
+  - New `sync-rag.yml` watches pushes to `main` touching `cv.json`; on drift it regenerates both
+    artifacts with `GEMINI_API_KEY`, runs all checks and opens a PR for human review (no auto-merge).
+  - Local dev now runs `sync:rag-local` before starting the API. It reuses the same checker and only
+    calls `buildRagSnapshot()` when drift is detected; a missing local key warns and skips instead of
+    blocking. The build logic was extracted so the CLI, CI workflow and local dev share one path.
+  - The current snapshot was regenerated from the latest `cv.json`, covering the stale summary from
+    PR #97 and the human's `location` update to Mendoza. `ADR-0006`, `ADR-0007` and
+    `docs/architecture.md` describe the new flow.
+  - Checks green: lint, typecheck, **183 tests**, build, check:boundaries, check:rag-freshness;
+    `sync:rag-local` was also verified to skip when the snapshot is fresh.
 
 ## Next steps
-- **`feat/ats-pdf-summary` (this branch):** human to review, commit and push; ask for the PR after
-  this STATUS note is included. No commit, push or PR was made by the agent.
+- **`chore/rag-sync` (this branch):** human to add the repository secret `GEMINI_API_KEY` (and
+  optional variable `GEMINI_EMBED_MODEL` if it differs from `gemini-embedding-001`), then review,
+  commit and push including the regenerated artifacts and this STATUS note; ask for the PR after
+  that. No commit, push or PR was made by the agent. After merge, redeploy the API project.
 - **`feat/mobile-ui-improvements` (this branch):** human to review the third iteration at
   320–390px (borderless About, icon-only chat, right-aligned footer GitHub, no header chat, downloads
   only in the menu) and the restored desktop sticky CV/ATS buttons; then commit/push and ask for the
@@ -855,9 +872,9 @@ Merged into `main` after the cutover (see PRs #20/#21):
   polish, Markdown summary, README GIF, on-demand CV PDFs, Open Graph portrait and per-project tech.
   No agent merge was performed.
 - After a CV edit, run `bun run build` (web only; PDFs are generated on click) and
-  `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings),
-  then redeploy both Vercel projects. This branch changed CV text but not the chunk builder; the
-  agent did not regenerate `cv.sqlite` because no `GEMINI_API_KEY` is available here.
+  `bun run --filter @portfolio/api build:rag` with `GEMINI_API_KEY` (fresh embeddings), then
+  redeploy both Vercel projects. `check:rag-freshness` guards CI and `sync-rag.yml` opens a review
+  PR when a `main` push changes `cv.json` without fresh artifacts.
 - **Local backlog (NOT committed):** `docs/backlog.local.md` (gitignored). The old
   **P1 re-enable EN/ES** and **P3 PDF upload panel** items are obsolete under ADR-0007.
 - **Process (from 2026-10-18):** the STATUS.md update for a change goes in that change's own
@@ -907,3 +924,6 @@ Merged into `main` after the cutover (see PRs #20/#21):
 - Hosting: two Vercel projects from the same repo (ADR-0006). The **web** project uses the root
   `vercel.json` (SINGLE source of its build config — no dashboard Build overrides) and builds
   `apps/web`. The **api** project uses Root Directory `apps/api` + `apps/api/vercel.json`.
+
+## Automated RAG sync
+<!-- rag-sync-log -->

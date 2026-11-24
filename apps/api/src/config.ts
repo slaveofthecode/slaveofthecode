@@ -20,7 +20,7 @@ export interface AppConfig {
 const DEFAULT_GEMINI_BASE_URL =
   "https://generativelanguage.googleapis.com/v1beta";
 const DEFAULT_MODEL = "gemini-flash-latest";
-const DEFAULT_EMBED_MODEL = "gemini-embedding-001";
+export const DEFAULT_EMBED_MODEL = "gemini-embedding-001";
 const DEFAULT_ORIGINS = [
   "https://slaveofthecode.vercel.app",
   "http://localhost:4321",

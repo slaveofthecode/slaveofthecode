@@ -5,12 +5,14 @@
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "bun run lint && bun run --filter '*' dev",
+    "sync:rag-local": "bun run --filter @portfolio/api sync:rag-local",
     "build": "bun run --filter '*' build",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "typecheck": "bun run --filter '*' typecheck",
     "test": "bun test",
     "check:boundaries": "bun scripts/check-boundaries.ts",
+    "check:rag-freshness": "bun run --filter @portfolio/api check:rag-freshness",
     "format:data": "biome format --write packages/content/data",
     "build_data": "bun run --filter @portfolio/api build:rag"
   },

@@ -96,8 +96,13 @@ Cloudflare Turnstile in front of the chat form.
 
 Ingestion (`bun run build:rag`, `apps/api/scripts/build-rag.ts`): `@portfolio/content`
 (the single `cv.json`, including `now` and personal projects) → `buildChunks` → Gemini embeddings →
-`buildRagBytes` (SQLite) → commits `apps/api/data/cv.sqlite` + the runtime module
-`apps/api/src/data/rag-db.ts`.
+`buildRagBytes` (SQLite with `cv_sha256`, `embedding_model` and `built_at` metadata) → commits
+`apps/api/data/cv.sqlite` + the runtime module `apps/api/src/data/rag-db.ts`.
+`bun run check:rag-freshness` verifies that hash and both artifacts without needing an API key.
+Locally, `bun run dev` runs `sync:rag-local` before starting the API: it rebuilds only when the
+snapshot is stale, and warns instead of blocking when `GEMINI_API_KEY` is unavailable. A push to
+`main` touching `cv.json` runs `sync-rag.yml`: if the snapshot is stale it regenerates the
+artifacts and opens a PR for human review (never auto-merge).
 
 Internal packages are consumed as TypeScript source (`"exports": "./src/index.ts"`,
 no build step). `apps/api` runs on Vercel's Node runtime via Web Standard
@@ -128,7 +133,8 @@ Two Vercel projects from the same repo (ADR-0006):
   defaults).
 
 The SQLite snapshot is committed and read-only at runtime; it is not persistent storage.
-Re-run `bun run build:rag` (with `GEMINI_API_KEY`) after changing the CV.
+Re-run `bun run build:rag` (with `GEMINI_API_KEY`) after changing the CV; CI fails fast via
+`check:rag-freshness` until the regenerated artifacts are committed.
 
 ## Data flow
 

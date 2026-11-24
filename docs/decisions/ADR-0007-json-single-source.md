@@ -21,8 +21,8 @@
     tech, repo URL, production URL and thumbnail URL). The web shows personal projects
     after "What I'm working on now"; both PDFs show a reduced project block.
 - **Consequences:** one edit updates the web and both PDFs immediately; the chat catches
-  up when `sync-rag.yml` regenerates its snapshot after any `cv.json` change, with a human
-  reviewing the follow-up PR. No ingest step, no translation drift, no committed PDF
+  up when `sync-rag.yml` regenerates its snapshot in the same PR for same-repo `cv.json` edits,
+  with a post-merge review PR as fallback. No ingest step, no translation drift, no committed PDF
   artifacts. Changing the CV still requires a web build and
   `bun run --filter @portfolio/api build:rag` locally (chat snapshot, needs `GEMINI_API_KEY`);
   PDFs always reflect the current JSON at click time.
